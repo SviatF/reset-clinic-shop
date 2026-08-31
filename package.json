@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "inspect:legacy": "node scripts/inspect-legacy.mjs"
   },
   "engines": {
     "node": ">=20 <23"
   },
   "dependencies": {
+    "cheerio": "1.1.2",
     "next": "15.5.9",
     "react": "19.1.1",
     "react-dom": "19.1.1"
