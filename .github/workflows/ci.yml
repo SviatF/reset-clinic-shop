@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - feat/native-home-migration
 
 jobs:
   build:
@@ -16,4 +17,10 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - run: npm run inspect:legacy
+      - uses: actions/upload-artifact@v4
+        with:
+          name: legacy-home-inspection
+          path: legacy-inspection
+          if-no-files-found: error
       - run: npm run build
