@@ -19,3 +19,44 @@ jobs:
       - name: Inspect legacy home structure
         run: node scripts/inspect-home.mjs
       - run: npm run build
+      - name: Smoke test native storefront routes
+        shell: bash
+        run: |
+          npm start -- -p 3100 > /tmp/reset-shop-next.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+
+          READY=0
+          for _ in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:3100/ > /tmp/reset-home.html; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$READY" -ne 1 ]; then
+            cat /tmp/reset-shop-next.log
+            exit 1
+          fi
+
+          for ROUTE in / /delivery/ /faq/ /calming-face-oil-treatment/; do
+            echo "Checking ${ROUTE}"
+            curl -fsS "http://127.0.0.1:3100${ROUTE}" > /tmp/reset-route.html || {
+              cat /tmp/reset-shop-next.log
+              exit 1
+            }
+            grep -q '/_next/static/' /tmp/reset-route.html || {
+              echo "Route ${ROUTE} did not render through Next.js"
+              exit 1
+            }
+          done
+
+          CSS_PATH=$(grep -oE 'href="[^"]+\.css[^\"]*"' /tmp/reset-home.html | head -1 | cut -d'"' -f2 || true)
+          if [[ "$CSS_PATH" == /* ]]; then
+            echo "Checking archived CSS asset ${CSS_PATH}"
+            curl -fsS "http://127.0.0.1:3100${CSS_PATH}" > /dev/null || {
+              cat /tmp/reset-shop-next.log
+              exit 1
+            }
+          fi
