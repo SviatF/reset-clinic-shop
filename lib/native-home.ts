@@ -2,19 +2,25 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { cache } from "react";
 import * as cheerio from "cheerio";
-import { domNodeToNative, rewriteLegacyShopHost, type NativeNode } from "./native-dom";
+import { domNodeToNative, type NativeNode } from "./native-dom";
 
 const SOURCE_FILE = path.join(process.cwd(), "legacy-source", "index.html");
 
 export type NativeHomeSnapshot = {
   header: NativeNode[];
   hero: NativeNode[];
-  sections: string[];
-  footer: string;
+  sections: NativeNode[];
+  footer: NativeNode[];
   pageClassName: string;
   pageElementorId?: string;
   sectionCount: number;
 };
+
+function requireNativeNode(node: any, label: string): NativeNode {
+  const converted = domNodeToNative(node);
+  if (!converted) throw new Error(`${label} could not be converted to native React data`);
+  return converted;
+}
 
 export const readNativeHomeSnapshot = cache(async (): Promise<NativeHomeSnapshot> => {
   const source = await fs.readFile(SOURCE_FILE, "utf8");
@@ -34,30 +40,23 @@ export const readNativeHomeSnapshot = cache(async (): Promise<NativeHomeSnapshot
     throw new Error("Legacy RESET Shop homepage landmarks could not be resolved");
   }
 
-  const headerNode = domNodeToNative(header.get(0));
-  if (!headerNode) {
-    throw new Error("RESET Shop header could not be converted to native React data");
-  }
-
   const sectionElements = page.children("section").toArray();
   if (!sectionElements.length) {
     throw new Error("Legacy RESET Shop homepage has no Elementor sections");
   }
 
-  const heroNode = domNodeToNative(sectionElements[0]);
-  if (!heroNode) {
-    throw new Error("RESET Shop homepage hero could not be converted to native React data");
-  }
-
-  const sections = sectionElements
+  const headerNode = requireNativeNode(header.get(0), "RESET Shop header");
+  const heroNode = requireNativeNode(sectionElements[0], "RESET Shop homepage hero");
+  const sectionNodes = sectionElements
     .slice(1)
-    .map((element) => rewriteLegacyShopHost($.html(element)));
+    .map((element, index) => requireNativeNode(element, `RESET Shop homepage section ${index + 2}`));
+  const footerNode = requireNativeNode(footer.get(0), "RESET Shop footer");
 
   return {
     header: [headerNode],
     hero: [heroNode],
-    sections,
-    footer: rewriteLegacyShopHost($.html(footer)),
+    sections: sectionNodes,
+    footer: [footerNode],
     pageClassName: page.attr("class") ?? "elementor elementor-18287",
     pageElementorId: page.attr("data-elementor-id"),
     sectionCount: sectionElements.length,

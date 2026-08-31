@@ -22,7 +22,7 @@ export default async function NativeHomePreviewPage() {
         pageClassName={snapshot.pageClassName}
         pageElementorId={snapshot.pageElementorId}
       />
-      <HomeFooter html={snapshot.footer} />
+      <HomeFooter nodes={snapshot.footer} />
     </>
   );
 }

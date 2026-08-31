@@ -16,7 +16,7 @@ export default async function HomePage() {
         pageClassName={snapshot.pageClassName}
         pageElementorId={snapshot.pageElementorId}
       />
-      <HomeFooter html={snapshot.footer} />
+      <HomeFooter nodes={snapshot.footer} />
     </>
   );
 }
