@@ -122,14 +122,23 @@ function renderNode(node: NativeNode, key: string | number): ReactNode {
   );
 }
 
+type NativeTreeProps = {
+  nodes: NativeNode[];
+  keyPrefix?: string;
+};
+
+export function NativeTree({ nodes, keyPrefix = "native" }: NativeTreeProps) {
+  return createElement(
+    Fragment,
+    null,
+    ...nodes.map((node, index) => renderNode(node, `${keyPrefix}.${index}`)),
+  );
+}
+
 type NativeHeaderProps = {
   nodes: NativeNode[];
 };
 
 export function NativeHeader({ nodes }: NativeHeaderProps) {
-  return createElement(
-    Fragment,
-    null,
-    ...nodes.map((node, index) => renderNode(node, `header.${index}`)),
-  );
+  return <NativeTree nodes={nodes} keyPrefix="header" />;
 }
