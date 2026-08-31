@@ -1,6 +1,6 @@
 import type { NativeNode } from "../../lib/native-dom";
 import { LegacyReactFragment } from "./LegacyReactFragment";
-import { NativeHeader } from "./NativeHeader";
+import { NativeHeader, NativeTree } from "./NativeHeader";
 
 type HomeHeaderProps = {
   nodes: NativeNode[];
@@ -11,12 +11,14 @@ export function HomeHeader({ nodes }: HomeHeaderProps) {
 }
 
 type HomeSectionsProps = {
+  hero: NativeNode[];
   sections: string[];
   pageClassName: string;
   pageElementorId?: string;
 };
 
 export function HomeSections({
+  hero,
   sections,
   pageClassName,
   pageElementorId,
@@ -27,6 +29,7 @@ export function HomeSections({
       data-elementor-id={pageElementorId}
       data-elementor-type="wp-page"
     >
+      <NativeTree nodes={hero} keyPrefix="hero" />
       {sections.map((section, index) => (
         <LegacyReactFragment key={index} html={section} />
       ))}
