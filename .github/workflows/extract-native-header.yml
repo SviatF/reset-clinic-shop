@@ -1,0 +1,37 @@
+name: Extract native shop header
+
+on:
+  push:
+    branches:
+      - feat/native-shop-header
+    paths:
+      - scripts/extract-native-header.mjs
+      - .github/workflows/extract-native-header.yml
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/native-shop-header
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/extract-native-header.mjs
+      - name: Commit extracted header
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/shop/native-header.snapshot.html
+          if git diff --cached --quiet; then
+            echo "Header snapshot is already up to date"
+            exit 0
+          fi
+          git commit -m "chore: extract legacy shop header"
+          git push origin HEAD:feat/native-shop-header
