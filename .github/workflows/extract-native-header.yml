@@ -20,8 +20,8 @@ jobs:
           ref: feat/native-shop-header
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm ci
+          node-version: 20
+      - run: npm install
       - run: node scripts/extract-native-header.mjs
       - name: Commit extracted header
         run: |
