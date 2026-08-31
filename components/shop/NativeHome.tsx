@@ -1,11 +1,13 @@
+import type { NativeNode } from "../../lib/native-dom";
 import { LegacyReactFragment } from "./LegacyReactFragment";
+import { NativeHeader } from "./NativeHeader";
 
 type HomeHeaderProps = {
-  html: string;
+  nodes: NativeNode[];
 };
 
-export function HomeHeader({ html }: HomeHeaderProps) {
-  return <LegacyReactFragment html={html} />;
+export function HomeHeader({ nodes }: HomeHeaderProps) {
+  return <NativeHeader nodes={nodes} />;
 }
 
 type HomeSectionsProps = {
