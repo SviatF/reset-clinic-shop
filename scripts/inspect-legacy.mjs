@@ -14,6 +14,22 @@ const $ = cheerio.load(html, { decodeEntities: false });
 
 const normalize = (value = '') => value.replace(/\s+/g, ' ').trim();
 const compactHtml = (value = '') => value.replace(/>\s+</g, '><').trim();
+const describe = (index, el) => {
+  const node = $(el);
+  return {
+    index,
+    tag: el.tagName,
+    id: node.attr('id') ?? '',
+    class: node.attr('class') ?? '',
+    text: normalize(node.text()).slice(0, 1000),
+    htmlLength: $.html(el).length,
+  };
+};
+
+const body = $('body').first();
+const header = $('.elementor-location-header').first();
+const footer = $('#main-footer').first().length ? $('#main-footer').first() : $('footer').first();
+const page = $('.elementor-18287').first();
 
 const links = $('head link').map((_, el) => ({
   rel: $(el).attr('rel') ?? '',
@@ -21,50 +37,9 @@ const links = $('head link').map((_, el) => ({
   media: $(el).attr('media') ?? '',
 })).get();
 
-const scripts = $('script').map((_, el) => ({
-  src: $(el).attr('src') ?? '',
-  id: $(el).attr('id') ?? '',
-  type: $(el).attr('type') ?? '',
-})).get();
-
-const body = $('body').first();
-const directChildren = body.children().map((index, el) => {
-  const node = $(el);
-  return {
-    index,
-    tag: el.tagName,
-    id: node.attr('id') ?? '',
-    class: node.attr('class') ?? '',
-    text: normalize(node.text()).slice(0, 400),
-    htmlLength: $.html(el).length,
-  };
-}).get();
-
-const landmarks = $('header, main, footer, nav').map((index, el) => {
-  const node = $(el);
-  return {
-    index,
-    tag: el.tagName,
-    id: node.attr('id') ?? '',
-    class: node.attr('class') ?? '',
-    text: normalize(node.text()).slice(0, 600),
-    htmlLength: $.html(el).length,
-  };
-}).get();
-
-const topSections = $('main section, main > div, #main section, #main > div, .site-main section, .site-main > div').map((index, el) => {
-  const node = $(el);
-  return {
-    index,
-    tag: el.tagName,
-    id: node.attr('id') ?? '',
-    class: node.attr('class') ?? '',
-    text: normalize(node.text()).slice(0, 800),
-    htmlLength: $.html(el).length,
-  };
-}).get();
-
-const navigation = $('header a, nav a').map((_, el) => ({
+const directChildren = body.children().map((index, el) => describe(index, el)).get();
+const pageSections = page.children('section').map((index, el) => describe(index, el)).get();
+const navigation = header.find('a').map((_, el) => ({
   text: normalize($(el).text()),
   href: $(el).attr('href') ?? '',
   class: $(el).attr('class') ?? '',
@@ -80,72 +55,69 @@ const images = $('img').map((_, el) => ({
   height: $(el).attr('height') ?? '',
 })).get();
 
-const backgroundUrls = [...new Set((html.match(/url\(([^)]+)\)/g) ?? [])
-  .map((entry) => entry.slice(4, -1).trim().replace(/^['"]|['"]$/g, ''))
-  .filter(Boolean))];
-
 const summary = {
   title: $('title').text(),
   bodyClass: body.attr('class') ?? '',
   bodyId: body.attr('id') ?? '',
   htmlBytes: Buffer.byteLength(html),
-  links,
-  scripts,
+  header: header.length ? describe(0, header[0]) : null,
+  footer: footer.length ? describe(0, footer[0]) : null,
+  page: page.length ? describe(0, page[0]) : null,
   directChildren,
-  landmarks,
-  topSections,
+  pageSections,
   navigation,
   imageCount: images.length,
-  backgroundUrlCount: backgroundUrls.length,
+  links,
 };
 
 await fs.writeFile(path.join(outDir, 'summary.json'), JSON.stringify(summary, null, 2));
 await fs.writeFile(path.join(outDir, 'images.json'), JSON.stringify(images, null, 2));
-await fs.writeFile(path.join(outDir, 'background-urls.json'), JSON.stringify(backgroundUrls, null, 2));
 
-const header = $('header').first();
-if (header.length) await fs.writeFile(path.join(outDir, 'header.html'), compactHtml($.html(header)));
+if (header.length) {
+  await fs.writeFile(path.join(outDir, 'header.html'), compactHtml($.html(header)));
+}
+if (footer.length) {
+  await fs.writeFile(path.join(outDir, 'footer.html'), compactHtml($.html(footer)));
+}
 
-const footer = $('footer').first();
-if (footer.length) await fs.writeFile(path.join(outDir, 'footer.html'), compactHtml($.html(footer)));
-
-const main = $('main').first().length ? $('main').first() : $('#main').first();
-if (main.length) {
-  const children = main.children();
+if (page.length) {
+  const sections = page.children('section');
   const manifest = [];
-  children.each((index, el) => {
-    const node = $(el);
-    const filename = `main-${String(index).padStart(2, '0')}.html`;
-    const fragment = compactHtml($.html(el));
-    manifest.push({
-      index,
-      filename,
-      tag: el.tagName,
-      id: node.attr('id') ?? '',
-      class: node.attr('class') ?? '',
-      text: normalize(node.text()).slice(0, 1000),
-      htmlLength: fragment.length,
-    });
+  sections.each((index, el) => {
+    const item = describe(index, el);
+    const filename = `section-${String(index).padStart(2, '0')}.html`;
+    manifest.push({ ...item, filename });
   });
-  await fs.writeFile(path.join(outDir, 'main-manifest.json'), JSON.stringify(manifest, null, 2));
+  await fs.writeFile(path.join(outDir, 'sections-manifest.json'), JSON.stringify(manifest, null, 2));
 
-  // Keep individual fragments bounded so GitHub artifacts remain easy to inspect.
   for (const item of manifest) {
-    const el = children.eq(item.index);
-    const fragment = compactHtml($.html(el));
-    if (fragment.length <= 2_000_000) {
-      await fs.writeFile(path.join(outDir, item.filename), fragment);
-    }
+    const fragment = compactHtml($.html(sections.eq(item.index)));
+    await fs.writeFile(path.join(outDir, item.filename), fragment);
   }
 }
+
+// Extract the exact inline style blocks that materially define the original visual system.
+const styleManifest = [];
+$('style').each((index, el) => {
+  const text = $(el).html() ?? '';
+  if (!text.trim()) return;
+  const id = $(el).attr('id') ?? '';
+  const relevant = /elementor|vamtam|woocommerce|font-face|--e-global|elementor-18287|elementor-18290/i.test(`${id}\n${text}`);
+  if (!relevant) return;
+  const filename = `style-${String(styleManifest.length).padStart(2, '0')}.css`;
+  styleManifest.push({ index, id, filename, length: text.length });
+  fs.writeFile(path.join(outDir, filename), text);
+});
+await fs.writeFile(path.join(outDir, 'styles-manifest.json'), JSON.stringify(styleManifest, null, 2));
 
 console.log(JSON.stringify({
   title: summary.title,
   bodyClass: summary.bodyClass,
-  directChildren: directChildren.length,
-  landmarks: landmarks.length,
-  topSections: topSections.length,
+  headerBytes: summary.header?.htmlLength ?? 0,
+  footerBytes: summary.footer?.htmlLength ?? 0,
+  pageBytes: summary.page?.htmlLength ?? 0,
+  sections: pageSections.length,
   navigationLinks: navigation.length,
   images: images.length,
-  backgroundUrls: backgroundUrls.length,
+  extractedStyles: styleManifest.length,
 }, null, 2));
