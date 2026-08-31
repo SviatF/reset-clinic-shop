@@ -17,6 +17,7 @@ export default async function NativeHomePreviewPage() {
     <>
       <HomeHeader nodes={snapshot.header} />
       <HomeSections
+        hero={snapshot.hero}
         sections={snapshot.sections}
         pageClassName={snapshot.pageClassName}
         pageElementorId={snapshot.pageElementorId}
