@@ -104,18 +104,49 @@ export async function findLegacyAsset(segments: string[]) {
   return null;
 }
 
-export async function readLegacyDocument(filePath: string) {
-  const html = await fs.readFile(filePath, "utf8");
-
+function normalizeLegacyHtml(html: string) {
   return html
     .replace(/\s*has-mouse-dot\b/g, "")
     .replace(/\s*has-mouse-circle\b/g, "")
     .replace(/https?:\/\/shop\.resetclinic\.org(?=\/|[\"'])/gi, "")
-    .replace(/\/\/shop\.resetclinic\.org(?=\/|[\"'])/gi, "")
-    .replace(
-      /<\/head>/i,
-      '<style id="reset-next-fidelity-fallback">html,body{cursor:auto!important}</style></head>',
-    );
+    .replace(/\/\/shop\.resetclinic\.org(?=\/|[\"'])/gi, "");
+}
+
+export async function readLegacyDocument(filePath: string) {
+  const html = normalizeLegacyHtml(await fs.readFile(filePath, "utf8"));
+
+  return html.replace(
+    /<\/head>/i,
+    '<style id="reset-next-fidelity-fallback">html,body{cursor:auto!important}</style></head>',
+  );
+}
+
+export type LegacyDocumentParts = {
+  headHtml: string;
+  bodyHtml: string;
+  bodyClassName?: string;
+  bodyId?: string;
+};
+
+export async function readLegacyRootDocumentParts(): Promise<LegacyDocumentParts> {
+  const html = normalizeLegacyHtml(await fs.readFile(safePath("index.html"), "utf8"));
+  const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+  const bodyMatch = html.match(/<body([^>]*)>([\s\S]*?)<\/body>/i);
+
+  if (!bodyMatch) {
+    throw new Error("Legacy RESET Shop root document has no <body>");
+  }
+
+  const bodyAttributes = bodyMatch[1] ?? "";
+  const bodyClassName = bodyAttributes.match(/\bclass=["']([^"']*)["']/i)?.[1];
+  const bodyId = bodyAttributes.match(/\bid=["']([^"']*)["']/i)?.[1];
+
+  return {
+    headHtml: `${headMatch?.[1] ?? ""}<style id="reset-next-fidelity-fallback">html,body{cursor:auto!important}</style>`,
+    bodyHtml: bodyMatch[2],
+    bodyClassName,
+    bodyId,
+  };
 }
 
 export async function readLegacyAsset(filePath: string, wrappedDownload = false) {
