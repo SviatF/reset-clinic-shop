@@ -1,0 +1,119 @@
+html.reset-mobile-menu-lock,
+html.reset-cart-drawer-open,
+html.reset-gallery-lock {
+  overflow: hidden !important;
+}
+
+.elementor-nav-menu__container.reset-mobile-menu-open {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  max-height: min(82vh, 760px) !important;
+  overflow-y: auto !important;
+}
+
+.elementor-nav-menu--dropdown .sub-menu.reset-submenu-open,
+.elementor-nav-menu--main .sub-menu.reset-submenu-open {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.elementor-menu-cart__container.reset-cart-open {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.elementor-menu-cart__container.reset-cart-open .elementor-menu-cart__main {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.reset-mini-cart-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 4px 0;
+  font-size: 11px;
+  opacity: .72;
+}
+
+.reset-remove-cart-item {
+  cursor: pointer;
+}
+
+#reset-shop-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100000;
+  max-width: min(380px, calc(100vw - 32px));
+  padding: 13px 18px;
+  border-radius: 999px;
+  background: #1b1b1b;
+  color: #fff;
+  font: 500 14px/1.35 Arial, sans-serif;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .18);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+#reset-shop-toast.reset-shop-toast-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#reset-shop-gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: rgba(0, 0, 0, .88);
+}
+
+#reset-shop-gallery-lightbox.reset-gallery-lightbox-open {
+  display: flex;
+}
+
+#reset-shop-gallery-lightbox img {
+  display: block;
+  max-width: min(1100px, 92vw);
+  max-height: 88vh;
+  object-fit: contain;
+}
+
+#reset-shop-gallery-lightbox .reset-gallery-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  #reset-shop-toast {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    text-align: center;
+  }
+
+  #reset-shop-gallery-lightbox {
+    padding: 24px;
+  }
+}
