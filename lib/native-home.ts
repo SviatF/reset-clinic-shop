@@ -2,17 +2,12 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { cache } from "react";
 import * as cheerio from "cheerio";
+import { domNodeToNative, rewriteLegacyShopHost, type NativeNode } from "./native-dom";
 
 const SOURCE_FILE = path.join(process.cwd(), "legacy-source", "index.html");
 
-function rewriteShopHost(value: string) {
-  return value
-    .replace(/https?:\/\/shop\.resetclinic\.org(?=\/|[\"'])/gi, "")
-    .replace(/\/\/shop\.resetclinic\.org(?=\/|[\"'])/gi, "");
-}
-
 export type NativeHomeSnapshot = {
-  header: string;
+  header: NativeNode[];
   sections: string[];
   footer: string;
   pageClassName: string;
@@ -25,8 +20,7 @@ export const readNativeHomeSnapshot = cache(async (): Promise<NativeHomeSnapshot
   const $ = cheerio.load(source);
 
   // Old WordPress/WooCommerce scripts are not part of the new runtime. Keeping
-  // them in SSR HTML would re-introduce the legacy application layer and can
-  // execute against DOM that is being migrated to React.
+  // them in SSR output would re-introduce the legacy application layer.
   $("script, noscript").remove();
 
   const header = $(".elementor-location-header").first();
@@ -39,9 +33,14 @@ export const readNativeHomeSnapshot = cache(async (): Promise<NativeHomeSnapshot
     throw new Error("Legacy RESET Shop homepage landmarks could not be resolved");
   }
 
+  const headerNode = domNodeToNative(header.get(0));
+  if (!headerNode) {
+    throw new Error("RESET Shop header could not be converted to native React data");
+  }
+
   const sections = page
     .children("section")
-    .map((_, element) => rewriteShopHost($.html(element)))
+    .map((_, element) => rewriteLegacyShopHost($.html(element)))
     .get();
 
   if (!sections.length) {
@@ -49,9 +48,9 @@ export const readNativeHomeSnapshot = cache(async (): Promise<NativeHomeSnapshot
   }
 
   return {
-    header: rewriteShopHost($.html(header)),
+    header: [headerNode],
     sections,
-    footer: rewriteShopHost($.html(footer)),
+    footer: rewriteLegacyShopHost($.html(footer)),
     pageClassName: page.attr("class") ?? "elementor elementor-18287",
     pageElementorId: page.attr("data-elementor-id"),
     sectionCount: sections.length,
