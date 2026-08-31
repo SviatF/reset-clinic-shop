@@ -98,6 +98,7 @@ if (page.length) {
 
 // Extract the exact inline style blocks that materially define the original visual system.
 const styleManifest = [];
+const styleWrites = [];
 $('style').each((index, el) => {
   const text = $(el).html() ?? '';
   if (!text.trim()) return;
@@ -106,8 +107,9 @@ $('style').each((index, el) => {
   if (!relevant) return;
   const filename = `style-${String(styleManifest.length).padStart(2, '0')}.css`;
   styleManifest.push({ index, id, filename, length: text.length });
-  fs.writeFile(path.join(outDir, filename), text);
+  styleWrites.push(fs.writeFile(path.join(outDir, filename), text));
 });
+await Promise.all(styleWrites);
 await fs.writeFile(path.join(outDir, 'styles-manifest.json'), JSON.stringify(styleManifest, null, 2));
 
 console.log(JSON.stringify({
