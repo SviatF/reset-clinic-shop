@@ -1,9 +1,21 @@
-import { readLegacyRootDocumentParts } from "../lib/legacy-source";
+import { HomeFooter, HomeHeader, HomeSections } from "../components/shop/NativeHome";
+import { readNativeHomeSnapshot } from "../lib/native-home";
 
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const legacy = await readLegacyRootDocumentParts();
+  const snapshot = await readNativeHomeSnapshot();
 
-  return <div dangerouslySetInnerHTML={{ __html: legacy.bodyHtml }} />;
+  return (
+    <>
+      <HomeHeader html={snapshot.header} />
+      <HomeSections
+        sections={snapshot.sections}
+        pageClassName={snapshot.pageClassName}
+        pageElementorId={snapshot.pageElementorId}
+      />
+      <HomeFooter html={snapshot.footer} />
+    </>
+  );
 }
