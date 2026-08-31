@@ -8,6 +8,7 @@ const SOURCE_FILE = path.join(process.cwd(), "legacy-source", "index.html");
 
 export type NativeHomeSnapshot = {
   header: NativeNode[];
+  hero: NativeNode[];
   sections: string[];
   footer: string;
   pageClassName: string;
@@ -38,21 +39,27 @@ export const readNativeHomeSnapshot = cache(async (): Promise<NativeHomeSnapshot
     throw new Error("RESET Shop header could not be converted to native React data");
   }
 
-  const sections = page
-    .children("section")
-    .map((_, element) => rewriteLegacyShopHost($.html(element)))
-    .get();
-
-  if (!sections.length) {
+  const sectionElements = page.children("section").toArray();
+  if (!sectionElements.length) {
     throw new Error("Legacy RESET Shop homepage has no Elementor sections");
   }
 
+  const heroNode = domNodeToNative(sectionElements[0]);
+  if (!heroNode) {
+    throw new Error("RESET Shop homepage hero could not be converted to native React data");
+  }
+
+  const sections = sectionElements
+    .slice(1)
+    .map((element) => rewriteLegacyShopHost($.html(element)));
+
   return {
     header: [headerNode],
+    hero: [heroNode],
     sections,
     footer: rewriteLegacyShopHost($.html(footer)),
     pageClassName: page.attr("class") ?? "elementor elementor-18287",
     pageElementorId: page.attr("data-elementor-id"),
-    sectionCount: sections.length,
+    sectionCount: sectionElements.length,
   };
 });
