@@ -1,10 +1,12 @@
 import type { ReactNode } from "react";
 import { headers } from "next/headers";
+import { StorefrontRuntime } from "../components/shop/StorefrontRuntime";
 import {
   findLegacyDocument,
   readLegacyDocumentParts,
   readLegacyRootDocumentParts,
 } from "../lib/legacy-source";
+import "./shop-runtime.css";
 
 async function legacyDocumentForRequest() {
   const requestHeaders = await headers();
@@ -31,6 +33,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <head dangerouslySetInnerHTML={{ __html: legacy.headHtml }} />
       <body id={legacy.bodyId} className={legacy.bodyClassName}>
         {children}
+        <StorefrontRuntime />
       </body>
     </html>
   );
