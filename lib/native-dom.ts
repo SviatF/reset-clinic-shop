@@ -22,7 +22,7 @@ export function domNodeToNative(node: any): NativeNode | null {
   if (!node) return null;
 
   if (node.type === "text") {
-    return { kind: "text", value: node.data ?? "" };
+    return { kind: "text", value: rewriteLegacyShopHost(node.data ?? "") };
   }
 
   if (node.type === "comment") return null;
