@@ -16,4 +16,6 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - name: Inspect legacy home structure
+        run: node scripts/inspect-home.mjs
       - run: npm run build
