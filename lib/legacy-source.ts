@@ -18,6 +18,8 @@ const MIME_BY_EXTENSION: Record<string, string> = {
   ".css": "text/css; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".map": "application/json; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
 };
 
 function safePath(...segments: string[]) {
@@ -128,13 +130,13 @@ export type LegacyDocumentParts = {
   bodyId?: string;
 };
 
-export async function readLegacyRootDocumentParts(): Promise<LegacyDocumentParts> {
-  const html = normalizeLegacyHtml(await fs.readFile(safePath("index.html"), "utf8"));
+export async function readLegacyDocumentParts(filePath: string): Promise<LegacyDocumentParts> {
+  const html = normalizeLegacyHtml(await fs.readFile(filePath, "utf8"));
   const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
   const bodyMatch = html.match(/<body([^>]*)>([\s\S]*?)<\/body>/i);
 
   if (!bodyMatch) {
-    throw new Error("Legacy RESET Shop root document has no <body>");
+    throw new Error(`Legacy RESET Shop document has no <body>: ${filePath}`);
   }
 
   const bodyAttributes = bodyMatch[1] ?? "";
@@ -147,6 +149,10 @@ export async function readLegacyRootDocumentParts(): Promise<LegacyDocumentParts
     bodyClassName,
     bodyId,
   };
+}
+
+export async function readLegacyRootDocumentParts(): Promise<LegacyDocumentParts> {
+  return readLegacyDocumentParts(safePath("index.html"));
 }
 
 export async function readLegacyAsset(filePath: string, wrappedDownload = false) {

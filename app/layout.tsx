@@ -1,8 +1,30 @@
 import type { ReactNode } from "react";
-import { readLegacyRootDocumentParts } from "../lib/legacy-source";
+import { headers } from "next/headers";
+import {
+  findLegacyDocument,
+  readLegacyDocumentParts,
+  readLegacyRootDocumentParts,
+} from "../lib/legacy-source";
+
+async function legacyDocumentForRequest() {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-reset-path") ?? "/";
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (!segments.length) {
+    return readLegacyRootDocumentParts();
+  }
+
+  const document = await findLegacyDocument(segments);
+  if (!document) {
+    return readLegacyRootDocumentParts();
+  }
+
+  return readLegacyDocumentParts(document);
+}
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-  const legacy = await readLegacyRootDocumentParts();
+  const legacy = await legacyDocumentForRequest();
 
   return (
     <html lang="uk">

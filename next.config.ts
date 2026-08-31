@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   outputFileTracingIncludes: {
     "/": ["./legacy-source/**/*"],
-    "/[[...slug]]": ["./legacy-source/**/*"],
+    "/[...slug]": ["./legacy-source/**/*"],
+    "/__legacy_asset/[...slug]": ["./legacy-source/**/*"],
   },
   experimental: {
     webpackMemoryOptimizations: true,
