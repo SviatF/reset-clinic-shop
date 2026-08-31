@@ -51,11 +51,12 @@ export async function findLegacyDocument(segments: string[]) {
     ? [
         safePath(...withoutIndex, "index.html"),
         safePath(`${withoutIndex.join("/")}.html`),
+        clean.at(-1)?.toLowerCase().endsWith(".html") ? safePath(...clean) : null,
       ]
     : [safePath("index.html")];
 
   for (const candidate of candidates) {
-    if (await isFile(candidate)) return candidate;
+    if (candidate && (await isFile(candidate))) return candidate;
   }
 
   return null;
@@ -80,7 +81,13 @@ export async function findLegacyAsset(segments: string[]) {
 
   const direct = safePath(...clean);
   if (await isFile(direct)) {
-    return { filePath: direct, contentType: MIME_BY_EXTENSION[path.extname(direct).toLowerCase()] };
+    const extension = path.extname(direct).toLowerCase();
+    return {
+      filePath: direct,
+      contentType: MIME_BY_EXTENSION[extension],
+      isHtml: extension === ".html",
+      wrappedDownload: false,
+    };
   }
 
   const wrapped = wrappedDownloadCandidate(clean);
@@ -89,6 +96,7 @@ export async function findLegacyAsset(segments: string[]) {
     return {
       filePath: wrapped,
       contentType: MIME_BY_EXTENSION[requestedExtension] ?? "application/octet-stream",
+      isHtml: false,
       wrappedDownload: true,
     };
   }
@@ -114,12 +122,14 @@ export async function readLegacyAsset(filePath: string, wrappedDownload = false)
   const data = await fs.readFile(filePath);
   if (!wrappedDownload) return data;
 
-  const bodyOpen = data.indexOf(Buffer.from("<body>"));
-  const bodyClose = data.lastIndexOf(Buffer.from("</body>"));
+  const bodyOpenMarker = Buffer.from("<body>");
+  const bodyCloseMarker = Buffer.from("</body>");
+  const bodyOpen = data.indexOf(bodyOpenMarker);
+  const bodyClose = data.lastIndexOf(bodyCloseMarker);
 
   if (bodyOpen === -1 || bodyClose === -1 || bodyClose <= bodyOpen) {
     return data;
   }
 
-  return data.subarray(bodyOpen + Buffer.byteLength("<body>"), bodyClose);
+  return data.subarray(bodyOpen + bodyOpenMarker.length, bodyClose);
 }

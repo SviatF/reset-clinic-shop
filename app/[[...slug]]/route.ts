@@ -24,6 +24,16 @@ function htmlResponse(html: string) {
   });
 }
 
+function binaryResponse(body: Buffer, contentType?: string) {
+  return new Response(new Uint8Array(body), {
+    status: 200,
+    headers: {
+      "content-type": contentType ?? "application/octet-stream",
+      "cache-control": "public, max-age=31536000, immutable",
+    },
+  });
+}
+
 export async function GET(
   request: NextRequest,
   context: { params: Promise<{ slug?: string[] }> },
@@ -32,26 +42,11 @@ export async function GET(
   const segments = routeSegments(params);
 
   const asset = await findLegacyAsset(segments);
-  if (asset && !asset.filePath.endsWith(".html")) {
-    const body = await readLegacyAsset(asset.filePath, asset.wrappedDownload);
-    return new Response(body, {
-      status: 200,
-      headers: {
-        "content-type": asset.contentType ?? "application/octet-stream",
-        "cache-control": "public, max-age=31536000, immutable",
-      },
-    });
-  }
-
-  if (asset?.wrappedDownload) {
-    const body = await readLegacyAsset(asset.filePath, true);
-    return new Response(body, {
-      status: 200,
-      headers: {
-        "content-type": asset.contentType ?? "application/octet-stream",
-        "cache-control": "public, max-age=31536000, immutable",
-      },
-    });
+  if (asset && !asset.isHtml) {
+    return binaryResponse(
+      await readLegacyAsset(asset.filePath, asset.wrappedDownload),
+      asset.contentType,
+    );
   }
 
   const document = await findLegacyDocument(segments);
@@ -59,8 +54,8 @@ export async function GET(
     return htmlResponse(await readLegacyDocument(document));
   }
 
-  // Preserve query strings such as WooCommerce legacy links, but route matching
-  // itself is intentionally based only on pathname segments.
+  // Query strings are deliberately left untouched. Legacy storefront links can
+  // still carry WooCommerce parameters while route resolution stays pathname-only.
   void request;
   return new Response("Not Found", { status: 404 });
 }
