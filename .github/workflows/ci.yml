@@ -67,6 +67,31 @@ jobs:
             echo "Archived homepage styling is inline; no external CSS asset check required"
           fi
 
+          for ROUTE in /category/skincare/ /category/body/ /category/tip-tricks/; do
+            echo "Checking native React category ${ROUTE}"
+            curl -fsS -D /tmp/reset-category.headers "http://127.0.0.1:3100${ROUTE}" -o /tmp/reset-category.html || {
+              cat /tmp/reset-shop-next.log
+              exit 1
+            }
+            grep -q '/_next/static/' /tmp/reset-category.html || {
+              echo "Category ${ROUTE} is not rendering through the Next.js page runtime"
+              exit 1
+            }
+            if grep -qi '^x-reset-renderer: next-ssr-fidelity-baseline' /tmp/reset-category.headers; then
+              echo "Category ${ROUTE} unexpectedly used the legacy SSR fallback"
+              exit 1
+            fi
+            CATEGORY_STYLE_COUNT=$(grep -o '<style' /tmp/reset-category.html | wc -l | tr -d ' ')
+            if [ "$CATEGORY_STYLE_COUNT" -lt 10 ]; then
+              echo "Category ${ROUTE} lost archived styling: ${CATEGORY_STYLE_COUNT} styles"
+              exit 1
+            fi
+            grep -qi 'product' /tmp/reset-category.html || {
+              echo "Category ${ROUTE} lost its product/catalog markup"
+              exit 1
+            }
+          done
+
           for ROUTE in /delivery/ /faq/ /calming-face-oil-treatment/; do
             echo "Checking legacy SSR fallback ${ROUTE}"
             curl -fsS -D /tmp/reset-route.headers "http://127.0.0.1:3100${ROUTE}" -o /tmp/reset-route.html || {
