@@ -16,9 +16,13 @@ export const readNativeRootShell = cache(async (): Promise<NativeRootShell> => {
   const source = await fs.readFile(SOURCE_FILE, "utf8");
   const $ = cheerio.load(source);
 
-  // The visual layer stays intact, but the old WordPress/WooCommerce runtime
-  // is deliberately not executed on native React pages.
-  $("head script, head noscript").remove();
+  // Keep visual/SEO resources from the archived storefront, but do not execute
+  // the old WordPress/WooCommerce application runtime on native React pages.
+  $("head script").each((_, element) => {
+    const type = ($(element).attr("type") ?? "").toLowerCase();
+    if (type !== "application/ld+json") $(element).remove();
+  });
+  $("head noscript").remove();
 
   const head = $("head").first();
   const body = $("body").first();
