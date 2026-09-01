@@ -1,11 +1,16 @@
 import { closeSync, openSync, readSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative, sep } from "node:path";
 import type { NextConfig } from "next";
 
 const LEGACY_SOURCE_DIR = join(process.cwd(), "legacy-source");
 const BODY_TAG_PATTERN = /<body\b[^>]*>/i;
-const BODY_CLASS_PATTERN = /\bclass=(["'])(.*?)\1/i;
 const SINGLE_PRODUCT_CLASS_PATTERN = /\bclass=(["'])[^"']*\bsingle-product\b[^"']*\1/i;
+const SKIPPED_ARCHIVE_DIRS = new Set(["assets", "node_modules", ".git"]);
+
+type NativeProductRoute = {
+  source: string;
+  destination: string;
+};
 
 function readArchivedBodyTag(filePath: string) {
   const descriptor = openSync(filePath, "r");
@@ -30,34 +35,50 @@ function readArchivedBodyTag(filePath: string) {
   }
 }
 
-function discoverNativeProductSlugs() {
-  const slugs: string[] = [];
+function archiveDirectoryToPath(directory: string) {
+  const relativePath = relative(LEGACY_SOURCE_DIR, directory);
+  const segments = relativePath.split(sep).filter(Boolean);
+  return `/${segments.join("/")}/`;
+}
 
-  for (const entry of readdirSync(LEGACY_SOURCE_DIR, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
+function discoverNativeProductRoutes() {
+  const routes: NativeProductRoute[] = [];
 
-    const indexPath = join(LEGACY_SOURCE_DIR, entry.name, "index.html");
-
+  function scan(directory: string) {
     try {
-      const bodyTag = readArchivedBodyTag(indexPath);
-      const bodyClass = bodyTag?.match(BODY_CLASS_PATTERN)?.[2] ?? "(no body class)";
-      console.log(`[native-products:scan] ${entry.name}: ${bodyClass}`);
+      const bodyTag = readArchivedBodyTag(join(directory, "index.html"));
 
       if (bodyTag && SINGLE_PRODUCT_CLASS_PATTERN.test(bodyTag)) {
-        slugs.push(entry.name);
+        const source = archiveDirectoryToPath(directory);
+        const pathWithoutOuterSlashes = source.replace(/^\/+|\/+$/g, "");
+
+        if (pathWithoutOuterSlashes) {
+          routes.push({
+            source,
+            destination: `/native-product/${pathWithoutOuterSlashes}/`,
+          });
+        }
       }
     } catch {
-      // Nested archive roots such as category/ and year folders do not have a
-      // root index.html. They stay on the existing legacy/category routes.
+      // A directory without index.html can still contain archived page folders,
+      // so continue recursively below.
+    }
+
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (!entry.isDirectory() || SKIPPED_ARCHIVE_DIRS.has(entry.name)) continue;
+      scan(join(directory, entry.name));
     }
   }
 
-  return slugs.sort();
+  scan(LEGACY_SOURCE_DIR);
+  return routes.sort((a, b) => a.source.localeCompare(b.source));
 }
 
-const nativeProductSlugs = discoverNativeProductSlugs();
+const nativeProductRoutes = discoverNativeProductRoutes();
 console.log(
-  `[native-products] discovered ${nativeProductSlugs.length}: ${nativeProductSlugs.join(", ")}`,
+  `[native-products] discovered ${nativeProductRoutes.length}: ${nativeProductRoutes
+    .map((route) => route.source)
+    .join(", ")}`,
 );
 
 const nextConfig: NextConfig = {
@@ -68,15 +89,12 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/": ["./legacy-source/**/*"],
     "/[...slug]": ["./legacy-source/**/*"],
-    "/native-product/[slug]": ["./legacy-source/**/*"],
+    "/native-product/[...slug]": ["./legacy-source/**/*"],
     "/__legacy_asset/[...slug]": ["./legacy-source/**/*"],
   },
   async rewrites() {
     return {
-      beforeFiles: nativeProductSlugs.map((slug) => ({
-        source: `/${slug}/`,
-        destination: `/native-product/${slug}/`,
-      })),
+      beforeFiles: nativeProductRoutes,
       afterFiles: [],
       fallback: [],
     };
