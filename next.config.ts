@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 
 const LEGACY_SOURCE_DIR = join(process.cwd(), "legacy-source");
 const BODY_TAG_PATTERN = /<body\b[^>]*>/i;
+const BODY_CLASS_PATTERN = /\bclass=(["'])(.*?)\1/i;
 const SINGLE_PRODUCT_CLASS_PATTERN = /\bclass=(["'])[^"']*\bsingle-product\b[^"']*\1/i;
 
 function readArchivedBodyTag(filePath: string) {
@@ -22,8 +23,6 @@ function readArchivedBodyTag(filePath: string) {
       const bodyTag = chunk.match(BODY_TAG_PATTERN)?.[0];
       if (bodyTag) return bodyTag;
 
-      // Keep enough overlap for a body tag split across two chunks without
-      // retaining the multi-megabyte archived document in memory.
       tail = chunk.slice(-4096);
     }
   } finally {
@@ -41,6 +40,9 @@ function discoverNativeProductSlugs() {
 
     try {
       const bodyTag = readArchivedBodyTag(indexPath);
+      const bodyClass = bodyTag?.match(BODY_CLASS_PATTERN)?.[2] ?? "(no body class)";
+      console.log(`[native-products:scan] ${entry.name}: ${bodyClass}`);
+
       if (bodyTag && SINGLE_PRODUCT_CLASS_PATTERN.test(bodyTag)) {
         slugs.push(entry.name);
       }
