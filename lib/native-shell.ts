@@ -16,13 +16,15 @@ export const readNativeRootShell = cache(async (): Promise<NativeRootShell> => {
   const source = await fs.readFile(SOURCE_FILE, "utf8");
   const $ = cheerio.load(source);
 
-  // Keep visual/SEO resources from the archived storefront, but do not execute
-  // the old WordPress/WooCommerce application runtime on native React pages.
-  $("head script").each((_, element) => {
+  // Saved storefront HTML contains a large part of its visual resources as
+  // top-level body nodes rather than inside <head>. The browser accepted that
+  // in the archived document, so native React must explicitly hoist those
+  // stylesheet/style/meta/title nodes into the real Next.js <head>.
+  $("script").each((_, element) => {
     const type = ($(element).attr("type") ?? "").toLowerCase();
     if (type !== "application/ld+json") $(element).remove();
   });
-  $("head noscript").remove();
+  $("noscript").remove();
 
   const head = $("head").first();
   const body = $("body").first();
@@ -31,8 +33,13 @@ export const readNativeRootShell = cache(async (): Promise<NativeRootShell> => {
     throw new Error("Legacy RESET Shop shell could not be resolved");
   }
 
+  const headNodes = head.contents().toArray();
+  const misplacedBodyHeadNodes = body
+    .children("meta, title, link, style, script[type='application/ld+json']")
+    .toArray();
+
   return {
-    head: domChildrenToNative(head.contents().toArray()),
+    head: domChildrenToNative([...headNodes, ...misplacedBodyHeadNodes]),
     bodyClassName: body.attr("class"),
     bodyId: body.attr("id"),
   };
