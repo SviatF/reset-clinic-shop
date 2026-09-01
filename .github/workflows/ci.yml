@@ -103,3 +103,11 @@ jobs:
               exit 1
             }
           done
+
+          echo "Checking that archived placeholder products are not published"
+          PRODUCT_STATUS=$(curl -sS -o /tmp/reset-placeholder-product.html -w '%{http_code}' \
+            http://127.0.0.1:3100/product/squalane-cleanser/)
+          if [ "$PRODUCT_STATUS" -ne 404 ]; then
+            echo "Archived placeholder product unexpectedly returned HTTP ${PRODUCT_STATUS}"
+            exit 1
+          fi

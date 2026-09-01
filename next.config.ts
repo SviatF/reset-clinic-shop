@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/": ["./legacy-source/**/*"],
     "/[...slug]": ["./legacy-source/**/*"],
+    "/product/[slug]": ["./legacy-source/**/*"],
     "/__legacy_asset/[...slug]": ["./legacy-source/**/*"],
   },
   experimental: {

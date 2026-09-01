@@ -12,6 +12,15 @@ The first Next.js layer server-renders the original saved storefront documents a
 
 Next migration phases will replace legacy runtime behavior block-by-block while keeping the approved visuals unchanged.
 
+## Product catalogue
+
+Archived WooCommerce products are visual placeholders and are not a data source.
+The native storefront contains one reusable product template in
+`components/catalog/ProductPageTemplate.tsx` and an explicit admin adapter
+boundary in `lib/catalog/provider.ts`. Until the admin panel is connected, the
+provider returns no products and native product routes return `404`; the app
+must never invent or seed catalogue items.
+
 ## Run
 
 ```bash
