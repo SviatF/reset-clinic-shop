@@ -8,7 +8,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const pathname = requestHeaders.get("x-reset-path") ?? "/";
 
   const shell =
-    pathname === "/"
+    pathname === "/" || pathname.startsWith("/product/")
       ? await readNativeRootShell()
       : await readNativeArchivePage(pathname);
 
