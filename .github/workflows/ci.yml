@@ -40,23 +40,42 @@ jobs:
             exit 1
           fi
 
-          for ROUTE in / /delivery/ /faq/ /calming-face-oil-treatment/; do
-            echo "Checking ${ROUTE}"
-            curl -fsS "http://127.0.0.1:3100${ROUTE}" > /tmp/reset-route.html || {
+          echo "Checking native React homepage"
+          grep -q '/_next/static/' /tmp/reset-home.html || {
+            echo "Homepage is not rendering through the Next.js page runtime"
+            exit 1
+          }
+          grep -q 'elementor-page-18287' /tmp/reset-home.html || {
+            echo "Homepage lost the archived Elementor body/page classes"
+            exit 1
+          }
+
+          STYLE_COUNT=$(grep -o '<style' /tmp/reset-home.html | wc -l | tr -d ' ')
+          if [ "$STYLE_COUNT" -lt 20 ]; then
+            echo "Homepage did not hoist enough archived inline styles: ${STYLE_COUNT}"
+            exit 1
+          fi
+
+          CSS_PATH=$(grep -oE 'href="[^"]+\.css[^\"]*"' /tmp/reset-home.html | head -1 | cut -d'"' -f2 || true)
+          if [[ "$CSS_PATH" != /* ]]; then
+            echo "Homepage did not expose an archived stylesheet URL"
+            exit 1
+          fi
+
+          echo "Checking archived CSS asset ${CSS_PATH}"
+          curl -fsS "http://127.0.0.1:3100${CSS_PATH}" > /dev/null || {
+            cat /tmp/reset-shop-next.log
+            exit 1
+          }
+
+          for ROUTE in /delivery/ /faq/ /calming-face-oil-treatment/; do
+            echo "Checking legacy SSR fallback ${ROUTE}"
+            curl -fsS -D /tmp/reset-route.headers "http://127.0.0.1:3100${ROUTE}" -o /tmp/reset-route.html || {
               cat /tmp/reset-shop-next.log
               exit 1
             }
-            grep -q '/_next/static/' /tmp/reset-route.html || {
-              echo "Route ${ROUTE} did not render through Next.js"
+            grep -qi '^x-reset-renderer: next-ssr-fidelity-baseline' /tmp/reset-route.headers || {
+              echo "Route ${ROUTE} did not use the guarded legacy SSR fallback"
               exit 1
             }
           done
-
-          CSS_PATH=$(grep -oE 'href="[^"]+\.css[^\"]*"' /tmp/reset-home.html | head -1 | cut -d'"' -f2 || true)
-          if [[ "$CSS_PATH" == /* ]]; then
-            echo "Checking archived CSS asset ${CSS_PATH}"
-            curl -fsS "http://127.0.0.1:3100${CSS_PATH}" > /dev/null || {
-              cat /tmp/reset-shop-next.log
-              exit 1
-            }
-          fi
