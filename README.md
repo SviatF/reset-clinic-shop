@@ -1,25 +1,32 @@
-# RESET Clinic Shop — Next.js migration
+# RESET Clinic Shop — native Next.js storefront
 
-This repository contains the standalone RESET Shop migration.
+The storefront is rendered entirely by Next.js and React.
 
-## Non-negotiable migration invariant
+## Design invariant
 
-The source storefront in `legacy-source/` is the visual reference and must stay untouched during migration. The Next.js storefront must preserve the same DOM-driven visual composition, spacing, typography, imagery, responsive behavior and page hierarchy. No redesigns and no substitute product/editorial imagery are allowed unless explicitly approved.
+The migrated React storefront preserves the approved visual composition,
+spacing, typography, imagery, responsive behavior and page hierarchy. Native
+content snapshots are typed DOM data, not HTML strings, and are rendered by
+React components.
 
-## Current phase: fidelity baseline
+## Architecture
 
-The first Next.js layer server-renders the original saved storefront documents and serves the original downloaded image payloads. This establishes a stable 1:1 visual baseline before individual blocks are converted into React Server Components.
-
-Next migration phases will replace legacy runtime behavior block-by-block while keeping the approved visuals unchanged.
+- every public route resolves to a Next.js `page.tsx`;
+- there is no raw HTML fallback or archived HTML in production;
+- shared header/footer and migrated page trees are rendered through React;
+- visual CSS and embedded imagery were deduplicated into normal static assets;
+- product and catalogue screens read only from the admin-provider boundary;
+- exactly one labelled test product exercises the complete store flow;
+- placeholder WooCommerce products are not part of the native catalogue.
 
 ## Product catalogue
 
-Archived WooCommerce products are visual placeholders and are not a data source.
+Archived WooCommerce products were placeholders and are not a data source.
 The native storefront contains one reusable product template in
 `components/catalog/ProductPageTemplate.tsx` and an explicit admin adapter
 boundary in `lib/catalog/provider.ts`. Until the admin panel is connected, the
-provider returns no products and native product routes return `404`; the app
-must never invent or seed catalogue items.
+provider returns only `/product/test-product/`. All archived product URLs stay
+unpublished and return `404`.
 
 ## Run
 

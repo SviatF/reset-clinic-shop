@@ -59,7 +59,11 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
 
           <ProductPurchasePanel
             productId={product.id}
+            slug={product.slug}
             productName={product.name}
+            price={product.price.amount}
+            currency={product.price.currency}
+            image={product.images[0]?.url}
             inStock={product.inStock}
             options={product.options}
           />
@@ -93,4 +97,3 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
     </main>
   );
 }
-

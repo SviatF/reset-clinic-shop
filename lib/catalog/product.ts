@@ -24,8 +24,8 @@ export type ProductSpecification = {
 /**
  * The storefront product contract.
  *
- * The future admin panel should return this shape. The UI deliberately does
- * not contain a local seed catalogue: no archived/demo products are published.
+ * The future admin panel should return this shape. The repository keeps only
+ * one explicitly marked test product and never republishes the archived list.
  */
 export type Product = {
   id: string;
@@ -51,4 +51,3 @@ export type Product = {
   sku?: string;
   inStock: boolean;
 };
-

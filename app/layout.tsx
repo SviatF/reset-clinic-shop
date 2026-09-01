@@ -1,24 +1,21 @@
 import type { ReactNode } from "react";
 import { headers } from "next/headers";
-import { readNativeArchivePage } from "../lib/native-archive-page";
-import { readNativeRootShell } from "../lib/native-shell";
+import { CartProvider } from "../components/cart/CartStore";
+import { getNativePageMeta } from "../lib/native-content";
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const requestHeaders = await headers();
   const pathname = requestHeaders.get("x-reset-path") ?? "/";
 
-  const shell =
-    pathname === "/" || pathname.startsWith("/product/")
-      ? await readNativeRootShell()
-      : await readNativeArchivePage(pathname);
+  const shell = getNativePageMeta(pathname) ?? getNativePageMeta("/");
 
   return (
     <html lang="uk">
       <head>
         <style>{"html,body{cursor:auto!important}"}</style>
       </head>
-      <body id={shell?.bodyId} className={shell?.bodyClassName}>
-        {children}
+      <body id={shell?.bodyId || undefined} className={shell?.bodyClassName || undefined}>
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
