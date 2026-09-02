@@ -1,0 +1,80 @@
+/* Small conversion extras kept separate from the main calibration layer. */
+.hero-consult-link {
+  display: inline-block;
+  margin-top: 15px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: #34322e;
+}
+
+.product-card-commerce {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.product-card-link { display: block; flex: 1; }
+.quick-add {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  min-height: 42px;
+  border: 0;
+  background: #111;
+  color: #fff;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transform: translateY(calc(100% + 18px));
+  opacity: 0;
+  transition: transform .28s cubic-bezier(.22,.75,.2,1), opacity .28s ease;
+  z-index: 3;
+}
+.product-card-commerce:hover .quick-add,
+.product-card-commerce:focus-within .quick-add { transform: translateY(0); opacity: 1; }
+
+.black-button,
+.light-button,
+.drawer-checkout,
+.home-consult-inner a,
+.checkout-submit {
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.black-button:hover,
+.drawer-checkout:hover,
+.checkout-submit:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.10); }
+.light-button:hover,
+.home-consult-inner a:hover { transform: translateY(-1px); }
+
+.category-hero-visual img,
+.editorial-image img,
+.promo-card > img,
+.consultation-image img {
+  transition: transform .65s cubic-bezier(.22,.75,.2,1);
+}
+.category-hero-visual:hover img,
+.editorial-image:hover img,
+.promo-card:hover > img,
+.consultation-image:hover img { transform: scale(1.018); }
+
+@media (hover: none) {
+  .quick-add {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin: 0 12px 12px;
+    width: calc(100% - 24px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-consult-link { font-size: 10px; line-height: 1.4; }
+  .quick-add { min-height: 39px; font-size: 10px; }
+}
