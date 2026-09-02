@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createPublicKey, verify } from "node:crypto";
-import { getAllProductRecords } from "@/lib/store-products";
+import { readProducts } from "@/lib/commerce-json";
 
 const MONO_API = "https://api.monobank.ua";
 export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.vercel.app";
@@ -48,7 +48,7 @@ export async function monoFetch(path: string, init: RequestInit = {}) {
 
 export async function normalizeOrder(items: CheckoutCartItem[]) {
   if (!Array.isArray(items) || !items.length) throw new Error("Кошик порожній");
-  const products = await getAllProductRecords();
+  const products = await readProducts();
   const bySlug = new Map(products.filter((item) => item.status === "active").map((item) => [item.slug, item]));
   const merged = new Map<string, number>();
   for (const item of items) {
@@ -63,15 +63,7 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
     if (item.track_stock && Number(item.stock_quantity) < qty) throw new Error(`Недостатньо товару «${item.name}» у наявності`);
     const unitAmount = Math.round(Number(item.price) * 100);
     if (!Number.isFinite(unitAmount) || unitAmount <= 0) throw new Error(`Некоректна ціна товару «${item.name}»`);
-    normalized.push({
-      productId: item.id,
-      slug: item.slug,
-      name: item.name,
-      sku: item.sku,
-      qty,
-      unitAmount,
-      totalAmount: unitAmount * qty,
-    });
+    normalized.push({ productId: item.id, slug: item.slug, name: item.name, sku: item.sku, qty, unitAmount, totalAmount: unitAmount * qty });
   }
   return { items: normalized, amount: normalized.reduce((sum, item) => sum + item.totalAmount, 0) };
 }
