@@ -48,6 +48,13 @@ export default function ProductPage() {
               <h1>{product.name}</h1>
               <p className="product-benefit-lead">Антиоксидантний догляд для делікатної зони навколо очей із фокусом на зволоження та комфорт.</p>
 
+              <div className="product-review-signal" aria-label={`Оцінка ${product.manufacturerRating} з 5 на сайті Aesop`}>
+                <span className="product-review-stars" aria-hidden="true">★★★★★</span>
+                <strong>{product.manufacturerRating.toFixed(1)}</strong>
+                <span>{product.manufacturerReviewCount} відгуки на сайті Aesop</span>
+                <a href={product.manufacturerReviewUrl} target="_blank" rel="noreferrer">Джерело ↗</a>
+              </div>
+
               <div className="product-meta-strip">
                 <span><b>{product.size}</b> ОБ’ЄМ</span>
                 <span className="product-order-status"><i /> ДОСТУПНО ДО ЗАМОВЛЕННЯ</span>
@@ -67,12 +74,12 @@ export default function ProductPage() {
 
               <div className="product-purchase-deck product-purchase-deck-light">
                 <div className="product-price-row product-price-card product-price-card-light">
-                  <div>
+                  <div className="product-price-main">
                     <span className="product-price-label">ЦІНА</span>
-                    <strong>{product.price}.00 <em>{product.displayCurrency}</em></strong>
+                    <strong className="product-price-number">{product.price}.00 <em>{product.displayCurrency}</em></strong>
                   </div>
                   <div className="product-price-side">
-                    <span>{product.size}</span>
+                    <span>RESET CLINIC</span>
                     <small>Офіційний продукт · контроль зберігання</small>
                   </div>
                 </div>
@@ -86,7 +93,7 @@ export default function ProductPage() {
                   <summary><span>Як застосовувати</span><b>+</b></summary>
                   <div className="product-disclosure-body"><p>{product.howToUse}</p><div><span>Кількість</span><strong>{product.dosage}</strong></div><div><span>Текстура</span><strong>{product.texture}</strong></div></div>
                 </details>
-                <details>
+                <details open>
                   <summary><span>Ключові компоненти</span><b>+</b></summary>
                   <div className="product-disclosure-body"><p>{product.keyIngredients.join(" · ")}</p><div><span>Підходить</span><strong>{product.suitedTo}</strong></div><div><span>Відчуття</span><strong>{product.skinFeel}</strong></div></div>
                 </details>
@@ -107,6 +114,37 @@ export default function ProductPage() {
         </div>
       </section>
 
+      <section className="product-ritual-crosssell product-ritual-crosssell-priority">
+        <div className="shell">
+          <div className="product-ritual-head"><span>ЗАВЕРШІТЬ РИТУАЛ</span><h2>Не набір баночок.<br/>Послідовна система.</h2><p>Побудуйте логічну послідовність навколо активів, які вже є у вашій схемі, або перевірте сумісність із косметологом RESET.</p></div>
+          <div className="product-ritual-grid">
+            <Link href="/face" className="product-ritual-card"><span>01</span><strong>Очищення</strong><p>Підготуйте шкіру до наступних етапів.</p><b>Підібрати →</b></Link>
+            <div className="product-ritual-card is-current"><span>02 · ЦЕЙ ПРОДУКТ</span><strong>Зона навколо очей</strong><p>{product.name}</p><b>{product.size}</b></div>
+            <Link href="/consultation" className="product-ritual-card"><span>03</span><strong>Крем / SPF</strong><p>Завершальний етап підбирається під вашу схему.</p><b>Перевірити сумісність →</b></Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="manufacturer-review-section">
+        <div className="shell manufacturer-review-shell">
+          <div className="manufacturer-review-heading">
+            <span>ВІДГУКИ ПРО ПРОДУКТ · AESOP</span>
+            <h2>{product.manufacturerRating.toFixed(1)} / 5</h2>
+            <p>{product.manufacturerReviewCount} customer reflections на офіційному сайті бренду. Це не відгуки клієнтів RESET.</p>
+            <a href={product.manufacturerReviewUrl} target="_blank" rel="noreferrer">Переглянути оригінал ↗</a>
+          </div>
+          <div className="manufacturer-review-cards">
+            {product.manufacturerReviewNotes.map((review, index) => (
+              <article key={review.title}>
+                <span>0{index + 1} · ★★★★★</span>
+                <strong>{review.title}</strong>
+                <p>{review.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="product-signature-band">
         <div className="shell product-signature-grid">
           <div>
@@ -117,17 +155,6 @@ export default function ProductPage() {
             <article><span>01</span><div><strong>Для делікатної зони</strong><p>Окремий етап догляду без перевантаження рутини.</p></div></article>
             <article><span>02</span><div><strong>Антиоксидантний фокус</strong><p>Вітаміни C та E у насиченій кремовій текстурі.</p></div></article>
             <article><span>03</span><div><strong>Сумісність важлива</strong><p>Активну схему краще перевірити перед покупкою.</p></div></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="product-ritual-crosssell">
-        <div className="shell">
-          <div className="product-ritual-head"><span>ЗАВЕРШІТЬ РИТУАЛ</span><h2>Не набір баночок.<br/>Послідовна система.</h2><p>Повний асортимент ще підключається, тому зараз ми не підставляємо вигадані товари — натомість показуємо правильну логіку сумісного догляду.</p></div>
-          <div className="product-ritual-grid">
-            <Link href="/face" className="product-ritual-card"><span>01</span><strong>Очищення</strong><p>Підготуйте шкіру до наступних етапів.</p><b>Підібрати →</b></Link>
-            <div className="product-ritual-card is-current"><span>02 · ЦЕЙ ПРОДУКТ</span><strong>Зона навколо очей</strong><p>{product.name}</p><b>{product.size}</b></div>
-            <Link href="/consultation" className="product-ritual-card"><span>03</span><strong>Крем / SPF</strong><p>Завершальний етап підбирається під вашу схему.</p><b>Перевірити сумісність →</b></Link>
           </div>
         </div>
       </section>
