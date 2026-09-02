@@ -34,6 +34,12 @@ export function TrustStrip() {
   );
 }
 
+const problemMap = {
+  face: ["Сухість", "Чутливість", "Пігментація", "Висипання", "Текстура", "Перші вікові зміни", "SPF"],
+  body: ["Сухість", "Відновлення бар’єру", "Текстура", "Чутливість", "Щоденне зволоження", "Догляд після процедур"],
+  hair: ["Сухість довжини", "Чутлива шкіра голови", "Ламкість", "Блиск", "Щоденний догляд", "Захист довжини"],
+} as const;
+
 export function CategoryLanding({
   eyebrow,
   title,
@@ -49,6 +55,7 @@ export function CategoryLanding({
   imageAlt: string;
   tone: "face" | "body" | "hair";
 }) {
+  const problems = problemMap[tone];
   return (
     <div className={`category-landing category-tone-${tone}`}>
       <section className="category-hero shell">
@@ -58,7 +65,11 @@ export function CategoryLanding({
           <p>{description}</p>
           <div className="category-hero-actions">
             <Link className="black-button" href="#products">Дивитися засоби <Arrow /></Link>
-            <Link className="text-link" href="/contacts">Попросити підбір →</Link>
+            <Link className="text-link" href="/consultation">Попросити підбір →</Link>
+          </div>
+          <div className="problem-discovery">
+            <span>ПОЧНІТЬ НЕ З БАНОЧКИ, А З ПОТРЕБИ</span>
+            <div className="problem-chip-list">{problems.map((problem) => <Link key={problem} href="/consultation" className="problem-chip">{problem}</Link>)}</div>
           </div>
           <div className="category-proof-line"><b>Професійний догляд</b><span>•</span><span>Оригінальність</span><span>•</span><span>Консультація</span></div>
         </div>
@@ -84,7 +95,8 @@ export function CategoryLanding({
           <span className="editorial-kicker">НЕ ВПЕВНЕНІ У ВИБОРІ?</span>
           <h2>Не вгадуйте.<br/>Запитайте косметолога.</h2>
           <p>Професійні активи дають кращий результат, коли підібрані під конкретний стан шкіри, ваші звички та вже наявний догляд.</p>
-          <Link className="black-button" href="/contacts">Отримати рекомендацію <Arrow /></Link>
+          <Link className="black-button" href="/consultation">Пройти короткий підбір <Arrow /></Link>
+          <Link className="text-link" href="/contacts">Одразу написати косметологу →</Link>
           <div className="micro-proof"><Image src={buyInHandImg} alt="Передача професійної косметики клієнту" /><span>Підбір → перевірка сумісності → зрозуміла схема використання</span></div>
         </div>
       </section>
