@@ -2,7 +2,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import PremiumProductCard from "@/components/PremiumProductCard";
 import { getStoreProducts } from "@/lib/store-products";
-import { isSupabaseConfigured } from "@/lib/supabase-rest";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -12,12 +11,8 @@ export default async function CatalogPage({ searchParams }: { searchParams?: Pro
   if (params?.category === "face") redirect("/face");
   if (params?.category === "body") redirect("/body");
   if (params?.category === "hair") redirect("/hair");
-
   const products = await getStoreProducts({ limit: 60 });
-  const visible = isSupabaseConfigured()
-    ? products
-    : Array.from({ length: 8 }).map((_, index) => products[index % products.length]);
-
+  const visible = products.length === 1 ? Array.from({ length: 8 }, () => products[0]) : products;
   return (
     <section className="catalog-page">
       <div className="shell">
