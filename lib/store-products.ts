@@ -1,8 +1,7 @@
 import "server-only";
 
-import { product as fallbackProduct } from "@/lib/product";
 import type { ProductRecord } from "@/lib/commerce-types";
-import { dbSelect, isSupabaseConfigured } from "@/lib/supabase-rest";
+import { PRODUCTS_PATH, readJsonStore } from "@/lib/json-store";
 
 export type StoreProduct = {
   id: string | null;
@@ -28,6 +27,7 @@ export type StoreProduct = {
   seoTitle: string;
   seoDescription: string;
   featured: boolean;
+  updatedAt: string;
 };
 
 function mapRecord(row: ProductRecord): StoreProduct {
@@ -55,60 +55,29 @@ function mapRecord(row: ProductRecord): StoreProduct {
     seoTitle: row.seo_title || row.name,
     seoDescription: row.seo_description || row.description || row.short_description || "",
     featured: row.featured,
+    updatedAt: row.updated_at,
   };
 }
 
-export function fallbackStoreProduct(): StoreProduct {
-  return {
-    id: null,
-    slug: fallbackProduct.slug,
-    name: fallbackProduct.name,
-    brand: "Aesop",
-    category: "face",
-    price: fallbackProduct.price,
-    currency: "UAH",
-    stockQuantity: 20,
-    trackStock: true,
-    size: fallbackProduct.size,
-    imageUrl: null,
-    secondaryImageUrl: null,
-    shortDescription: fallbackProduct.description,
-    description: fallbackProduct.description,
-    hoverLabel: "ПРИЗНАЧЕННЯ",
-    hoverTitle: "Зволоження + антиоксидантний догляд",
-    hoverText: "Для делікатної зони навколо очей",
-    howToUse: fallbackProduct.howToUse,
-    keyIngredients: fallbackProduct.keyIngredients,
-    inci: fallbackProduct.inci,
-    seoTitle: fallbackProduct.name,
-    seoDescription: fallbackProduct.description,
-    featured: true,
-  };
+export async function getAllProductRecords() {
+  const { data } = await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, []);
+  return Array.isArray(data) ? data : [];
 }
 
 export async function getStoreProducts(options: { category?: string; featured?: boolean; limit?: number } = {}) {
-  if (!isSupabaseConfigured()) return [fallbackStoreProduct()];
-  try {
-    const query = ["select=*"]; 
-    query.push("status=eq.active");
-    if (options.category) query.push(`category=eq.${encodeURIComponent(options.category)}`);
-    if (options.featured) query.push("featured=eq.true");
-    query.push("order=sort_order.asc,created_at.desc");
-    query.push(`limit=${Math.max(1, Math.min(100, options.limit || 50))}`);
-    const rows = await dbSelect<ProductRecord>("products", query.join("&"));
-    return rows.map(mapRecord);
-  } catch (error) {
-    console.error("store products fallback", error);
-    return [fallbackStoreProduct()];
-  }
+  const rows = await getAllProductRecords();
+  const limit = Math.max(1, Math.min(100, options.limit || 50));
+  return rows
+    .filter((row) => row.status === "active")
+    .filter((row) => !options.category || row.category === options.category)
+    .filter((row) => options.featured === undefined || row.featured === options.featured)
+    .sort((a, b) => a.sort_order - b.sort_order || new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, limit)
+    .map(mapRecord);
 }
 
 export async function getStoreProductBySlug(slug: string) {
-  if (!isSupabaseConfigured()) return slug === fallbackProduct.slug ? fallbackStoreProduct() : null;
-  try {
-    const rows = await dbSelect<ProductRecord>("products", `select=*&slug=eq.${encodeURIComponent(slug)}&status=eq.active&limit=1`);
-    return rows?.[0] ? mapRecord(rows[0]) : null;
-  } catch {
-    return slug === fallbackProduct.slug ? fallbackStoreProduct() : null;
-  }
+  const rows = await getAllProductRecords();
+  const row = rows.find((item) => item.slug === slug && item.status === "active");
+  return row ? mapRecord(row) : null;
 }
