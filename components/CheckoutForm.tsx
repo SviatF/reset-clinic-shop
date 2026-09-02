@@ -5,26 +5,59 @@ import { useCart } from "@/components/CartProvider";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
-  const [submitted, setSubmitted] = useState(false);
   const [delivery, setDelivery] = useState("nova");
+  const [isPaying, setIsPaying] = useState(false);
+  const [error, setError] = useState("");
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!items.length || isPaying) return;
+
+    setError("");
+    setIsPaying(true);
+
     const form = new FormData(e.currentTarget);
     const draft = {
-      name: form.get("name"),
-      phone: form.get("phone"),
-      email: form.get("email"),
-      city: form.get("city"),
-      branch: form.get("branch"),
-      comment: form.get("comment"),
+      name: String(form.get("name") || "").trim(),
+      phone: String(form.get("phone") || "").trim(),
+      email: String(form.get("email") || "").trim(),
+      city: String(form.get("city") || "").trim(),
+      branch: String(form.get("branch") || "").trim(),
+      comment: String(form.get("comment") || "").trim(),
       delivery,
       items,
       total,
       createdAt: new Date().toISOString(),
     };
-    localStorage.setItem("reset-order-draft", JSON.stringify(draft));
-    setSubmitted(true);
+
+    try {
+      localStorage.setItem("reset-order-draft", JSON.stringify(draft));
+
+      const response = await fetch("/api/mono/create-invoice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draft),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data?.pageUrl || !data?.invoiceId) {
+        throw new Error(data?.error || "Не вдалося створити рахунок для оплати");
+      }
+
+      localStorage.setItem("reset-mono-payment", JSON.stringify({
+        invoiceId: data.invoiceId,
+        reference: data.reference,
+        amount: data.amount,
+        pageUrl: data.pageUrl,
+        appUrl: data.appUrl || null,
+        createdAt: new Date().toISOString(),
+      }));
+
+      window.location.assign(data.pageUrl);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Не вдалося перейти до оплати");
+      setIsPaying(false);
+    }
   }
 
   return (
@@ -51,14 +84,26 @@ export default function CheckoutForm() {
         </div>}
       </section>
 
+      <section className="checkout-section checkout-payment-section">
+        <h2>Оплата</h2>
+        <div className="mono-payment-choice" aria-label="Онлайн-оплата monobank">
+          <div className="mono-payment-mark"><span>mono</span></div>
+          <div><strong>Онлайн-оплата через monobank</strong><span>Картка · Apple Pay · Google Pay · monobank</span></div>
+          <i aria-hidden="true">✓</i>
+        </div>
+        <p className="mono-payment-security">Платіж проходить на захищеній сторінці monobank. RESET Clinic не отримує і не зберігає дані вашої картки.</p>
+      </section>
+
       <section className="checkout-section">
         <h2>Коментар</h2>
         <div className="checkout-field full"><label htmlFor="comment">Побажання до замовлення</label><textarea id="comment" name="comment" placeholder="Наприклад, хочу уточнити сумісність із моїм поточним доглядом" /></div>
       </section>
 
-      <button className="checkout-submit" type="submit" disabled={!items.length}>Підтвердити дані замовлення</button>
-      <p className="checkout-note">Цей крок зберігає дані замовлення у вашому браузері. Онлайн-оплату WayForPay можна підключити після додавання merchant credentials.</p>
-      {submitted && <div className="checkout-success"><strong>Дані збережено.</strong><br/>Структура checkout готова. Для реальної передачі замовлення та онлайн-оплати потрібне підключення платіжного шлюзу/CRM.</div>}
+      <button className="checkout-submit mono-checkout-submit" type="submit" disabled={!items.length || isPaying}>
+        {isPaying ? "СТВОРЮЄМО БЕЗПЕЧНИЙ ПЛАТІЖ…" : `ОПЛАТИТИ ОНЛАЙН · ${total.toFixed(2)} грн`}
+      </button>
+      <p className="checkout-note">Після натискання ви перейдете на офіційну платіжну сторінку monobank, а після оплати повернетеся в RESET Clinic.</p>
+      {error && <div className="checkout-success checkout-payment-error"><strong>Оплату не запущено.</strong><br/>{error}</div>}
     </form>
   );
 }
