@@ -68,6 +68,10 @@
 body:has(.checkout-page) .site-header,
 body:has(.checkout-page) .footer { display: none; }
 body:has(.checkout-page) main { min-height: 100vh; }
+.checkout-brand-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid rgba(17,17,15,.13); }
+.checkout-brand-row a { width: 92px; display: block; }
+.checkout-brand-row img { width: 100%; height: auto; display: block; }
+.checkout-brand-row span { font-size: 9px; letter-spacing: .17em; color: #77736b; }
 
 @media (hover: none) {
   .quick-add {
@@ -93,4 +97,7 @@ body:has(.checkout-page) main { min-height: 100vh; }
     margin-right: -10px;
     box-shadow: 0 -12px 30px rgba(0,0,0,.06);
   }
+  .checkout-brand-row { padding-bottom: 18px; margin-bottom: 20px; }
+  .checkout-brand-row a { width: 74px; }
+  .checkout-brand-row span { font-size: 8px; }
 }
