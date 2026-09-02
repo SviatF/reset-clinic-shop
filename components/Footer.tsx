@@ -21,7 +21,7 @@ export default function Footer() {
           <div className="footer-column"><strong>ПРО НАС</strong><Link href="/philosophy">Філософія</Link><Link href="/advantages">Переваги</Link></div>
           <div className="footer-column"><strong>МАГАЗИН</strong><Link href="/face">Обличчя</Link><Link href="/body">Тіло</Link><Link href="/hair">Волосся</Link></div>
           <div className="footer-column"><strong>КЛІЄНТУ</strong><Link href="/clients/delivery">Доставка</Link><Link href="/clients/returns">Повернення</Link><Link href="/clients/faq">FAQ</Link><Link href="/contacts">Контакти</Link></div>
-          <div className="footer-credit footer-credit-logo"><Image src={ptsLogo} alt="PTS Cooperation" /></div>
+          <div className="footer-credit"><Image src={ptsLogo} alt="PTS Cooperation" className="footer-credit-logo" /></div>
         </div>
         <div className="footer-bottom">
           <span>Copyright © 2026 Reset Clinic. Усі права захищені.</span>
