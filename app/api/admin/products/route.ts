@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import type { ProductRecord } from "@/lib/commerce-types";
-import { dbInsert, dbSelect, isSupabaseConfigured } from "@/lib/supabase-rest";
+import { appendActivity, mutateProducts, newId, readProducts } from "@/lib/commerce-json";
+import { jsonStoreWriteConfigured } from "@/lib/json-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,26 +12,19 @@ function clean(value: unknown, max = 5000) {
 }
 
 function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[’']/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 120);
+  return value.toLowerCase().normalize("NFKD").replace(/[’']/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 120);
 }
 
-function normalizeProduct(body: any) {
+function normalizeProduct(body: any, id: string, createdAt: string): ProductRecord {
   const name = clean(body?.name, 180);
   if (!name) throw new Error("Назва товару обов’язкова");
   const slug = slugify(clean(body?.slug, 140) || name);
   if (!slug) throw new Error("Не вдалося сформувати slug");
-  const price = Math.max(0, Number(body?.price) || 0);
-  const stock = Math.max(0, Math.trunc(Number(body?.stock_quantity) || 0));
-  const category = ["face", "body", "hair", "other"].includes(body?.category) ? body.category : "face";
-  const status = ["draft", "active", "archived"].includes(body?.status) ? body.status : "draft";
-
+  const status: ProductRecord["status"] = ["draft", "active", "archived"].includes(body?.status) ? body.status : "draft";
+  const category: ProductRecord["category"] = ["face", "body", "hair", "other"].includes(body?.category) ? body.category : "face";
+  const now = new Date().toISOString();
   return {
+    id,
     slug,
     name,
     brand: clean(body?.brand, 120) || "RESET Clinic",
@@ -39,9 +33,9 @@ function normalizeProduct(body: any) {
     status,
     short_description: clean(body?.short_description, 500),
     description: clean(body?.description, 5000),
-    price,
+    price: Math.max(0, Number(body?.price) || 0),
     currency: "UAH",
-    stock_quantity: stock,
+    stock_quantity: Math.max(0, Math.trunc(Number(body?.stock_quantity) || 0)),
     track_stock: body?.track_stock !== false,
     size: clean(body?.size, 80) || null,
     image_url: clean(body?.image_url, 1200) || null,
@@ -57,36 +51,35 @@ function normalizeProduct(body: any) {
     seo_keywords: Array.isArray(body?.seo_keywords) ? body.seo_keywords.map((v: unknown) => clean(v, 100)).filter(Boolean).slice(0, 30) : [],
     featured: Boolean(body?.featured),
     sort_order: Math.trunc(Number(body?.sort_order) || 0),
-    published_at: status === "active" ? new Date().toISOString() : null,
+    published_at: status === "active" ? now : null,
+    created_at: createdAt,
+    updated_at: now,
   };
 }
 
 export async function GET() {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!isSupabaseConfigured()) return NextResponse.json({ configured: false, products: [] });
-
   try {
-    const products = await dbSelect<ProductRecord>("products", "select=*&order=sort_order.asc,created_at.desc");
-    return NextResponse.json({ configured: true, products });
+    const products = (await readProducts()).sort((a, b) => a.sort_order - b.sort_order || new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    return NextResponse.json({ configured: true, writable: jsonStoreWriteConfigured(), products });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "DB error" }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "JSON read error" }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!isSupabaseConfigured()) return NextResponse.json({ error: "Supabase ще не підключений" }, { status: 503 });
-
+  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "GITHUB_TOKEN не налаштований" }, { status: 503 });
   try {
-    const payload = normalizeProduct(await request.json());
-    const product = await dbInsert<ProductRecord>("products", payload);
-    await dbInsert("activity_events", {
-      event_type: "product_created",
-      entity_type: "product",
-      entity_id: product?.id || null,
-      title: `Створено товар: ${payload.name}`,
-      metadata: { slug: payload.slug, status: payload.status, price: payload.price },
+    const body = await request.json();
+    const id = newId("product");
+    const now = new Date().toISOString();
+    const product = normalizeProduct(body, id, now);
+    await mutateProducts(`Admin: add product ${product.slug}`, (products) => {
+      if (products.some((item) => item.slug === product.slug)) throw new Error("Товар з таким slug вже існує");
+      return [...products, product];
     });
+    await appendActivity({ event_type: "product_created", entity_type: "product", entity_id: product.id, title: `Створено товар: ${product.name}`, metadata: { slug: product.slug, status: product.status, price: product.price } });
     return NextResponse.json({ product }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Не вдалося створити товар" }, { status: 400 });
