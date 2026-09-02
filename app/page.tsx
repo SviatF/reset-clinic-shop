@@ -35,7 +35,8 @@ export default function HomePage() {
           <div className="hero-card">
             <h1>Ваша шкіра — під<br />професійним наглядом</h1>
             <p>Добірка найкращих професійних засобів для здоров&apos;я вашої шкіри. Консультуємо, підбираємо та допомагаємо досягти видимого результату.</p>
-            <Link className="black-button" href="/catalog">Перейти в каталог <Arrow /></Link>
+            <Link className="black-button" href="/face">Перейти в каталог <Arrow /></Link>
+            <Link className="hero-consult-link" href="/consultation">Не знаєте, з чого почати? Підібрати догляд →</Link>
           </div>
         </div>
       </section>
@@ -51,15 +52,15 @@ export default function HomePage() {
       <section className="categories-section">
         <div className="categories-shell shell">
           <h2>Оберіть<br />категорію</h2>
-          <Link href="/catalog?category=body" className="category-card body-card" id="body">
+          <Link href="/body" className="category-card body-card" id="body">
             <Image src={bodyImg} alt="Тіло" sizes="(max-width: 768px) 86vw, 330px" />
             <strong>ТІЛО</strong>
           </Link>
-          <Link href="/catalog?category=face" className="category-card face-card" id="face">
+          <Link href="/face" className="category-card face-card" id="face">
             <Image src={faceImg} alt="Обличчя" sizes="(max-width: 768px) 86vw, 330px" />
             <strong>ОБЛИЧЧЯ</strong>
           </Link>
-          <Link href="/catalog?category=hair" className="category-card hair-card" id="hair">
+          <Link href="/hair" className="category-card hair-card" id="hair">
             <Image src={hairImg} alt="Волосся" sizes="(max-width: 768px) 86vw, 330px" />
             <strong>ВОЛОССЯ</strong>
           </Link>
@@ -79,7 +80,7 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-          <Link className="black-button centered-button" href="/catalog">Дивитись усі <Arrow /></Link>
+          <Link className="black-button centered-button" href="/face">Дивитись усі <Arrow /></Link>
         </div>
       </section>
 
@@ -100,13 +101,20 @@ export default function HomePage() {
               <h3>Ваша шкіра — під<br />професійним наглядом</h3>
               <p>Добірка найкращих професійних засобів для здоров&apos;я вашої шкіри.</p>
               <p>Консультуємо, підбираємо та допомагаємо досягти видимого результату.</p>
-              <Link className="black-button" href="/catalog">Переглянути каталог <Arrow /></Link>
+              <Link className="black-button" href="/face">Переглянути каталог <Arrow /></Link>
             </div>
             <div className="editorial-image">
               <Image src={block3} alt="Професійний догляд RESET Clinic" />
               <svg className="circle-copy" viewBox="0 0 180 180" aria-hidden="true"><defs><path id="copycircle" d="M90,90 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0" /></defs><text><textPath href="#copycircle">YOUR SKIN • HAIR • BODY • BEST FOR • </textPath></text></svg>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="home-consult-cta">
+        <div className="shell home-consult-inner">
+          <div><span>RESET CARE FINDER · 2 ХВИЛИНИ</span><h2>Не знаєте, що саме купити? Почніть із потреби, а не з баночки.</h2></div>
+          <Link href="/consultation">Пройти підбір →</Link>
         </div>
       </section>
 
