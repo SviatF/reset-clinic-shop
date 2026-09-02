@@ -1,10 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import productImg from "@/assets/img/tovar1.webp";
 import consultationImg from "@/assets/img/consultation.webp";
 import buyInHandImg from "@/assets/img/buyinhand.webp";
-import QuickAddButton from "@/components/QuickAddButton";
-import { product, productHref } from "@/lib/product";
+import PremiumProductCard from "@/components/PremiumProductCard";
 
 export function Arrow() {
   return <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M1 8h37M32 2l6 6-6 6" /></svg>;
@@ -13,15 +11,7 @@ export function Arrow() {
 export function ProductGrid({ count = 8 }: { count?: number }) {
   return (
     <div className="category-product-grid">
-      {Array.from({ length: count }).map((_, index) => (
-        <article className="product-card category-product-card product-card-commerce" key={index}>
-          <Link href={productHref} className="product-card-link">
-            <div className="product-image"><Image src={productImg} alt={product.name} /></div>
-            <div className="product-copy"><strong>{product.name.toUpperCase()}</strong><span>{product.price}.00₴</span></div>
-          </Link>
-          <QuickAddButton />
-        </article>
-      ))}
+      {Array.from({ length: count }).map((_, index) => <PremiumProductCard key={index} index={index + 1} />)}
     </div>
   );
 }
