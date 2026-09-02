@@ -7,30 +7,31 @@ import { redirect } from "next/navigation";
 const COOKIE_NAME = "reset_admin_session";
 const SESSION_SECONDS = 60 * 60 * 12;
 
-function sessionSecret() {
-  const secret = process.env.ADMIN_SESSION_SECRET;
-  if (!secret) throw new Error("ADMIN_SESSION_SECRET is not configured");
-  return secret;
-}
-
 function safeEqual(leftValue: string, rightValue: string) {
   const left = Buffer.from(leftValue);
   const right = Buffer.from(rightValue);
   return left.length === right.length && timingSafeEqual(left, right);
 }
 
+function sessionKey() {
+  const login = process.env.ADMIN_LOGIN || "";
+  const pass = process.env.ADMIN_PASS || "";
+  if (!login || !pass) throw new Error("ADMIN_LOGIN or ADMIN_PASS is not configured");
+  return `${login}\u0000${pass}`;
+}
+
 function sign(exp: string, login: string) {
-  return createHmac("sha256", sessionSecret()).update(`${exp}.${login}`).digest("hex");
+  return createHmac("sha256", sessionKey()).update(`${exp}.${login}`).digest("hex");
 }
 
 export function adminCredentialsConfigured() {
-  return Boolean(process.env.ADMIN_LOGIN && process.env.ADMIN_PASS && process.env.ADMIN_SESSION_SECRET);
+  return Boolean(process.env.ADMIN_LOGIN && process.env.ADMIN_PASS);
 }
 
 export function verifyAdminCredentials(login: string, pass: string) {
   const expectedLogin = process.env.ADMIN_LOGIN || "";
   const expectedPass = process.env.ADMIN_PASS || "";
-  if (!expectedLogin || !expectedPass || !process.env.ADMIN_SESSION_SECRET) return false;
+  if (!expectedLogin || !expectedPass) return false;
   return safeEqual(login, expectedLogin) && safeEqual(pass, expectedPass);
 }
 
