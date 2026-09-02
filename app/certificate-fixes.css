@@ -22,7 +22,7 @@
   max-height: none !important;
   object-fit: contain !important;
   object-position: center !important;
-  transform: none !important;
+  transform: translateY(-12px) !important;
   box-shadow: none !important;
 }
 
@@ -84,6 +84,12 @@
     height: 430px;
   }
 
+  .certificate-page .certificate-art.certificate-art-single img,
+  .certificate-page .certificate-art.certificate-art-single img:first-child,
+  .certificate-page .certificate-art.certificate-art-single img:last-child {
+    transform: translateY(-8px) !important;
+  }
+
   .advantages-page .cert-stack.cert-stack-correct {
     max-width: 620px;
     width: 100%;
@@ -100,6 +106,12 @@
   .certificate-page .certificate-art.certificate-art-single {
     height: 320px;
     padding: 20px;
+  }
+
+  .certificate-page .certificate-art.certificate-art-single img,
+  .certificate-page .certificate-art.certificate-art-single img:first-child,
+  .certificate-page .certificate-art.certificate-art-single img:last-child {
+    transform: translateY(-5px) !important;
   }
 
   .advantages-page .cert-stack.cert-stack-correct {
