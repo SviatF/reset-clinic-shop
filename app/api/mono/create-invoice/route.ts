@@ -1,7 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
-import { monoFetch, normalizeOrder, SITE_URL } from "@/lib/mono";
-import { dbInsert, dbSelect, isSupabaseConfigured } from "@/lib/supabase-rest";
+import type { OrderRecord } from "@/lib/commerce-types";
+import { appendActivity, mutateOrders, newId } from "@/lib/commerce-json";
+import { jsonStoreWriteConfigured } from "@/lib/json-store";
+import { monoFetch, normalizeOrder, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,11 +29,16 @@ async function persistOrder(args: {
   orderCode: string;
   amount: number;
   body: CreateInvoiceBody;
-  items: Array<{ slug: string; name: string; qty: number; unitAmount: number; totalAmount: number }>;
+  items: NormalizedCheckoutItem[];
 }) {
-  if (!isSupabaseConfigured()) return;
+  if (!jsonStoreWriteConfigured()) {
+    console.warn("Order JSON persistence skipped: GITHUB_TOKEN is not configured");
+    return;
+  }
   try {
-    const order = await dbInsert<any>("orders", {
+    const now = new Date().toISOString();
+    const order: OrderRecord = {
+      id: newId("order"),
       order_number: `RST-${args.orderCode}`,
       invoice_id: args.invoiceId,
       reference: args.reference,
@@ -44,35 +51,29 @@ async function persistOrder(args: {
       city: clean(args.body.city, 160),
       branch: clean(args.body.branch, 240),
       comment: clean(args.body.comment, 1000),
+      tracking_number: null,
+      admin_notes: null,
       subtotal: args.amount / 100,
       shipping: 0,
       total: args.amount / 100,
       currency: "UAH",
-    });
-    if (!order?.id) return;
-
-    for (const item of args.items) {
-      const productRows = await dbSelect<any>("products", `select=id,sku&slug=eq.${encodeURIComponent(item.slug)}&limit=1`);
-      const dbProduct = productRows?.[0];
-      await dbInsert("order_items", {
-        order_id: order.id,
-        product_id: dbProduct?.id || null,
+      items: args.items.map((item) => ({
+        product_id: item.productId,
         slug: item.slug,
         name: item.name,
-        sku: dbProduct?.sku || null,
+        sku: item.sku,
         unit_price: item.unitAmount / 100,
         quantity: item.qty,
         line_total: item.totalAmount / 100,
-      });
-    }
-
-    await dbInsert("activity_events", {
-      event_type: "order_created",
-      entity_type: "order",
-      entity_id: order.id,
-      title: `Нове замовлення RST-${args.orderCode}`,
-      metadata: { invoiceId: args.invoiceId, total: args.amount / 100 },
-    });
+      })),
+      mono_payload: null,
+      stock_decremented: false,
+      paid_at: null,
+      created_at: now,
+      updated_at: now,
+    };
+    await mutateOrders(`Order ${order.order_number}: created`, (orders) => [order, ...orders]);
+    await appendActivity({ event_type: "order_created", entity_type: "order", entity_id: order.id, title: `Нове замовлення ${order.order_number}`, metadata: { invoiceId: args.invoiceId, total: args.amount / 100 } });
   } catch (error) {
     console.error("Failed to persist commerce order", error);
   }
@@ -81,11 +82,10 @@ async function persistOrder(args: {
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as CreateInvoiceBody;
-    const { items, amount } = normalizeOrder(body.items || []);
+    const { items, amount } = await normalizeOrder(body.items || []);
     const reference = randomUUID().replaceAll("-", "");
     const orderCode = reference.slice(0, 8).toUpperCase();
     const email = clean(body.email, 120);
-
     const monoPayload = {
       amount,
       ccy: 980,
@@ -99,47 +99,22 @@ export async function POST(request: Request) {
         destination: `RESET Clinic · замовлення ${orderCode}`,
         comment: "Онлайн-замовлення RESET Clinic",
         ...(email ? { customerEmails: [email] } : {}),
-        basketOrder: items.map((item) => ({
-          name: item.name,
-          qty: item.qty,
-          sum: item.unitAmount,
-          total: item.totalAmount,
-          unit: "шт.",
-          code: item.slug,
-        })),
+        basketOrder: items.map((item) => ({ name: item.name, qty: item.qty, sum: item.unitAmount, total: item.totalAmount, unit: "шт.", code: item.slug })),
       },
     };
-
     const response = await monoFetch("/api/merchant/invoice/create", {
       method: "POST",
       body: JSON.stringify(monoPayload),
-      headers: {
-        "X-Cms": "RESET Clinic Next.js",
-        "X-Cms-Version": "1.0",
-      },
+      headers: { "X-Cms": "RESET Clinic Next.js", "X-Cms-Version": "1.0" },
     });
-
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       const message = typeof data?.errText === "string" ? data.errText : typeof data?.message === "string" ? data.message : "Не вдалося створити рахунок mono";
       return NextResponse.json({ error: message }, { status: response.status });
     }
-
-    if (!data?.invoiceId || !data?.pageUrl) {
-      return NextResponse.json({ error: "mono не повернув посилання на оплату" }, { status: 502 });
-    }
-
+    if (!data?.invoiceId || !data?.pageUrl) return NextResponse.json({ error: "mono не повернув посилання на оплату" }, { status: 502 });
     await persistOrder({ invoiceId: data.invoiceId, reference, orderCode, amount, body, items });
-
-    return NextResponse.json({
-      invoiceId: data.invoiceId,
-      pageUrl: data.pageUrl,
-      appUrl: data.appUrl || null,
-      reference,
-      orderNumber: `RST-${orderCode}`,
-      amount,
-      currency: "UAH",
-    });
+    return NextResponse.json({ invoiceId: data.invoiceId, pageUrl: data.pageUrl, appUrl: data.appUrl || null, reference, orderNumber: `RST-${orderCode}`, amount, currency: "UAH" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Помилка створення платежу";
     const status = message.includes("MONOPAY_TOKEN") ? 503 : 400;
