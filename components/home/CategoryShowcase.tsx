@@ -27,11 +27,16 @@ export function CategoryShowcase() {
   return (
     <section className={styles.section} aria-labelledby="home-category-title">
       <div className={styles.inner}>
-        <h2 className={styles.title} id="home-category-title">
+        <div
+          className={styles.title}
+          id="home-category-title"
+          role="heading"
+          aria-level={2}
+        >
           Оберіть
           <br />
           категорію
-        </h2>
+        </div>
 
         <div className={styles.grid}>
           {categories.map((category) => (
