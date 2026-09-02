@@ -43,11 +43,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="site-header">
+      <header className="site-header precision-header">
         <div className="header-topline">
           <div className="shell header-topline-inner">
-            <span>RESET CLINIC · PROFESSIONAL SKINCARE · LVIV</span>
-            <Link href="/consultation">Підбір догляду косметологом <b>↗</b></Link>
+            <span>БЕЗКОШТОВНА ДОСТАВКА ВІД 5000 ₴</span>
+            <Link href="/consultation">ПІДБІР КОСМЕТОЛОГА →</Link>
           </div>
         </div>
         <div className="header-inner shell">
