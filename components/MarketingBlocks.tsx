@@ -59,7 +59,16 @@ export function CategoryLanding({ eyebrow, title, description, image, imageAlt, 
 
       <section className="consultation-sell shell">
         <div className="consultation-image"><Image src={consultationImg} alt="Консультація косметолога RESET Clinic" /></div>
-        <div className="consultation-copy"><span className="editorial-kicker">НЕ ВПЕВНЕНІ У ВИБОРІ?</span><h2>Не вгадуйте.<br/>Запитайте косметолога.</h2><p>Професійні активи дають кращий результат, коли підібрані під конкретний стан шкіри, ваші звички та вже наявний догляд.</p><Link className="black-button" href="/consultation">Пройти короткий підбір <Arrow /></Link><Link className="text-link" href="/contacts">Одразу написати косметологу →</Link><div className="micro-proof"><Image src={buyInHandImg} alt="Передача професійної косметики клієнту" /><span>Підбір → перевірка сумісності → зрозуміла схема використання</span></div></div>
+        <div className="consultation-copy">
+          <span className="editorial-kicker">НЕ ВПЕВНЕНІ У ВИБОРІ?</span>
+          <h2>Не вгадуйте.<br/>Запитайте косметолога.</h2>
+          <p>Професійні активи дають кращий результат, коли підібрані під конкретний стан шкіри, ваші звички та вже наявний догляд.</p>
+          <div className="consultation-actions">
+            <Link className="black-button" href="/consultation">Пройти короткий підбір <Arrow /></Link>
+            <Link className="text-link" href="/contacts">Одразу написати косметологу →</Link>
+          </div>
+          <div className="micro-proof"><Image src={buyInHandImg} alt="Передача професійної косметики клієнту" /><span>Підбір → перевірка сумісності → зрозуміла схема використання</span></div>
+        </div>
       </section>
       <TrustStrip />
     </div>
