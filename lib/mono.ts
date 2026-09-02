@@ -1,6 +1,6 @@
 import "server-only";
 
-import { createHash, createPublicKey, verify } from "node:crypto";
+import { createPublicKey, verify } from "node:crypto";
 import { product } from "@/lib/product";
 
 const MONO_API = "https://api.monobank.ua";
@@ -81,16 +81,15 @@ async function fetchWebhookPublicKey(force = false) {
   if (!data.key) throw new Error("mono pubkey missing");
 
   const decoded = Buffer.from(data.key, "base64");
-  const pem = decoded.toString("utf8").includes("BEGIN PUBLIC KEY") ? decoded.toString("utf8") : decoded;
-  cachedPublicKey = createPublicKey(pem);
+  const utf8 = decoded.toString("utf8");
+  cachedPublicKey = createPublicKey(utf8.includes("BEGIN PUBLIC KEY") ? utf8 : decoded);
   return cachedPublicKey;
 }
 
 async function verifyWithKey(rawBody: string, signatureBase64: string, forceRefresh = false) {
   const key = await fetchWebhookPublicKey(forceRefresh);
   const signature = Buffer.from(signatureBase64, "base64");
-  const digest = createHash("sha256").update(rawBody).digest();
-  return verify(null, digest, key, signature);
+  return verify("sha256", Buffer.from(rawBody, "utf8"), key, signature);
 }
 
 export async function verifyMonoWebhook(rawBody: string, signatureBase64: string) {
