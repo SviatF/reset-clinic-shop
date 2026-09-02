@@ -6,14 +6,22 @@ import styles from "./product-page.module.css";
 
 type ProductPurchasePanelProps = {
   productId: string;
+  slug: string;
   productName: string;
+  price: number;
+  currency: "UAH" | "EUR" | "USD";
+  image?: string;
   inStock: boolean;
   options?: ProductOption[];
 };
 
 export function ProductPurchasePanel({
   productId,
+  slug,
   productName,
+  price,
+  currency,
+  image,
   inStock,
   options = [],
 }: ProductPurchasePanelProps) {
@@ -34,7 +42,16 @@ export function ProductPurchasePanel({
 
         window.dispatchEvent(
           new CustomEvent("reset:add-to-cart", {
-            detail: { productId, productName, quantity, options: selectedOptions },
+            detail: {
+              productId,
+              slug,
+              name: productName,
+              price,
+              currency,
+              image,
+              quantity,
+              options: selectedOptions,
+            },
           }),
         );
       }}
@@ -79,4 +96,3 @@ export function ProductPurchasePanel({
     </form>
   );
 }
-

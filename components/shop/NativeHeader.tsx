@@ -112,26 +112,59 @@ function reactProps(node: NativeElementNode, key: string | number) {
   return props;
 }
 
-function renderNode(node: NativeNode, key: string | number): ReactNode {
+type RenderOptions = {
+  injectAfterDataId?: string;
+  injectedContent?: ReactNode;
+};
+
+function renderNode(
+  node: NativeNode,
+  key: string | number,
+  options: RenderOptions,
+): ReactNode {
   if (node.kind === "text") return node.value;
 
-  return createElement(
+  const rendered = createElement(
     node.tag,
     reactProps(node, key),
-    ...node.children.map((child, index) => renderNode(child, `${key}.${index}`)),
+    ...node.children.map((child, index) => renderNode(child, `${key}.${index}`, options)),
   );
+
+  if (
+    options.injectedContent &&
+    options.injectAfterDataId &&
+    node.attributes["data-id"] === options.injectAfterDataId
+  ) {
+    return createElement(
+      Fragment,
+      { key: `${key}.with-injection` },
+      rendered,
+      options.injectedContent,
+    );
+  }
+
+  return rendered;
 }
 
 type NativeTreeProps = {
   nodes: NativeNode[];
   keyPrefix?: string;
+  injectAfterDataId?: string;
+  injectedContent?: ReactNode;
 };
 
-export function NativeTree({ nodes, keyPrefix = "native" }: NativeTreeProps) {
+export function NativeTree({
+  nodes,
+  keyPrefix = "native",
+  injectAfterDataId,
+  injectedContent,
+}: NativeTreeProps) {
+  const options: RenderOptions = { injectAfterDataId, injectedContent };
+
   return createElement(
     Fragment,
     null,
-    ...nodes.map((node, index) => renderNode(node, `${keyPrefix}.${index}`)),
+    ...nodes.map((node, index) => renderNode(node, `${keyPrefix}.${index}`, options)),
   );
 }
 

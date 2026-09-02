@@ -6,10 +6,13 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   productionBrowserSourceMaps: false,
   outputFileTracingIncludes: {
-    "/": ["./legacy-source/**/*"],
-    "/[...slug]": ["./legacy-source/**/*"],
-    "/product/[slug]": ["./legacy-source/**/*"],
-    "/__legacy_asset/[...slug]": ["./legacy-source/**/*"],
+    "/": ["./content/native/**/*"],
+    "/[[...slug]]": ["./content/native/**/*"],
+    "/product/[slug]": ["./content/native/**/*"],
+    "/product-category/[...slug]": ["./content/native/**/*"],
+    "/shop/[[...page]]": ["./content/native/**/*"],
+    "/cart": ["./content/native/**/*"],
+    "/checkout": ["./content/native/**/*"],
   },
   experimental: {
     webpackMemoryOptimizations: true,
