@@ -17,70 +17,113 @@ function Arrow() {
   return <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M0 8h38M31 1l7 7-7 7" /></svg>;
 }
 
-function MiniIcon({ type }: { type: "truck" | "bag" | "check" | "heart" }) {
-  if (type === "truck") return <svg viewBox="0 0 42 42" aria-hidden="true"><path d="M3 11h23v20H3zM26 19h7l6 6v6H26z"/><circle cx="11" cy="32" r="4"/><circle cx="32" cy="32" r="4"/></svg>;
-  if (type === "bag") return <svg viewBox="0 0 42 42" aria-hidden="true"><path d="M12 12h18l5 7-4 18H11L7 19z"/><path d="M16 12c0-4 2-7 5-7s5 3 5 7M21 17v15M16 22h7c4 0 4 5 0 5h-4"/></svg>;
-  if (type === "heart") return <svg viewBox="0 0 42 42" aria-hidden="true"><path d="M21 35S6 27 6 16c0-6 8-10 15-2 7-8 15-4 15 2 0 11-15 19-15 19Z"/></svg>;
-  return <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="16"/><path d="m13 21 5 5 11-12"/></svg>;
-}
-
 const recommendations = Array.from({ length: 8 });
 
-function CategoryCard({ href, id, image, title, index, note, className }: { href: string; id: string; image: typeof bodyImg; title: string; index: string; note: string; className: string; }) {
-  return (
-    <Link href={href} className={`category-card ${className}`} id={id}>
-      <div className="category-media"><Image src={image} alt={title} sizes="(max-width: 768px) 86vw, 380px" /><span className="category-index">{index}</span></div>
-      <div className="category-card-meta"><strong>{title}</strong><span>{note}</span><b>↗</b></div>
-    </Link>
-  );
-}
+const directions = [
+  { href: "/face", image: faceImg, title: "Обличчя", note: "Щоденний догляд, активи та SPF" },
+  { href: "/body", image: bodyImg, title: "Тіло", note: "Зволоження, відновлення та комфорт" },
+  { href: "/hair", image: hairImg, title: "Волосся", note: "Шкіра голови, довжина та захист" },
+];
 
 export default function HomePage() {
   return (
     <>
-      <section className="hero" id="home">
-        <Image className="hero-bg" src={hero} alt="Професійні засоби RESET Clinic" fill priority sizes="100vw" />
-        <div className="hero-grain" aria-hidden="true" />
-        <div className="shell hero-shell">
-          <div className="hero-card">
-            <span className="hero-kicker">RESET CLINICAL EDIT · LVIV</span>
-            <h1>Догляд, який<br /><em>не обирають навмання.</em></h1>
-            <p>Професійні засоби, відібрані клінікою. Допомагаємо зрозуміти потребу шкіри, перевірити сумісність активів і зібрати логічну систему догляду.</p>
-            <div className="hero-actions"><Link className="black-button" href="/face">Перейти в каталог <Arrow /></Link><Link className="hero-consult-link" href="/consultation">Підібрати з косметологом ↗</Link></div>
-            <div className="hero-proof-row"><span>01 · ОРИГІНАЛЬНІСТЬ</span><span>02 · ЕКСПЕРТНИЙ ПІДБІР</span><span>03 · RESET SUPPORT</span></div>
+      <section className="precision-hero" id="home">
+        <div className="precision-hero-copy">
+          <div className="precision-copy-inner">
+            <span className="precision-eyebrow">RESET CLINIC SHOP</span>
+            <h1>Професійний догляд.<br />Підібраний правильно.</h1>
+            <p>Косметика для обличчя, тіла та волосся, яку ми відбираємо за професійними критеріями. Якщо не знаєте, що обрати — допоможе косметолог RESET.</p>
+            <div className="precision-hero-actions">
+              <Link className="precision-primary" href="/face">Обрати догляд <Arrow /></Link>
+              <Link className="precision-secondary" href="/consultation">Підбір косметолога</Link>
+            </div>
+            <div className="precision-proof">
+              <div><strong>100%</strong><span>оригінальна продукція</span></div>
+              <div><strong>01</strong><span>професійний підбір</span></div>
+              <div><strong>5000 ₴</strong><span>безкоштовна доставка від</span></div>
+            </div>
           </div>
         </div>
-        <div className="hero-side-note"><span>PROFESSIONAL SKINCARE</span><b>2026 / RESET</b></div>
-      </section>
-
-      <section className="benefit-strip" id="benefits"><div className="shell benefit-grid"><div className="benefit"><MiniIcon type="truck"/><div><strong>БЕЗКОШТОВНА ДОСТАВКА</strong><span>На всі замовлення від 5000 грн</span></div></div><div className="benefit"><MiniIcon type="bag"/><div><strong>НАКОПИЧУЙТЕ КЕШБЕК</strong><span>Розраховуйтесь ними за наступні замовлення</span></div></div><div className="benefit"><MiniIcon type="check"/><div><strong>ОФІЦІЙНА ГАРАНТІЯ</strong><span>Всі засоби сертифіковані та офіційні</span></div></div></div></section>
-
-      <section className="categories-section">
-        <div className="categories-shell shell">
-          <div className="categories-heading"><span>SHOP BY AREA · 001—003</span><h2>Оберіть<br /><em>ритуал.</em></h2><p>Три напрямки. Один принцип: професійний догляд без хаотичних покупок.</p></div>
-          <CategoryCard href="/body" id="body" image={bodyImg} title="ТІЛО" index="01" note="Body care / clinical edit" className="body-card" />
-          <CategoryCard href="/face" id="face" image={faceImg} title="ОБЛИЧЧЯ" index="02" note="Face care / daily system" className="face-card" />
-          <CategoryCard href="/hair" id="hair" image={hairImg} title="ВОЛОССЯ" index="03" note="Hair care / scalp & length" className="hair-card" />
+        <div className="precision-hero-media">
+          <Image src={hero} alt="Професійна косметика RESET Clinic" fill priority sizes="(max-width: 900px) 100vw, 56vw" />
+          <div className="precision-image-label"><span>RESET CLINIC</span><b>Професійний догляд</b></div>
         </div>
       </section>
 
-      <section className="recommend-section premium-recommend-section">
-        <div className="cream-mark" aria-hidden="true" />
-        <div className="shell recommend-shell">
-          <div className="recommend-heading"><span>RESET PRODUCT EDIT · 001—008</span><h2>Відібрано<br /><em>для щоденного ритуалу.</em></h2></div>
-          <div className="tabs" aria-label="Категорії рекомендацій"><button className="selected">ХІТИ ПРОДАЖ</button><button>НОВЕ</button><button>ТРЕНДОВЕ</button></div>
-          <div className="products-grid">
+      <section className="precision-trustbar">
+        <div className="shell precision-trustgrid">
+          <div><span>01</span><strong>Офіційна продукція</strong><p>Перевірені поставки та контроль оригінальності.</p></div>
+          <div><span>02</span><strong>Допомога косметолога</strong><p>Підбір засобів під потреби шкіри та вашу рутину.</p></div>
+          <div><span>03</span><strong>Швидка доставка</strong><p>Нова Пошта, курʼєр або самовивіз із RESET Clinic.</p></div>
+        </div>
+      </section>
+
+      <section className="precision-categories">
+        <div className="shell">
+          <div className="precision-section-head">
+            <div><span>КАТЕГОРІЇ</span><h2>Оберіть напрямок</h2></div>
+            <p>Швидкий старт без зайвої навігації. Оберіть зону догляду — далі допоможемо звузити вибір.</p>
+          </div>
+          <div className="precision-category-grid">
+            {directions.map((item, index) => (
+              <Link href={item.href} className="precision-category-card" key={item.href}>
+                <div className="precision-category-image"><Image src={item.image} alt={item.title} sizes="(max-width: 700px) 100vw, 33vw" /><span>0{index + 1}</span></div>
+                <div className="precision-category-info"><div><h3>{item.title}</h3><p>{item.note}</p></div><b>↗</b></div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="precision-products">
+        <div className="shell">
+          <div className="precision-section-head precision-products-head">
+            <div><span>RESET РЕКОМЕНДУЄ</span><h2>Засоби для щоденного догляду</h2></div>
+            <Link href="/face">Переглянути каталог <b>↗</b></Link>
+          </div>
+          <div className="precision-filter-row"><button className="active">Рекомендовані</button><button>Обличчя</button><button>Нове</button></div>
+          <div className="products-grid precision-product-grid">
             {recommendations.map((_, index) => <PremiumProductCard key={index} index={index + 1} />)}
           </div>
-          <Link className="black-button centered-button" href="/face">Дивитись весь каталог <Arrow /></Link>
         </div>
       </section>
 
-      <section className="promo-section" id="about"><div className="shell promo-shell"><div className="promo-intro"><span>RESET JOURNAL · SELECTIONS</span><h2>Косметика як частина<br /><em>продуманої системи.</em></h2></div><div className="promo-grid"><article className="promo-card promo-green"><div className="promo-copy"><span>НОВІ НАДХОДЖЕННЯ · 01</span><h3>Зимовий догляд за<br />шкірою Aesop</h3><Link className="light-button" href={productHref}>Обрати зараз <Arrow /></Link></div><Image src={block1} alt="Нові надходження Aesop" /></article><article className="promo-card promo-pink"><div className="promo-copy"><span>ПРЕДСТАВЛЕНИЙ БРЕНД · 02</span><h3>Інтенсивний догляд за<br />шкірою сяйва</h3><Link className="light-button" href={productHref}>Переглянути <Arrow /></Link></div><Image src={block2} alt="Представлений бренд" /></article></div><div className="editorial-row"><div className="editorial-copy"><span>CLINICAL CURATION · RESET</span><h3>Не більше засобів.<br /><em>Більше точності.</em></h3><p>Ми формуємо асортимент так, як косметолог формує домашню схему: кожен продукт має зрозумілу роль.</p><p>Якщо сумніваєтесь — допоможемо перевірити сумісність і побудувати послідовність.</p><Link className="black-button" href="/consultation">Підібрати догляд <Arrow /></Link></div><div className="editorial-image"><Image src={block3} alt="Професійний догляд RESET Clinic" /><svg className="circle-copy" viewBox="0 0 180 180" aria-hidden="true"><defs><path id="copycircle" d="M90,90 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0" /></defs><text><textPath href="#copycircle">RESET CLINIC • SKIN • HAIR • BODY • </textPath></text></svg></div></div></div></section>
+      <section className="precision-features">
+        <div className="shell">
+          <div className="precision-section-head"><div><span>ДОБІРКИ RESET</span><h2>Догляд без випадкових покупок</h2></div><p>Ми не намагаємось продати більше засобів. Завдання — зібрати зрозумілу систему, де кожен продукт має свою роль.</p></div>
+          <div className="precision-feature-grid">
+            <Link href={productHref} className="precision-feature precision-feature-large">
+              <Image src={block1} alt="Добірка професійної косметики" fill sizes="(max-width: 800px) 100vw, 62vw" />
+              <div className="precision-feature-overlay"><span>НОВЕ В RESET</span><h3>Професійні засоби для холодного сезону</h3><b>Переглянути добірку ↗</b></div>
+            </Link>
+            <Link href={productHref} className="precision-feature precision-feature-small">
+              <Image src={block2} alt="Професійний догляд для сяйва" fill sizes="(max-width: 800px) 100vw, 38vw" />
+              <div className="precision-feature-overlay"><span>ФОКУС</span><h3>Догляд для рівного тону та сяйва</h3><b>Переглянути ↗</b></div>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-      <section className="home-consult-cta"><div className="shell home-consult-inner"><div><span>RESET CARE FINDER · 2 ХВИЛИНИ</span><h2>Не знаєте, що саме купити?<br /><em>Почніть із потреби.</em></h2></div><Link href="/consultation">Пройти підбір ↗</Link></div></section>
+      <section className="precision-consult">
+        <div className="precision-consult-media"><Image src={block3} alt="Консультація та професійний догляд RESET Clinic" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
+        <div className="precision-consult-copy">
+          <span>НЕ ВПЕВНЕНІ У ВИБОРІ?</span>
+          <h2>Не вгадуйте.<br />Запитайте косметолога.</h2>
+          <p>Коротко опишіть потребу — ми допоможемо зрозуміти, які засоби доречні, як їх поєднати та в якій послідовності використовувати.</p>
+          <Link className="precision-light-button" href="/consultation">Пройти підбір <Arrow /></Link>
+          <Link className="precision-inline-link" href="/contacts">Звʼязатися з RESET →</Link>
+        </div>
+      </section>
 
-      <section className="service-strip"><div className="shell service-grid"><div className="service-item"><MiniIcon type="bag"/><div><strong>ПРОГРАМА ЛОЯЛЬНОСТІ</strong><span>Накопичувальні знижки, персональні подарунки та святкові бонуси для постійних покупців.</span></div></div><div className="service-item"><MiniIcon type="heart"/><div><strong>ПІДТРИМКА КОСМЕТОЛОГА</strong><span>Професійні консультації та допомога у підборі догляду в будь-який зручний час.</span></div></div><div className="service-item"><MiniIcon type="check"/><div><strong>ВИГІДНІ ПОКУПКИ</strong><span>Додаткові спеціальні пропозиції, персональні знижки та акції на улюблені товари.</span></div></div></div></section>
+      <section className="precision-bottom-services">
+        <div className="shell precision-bottom-grid">
+          <div><span>01</span><strong>Підбір</strong><p>Допомога з вибором і сумісністю засобів.</p></div>
+          <div><span>02</span><strong>Доставка</strong><p>Зручний спосіб отримання замовлення по Україні.</p></div>
+          <div><span>03</span><strong>Підтримка</strong><p>Можна повернутися з питанням після покупки.</p></div>
+          <div><span>04</span><strong>Лояльність</strong><p>Переваги для постійних клієнтів RESET.</p></div>
+        </div>
+      </section>
     </>
   );
 }
