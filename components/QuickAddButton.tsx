@@ -27,7 +27,7 @@ export default function QuickAddButton() {
       onClick={handleAdd}
       aria-live="polite"
     >
-      {added ? <><span>Додано</span><span>✓</span></> : <><span>Додати до кошика</span><span>+</span></>}
+      {added ? <>Додано <span>✓</span></> : <>Додати до кошика <span>+</span></>}
     </button>
   );
 }
