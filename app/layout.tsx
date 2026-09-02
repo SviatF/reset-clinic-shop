@@ -20,6 +20,17 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang="uk">
       <head>
         <style>{"html,body{cursor:auto!important}"}</style>
+        {shell?.links.map((link, index) => (
+          <link
+            href={link.href}
+            rel={link.rel}
+            media={link.media}
+            key={`native-head-link-${index}-${link.href}`}
+          />
+        ))}
+        {shell?.stylesheets.map((href) => (
+          <link href={href} rel="stylesheet" key={`native-head-style-${href}`} />
+        ))}
       </head>
       <body
         id={shell?.bodyId || undefined}
