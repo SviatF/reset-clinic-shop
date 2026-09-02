@@ -11,12 +11,8 @@ export const dynamic = "force-dynamic";
 
 export default function ConsultationPage() {
   return (
-    <section className="consultation-page">
-      <div className="shell consultation-shell">
-        <div className="consultation-intro">
-          <div><span>RESET CARE FINDER ~ 2 ХВИЛИНИ</span><h1>Звузьте вибір до того, що вам справді потрібно.</h1></div>
-          <p>Чотири короткі кроки допоможуть структурувати ваш запит. Без «магічних» обіцянок: якщо потрібна професійна оцінка, ми одразу направимо до косметолога.</p>
-        </div>
+    <section className="consultation-page consultation-quiz-page">
+      <div className="shell consultation-shell consultation-quiz-shell">
         <ConsultationQuiz />
       </div>
     </section>
