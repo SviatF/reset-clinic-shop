@@ -57,9 +57,9 @@ export default function PremiumProductCard({ index = 1 }: { index?: number }) {
                 sizes="(max-width: 700px) 92vw, 310px"
               />
               <div className="premium-hover-note">
-                <span>RESET CARE NOTE</span>
-                <strong>Антиоксидантний фокус</strong>
-                <small>Для делікатної зони</small>
+                <span>ПРИЗНАЧЕННЯ</span>
+                <strong>Зволоження + антиоксидантний догляд</strong>
+                <small>Для делікатної зони навколо очей</small>
               </div>
             </div>
 
