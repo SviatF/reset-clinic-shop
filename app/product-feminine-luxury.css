@@ -1,0 +1,379 @@
+/* Feminine clinical luxury — restrained warmth, softer beauty language, no mass-market pink. */
+
+.product-page-feminine {
+  --fem-ivory: #f7f2ed;
+  --fem-cream: #eee4de;
+  --fem-rose: #b99d93;
+  --fem-rose-soft: rgba(185,157,147,.18);
+  --fem-ink: #171310;
+  --fem-espresso: #2a211e;
+  --fem-line: rgba(86,66,58,.15);
+  background:
+    radial-gradient(circle at 74% 11%, rgba(197,169,157,.12), transparent 26%),
+    radial-gradient(circle at 8% 38%, rgba(255,255,255,.92), transparent 34%),
+    var(--fem-ivory) !important;
+}
+
+.product-page-feminine .product-conversion-hero {
+  background:
+    radial-gradient(circle at 76% 20%, rgba(190,157,145,.11), transparent 29%),
+    linear-gradient(180deg,#f9f5f1 0%,#f4efea 100%) !important;
+}
+
+.product-page-feminine .product-object-stage {
+  background:
+    radial-gradient(circle at 74% 70%, rgba(186,151,138,.13), transparent 30%),
+    linear-gradient(135deg,rgba(255,255,255,.98),rgba(238,230,223,.9)) !important;
+  border-color: rgba(104,78,68,.14) !important;
+  box-shadow: 0 30px 76px rgba(77,56,47,.09) !important;
+}
+
+.product-page-feminine .product-object-stage:before {
+  border-color: rgba(159,127,115,.15) !important;
+}
+
+.product-page-feminine .product-object-stage:after {
+  background: rgba(112,80,68,.10) !important;
+}
+
+.product-page-feminine .product-gallery-tag {
+  background: var(--fem-espresso) !important;
+  color: #fff9f5 !important;
+  letter-spacing: .15em !important;
+}
+
+.product-page-feminine .product-object-index,
+.product-page-feminine .product-object-footer {
+  color: #756761 !important;
+}
+
+.product-page-feminine .product-object-footer {
+  border-color: rgba(116,89,79,.16) !important;
+  background: rgba(250,246,242,.72) !important;
+  backdrop-filter: blur(8px);
+}
+
+.product-page-feminine .product-premium-detail > .eyebrow {
+  color: #8a746c !important;
+  letter-spacing: .17em !important;
+}
+
+.product-page-feminine .product-premium-detail h1 {
+  color: var(--fem-ink) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.052em !important;
+}
+
+.product-page-feminine .product-benefit-lead {
+  color: #6d605a !important;
+}
+
+.product-page-feminine .product-review-stars {
+  color: #604c45 !important;
+}
+
+.product-page-feminine .product-review-signal > a {
+  text-decoration-color: rgba(185,157,147,.7) !important;
+}
+
+/* Keep purchase decision high in hierarchy; new feminine content follows benefits. */
+.product-page-feminine .product-premium-detail > .eyebrow { order: 1; }
+.product-page-feminine .product-premium-detail > h1 { order: 2; }
+.product-page-feminine .product-premium-detail > .product-benefit-lead { order: 3; }
+.product-page-feminine .product-premium-detail > .product-review-signal { order: 4; }
+.product-page-feminine .product-premium-detail > .product-purchase-deck { order: 5; }
+.product-page-feminine .product-premium-detail > .product-meta-strip { order: 6; }
+.product-page-feminine .product-premium-detail > .product-quick-facts { order: 7; }
+.product-page-feminine .product-premium-detail > .product-for-whom { order: 8; }
+.product-page-feminine .product-premium-detail > .product-consult-inline-v2 { order: 9; }
+.product-page-feminine .product-premium-detail > .product-detail-disclosures { order: 10; }
+.product-page-feminine .product-premium-detail > .product-assurance-grid { order: 11; }
+
+.product-page-feminine .product-purchase-deck-light {
+  background: rgba(255,253,251,.82) !important;
+  border-color: rgba(116,87,76,.16) !important;
+  box-shadow: 0 18px 44px rgba(88,64,53,.055) !important;
+}
+
+.product-page-feminine .product-price-card-light {
+  background: linear-gradient(90deg,#fffdfa 0%,#f6eee9 100%) !important;
+  border-bottom-color: rgba(137,103,91,.15) !important;
+}
+
+.product-page-feminine .product-price-number,
+.product-page-feminine .product-price-number em {
+  color: #211815 !important;
+}
+
+.product-page-feminine .product-price-label,
+.product-page-feminine .product-price-side > span {
+  color: #92796f !important;
+}
+
+.product-page-feminine .product-ritual-microcopy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 16px;
+  padding: 11px 0 0;
+  border-top: 1px solid rgba(137,103,91,.11);
+}
+
+.product-page-feminine .product-ritual-microcopy span {
+  font-size: 6.5px;
+  letter-spacing: .16em;
+  color: #9b8278;
+  font-weight: 760;
+}
+
+.product-page-feminine .product-ritual-microcopy strong {
+  font-size: 9px;
+  color: #554741;
+  font-weight: 520;
+}
+
+.product-page-feminine .product-purchase-deck .add-cart {
+  background: var(--fem-ink) !important;
+  color: #fffaf6 !important;
+  transition: background .3s ease, transform .3s ease, box-shadow .3s ease !important;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .product-page-feminine .product-purchase-deck .add-cart:hover {
+    background: #3b2d28 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 14px 28px rgba(78,54,45,.16) !important;
+  }
+}
+
+.product-page-feminine .product-meta-strip {
+  border-color: rgba(126,96,85,.14) !important;
+  color: #7c6d67 !important;
+}
+
+.product-page-feminine .product-order-status i {
+  background: #8c9d83 !important;
+  box-shadow: 0 0 0 4px rgba(140,157,131,.12) !important;
+}
+
+.product-page-feminine .product-quick-facts,
+.product-page-feminine .product-quick-facts-icons {
+  border-top-color: rgba(126,96,85,.14) !important;
+  border-bottom-color: rgba(126,96,85,.14) !important;
+}
+
+.product-page-feminine .product-quick-facts > div,
+.product-page-feminine .product-quick-facts-icons > div {
+  border-right-color: rgba(126,96,85,.11) !important;
+}
+
+.product-page-feminine .product-quick-facts svg {
+  stroke: #65514a !important;
+}
+
+.product-page-feminine .product-quick-facts span {
+  color: #9a8279 !important;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .product-page-feminine .product-quick-facts > div:hover,
+  .product-page-feminine .product-quick-facts-icons > div:hover {
+    background: rgba(223,207,199,.24) !important;
+  }
+}
+
+/* Compact self-identification layer. */
+.product-for-whom {
+  margin: 18px 0 16px;
+  padding: 16px 0 13px;
+  border-top: 1px solid var(--fem-line);
+  border-bottom: 1px solid var(--fem-line);
+}
+
+.product-for-whom-head {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 22px;
+  align-items: start;
+  margin-bottom: 13px;
+}
+
+.product-for-whom-head span {
+  font-size: 6.5px;
+  line-height: 1.3;
+  letter-spacing: .17em;
+  color: #9a8178;
+  font-weight: 760;
+}
+
+.product-for-whom-head strong {
+  max-width: 360px;
+  font-size: 11px;
+  line-height: 1.42;
+  color: #3f332f;
+  font-weight: 540;
+}
+
+.product-for-whom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 24px;
+}
+
+.product-for-whom-grid span {
+  position: relative;
+  padding: 9px 0 9px 15px;
+  border-top: 1px solid rgba(126,96,85,.09);
+  font-size: 8.5px;
+  line-height: 1.35;
+  color: #6a5b55;
+}
+
+.product-for-whom-grid span:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b99d93;
+}
+
+.product-page-feminine .product-consult-inline-v2 {
+  background: linear-gradient(90deg,#eee4df 0%,#f4ece7 100%) !important;
+  border: 0 !important;
+  border-left: 2px solid #b99d93 !important;
+  color: #302623 !important;
+}
+
+.product-page-feminine .product-consult-inline-v2 > div > span {
+  color: #9a8077 !important;
+}
+
+.product-page-feminine .product-consult-inline-v2 a {
+  color: #3b2d28 !important;
+  border-bottom-color: rgba(185,157,147,.8) !important;
+}
+
+.product-page-feminine .product-detail-disclosures details {
+  border-color: rgba(126,96,85,.14) !important;
+}
+
+.product-page-feminine .product-detail-disclosures summary {
+  color: #413530 !important;
+}
+
+/* Ritual section: warmer and more beauty-led without becoming decorative. */
+.product-page-feminine .product-ritual-crosssell {
+  background: linear-gradient(180deg,#efe5df 0%,#f4ece7 100%) !important;
+  border-color: rgba(126,96,85,.16) !important;
+}
+
+.product-page-feminine .product-ritual-head > span {
+  color: #9b7e73 !important;
+}
+
+.product-page-feminine .product-ritual-head h2 {
+  color: #211917 !important;
+  font-weight: 500 !important;
+}
+
+.product-page-feminine .product-ritual-head p {
+  color: #71625c !important;
+}
+
+.product-page-feminine .product-ritual-card {
+  background: rgba(255,252,249,.54) !important;
+  border-color: rgba(123,91,80,.14) !important;
+}
+
+.product-page-feminine .product-ritual-card.is-current {
+  background: var(--fem-espresso) !important;
+  color: #fff8f4 !important;
+}
+
+.product-page-feminine .product-ritual-card:not(.is-current):hover {
+  background: rgba(255,252,249,.85) !important;
+  box-shadow: 0 18px 38px rgba(97,69,58,.07) !important;
+}
+
+/* Manufacturer social proof becomes warm espresso instead of hard black. */
+.product-page-feminine .manufacturer-review-section {
+  background:
+    radial-gradient(circle at 16% 22%, rgba(185,157,147,.10), transparent 28%),
+    #241d1a !important;
+  color: #fff8f4 !important;
+}
+
+.product-page-feminine .manufacturer-review-cards article {
+  border-color: rgba(255,244,238,.16) !important;
+}
+
+.product-page-feminine .manufacturer-review-cards article:hover {
+  background: #302622 !important;
+}
+
+.product-page-feminine .manufacturer-review-heading p,
+.product-page-feminine .manufacturer-review-cards article p {
+  color: #c4b3ab !important;
+}
+
+.product-page-feminine .product-signature-band {
+  background:
+    linear-gradient(120deg,#171311 0%,#2e231f 100%) !important;
+  color: #fff9f5 !important;
+}
+
+.product-page-feminine .product-signature-band > .shell:before {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 1px;
+  margin-bottom: 22px;
+  background: #b99d93;
+}
+
+.product-page-feminine .real-trust-layer {
+  background: #f7f1ec !important;
+  border-top-color: rgba(126,96,85,.14) !important;
+}
+
+.product-page-feminine .home-consult-cta {
+  background: linear-gradient(115deg,#eee2dc 0%,#f7efea 100%) !important;
+  color: #211815 !important;
+}
+
+.product-page-feminine .home-consult-cta a {
+  background: #211815 !important;
+  color: #fff9f5 !important;
+}
+
+@media (max-width: 700px) {
+  .product-for-whom {
+    margin: 14px 0;
+    padding: 14px 0 11px;
+  }
+
+  .product-for-whom-head {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .product-for-whom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-page-feminine .product-ritual-microcopy {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0 14px;
+  }
+
+  .product-page-feminine .product-object-footer span:first-child,
+  .product-page-feminine .product-object-footer span:last-child {
+    font-size: 6px !important;
+  }
+}
