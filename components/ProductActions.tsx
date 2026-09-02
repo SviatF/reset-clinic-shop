@@ -4,13 +4,17 @@ import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 import { product } from "@/lib/product";
 
-export default function ProductActions() {
+type ActionProduct = { slug: string; name: string; price: number; maxQty?: number };
+
+export default function ProductActions({ item }: { item?: ActionProduct }) {
+  const current = item || { slug: product.slug, name: product.name, price: product.price, maxQty: 20 };
+  const maxQty = Math.max(1, Math.min(20, current.maxQty || 20));
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const { add } = useCart();
 
   function addToCart() {
-    add({ slug: product.slug, name: product.name, price: product.price }, qty);
+    add({ slug: current.slug, name: current.name, price: current.price }, qty);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1800);
   }
@@ -18,9 +22,11 @@ export default function ProductActions() {
   return (
     <div className="product-actions-panel">
       <div className="qty-control" aria-label="Кількість">
-        <button onClick={() => setQty((v) => Math.max(1, v - 1))}>−</button><span>{qty}</span><button onClick={() => setQty((v) => v + 1)}>+</button>
+        <button type="button" onClick={() => setQty((v) => Math.max(1, v - 1))}>−</button>
+        <span>{qty}</span>
+        <button type="button" onClick={() => setQty((v) => Math.min(maxQty, v + 1))}>+</button>
       </div>
-      <button className="add-cart" onClick={addToCart}>{added ? "ДОДАНО ДО КОШИКА" : "ДОДАТИ ДО КОШИКА"}</button>
+      <button type="button" className="add-cart" onClick={addToCart}>{added ? "ДОДАНО ДО КОШИКА" : "ДОДАТИ ДО КОШИКА"}</button>
     </div>
   );
 }
