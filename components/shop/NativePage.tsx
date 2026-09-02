@@ -5,6 +5,7 @@ import {
   readNativeContentPage,
   readNativeContentShell,
 } from "../../lib/native-content";
+import { CategoryShowcase } from "../home/CategoryShowcase";
 import { NativeTree } from "./NativeHeader";
 import { NativeInteractions } from "./NativeInteractions";
 
@@ -56,9 +57,16 @@ export async function NativeSnapshotPage({ pathname }: { pathname: string }) {
   const page = await readNativeContentPage(pathname);
   if (!page) notFound();
 
+  const isHome = page.pathname === "/";
+
   return (
     <NativeShell resourcePathname={page.pathname}>
-      <NativeTree nodes={page.nodes} keyPrefix={`native-page-${page.pathname}`} />
+      <NativeTree
+        nodes={page.nodes}
+        keyPrefix={`native-page-${page.pathname}`}
+        injectAfterDataId={isHome ? "039aeb8" : undefined}
+        injectedContent={isHome ? <CategoryShowcase /> : undefined}
+      />
     </NativeShell>
   );
 }
