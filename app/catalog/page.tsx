@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import productImg from "@/assets/img/tovar1.webp";
-import { product, productHref } from "@/lib/product";
+import PremiumProductCard from "@/components/PremiumProductCard";
+import { getStoreProducts } from "@/lib/store-products";
+import { isSupabaseConfigured } from "@/lib/supabase-rest";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -13,18 +13,18 @@ export default async function CatalogPage({ searchParams }: { searchParams?: Pro
   if (params?.category === "body") redirect("/body");
   if (params?.category === "hair") redirect("/hair");
 
+  const products = await getStoreProducts({ limit: 60 });
+  const visible = isSupabaseConfigured()
+    ? products
+    : Array.from({ length: 8 }).map((_, index) => products[index % products.length]);
+
   return (
     <section className="catalog-page">
       <div className="shell">
         <div className="catalog-head"><span>RESET CLINIC SHOP</span><h1>Каталог</h1><p>Професійні засоби для обличчя, тіла та волосся.</p></div>
         <div className="catalog-filters"><span className="selected">ВСЕ</span><Link href="/face">ОБЛИЧЧЯ</Link><Link href="/body">ТІЛО</Link><Link href="/hair">ВОЛОССЯ</Link></div>
-        <div className="catalog-grid">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Link className="product-card" href={productHref} key={index}>
-              <div className="product-image"><Image src={productImg} alt={product.name} /></div>
-              <div className="product-copy"><strong>{product.name.toUpperCase()}</strong><span>{product.price}.00₴</span></div>
-            </Link>
-          ))}
+        <div className="category-product-grid catalog-premium-grid">
+          {visible.map((item, index) => <PremiumProductCard key={`${item.slug}-${index}`} index={index + 1} productData={item} />)}
         </div>
       </div>
     </section>
