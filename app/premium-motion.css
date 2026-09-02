@@ -1,0 +1,188 @@
+/* RESET — restrained premium motion system */
+html{scroll-behavior:smooth}
+
+/* Page / hero entrance */
+.premium-motion-ready .precision-copy-inner>*{
+  opacity:0;
+  transform:translate3d(0,18px,0);
+  animation:pmHeroIn .72s cubic-bezier(.2,.78,.2,1) forwards;
+}
+.premium-motion-ready .precision-copy-inner>*:nth-child(1){animation-delay:.06s}
+.premium-motion-ready .precision-copy-inner>*:nth-child(2){animation-delay:.13s}
+.premium-motion-ready .precision-copy-inner>*:nth-child(3){animation-delay:.2s}
+.premium-motion-ready .precision-copy-inner>*:nth-child(4){animation-delay:.27s}
+.premium-motion-ready .precision-copy-inner>*:nth-child(5){animation-delay:.34s}
+.premium-motion-ready .precision-hero-media{
+  animation:pmMediaIn .9s cubic-bezier(.2,.78,.2,1) both;
+}
+
+/* Scroll reveals */
+.pm-reveal{
+  opacity:0;
+  transform:translate3d(0,24px,0);
+  transition:
+    opacity .72s cubic-bezier(.2,.78,.2,1) var(--pm-delay,0ms),
+    transform .72s cubic-bezier(.2,.78,.2,1) var(--pm-delay,0ms);
+  will-change:transform,opacity;
+}
+.pm-reveal.pm-visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+
+/* Image mask reveal */
+.pm-image-reveal{
+  clip-path:inset(0 0 10% 0);
+  opacity:.72;
+  transition:clip-path .95s cubic-bezier(.2,.78,.2,1),opacity .7s ease;
+}
+.pm-image-reveal.pm-visible{
+  clip-path:inset(0 0 0 0);
+  opacity:1;
+}
+
+/* Very subtle scroll parallax on major imagery */
+.precision-hero-media>img,
+.precision-consult-media>img{
+  transform:translate3d(0,var(--pm-parallax-y,0px),0) scale(1.045);
+  transition:transform .12s linear;
+  will-change:transform;
+}
+
+/* Header gets a more tactile floating state after the first scroll */
+.site-header{
+  transition:box-shadow .3s ease,background-color .3s ease,border-color .3s ease;
+}
+body.pm-scrolled .site-header{
+  box-shadow:0 8px 28px rgba(17,17,15,.055);
+}
+
+/* Buttons — light sweep instead of generic hover */
+.precision-primary,
+.precision-light-button,
+.black-button,
+.drawer-checkout{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+.precision-primary:after,
+.precision-light-button:after,
+.black-button:after,
+.drawer-checkout:after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  z-index:-1;
+  background:linear-gradient(105deg,transparent 15%,rgba(255,255,255,.17) 45%,transparent 72%);
+  transform:translateX(-125%);
+  transition:transform .72s cubic-bezier(.2,.78,.2,1);
+}
+.precision-primary:hover:after,
+.precision-light-button:hover:after,
+.black-button:hover:after,
+.drawer-checkout:hover:after{
+  transform:translateX(125%);
+}
+
+/* Premium image hover movement */
+.precision-category-image img,
+.precision-feature>img,
+.story-visual img,
+.mosaic-image img,
+.editorial-image img,
+.proof-banner-visual img{
+  transition:transform .75s cubic-bezier(.2,.78,.2,1),filter .5s ease!important;
+}
+.precision-category-card:hover .precision-category-image img,
+.precision-feature:hover>img,
+.story-visual:hover img,
+.mosaic-image:hover img,
+.editorial-image:hover img,
+.proof-banner-visual:hover img{
+  transform:scale(1.035)!important;
+}
+
+/* Links get a precise directional response */
+.precision-secondary,
+.precision-inline-link,
+.precision-products-head>a,
+.footer-column a,
+.footer-contact a{
+  transition:opacity .25s ease,transform .25s ease,color .25s ease;
+}
+.precision-secondary:hover,
+.precision-inline-link:hover,
+.precision-products-head>a:hover{
+  transform:translateX(3px);
+}
+.footer-column a:hover,
+.footer-contact a:hover{
+  opacity:.62;
+  transform:translateX(2px);
+}
+
+/* Trust and service cards become tactile without looking playful */
+.precision-trustgrid>div,
+.precision-bottom-grid>div,
+.product-story-card,
+.routine-step,
+.policy-card,
+.delivery-card{
+  transition:background-color .32s ease,transform .38s cubic-bezier(.2,.78,.2,1),box-shadow .38s ease;
+}
+.precision-trustgrid>div:hover,
+.precision-bottom-grid>div:hover,
+.product-story-card:hover,
+.policy-card:hover,
+.delivery-card:hover{
+  transform:translateY(-3px);
+}
+.product-story-card:hover,
+.policy-card:hover,
+.delivery-card:hover{
+  box-shadow:0 20px 44px rgba(17,17,15,.055);
+}
+
+@keyframes pmHeroIn{
+  from{opacity:0;transform:translate3d(0,18px,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+@keyframes pmMediaIn{
+  from{opacity:0;clip-path:inset(0 0 12% 0)}
+  to{opacity:1;clip-path:inset(0 0 0 0)}
+}
+
+@media(max-width:980px){
+  .precision-hero-media>img,
+  .precision-consult-media>img{
+    transform:none!important;
+    transition:none!important;
+  }
+  .pm-reveal{transform:translate3d(0,16px,0)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .premium-motion-ready .precision-copy-inner>*,
+  .premium-motion-ready .precision-hero-media,
+  .pm-reveal,
+  .pm-image-reveal{
+    animation:none!important;
+    transition:none!important;
+    opacity:1!important;
+    transform:none!important;
+    clip-path:none!important;
+  }
+  .precision-hero-media>img,
+  .precision-consult-media>img,
+  .precision-category-image img,
+  .precision-feature>img,
+  .story-visual img,
+  .mosaic-image img,
+  .editorial-image img,
+  .proof-banner-visual img{
+    transform:none!important;
+    transition:none!important;
+  }
+}
