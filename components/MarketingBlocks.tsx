@@ -3,15 +3,22 @@ import Link from "next/link";
 import consultationImg from "@/assets/img/consultation.webp";
 import buyInHandImg from "@/assets/img/buyinhand.webp";
 import PremiumProductCard from "@/components/PremiumProductCard";
+import { getStoreProducts } from "@/lib/store-products";
+import { isSupabaseConfigured } from "@/lib/supabase-rest";
 
 export function Arrow() {
   return <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M1 8h37M32 2l6 6-6 6" /></svg>;
 }
 
-export function ProductGrid({ count = 8 }: { count?: number }) {
+export async function ProductGrid({ count = 8, category }: { count?: number; category?: "face" | "body" | "hair" }) {
+  const products = await getStoreProducts({ category, limit: count });
+  const visible = isSupabaseConfigured()
+    ? products.slice(0, count)
+    : Array.from({ length: count }).map((_, index) => products[index % products.length]);
+
   return (
     <div className="category-product-grid">
-      {Array.from({ length: count }).map((_, index) => <PremiumProductCard key={index} index={index + 1} />)}
+      {visible.map((item, index) => <PremiumProductCard key={`${item.slug}-${index}`} index={index + 1} productData={item} />)}
     </div>
   );
 }
@@ -54,7 +61,7 @@ export function CategoryLanding({ eyebrow, title, description, image, imageAlt, 
       </section>
 
       <section className="category-products" id="products">
-        <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Зараз у каталозі один тестовий продукт. Структура готова до підключення повного асортименту без зміни дизайну.</p></div><ProductGrid /></div>
+        <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Асортимент керується з RESET Commerce Admin: активні товари, ціни та залишки оновлюються без зміни дизайну сайту.</p></div><ProductGrid category={tone} /></div>
       </section>
 
       <section className="consultation-sell shell">
