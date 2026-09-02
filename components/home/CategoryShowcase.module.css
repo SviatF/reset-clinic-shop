@@ -1,3 +1,4 @@
+/* Keep this module in the branch build so Vercel recreates the branch preview after project relink. */
 .section {
   background: #f5f4ea;
   overflow: hidden;
