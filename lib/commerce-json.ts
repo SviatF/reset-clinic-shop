@@ -1,15 +1,18 @@
 import "server-only";
 
 import { randomUUID } from "node:crypto";
+import productsData from "@/data/products.json";
 import type { ActivityRecord, OrderRecord, ProductRecord } from "@/lib/commerce-types";
 import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonStore } from "@/lib/json-store";
 
+const productSeed = productsData as unknown as ProductRecord[];
+
 export async function readProducts() {
-  return (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, [])).data;
+  return (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data;
 }
 
 export async function mutateProducts(message: string, mutate: (products: ProductRecord[]) => ProductRecord[] | Promise<ProductRecord[]>) {
-  return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, [], message, mutate);
+  return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed, message, mutate);
 }
 
 export async function readOrders() {
