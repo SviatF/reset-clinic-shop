@@ -49,7 +49,7 @@
   }
 
   .hero-bg {
-    object-position: center 25% !important;
+    object-position: center 6% !important;
   }
 
   .hero-shell {
@@ -321,6 +321,10 @@
 
 /* Tablet: categories become a balanced two-column grid without absolute overflow. */
 @media (min-width: 641px) and (max-width: 980px) {
+  .hero-bg {
+    object-position: center 12% !important;
+  }
+
   .categories-section {
     padding: 54px 0 68px;
   }
@@ -357,6 +361,10 @@
 
 /* Mobile: clean single-column flow, no clipping or oversized imagery. */
 @media (max-width: 640px) {
+  .hero-bg {
+    object-position: center 18% !important;
+  }
+
   .categories-section {
     padding: 48px 0 64px;
   }
