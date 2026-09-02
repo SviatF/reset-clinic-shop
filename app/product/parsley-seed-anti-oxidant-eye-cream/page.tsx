@@ -23,7 +23,7 @@ function FactIcon({ type }: { type: "drop" | "spark" | "eye" }) {
 
 export default function ProductPage() {
   return (
-    <div className="product-page-conversion product-page-premium product-page-audit-v2">
+    <div className="product-page-conversion product-page-premium product-page-audit-v2 product-page-feminine">
       <section className="product-conversion-hero product-object-hero">
         <div className="shell">
           <div className="breadcrumbs"><Link href="/">Головна</Link><span>/</span><Link href="/face">Обличчя</Link><span>/</span><span>{product.name}</span></div>
@@ -31,22 +31,22 @@ export default function ProductPage() {
           <div className="product-conversion-layout product-object-layout">
             <div className="product-gallery-panel product-object-gallery">
               <div className="product-gallery-main product-object-stage">
-                <span className="product-gallery-tag">RESET SELECTION</span>
-                <span className="product-object-index">01 / PRODUCT OBJECT</span>
+                <span className="product-gallery-tag">DELICATE CARE</span>
+                <span className="product-object-index">01 / DAILY RITUAL</span>
                 <span className="product-object-halo" aria-hidden="true" />
                 <Image src={productImg} alt={product.name} priority />
                 <div className="product-object-footer">
-                  <span>FACE CARE</span>
+                  <span>ДЕЛІКАТНИЙ ДОГЛЯД</span>
                   <span>{product.size}</span>
-                  <span>ANTI-OXIDANT</span>
+                  <span>ЩОДЕННИЙ РИТУАЛ</span>
                 </div>
               </div>
             </div>
 
             <div className="product-detail-panel product-premium-detail">
-              <span className="eyebrow">ДОГЛЯД ЗА ОБЛИЧЧЯМ · ЗОНА НАВКОЛО ОЧЕЙ</span>
+              <span className="eyebrow">ДЕЛІКАТНИЙ ДОГЛЯД · ЗОНА НАВКОЛО ОЧЕЙ</span>
               <h1>{product.name}</h1>
-              <p className="product-benefit-lead">Антиоксидантний догляд для делікатної зони навколо очей із фокусом на зволоження та комфорт.</p>
+              <p className="product-benefit-lead">Делікатний щоденний догляд для зони навколо очей, що підтримує зволоження, комфорт і більш доглянутий вигляд шкіри.</p>
 
               <div className="product-review-signal" aria-label={`Оцінка ${product.manufacturerRating} з 5 на сайті Aesop`}>
                 <span className="product-review-stars" aria-hidden="true">★★★★★</span>
@@ -58,17 +58,27 @@ export default function ProductPage() {
               <div className="product-meta-strip">
                 <span><b>{product.size}</b> ОБ’ЄМ</span>
                 <span className="product-order-status"><i /> ДОСТУПНО ДО ЗАМОВЛЕННЯ</span>
-                <span>ДЛЯ ШИРОКОГО СПЕКТРА ТИПІВ ШКІРИ</span>
+                <span>ДЛЯ ДЕЛІКАТНОГО ЩОДЕННОГО ДОГЛЯДУ</span>
               </div>
 
               <div className="product-quick-facts product-quick-facts-icons">
-                <div><FactIcon type="drop"/><span>ЗВОЛОЖЕННЯ</span><strong>Підтримує комфорт делікатної зони</strong></div>
+                <div><FactIcon type="drop"/><span>ЗВОЛОЖЕННЯ</span><strong>Комфорт для делікатної зони</strong></div>
                 <div><FactIcon type="spark"/><span>АНТИОКСИДАНТИ</span><strong>Вітаміни C + E</strong></div>
-                <div><FactIcon type="eye"/><span>ТЕКСТУРА</span><strong>Насичений крем</strong></div>
+                <div><FactIcon type="eye"/><span>ВІДЧУТТЯ</span><strong>Насичена кремова текстура</strong></div>
+              </div>
+
+              <div className="product-for-whom">
+                <div className="product-for-whom-head"><span>ДЛЯ КОГО ЦЕЙ ЗАСІБ</span><strong>Коли хочеться більше комфорту й делікатності у щоденному догляді.</strong></div>
+                <div className="product-for-whom-grid">
+                  <span>Сухість і відчуття стягнення</span>
+                  <span>Делікатна зона навколо очей</span>
+                  <span>М’який доглянутий вигляд</span>
+                  <span>Окремий етап у щоденній рутині</span>
+                </div>
               </div>
 
               <div className="product-consult-inline-v2">
-                <div><span>НЕ ВПЕВНЕНІ У ВИБОРІ?</span><strong>Перевіримо сумісність перед покупкою.</strong></div>
+                <div><span>НЕ ВПЕВНЕНІ У ВИБОРІ?</span><strong>Перевіримо сумісність і допоможемо зробити догляд спокійнішим.</strong></div>
                 <Link href="/consultation">Підібрати догляд →</Link>
               </div>
 
@@ -83,7 +93,7 @@ export default function ProductPage() {
                     <small>Офіційний продукт · контроль зберігання</small>
                   </div>
                 </div>
-
+                <div className="product-ritual-microcopy"><span>ЩОДЕННИЙ РИТУАЛ</span><strong>Делікатний етап у вашому догляді.</strong></div>
                 <ProductActions />
                 <div className="product-shipping-line"><span>ДОСТАВКА</span><strong>Безкоштовно від 5000 грн</strong></div>
               </div>
@@ -116,11 +126,11 @@ export default function ProductPage() {
 
       <section className="product-ritual-crosssell product-ritual-crosssell-priority">
         <div className="shell">
-          <div className="product-ritual-head"><span>ЗАВЕРШІТЬ РИТУАЛ</span><h2>Не набір баночок.<br/>Послідовна система.</h2><p>Побудуйте логічну послідовність навколо активів, які вже є у вашій схемі, або перевірте сумісність із косметологом RESET.</p></div>
+          <div className="product-ritual-head"><span>ДОПОВНІТЬ СВІЙ РИТУАЛ</span><h2>Догляд, у якому<br/>кожен крок має сенс.</h2><p>Побудуйте м’яку й послідовну схему навколо засобів, які вже є у вашій рутині, або перевірте сумісність із косметологом RESET.</p></div>
           <div className="product-ritual-grid">
-            <Link href="/face" className="product-ritual-card"><span>01</span><strong>Очищення</strong><p>Підготуйте шкіру до наступних етапів.</p><b>Підібрати →</b></Link>
+            <Link href="/face" className="product-ritual-card"><span>01</span><strong>Очищення</strong><p>Делікатно підготуйте шкіру до наступних етапів.</p><b>Підібрати →</b></Link>
             <div className="product-ritual-card is-current"><span>02 · ЦЕЙ ПРОДУКТ</span><strong>Зона навколо очей</strong><p>{product.name}</p><b>{product.size}</b></div>
-            <Link href="/consultation" className="product-ritual-card"><span>03</span><strong>Крем / SPF</strong><p>Завершальний етап підбирається під вашу схему.</p><b>Перевірити сумісність →</b></Link>
+            <Link href="/consultation" className="product-ritual-card"><span>03</span><strong>Крем / SPF</strong><p>Завершальний етап підбирається під вашу індивідуальну схему.</p><b>Перевірити сумісність →</b></Link>
           </div>
         </div>
       </section>
@@ -148,13 +158,13 @@ export default function ProductPage() {
       <section className="product-signature-band">
         <div className="shell product-signature-grid">
           <div>
-            <span>RESET PRODUCT LOGIC</span>
-            <h2>Один засіб.<br/>Чітка роль у схемі.</h2>
+            <span>RESET CARE PHILOSOPHY</span>
+            <h2>Менше випадковості.<br/>Більше турботи.</h2>
           </div>
           <div className="product-signature-points">
-            <article><span>01</span><div><strong>Для делікатної зони</strong><p>Окремий етап догляду без перевантаження рутини.</p></div></article>
-            <article><span>02</span><div><strong>Антиоксидантний фокус</strong><p>Вітаміни C та E у насиченій кремовій текстурі.</p></div></article>
-            <article><span>03</span><div><strong>Сумісність важлива</strong><p>Активну схему краще перевірити перед покупкою.</p></div></article>
+            <article><span>01</span><div><strong>Для делікатної зони</strong><p>Окремий етап догляду без перевантаження щоденної рутини.</p></div></article>
+            <article><span>02</span><div><strong>Комфорт у текстурі</strong><p>Насичена кремова текстура для відчуття м’якості та доглянутості.</p></div></article>
+            <article><span>03</span><div><strong>Підбір має значення</strong><p>Активну схему краще перевірити перед покупкою — особливо для делікатних зон.</p></div></article>
           </div>
         </div>
       </section>
@@ -162,7 +172,7 @@ export default function ProductPage() {
       <RealTrustLayer />
 
       <section className="home-consult-cta">
-        <div className="shell home-consult-inner"><div><span>НЕ ХОЧЕТЕ ВГАДУВАТИ?</span><h2>За 2 хвилини звузьте вибір і зрозумійте, що варто уточнити у косметолога.</h2></div><Link href="/consultation">Пройти підбір →</Link></div>
+        <div className="shell home-consult-inner"><div><span>ДОГЛЯД БЕЗ ВГАДУВАНЬ</span><h2>Звузьте вибір за 2 хвилини й отримайте більш спокійний шлях до своєї рутини.</h2></div><Link href="/consultation">Пройти підбір →</Link></div>
       </section>
     </div>
   );
