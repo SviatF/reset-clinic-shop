@@ -1,1 +1,0 @@
-Temporary storefront interaction inspector used during the native React migration.
