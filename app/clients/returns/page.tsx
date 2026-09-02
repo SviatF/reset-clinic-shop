@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import certMain from "@/assets/img/certificak-main2.webp";
+import certificateMain from "@/assets/img/main-certificate.webp";
 import buyInHandImg from "@/assets/img/buyinhand.webp";
 import { TrustStrip } from "@/components/MarketingBlocks";
 
@@ -12,7 +12,7 @@ export default function ReturnsPage() {
     <div className="inner-page returns-page">
       <section className="returns-hero shell">
         <div><span className="editorial-kicker">ПОЛІТИКА ЯКОСТІ ~</span><h1>Безпека продукту важливіша за формальне «повернення».</h1><p>Косметика належної якості не підлягає обміну або поверненню. Це правило захищає вас: кожен продукт, який ви отримуєте, має бути новим, не відкритим і не використаним сторонніми особами.</p></div>
-        <div className="returns-visual returns-cert-square"><Image src={certMain} alt="Подарунковий сертифікат RESET Clinic" priority /></div>
+        <div className="returns-visual returns-cert-square"><Image src={certificateMain} alt="Основний сертифікат RESET Clinic" priority /></div>
       </section>
 
       <section className="quality-check shell"><div className="quality-image"><Image src={buyInHandImg} alt="Перевірене замовлення RESET Clinic" /></div><div className="quality-copy"><span>ПЕРЕД ВІДПРАВКОЮ</span><h2>Ми перевіряємо кожен флакон.</h2><ul><li>термін придатності;</li><li>цілісність флакона й коробки;</li><li>герметичність кришки;</li><li>надійність пакування для транспортування.</li></ul></div></section>
