@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./refinements.css";
 import "./secondary-pages.css";
+import "./certificate-fixes.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
