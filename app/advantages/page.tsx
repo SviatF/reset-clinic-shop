@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import certMain from "@/assets/img/certificak-main2.webp";
-import certSecond from "@/assets/img/certificat-second.webp";
+import certificateMain from "@/assets/img/main-certificate.webp";
+import certificateBox from "@/assets/img/certificak-main2.webp";
 import partnersImg from "@/assets/img/our-partners.webp";
 import buyInHandImg from "@/assets/img/buyinhand.webp";
 import { Arrow, TrustStrip } from "@/components/MarketingBlocks";
@@ -22,7 +22,7 @@ export default function AdvantagesPage() {
     <div className="inner-page advantages-page">
       <section className="advantages-hero shell">
         <div><span className="editorial-kicker">НАШІ ~ ПЕРЕВАГИ</span><h1>Професійна косметика — інвестиція у здоров’я вашої шкіри.</h1><p>Ми поєднали магазин, експертність клініки та контроль якості в одному досвіді покупки.</p><Link className="black-button" href="/catalog">Купувати професійно <Arrow /></Link></div>
-        <div className="cert-stack"><Image className="cert-one" src={certMain} alt="Сертифікат RESET Clinic" /><Image className="cert-two" src={certSecond} alt="Підтвердження сертифікації" /></div>
+        <div className="cert-stack cert-stack-correct"><Image className="cert-one" src={certificateMain} alt="Основний сертифікат RESET Clinic" priority /><Image className="cert-two" src={certificateBox} alt="Подарункова коробка RESET Clinic" /></div>
       </section>
 
       <section className="benefits-ledger shell">
