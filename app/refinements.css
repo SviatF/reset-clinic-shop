@@ -1,41 +1,122 @@
-/* Desktop visual calibration against the supplied RESET reference screenshots.
-   Kept separate from the base stylesheet so the native responsive system stays intact. */
+/* Desktop calibration against the supplied RESET reference screenshots. */
 @media (min-width: 981px) {
-  /* Header: slightly tighter than the first pass. */
+  /* The reference uses a much narrower centered content rail. */
+  .shell {
+    width: min(calc(100% - 64px), 1272px);
+  }
+
+  /* Header */
   .site-header {
-    height: 104px;
+    height: 96px;
+    background: #fafaf6;
   }
 
   .header-inner {
-    height: 101px;
-    grid-template-columns: 205px 1fr 178px;
+    height: 93px;
+    grid-template-columns: 170px 1fr 150px;
   }
 
   .brand,
   .brand img {
-    width: 124px;
+    width: 104px;
   }
 
   .desktop-nav {
-    gap: 42px;
+    gap: 36px;
+  }
+
+  .desktop-nav a {
+    font-size: 12px;
   }
 
   .header-actions {
-    gap: 18px;
+    gap: 15px;
   }
 
-  /* Hero: preserve section/card proportions, but reveal more of the upper image.
-     A lower crop matches the original screenshot where the bottles sit lower. */
+  .icon-btn {
+    width: 29px;
+    height: 29px;
+  }
+
+  .icon-btn svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  /* Hero: reference is substantially shorter and the source photo sits lower. */
+  .hero {
+    height: 665px;
+  }
+
   .hero-bg {
-    object-position: center 39% !important;
+    object-position: center 25% !important;
   }
 
   .hero-shell {
-    padding-top: 165px;
+    padding-top: 150px;
   }
 
-  /* Recommendation block: remove excessive dead space and make the actual
-     product fill the image cell rather than looking like a tiny thumbnail. */
+  .hero-card {
+    width: 435px;
+    padding: 40px 40px 52px;
+    border-radius: 4px;
+  }
+
+  .hero-card:after {
+    bottom: -30px;
+    border-top-width: 30px;
+    border-right-width: 30px;
+  }
+
+  .hero-card h1 {
+    font-size: 32px;
+    line-height: 1.08;
+    letter-spacing: -.8px;
+    margin-bottom: 22px;
+  }
+
+  .hero-card p {
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 355px;
+    margin-bottom: 24px;
+  }
+
+  .hero-card .black-button {
+    min-height: 48px;
+    padding: 0 20px;
+    font-size: 14px;
+    gap: 20px;
+  }
+
+  /* Benefit strip directly under hero. */
+  .benefit-strip {
+    height: 128px;
+  }
+
+  .benefit-grid {
+    padding: 0 70px;
+    gap: 58px;
+  }
+
+  .benefit {
+    gap: 18px;
+  }
+
+  .benefit > svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .benefit strong {
+    font-size: 15px;
+  }
+
+  .benefit span {
+    font-size: 13px;
+  }
+
+  /* Recommendation block: tighter rhythm and larger actual product. */
   .recommend-section {
     padding-top: 52px;
     padding-bottom: 72px;
@@ -72,37 +153,47 @@
     margin-top: 46px;
   }
 
+  /* Promo/editorial block follows the same narrower rail as the reference. */
+  .promo-shell {
+    max-width: 1272px;
+  }
+
   /* Slightly more compact service/footer area. */
   .service-strip {
     padding-top: 32px;
     padding-bottom: 35px;
   }
 
+  .service-grid {
+    padding: 0 38px;
+    gap: 70px;
+  }
+
   .footer-shell {
-    padding-top: 82px;
+    padding-top: 76px;
   }
 
   .footer-logo {
-    width: 205px;
+    width: 190px;
   }
 
   .footer-categories {
-    margin-top: 70px;
-    gap: 58px;
-    font-size: 27px;
+    margin-top: 64px;
+    gap: 54px;
+    font-size: 26px;
   }
 
   .footer-categories span {
-    width: 54px;
+    width: 50px;
   }
 
   .footer-main {
-    margin-top: 64px;
-    padding-bottom: 31px;
+    margin-top: 58px;
+    padding-bottom: 29px;
   }
 
   .footer-contact {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .footer-column,
@@ -112,6 +203,6 @@
   }
 
   .footer-bottom {
-    min-height: 78px;
+    min-height: 74px;
   }
 }
