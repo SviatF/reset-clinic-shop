@@ -1,4 +1,5 @@
-/* Certificate imagery fixes for the new wide certificak-main2.webp asset. */
+/* Certificate imagery rules: main-certificate.webp is always the primary certificate artwork.
+   certificak-main2.webp is only used as the secondary box image in two-image compositions. */
 
 .certificate-page .certificate-art.certificate-art-single {
   position: relative;
@@ -7,6 +8,7 @@
   background: #eceae2;
   display: grid;
   place-items: center;
+  padding: 34px;
 }
 
 .certificate-page .certificate-art.certificate-art-single img,
@@ -18,10 +20,41 @@
   height: 100% !important;
   max-width: none !important;
   max-height: none !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
   transform: none !important;
   box-shadow: none !important;
+}
+
+/* Advantages: primary certificate + secondary branded box, never duplicate imagery. */
+.advantages-page .cert-stack.cert-stack-correct {
+  position: relative;
+  height: 540px;
+}
+
+.advantages-page .cert-stack.cert-stack-correct img {
+  position: absolute;
+  object-fit: contain;
+  object-position: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,.08);
+}
+
+.advantages-page .cert-stack.cert-stack-correct .cert-one {
+  width: 72%;
+  max-height: 82%;
+  left: 0;
+  top: 26px;
+  transform: rotate(-3deg);
+  z-index: 2;
+}
+
+.advantages-page .cert-stack.cert-stack-correct .cert-two {
+  width: 54%;
+  max-height: 66%;
+  right: 0;
+  bottom: 24px;
+  transform: rotate(4deg);
+  z-index: 3;
 }
 
 .returns-page .returns-visual.returns-cert-square {
@@ -51,6 +84,12 @@
     height: 430px;
   }
 
+  .advantages-page .cert-stack.cert-stack-correct {
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
   .returns-page .returns-visual.returns-cert-square {
     max-width: 560px;
     margin: 0 auto;
@@ -60,6 +99,21 @@
 @media (max-width: 640px) {
   .certificate-page .certificate-art.certificate-art-single {
     height: 320px;
+    padding: 20px;
+  }
+
+  .advantages-page .cert-stack.cert-stack-correct {
+    height: 390px;
+  }
+
+  .advantages-page .cert-stack.cert-stack-correct .cert-one {
+    width: 78%;
+    top: 20px;
+  }
+
+  .advantages-page .cert-stack.cert-stack-correct .cert-two {
+    width: 58%;
+    bottom: 20px;
   }
 
   .returns-page .returns-visual.returns-cert-square {
