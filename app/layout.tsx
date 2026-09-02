@@ -19,6 +19,7 @@ import "./final-premium-polish.css";
 import "./product-card-note-fix.css";
 import "./product-audit-polish.css";
 import "./product-conversion-final.css";
+import "./product-compact-20.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
