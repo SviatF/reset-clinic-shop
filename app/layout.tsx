@@ -12,10 +12,13 @@ import "./premium-product-cards-compat.css";
 import "./ultra-premium.css";
 import "./precision-premium.css";
 import "./precision-card-motion.css";
+import "./consultation-premium.css";
+import "./premium-motion.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ConsultationDock from "@/components/ConsultationDock";
+import PremiumMotion from "@/components/PremiumMotion";
 import { CartProvider } from "@/components/CartProvider";
 
 export const metadata: Metadata = {
@@ -35,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Footer />
           <ConsultationDock />
           <CartDrawer />
+          <PremiumMotion />
         </CartProvider>
       </body>
     </html>
