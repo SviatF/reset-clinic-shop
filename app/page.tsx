@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import hero from "@/assets/img/hero-ph.webp";
@@ -8,7 +9,14 @@ import block1 from "@/assets/img/block1.webp";
 import block2 from "@/assets/img/block2.webp";
 import block3 from "@/assets/img/block3.webp";
 import PremiumProductCard from "@/components/PremiumProductCard";
-import { productHref } from "@/lib/product";
+import { getStoreProducts } from "@/lib/store-products";
+import { isSupabaseConfigured } from "@/lib/supabase-rest";
+
+export const metadata: Metadata = {
+  title: "Професійна косметика та підбір догляду",
+  description: "Професійна косметика для обличчя, тіла та волосся від RESET Clinic у Львові. Оригінальна продукція, підбір косметолога та доставка по Україні.",
+  alternates: { canonical: "/" },
+};
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -17,15 +25,20 @@ function Arrow() {
   return <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M0 8h38M31 1l7 7-7 7" /></svg>;
 }
 
-const recommendations = Array.from({ length: 8 });
-
 const directions = [
   { href: "/face", image: faceImg, title: "Обличчя", note: "Щоденний догляд, активи та SPF" },
   { href: "/body", image: bodyImg, title: "Тіло", note: "Зволоження, відновлення та комфорт" },
   { href: "/hair", image: hairImg, title: "Волосся", note: "Шкіра голови, довжина та захист" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  let recommendations = await getStoreProducts({ featured: true, limit: 8 });
+  if (!recommendations.length) recommendations = await getStoreProducts({ limit: 8 });
+  const visibleProducts = isSupabaseConfigured()
+    ? recommendations
+    : Array.from({ length: 8 }).map((_, index) => recommendations[index % recommendations.length]);
+  const featureHref = visibleProducts[0] ? `/product/${visibleProducts[0].slug}` : "/face";
+
   return (
     <>
       <section className="precision-hero" id="home">
@@ -80,11 +93,11 @@ export default function HomePage() {
         <div className="shell">
           <div className="precision-section-head precision-products-head">
             <div><span>RESET РЕКОМЕНДУЄ</span><h2>Засоби для щоденного догляду</h2></div>
-            <Link href="/face">Переглянути каталог <b>↗</b></Link>
+            <Link href="/catalog">Переглянути каталог <b>↗</b></Link>
           </div>
-          <div className="precision-filter-row"><button className="active">Рекомендовані</button><button>Обличчя</button><button>Нове</button></div>
+          <div className="precision-filter-row"><button className="active">Рекомендовані</button><Link href="/face">Обличчя</Link><Link href="/catalog">Нове</Link></div>
           <div className="products-grid precision-product-grid">
-            {recommendations.map((_, index) => <PremiumProductCard key={index} index={index + 1} />)}
+            {visibleProducts.map((item, index) => <PremiumProductCard key={`${item.slug}-${index}`} index={index + 1} productData={item} />)}
           </div>
         </div>
       </section>
@@ -93,11 +106,11 @@ export default function HomePage() {
         <div className="shell">
           <div className="precision-section-head"><div><span>ДОБІРКИ RESET</span><h2>Догляд без випадкових покупок</h2></div><p>Ми не намагаємось продати більше засобів. Завдання — зібрати зрозумілу систему, де кожен продукт має свою роль.</p></div>
           <div className="precision-feature-grid">
-            <Link href={productHref} className="precision-feature precision-feature-large">
+            <Link href={featureHref} className="precision-feature precision-feature-large">
               <Image src={block1} alt="Добірка професійної косметики" fill sizes="(max-width: 800px) 100vw, 62vw" />
               <div className="precision-feature-overlay"><span>НОВЕ В RESET</span><h3>Професійні засоби для холодного сезону</h3><b>Переглянути добірку ↗</b></div>
             </Link>
-            <Link href={productHref} className="precision-feature precision-feature-small">
+            <Link href="/face" className="precision-feature precision-feature-small">
               <Image src={block2} alt="Професійний догляд для сяйва" fill sizes="(max-width: 800px) 100vw, 38vw" />
               <div className="precision-feature-overlay"><span>ФОКУС</span><h3>Догляд для рівного тону та сяйва</h3><b>Переглянути ↗</b></div>
             </Link>
