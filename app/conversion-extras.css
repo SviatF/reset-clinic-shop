@@ -64,6 +64,11 @@
 .promo-card:hover > img,
 .consultation-image:hover img { transform: scale(1.018); }
 
+/* Checkout deliberately removes browsing distractions. */
+body:has(.checkout-page) .site-header,
+body:has(.checkout-page) .footer { display: none; }
+body:has(.checkout-page) main { min-height: 100vh; }
+
 @media (hover: none) {
   .quick-add {
     position: static;
@@ -77,4 +82,15 @@
 @media (max-width: 640px) {
   .hero-consult-link { font-size: 10px; line-height: 1.4; }
   .quick-add { min-height: 39px; font-size: 10px; }
+  .product-detail-panel .product-actions-panel {
+    position: sticky;
+    bottom: 0;
+    z-index: 25;
+    background: rgba(247,246,238,.95);
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    box-shadow: 0 -12px 30px rgba(0,0,0,.06);
+  }
 }
