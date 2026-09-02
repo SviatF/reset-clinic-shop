@@ -65,6 +65,22 @@
   text-underline-offset:4px;
 }
 
+/* Purchase decision appears immediately after social proof. */
+.product-page-audit-v2 .product-premium-detail{
+  display:flex!important;
+  flex-direction:column!important;
+}
+.product-page-audit-v2 .product-premium-detail>.eyebrow{order:1}
+.product-page-audit-v2 .product-premium-detail>h1{order:2}
+.product-page-audit-v2 .product-premium-detail>.product-benefit-lead{order:3}
+.product-page-audit-v2 .product-premium-detail>.product-review-signal{order:4}
+.product-page-audit-v2 .product-premium-detail>.product-purchase-deck{order:5;margin:22px 0 26px!important}
+.product-page-audit-v2 .product-premium-detail>.product-meta-strip{order:6;margin:0 0 28px!important}
+.product-page-audit-v2 .product-premium-detail>.product-quick-facts{order:7}
+.product-page-audit-v2 .product-premium-detail>.product-consult-inline-v2{order:8}
+.product-page-audit-v2 .product-premium-detail>.product-detail-disclosures{order:9}
+.product-page-audit-v2 .product-premium-detail>.product-assurance-grid{order:10}
+
 .product-ritual-crosssell-priority{
   border-top:1px solid #c9c5bd;
   border-bottom:1px solid #c9c5bd;
@@ -157,6 +173,8 @@
 @media(max-width:700px){
   .product-review-signal{margin-top:14px;gap:6px 8px}
   .product-review-signal>a{margin-left:0;width:100%;margin-top:2px}
+  .product-page-audit-v2 .product-premium-detail>.product-purchase-deck{margin:18px 0 22px!important}
+  .product-page-audit-v2 .product-premium-detail>.product-meta-strip{margin:0 0 22px!important}
   .product-page-audit-v2 .product-price-number{font-size:42px!important}
   .manufacturer-review-section{padding:62px 0}
   .manufacturer-review-heading h2{font-size:66px}
