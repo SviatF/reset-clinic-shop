@@ -1,24 +1,17 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import type { ActivityRecord, OrderRecord, ProductRecord } from "@/lib/commerce-types";
-import { dbSelect, isSupabaseConfigured } from "@/lib/supabase-rest";
+import { readActivity, readOrders, readProducts } from "@/lib/commerce-json";
+import { jsonStoreWriteConfigured } from "@/lib/json-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ configured: false, metrics: null, recentOrders: [], activity: [] });
-  }
-
   try {
-    const [products, orders, activity] = await Promise.all([
-      dbSelect<ProductRecord>("products", "select=*&order=created_at.desc"),
-      dbSelect<OrderRecord>("orders", "select=*&order=created_at.desc&limit=500"),
-      dbSelect<ActivityRecord>("activity_events", "select=*&order=created_at.desc&limit=30"),
-    ]);
-
+    const [products, rawOrders, rawActivity] = await Promise.all([readProducts(), readOrders(), readActivity()]);
+    const orders = [...rawOrders].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    const activity = [...rawActivity].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 30);
     const paid = orders.filter((order) => order.payment_status === "success" || ["paid","processing","shipped","completed"].includes(order.status));
     const revenue = paid.reduce((sum, order) => sum + Number(order.total || 0), 0);
     const now = new Date();
@@ -26,10 +19,10 @@ export async function GET() {
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
     const monthPaid = paid.filter((order) => new Date(order.paid_at || order.created_at).getTime() >= monthStart);
     const todayOrders = orders.filter((order) => new Date(order.created_at).getTime() >= todayStart);
-    const lowStock = products.filter((product) => product.status === "active" && product.track_stock && product.stock_quantity <= 5);
-
+    const lowStock = products.filter((product) => product.status === "active" && product.track_stock && Number(product.stock_quantity) <= 5);
     return NextResponse.json({
       configured: true,
+      writable: jsonStoreWriteConfigured(),
       metrics: {
         revenue,
         monthRevenue: monthPaid.reduce((sum, order) => sum + Number(order.total || 0), 0),
@@ -47,6 +40,6 @@ export async function GET() {
       activity,
     });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "DB error" }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "JSON read error" }, { status: 500 });
   }
 }
