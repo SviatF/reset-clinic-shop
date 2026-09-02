@@ -13,22 +13,32 @@ function sessionSecret() {
   return secret;
 }
 
-function sign(exp: string) {
-  return createHmac("sha256", sessionSecret()).update(exp).digest("hex");
-}
-
-export function verifyAdminPassword(value: string) {
-  const expected = process.env.ADMIN_PASSWORD;
-  if (!expected) return false;
-  const left = Buffer.from(value);
-  const right = Buffer.from(expected);
+function safeEqual(leftValue: string, rightValue: string) {
+  const left = Buffer.from(leftValue);
+  const right = Buffer.from(rightValue);
   return left.length === right.length && timingSafeEqual(left, right);
 }
 
-export async function createAdminSession() {
+function sign(exp: string, login: string) {
+  return createHmac("sha256", sessionSecret()).update(`${exp}.${login}`).digest("hex");
+}
+
+export function adminCredentialsConfigured() {
+  return Boolean(process.env.ADMIN_LOGIN && process.env.ADMIN_PASS && process.env.ADMIN_SESSION_SECRET);
+}
+
+export function verifyAdminCredentials(login: string, pass: string) {
+  const expectedLogin = process.env.ADMIN_LOGIN || "";
+  const expectedPass = process.env.ADMIN_PASS || "";
+  if (!expectedLogin || !expectedPass || !process.env.ADMIN_SESSION_SECRET) return false;
+  return safeEqual(login, expectedLogin) && safeEqual(pass, expectedPass);
+}
+
+export async function createAdminSession(login: string) {
   const store = await cookies();
   const exp = String(Math.floor(Date.now() / 1000) + SESSION_SECONDS);
-  store.set(COOKIE_NAME, `${exp}.${sign(exp)}`, {
+  const encodedLogin = Buffer.from(login, "utf8").toString("base64url");
+  store.set(COOKIE_NAME, `${exp}.${encodedLogin}.${sign(exp, login)}`, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -53,9 +63,12 @@ export async function isAdminAuthenticated() {
     const store = await cookies();
     const raw = store.get(COOKIE_NAME)?.value;
     if (!raw) return false;
-    const [exp, signature] = raw.split(".");
-    if (!exp || !signature || Number(exp) <= Math.floor(Date.now() / 1000)) return false;
-    const expected = Buffer.from(sign(exp));
+    const [exp, encodedLogin, signature] = raw.split(".");
+    if (!exp || !encodedLogin || !signature || Number(exp) <= Math.floor(Date.now() / 1000)) return false;
+    const login = Buffer.from(encodedLogin, "base64url").toString("utf8");
+    const configuredLogin = process.env.ADMIN_LOGIN || "";
+    if (!configuredLogin || !safeEqual(login, configuredLogin)) return false;
+    const expected = Buffer.from(sign(exp, login));
     const actual = Buffer.from(signature);
     return expected.length === actual.length && timingSafeEqual(expected, actual);
   } catch {
