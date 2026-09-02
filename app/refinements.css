@@ -1,6 +1,6 @@
-/* Desktop calibration against the supplied RESET reference screenshots. */
+/* Visual calibration against the supplied RESET reference screenshots. */
 @media (min-width: 981px) {
-  /* The reference uses a much narrower centered content rail. */
+  /* Centered desktop content rail. */
   .shell {
     width: min(calc(100% - 64px), 1272px);
   }
@@ -43,7 +43,7 @@
     height: 25px;
   }
 
-  /* Hero: reference is substantially shorter and the source photo sits lower. */
+  /* Hero */
   .hero {
     height: 665px;
   }
@@ -116,10 +116,47 @@
     font-size: 13px;
   }
 
-  /* Recommendation block: tighter rhythm and larger actual product. */
+  /* Categories: keep the full composition inside one desktop viewport. */
+  .categories-section {
+    height: min(760px, calc(100svh - 96px));
+    min-height: 670px;
+  }
+
+  .categories-shell h2 {
+    top: 42px;
+    font-size: 48px;
+    line-height: .98;
+    letter-spacing: -1.8px;
+  }
+
+  .category-card {
+    width: clamp(230px, 17vw, 265px);
+    gap: 12px;
+  }
+
+  .category-card strong {
+    font-size: 16px;
+  }
+
+  .body-card {
+    left: 8.5%;
+    top: 185px;
+  }
+
+  .face-card {
+    left: 50%;
+    top: 270px;
+  }
+
+  .hair-card {
+    right: 8.5%;
+    top: 135px;
+  }
+
+  /* Recommendation block: smaller product photography and tighter rhythm. */
   .recommend-section {
     padding-top: 52px;
-    padding-bottom: 72px;
+    padding-bottom: 64px;
   }
 
   .recommend-shell h2 {
@@ -128,37 +165,112 @@
 
   .tabs {
     margin-top: 34px;
-    margin-bottom: 58px;
+    margin-bottom: 52px;
   }
 
   .product-image {
-    height: 270px;
-    padding: 22px;
+    height: 260px;
+    padding: 24px;
     overflow: hidden;
   }
 
   .product-image img {
     max-width: 88%;
     max-height: 88%;
-    transform: scale(2.15);
+    transform: scale(1.62);
     transform-origin: center;
   }
 
   .product-copy {
-    min-height: 100px;
-    padding: 20px 26px 18px;
+    min-height: 96px;
+    padding: 19px 24px 17px;
   }
 
   .centered-button {
-    margin-top: 46px;
+    margin-top: 42px;
   }
 
-  /* Promo/editorial block follows the same narrower rail as the reference. */
+  /* Promo/editorial area: roughly 30% more compact than the first pass. */
+  .promo-section {
+    padding: 6px 0 62px;
+  }
+
   .promo-shell {
-    max-width: 1272px;
+    max-width: 1060px;
   }
 
-  /* Slightly more compact service/footer area. */
+  .promo-grid {
+    gap: 42px;
+    margin-top: 54px;
+  }
+
+  .promo-card {
+    height: 390px;
+  }
+
+  .promo-copy {
+    padding: 30px 28px;
+  }
+
+  .promo-copy > span {
+    font-size: 13px;
+  }
+
+  .promo-copy h3 {
+    font-size: 29px;
+    line-height: 1.08;
+    letter-spacing: -.7px;
+    margin: 16px 0 20px;
+  }
+
+  .light-button {
+    min-height: 42px;
+    padding: 0 17px;
+    font-size: 12px;
+  }
+
+  .editorial-row {
+    gap: 42px;
+    margin-top: 42px;
+  }
+
+  .editorial-copy {
+    padding: 18px 26px;
+  }
+
+  .editorial-copy h3 {
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -.7px;
+    margin-bottom: 25px;
+  }
+
+  .editorial-copy p {
+    font-size: 14px;
+    line-height: 1.45;
+    max-width: 365px;
+    margin-bottom: 13px;
+  }
+
+  .editorial-copy .black-button {
+    min-height: 46px;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+
+  .circle-copy {
+    width: 116px;
+    height: 116px;
+    left: -58px;
+    top: 48px;
+  }
+
+  .circle-copy text {
+    font-size: 10px;
+    letter-spacing: 4px;
+  }
+
+  /* Compact service/footer area. */
   .service-strip {
     padding-top: 32px;
     padding-bottom: 35px;
@@ -204,5 +316,88 @@
 
   .footer-bottom {
     min-height: 74px;
+  }
+}
+
+/* Tablet: categories become a balanced two-column grid without absolute overflow. */
+@media (min-width: 641px) and (max-width: 980px) {
+  .categories-section {
+    padding: 54px 0 68px;
+  }
+
+  .categories-shell {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 34px;
+    align-items: start;
+  }
+
+  .categories-shell h2 {
+    font-size: 43px;
+    margin-bottom: 6px;
+  }
+
+  .category-card {
+    max-width: 310px;
+    justify-self: center;
+  }
+
+  .hair-card {
+    width: 100%;
+    max-width: 310px;
+  }
+
+  .promo-shell {
+    width: min(calc(100% - 44px), 780px);
+  }
+
+  .promo-card {
+    height: 470px;
+  }
+}
+
+/* Mobile: clean single-column flow, no clipping or oversized imagery. */
+@media (max-width: 640px) {
+  .categories-section {
+    padding: 48px 0 64px;
+  }
+
+  .categories-shell {
+    gap: 26px;
+  }
+
+  .categories-shell h2 {
+    font-size: 38px;
+    margin-bottom: 4px;
+  }
+
+  .category-card {
+    width: min(82vw, 330px);
+    gap: 10px;
+  }
+
+  .category-card strong {
+    font-size: 15px;
+  }
+
+  .product-image img {
+    transform: none;
+    max-width: 72%;
+    max-height: 72%;
+  }
+
+  .promo-section {
+    padding-bottom: 58px;
+  }
+
+  .promo-card {
+    height: 360px;
+  }
+
+  .promo-copy h3 {
+    font-size: 27px;
+  }
+
+  .editorial-row {
+    margin-top: 34px;
   }
 }
