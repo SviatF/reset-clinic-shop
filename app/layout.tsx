@@ -8,6 +8,7 @@ import "./conversion-extras.css";
 import "./account-conversion.css";
 import "./trust-layer.css";
 import "./premium-product-cards.css";
+import "./premium-product-cards-compat.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
