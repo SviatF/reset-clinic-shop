@@ -9,6 +9,7 @@ import "./account-conversion.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import ConsultationDock from "@/components/ConsultationDock";
 import { CartProvider } from "@/components/CartProvider";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Header />
           <main>{children}</main>
           <Footer />
+          <ConsultationDock />
           <CartDrawer />
         </CartProvider>
       </body>
