@@ -1,17 +1,21 @@
 import { NextResponse } from "next/server";
-import { createAdminSession, verifyAdminPassword } from "@/lib/admin-auth";
+import { adminCredentialsConfigured, createAdminSession, verifyAdminCredentials } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const password = typeof body?.password === "string" ? body.password : "";
-    if (!verifyAdminPassword(password)) {
-      return NextResponse.json({ error: "Невірний пароль" }, { status: 401 });
+    if (!adminCredentialsConfigured()) {
+      return NextResponse.json({ error: "ADMIN_LOGIN / ADMIN_PASS / ADMIN_SESSION_SECRET не налаштовані" }, { status: 503 });
     }
-    await createAdminSession();
+    const body = await request.json();
+    const login = typeof body?.login === "string" ? body.login.trim() : "";
+    const pass = typeof body?.pass === "string" ? body.pass : "";
+    if (!verifyAdminCredentials(login, pass)) {
+      return NextResponse.json({ error: "Невірний логін або пароль" }, { status: 401 });
+    }
+    await createAdminSession(login);
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: "Не вдалося увійти" }, { status: 500 });
