@@ -15,6 +15,7 @@ import "./precision-card-motion.css";
 import "./consultation-premium.css";
 import "./premium-motion.css";
 import "./commerce-polish.css";
+import "./final-premium-polish.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
