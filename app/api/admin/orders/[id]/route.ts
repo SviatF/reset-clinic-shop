@@ -6,7 +6,6 @@ import { jsonStoreWriteConfigured } from "@/lib/json-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
 const statuses = new Set(["new","awaiting_payment","paid","processing","shipped","completed","cancelled","refunded"]);
 
 export async function PATCH(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -20,15 +19,14 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     if (typeof body?.tracking_number === "string") changes.tracking_number = body.tracking_number.trim().slice(0, 120) || null;
     if (typeof body?.admin_notes === "string") changes.admin_notes = body.admin_notes.trim().slice(0, 3000) || null;
     if (!Object.keys(changes).length) return NextResponse.json({ error: "Немає змін" }, { status: 400 });
-    let updated: OrderRecord | null = null;
-    await mutateOrders(`Admin: update order ${id}`, (orders) => {
+    const nextOrders = await mutateOrders(`Admin: update order ${id}`, (orders) => {
       const index = orders.findIndex((item) => item.id === id);
       if (index < 0) throw new Error("Замовлення не знайдено");
-      updated = { ...orders[index], ...changes, updated_at: new Date().toISOString() };
       const copy = [...orders];
-      copy[index] = updated;
+      copy[index] = { ...copy[index], ...changes, updated_at: new Date().toISOString() } as OrderRecord;
       return copy;
     });
+    const updated = nextOrders.find((item) => item.id === id);
     if (!updated) return NextResponse.json({ error: "Замовлення не знайдено" }, { status: 404 });
     await appendActivity({ event_type: "order_updated", entity_type: "order", entity_id: id, title: `Замовлення ${updated.order_number}: ${updated.status}`, metadata: changes as Record<string, unknown> });
     return NextResponse.json({ order: updated });
