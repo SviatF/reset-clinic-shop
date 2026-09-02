@@ -1,14 +1,21 @@
 import "server-only";
 
 import { createPublicKey, verify } from "node:crypto";
-import { product } from "@/lib/product";
+import { getAllProductRecords } from "@/lib/store-products";
 
 const MONO_API = "https://api.monobank.ua";
 export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.vercel.app";
 
-export type CheckoutCartItem = {
+export type CheckoutCartItem = { slug: string; qty: number };
+
+export type NormalizedCheckoutItem = {
+  productId: string;
   slug: string;
+  name: string;
+  sku: string | null;
   qty: number;
+  unitAmount: number;
+  totalAmount: number;
 };
 
 export type MonoInvoiceStatus = {
@@ -22,11 +29,7 @@ export type MonoInvoiceStatus = {
   failureReason?: string;
   errCode?: string;
   modifiedDate?: string;
-  paymentInfo?: {
-    maskedPan?: string;
-    paymentSystem?: string;
-    paymentMethod?: string;
-  };
+  paymentInfo?: { maskedPan?: string; paymentSystem?: string; paymentMethod?: string };
 };
 
 function token() {
@@ -40,46 +43,47 @@ export async function monoFetch(path: string, init: RequestInit = {}) {
   headers.set("X-Token", token());
   headers.set("Accept", "application/json");
   if (init.body && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
-
-  return fetch(`${MONO_API}${path}`, {
-    ...init,
-    headers,
-    cache: "no-store",
-  });
+  return fetch(`${MONO_API}${path}`, { ...init, headers, cache: "no-store" });
 }
 
-export function normalizeOrder(items: CheckoutCartItem[]) {
+export async function normalizeOrder(items: CheckoutCartItem[]) {
   if (!Array.isArray(items) || !items.length) throw new Error("Кошик порожній");
-
-  const normalized = items.map((item) => {
-    if (item.slug !== product.slug) throw new Error("У кошику є невідомий товар");
+  const products = await getAllProductRecords();
+  const bySlug = new Map(products.filter((item) => item.status === "active").map((item) => [item.slug, item]));
+  const merged = new Map<string, number>();
+  for (const item of items) {
+    const slug = typeof item?.slug === "string" ? item.slug : "";
+    if (!slug || !bySlug.has(slug)) throw new Error("У кошику є недоступний товар");
     const qty = Math.max(1, Math.min(20, Math.trunc(Number(item.qty) || 1)));
-    const unitAmount = Math.round(product.price * 100);
-    return {
-      slug: product.slug,
-      name: product.name,
+    merged.set(slug, Math.min(20, (merged.get(slug) || 0) + qty));
+  }
+  const normalized: NormalizedCheckoutItem[] = [];
+  for (const [slug, qty] of merged) {
+    const item = bySlug.get(slug)!;
+    if (item.track_stock && Number(item.stock_quantity) < qty) throw new Error(`Недостатньо товару «${item.name}» у наявності`);
+    const unitAmount = Math.round(Number(item.price) * 100);
+    if (!Number.isFinite(unitAmount) || unitAmount <= 0) throw new Error(`Некоректна ціна товару «${item.name}»`);
+    normalized.push({
+      productId: item.id,
+      slug: item.slug,
+      name: item.name,
+      sku: item.sku,
       qty,
       unitAmount,
       totalAmount: unitAmount * qty,
-    };
-  });
-
-  return {
-    items: normalized,
-    amount: normalized.reduce((sum, item) => sum + item.totalAmount, 0),
-  };
+    });
+  }
+  return { items: normalized, amount: normalized.reduce((sum, item) => sum + item.totalAmount, 0) };
 }
 
 let cachedPublicKey: ReturnType<typeof createPublicKey> | null = null;
 
 async function fetchWebhookPublicKey(force = false) {
   if (cachedPublicKey && !force) return cachedPublicKey;
-
   const response = await monoFetch("/api/merchant/pubkey");
   if (!response.ok) throw new Error(`mono pubkey request failed: ${response.status}`);
   const data = (await response.json()) as { key?: string };
   if (!data.key) throw new Error("mono pubkey missing");
-
   const decoded = Buffer.from(data.key, "base64");
   const utf8 = decoded.toString("utf8");
   cachedPublicKey = createPublicKey(utf8.includes("BEGIN PUBLIC KEY") ? utf8 : decoded);
