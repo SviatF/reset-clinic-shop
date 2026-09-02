@@ -1,4 +1,4 @@
-/* Compact hover insight: floats over the product object, not below it. */
+/* Compact hover insight: floats below the product object without covering it. */
 @media (hover:hover) and (pointer:fine){
   .precision-product-grid .premium-hover-note,
   .category-product-grid .premium-hover-note{
@@ -10,7 +10,7 @@
     max-width:168px!important;
     left:auto!important;
     right:12px!important;
-    top:50%!important;
+    top:68%!important;
     bottom:auto!important;
     padding:10px 11px 10px!important;
     background:rgba(17,17,15,.94)!important;
