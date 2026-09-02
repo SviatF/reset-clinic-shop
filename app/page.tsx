@@ -4,12 +4,11 @@ import hero from "@/assets/img/hero-ph.webp";
 import bodyImg from "@/assets/img/body.webp";
 import faceImg from "@/assets/img/face.webp";
 import hairImg from "@/assets/img/hair.webp";
-import productImg from "@/assets/img/tovar1.webp";
 import block1 from "@/assets/img/block1.webp";
 import block2 from "@/assets/img/block2.webp";
 import block3 from "@/assets/img/block3.webp";
-import QuickAddButton from "@/components/QuickAddButton";
-import { product, productHref } from "@/lib/product";
+import PremiumProductCard from "@/components/PremiumProductCard";
+import { productHref } from "@/lib/product";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -39,18 +38,13 @@ export default function HomePage() {
 
       <section className="categories-section"><div className="categories-shell shell"><h2>Оберіть<br />категорію</h2><Link href="/body" className="category-card body-card" id="body"><Image src={bodyImg} alt="Тіло" sizes="(max-width: 768px) 86vw, 330px" /><strong>ТІЛО</strong></Link><Link href="/face" className="category-card face-card" id="face"><Image src={faceImg} alt="Обличчя" sizes="(max-width: 768px) 86vw, 330px" /><strong>ОБЛИЧЧЯ</strong></Link><Link href="/hair" className="category-card hair-card" id="hair"><Image src={hairImg} alt="Волосся" sizes="(max-width: 768px) 86vw, 330px" /><strong>ВОЛОССЯ</strong></Link></div></section>
 
-      <section className="recommend-section">
+      <section className="recommend-section premium-recommend-section">
         <div className="cream-mark" aria-hidden="true" />
         <div className="shell recommend-shell">
           <h2>Рекомендуємо</h2>
           <div className="tabs" aria-label="Категорії рекомендацій"><button className="selected">ХІТИ ПРОДАЖ</button><button>НОВЕ</button><button>ТРЕНДОВЕ</button></div>
           <div className="products-grid">
-            {recommendations.map((_, index) => (
-              <article className="product-card product-card-commerce" key={index}>
-                <Link href={productHref} className="product-card-link"><div className="product-image"><Image src={productImg} alt={product.name} sizes="(max-width: 700px) 44vw, 250px" /></div><div className="product-copy"><strong>{product.name.toUpperCase()}</strong><span>{product.price}.00₴</span></div></Link>
-                <QuickAddButton />
-              </article>
-            ))}
+            {recommendations.map((_, index) => <PremiumProductCard key={index} index={index + 1} />)}
           </div>
           <Link className="black-button centered-button" href="/face">Дивитись усі <Arrow /></Link>
         </div>
