@@ -409,3 +409,43 @@
     margin-top: 34px;
   }
 }
+
+/* PTS production credit in footer: intentionally subtle. */
+.footer-credit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.footer-credit .footer-credit-logo {
+  display: block;
+  width: 120px !important;
+  max-width: 120px !important;
+  height: auto !important;
+  object-fit: contain;
+}
+
+@media (min-width: 641px) and (max-width: 980px) {
+  .footer-credit {
+    justify-content: flex-start;
+    margin-top: 16px;
+  }
+
+  .footer-credit .footer-credit-logo {
+    width: 105px !important;
+    max-width: 105px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-credit {
+    justify-content: flex-start;
+    margin-top: 14px;
+  }
+
+  .footer-credit .footer-credit-logo {
+    width: 90px !important;
+    max-width: 90px !important;
+  }
+}
