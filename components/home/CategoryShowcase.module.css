@@ -1,4 +1,4 @@
-/* Keep this module in the branch build so Vercel recreates the branch preview after project relink. */
+/* Homepage category showcase. */
 .section {
   background: #f5f4ea;
   overflow: hidden;
@@ -13,19 +13,28 @@
 }
 
 .title {
+  display: block;
+  visibility: visible;
+  opacity: 1;
   position: absolute;
   top: 66px;
   left: 50%;
-  z-index: 2;
+  z-index: 20;
+  width: max-content;
+  max-width: 90%;
   margin: 0;
+  padding: 0;
   transform: translateX(-50%);
   color: #050505;
-  font-family: inherit;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: clamp(44px, 4vw, 58px);
+  font-style: normal;
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: -0.04em;
   text-align: center;
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .grid {
@@ -128,9 +137,12 @@
 
   .title {
     position: static;
+    width: auto;
+    max-width: none;
     transform: none;
     margin-bottom: 42px;
     font-size: clamp(38px, 11vw, 50px);
+    white-space: normal;
   }
 
   .grid {
