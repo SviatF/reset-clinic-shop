@@ -10,7 +10,6 @@ import block2 from "@/assets/img/block2.webp";
 import block3 from "@/assets/img/block3.webp";
 import PremiumProductCard from "@/components/PremiumProductCard";
 import { getStoreProducts } from "@/lib/store-products";
-import { isSupabaseConfigured } from "@/lib/supabase-rest";
 
 export const metadata: Metadata = {
   title: "Професійна косметика та підбір догляду",
@@ -34,9 +33,9 @@ const directions = [
 export default async function HomePage() {
   let recommendations = await getStoreProducts({ featured: true, limit: 8 });
   if (!recommendations.length) recommendations = await getStoreProducts({ limit: 8 });
-  const visibleProducts = isSupabaseConfigured()
-    ? recommendations
-    : Array.from({ length: 8 }).map((_, index) => recommendations[index % recommendations.length]);
+  const visibleProducts = recommendations.length === 1
+    ? Array.from({ length: 8 }, () => recommendations[0])
+    : recommendations;
   const featureHref = visibleProducts[0] ? `/product/${visibleProducts[0].slug}` : "/face";
 
   return (
