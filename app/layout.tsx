@@ -6,6 +6,7 @@ import "./certificate-fixes.css";
 import "./conversion.css";
 import "./conversion-extras.css";
 import "./account-conversion.css";
+import "./trust-layer.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
