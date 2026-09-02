@@ -1,0 +1,117 @@
+/* Desktop visual calibration against the supplied RESET reference screenshots.
+   Kept separate from the base stylesheet so the native responsive system stays intact. */
+@media (min-width: 981px) {
+  /* Header: slightly tighter than the first pass. */
+  .site-header {
+    height: 104px;
+  }
+
+  .header-inner {
+    height: 101px;
+    grid-template-columns: 205px 1fr 178px;
+  }
+
+  .brand,
+  .brand img {
+    width: 124px;
+  }
+
+  .desktop-nav {
+    gap: 42px;
+  }
+
+  .header-actions {
+    gap: 18px;
+  }
+
+  /* Hero: preserve section/card proportions, but reveal more of the upper image.
+     A lower crop matches the original screenshot where the bottles sit lower. */
+  .hero-bg {
+    object-position: center 39% !important;
+  }
+
+  .hero-shell {
+    padding-top: 165px;
+  }
+
+  /* Recommendation block: remove excessive dead space and make the actual
+     product fill the image cell rather than looking like a tiny thumbnail. */
+  .recommend-section {
+    padding-top: 52px;
+    padding-bottom: 72px;
+  }
+
+  .recommend-shell h2 {
+    font-size: 54px;
+  }
+
+  .tabs {
+    margin-top: 34px;
+    margin-bottom: 58px;
+  }
+
+  .product-image {
+    height: 270px;
+    padding: 22px;
+    overflow: hidden;
+  }
+
+  .product-image img {
+    max-width: 88%;
+    max-height: 88%;
+    transform: scale(2.15);
+    transform-origin: center;
+  }
+
+  .product-copy {
+    min-height: 100px;
+    padding: 20px 26px 18px;
+  }
+
+  .centered-button {
+    margin-top: 46px;
+  }
+
+  /* Slightly more compact service/footer area. */
+  .service-strip {
+    padding-top: 32px;
+    padding-bottom: 35px;
+  }
+
+  .footer-shell {
+    padding-top: 82px;
+  }
+
+  .footer-logo {
+    width: 205px;
+  }
+
+  .footer-categories {
+    margin-top: 70px;
+    gap: 58px;
+    font-size: 27px;
+  }
+
+  .footer-categories span {
+    width: 54px;
+  }
+
+  .footer-main {
+    margin-top: 64px;
+    padding-bottom: 31px;
+  }
+
+  .footer-contact {
+    font-size: 15px;
+  }
+
+  .footer-column,
+  .footer-column strong,
+  .footer-credit {
+    font-size: 13px;
+  }
+
+  .footer-bottom {
+    min-height: 78px;
+  }
+}
