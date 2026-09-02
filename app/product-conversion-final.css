@@ -1,0 +1,166 @@
+/* Final product conversion layer: price visibility, verified reviews, stronger hierarchy. */
+.product-page-audit-v2 .product-price-card-light{
+  background:#fbfaf7!important;
+  color:#111!important;
+  border-bottom:1px solid #d8d4cc!important;
+}
+.product-page-audit-v2 .product-price-main{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:7px!important;
+  min-width:180px;
+}
+.product-page-audit-v2 .product-price-number{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#111!important;
+  font-size:46px!important;
+  line-height:.9!important;
+  font-weight:760!important;
+  letter-spacing:-.055em!important;
+  white-space:nowrap!important;
+}
+.product-page-audit-v2 .product-price-number em{
+  color:#111!important;
+  font-size:13px!important;
+  font-style:normal!important;
+  font-weight:700!important;
+  letter-spacing:.01em!important;
+  margin-left:5px!important;
+}
+.product-page-audit-v2 .product-price-side>span{
+  font-size:7px!important;
+  letter-spacing:.15em!important;
+  color:#77736c!important;
+}
+
+.product-review-signal{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:7px 10px;
+  margin:18px 0 0;
+  color:#5f5b55;
+  font-size:9px;
+  line-height:1.2;
+}
+.product-review-stars{
+  color:#111;
+  font-size:11px;
+  letter-spacing:.08em;
+}
+.product-review-signal strong{
+  color:#111;
+  font-size:11px;
+  font-weight:750;
+}
+.product-review-signal>a{
+  margin-left:auto;
+  color:#111;
+  font-size:8px;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+.product-ritual-crosssell-priority{
+  border-top:1px solid #c9c5bd;
+  border-bottom:1px solid #c9c5bd;
+}
+
+.manufacturer-review-section{
+  background:#11110f;
+  color:#f7f4ed;
+  padding:88px 0;
+}
+.manufacturer-review-shell{
+  display:grid;
+  grid-template-columns:.72fr 1.28fr;
+  gap:72px;
+  align-items:start;
+}
+.manufacturer-review-heading>span{
+  display:block;
+  font-size:8px;
+  letter-spacing:.15em;
+  color:#9d998f;
+  font-weight:750;
+  margin-bottom:24px;
+}
+.manufacturer-review-heading h2{
+  margin:0;
+  font-size:clamp(64px,7vw,104px);
+  line-height:.86;
+  letter-spacing:-.07em;
+  font-weight:520;
+}
+.manufacturer-review-heading p{
+  max-width:360px;
+  margin:24px 0 20px;
+  font-size:10px;
+  line-height:1.55;
+  color:#aaa69c;
+}
+.manufacturer-review-heading a{
+  display:inline-block;
+  color:#fff;
+  font-size:9px;
+  font-weight:700;
+  border-bottom:1px solid rgba(255,255,255,.5);
+  padding-bottom:4px;
+}
+.manufacturer-review-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-top:1px solid rgba(255,255,255,.25);
+  border-left:1px solid rgba(255,255,255,.25);
+}
+.manufacturer-review-cards article{
+  min-height:280px;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid rgba(255,255,255,.25);
+  border-bottom:1px solid rgba(255,255,255,.25);
+  transition:background .35s ease,transform .35s ease;
+}
+.manufacturer-review-cards article:hover{
+  background:#1c1c19;
+  transform:translateY(-4px);
+}
+.manufacturer-review-cards article>span{
+  font-size:8px;
+  letter-spacing:.12em;
+  color:#a7a399;
+}
+.manufacturer-review-cards article strong{
+  margin-top:68px;
+  font-size:24px;
+  line-height:1.05;
+  letter-spacing:-.035em;
+  font-weight:540;
+}
+.manufacturer-review-cards article p{
+  margin:16px 0 0;
+  max-width:340px;
+  font-size:11px;
+  line-height:1.6;
+  color:#aaa69c;
+}
+
+@media(max-width:980px){
+  .manufacturer-review-shell{grid-template-columns:1fr;gap:44px}
+}
+
+@media(max-width:700px){
+  .product-review-signal{margin-top:14px;gap:6px 8px}
+  .product-review-signal>a{margin-left:0;width:100%;margin-top:2px}
+  .product-page-audit-v2 .product-price-number{font-size:42px!important}
+  .manufacturer-review-section{padding:62px 0}
+  .manufacturer-review-heading h2{font-size:66px}
+  .manufacturer-review-cards{grid-template-columns:1fr}
+  .manufacturer-review-cards article{min-height:220px;padding:22px}
+  .manufacturer-review-cards article strong{margin-top:42px;font-size:22px}
+}
