@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import productImg from "@/assets/img/tovar1.webp";
 import ProductActions from "@/components/ProductActions";
+import RealTrustLayer from "@/components/RealTrustLayer";
 import { product } from "@/lib/product";
 
 export const dynamic = "force-dynamic";
@@ -74,6 +75,8 @@ export default function ProductPage() {
           </div>
         </div>
       </section>
+
+      <RealTrustLayer />
 
       <section className="home-consult-cta">
         <div className="shell home-consult-inner"><div><span>НЕ ХОЧЕТЕ ВГАДУВАТИ?</span><h2>За 2 хвилини звузьте вибір і зрозумійте, що варто уточнити у косметолога.</h2></div><Link href="/consultation">Пройти підбір →</Link></div>
