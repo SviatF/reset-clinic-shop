@@ -5,7 +5,12 @@ import { usePathname } from "next/navigation";
 
 export default function ConsultationDock() {
   const pathname = usePathname();
-  if (pathname === "/checkout" || pathname === "/consultation") return null;
+  if (
+    pathname === "/checkout" ||
+    pathname === "/consultation" ||
+    pathname.startsWith("/product/")
+  ) return null;
+
   return (
     <Link href="/consultation" className="consultation-dock" aria-label="Підібрати догляд">
       <span className="consultation-dock-dot" />
