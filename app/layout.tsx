@@ -24,6 +24,7 @@ import "./product-clean-luxury.css";
 import "./product-feminine-luxury.css";
 import "./product-readable-details.css";
 import "./mono-payment.css";
+import "./admin.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
