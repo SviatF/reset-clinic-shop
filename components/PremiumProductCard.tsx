@@ -16,8 +16,8 @@ export default function PremiumProductCard({ index = 1 }: { index?: number }) {
     const rect = card.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    const tiltY = ((x / rect.width) - 0.5) * 5;
-    const tiltX = ((y / rect.height) - 0.5) * -4;
+    const tiltY = ((x / rect.width) - 0.5) * 7;
+    const tiltX = ((y / rect.height) - 0.5) * -5;
 
     card.style.setProperty("--spot-x", `${x}px`);
     card.style.setProperty("--spot-y", `${y}px`);
@@ -47,17 +47,19 @@ export default function PremiumProductCard({ index = 1 }: { index?: number }) {
             </div>
 
             <div className="premium-product-stage">
+              <span className="premium-stage-shine" aria-hidden="true" />
               <span className="premium-orbit premium-orbit-one" aria-hidden="true" />
               <span className="premium-orbit premium-orbit-two" aria-hidden="true" />
               <span className="premium-product-shadow" aria-hidden="true" />
               <Image
                 src={productImg}
                 alt={product.name}
-                sizes="(max-width: 700px) 46vw, 310px"
+                sizes="(max-width: 700px) 92vw, 310px"
               />
               <div className="premium-hover-note">
-                <span>RESET SELECTION</span>
-                <strong>Професійний догляд</strong>
+                <span>RESET CARE NOTE</span>
+                <strong>Антиоксидантний фокус</strong>
+                <small>Для делікатної зони</small>
               </div>
             </div>
 
