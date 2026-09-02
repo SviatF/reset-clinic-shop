@@ -31,6 +31,16 @@ export type ProductRecord = {
   updated_at: string;
 };
 
+export type OrderItemRecord = {
+  product_id: string | null;
+  slug: string;
+  name: string;
+  sku: string | null;
+  unit_price: number;
+  quantity: number;
+  line_total: number;
+};
+
 export type OrderRecord = {
   id: string;
   order_number: string;
@@ -46,10 +56,14 @@ export type OrderRecord = {
   branch: string;
   comment: string;
   tracking_number: string | null;
+  admin_notes: string | null;
   subtotal: number | string;
   shipping: number | string;
   total: number | string;
   currency: string;
+  items: OrderItemRecord[];
+  mono_payload?: Record<string, unknown> | null;
+  stock_decremented?: boolean;
   paid_at: string | null;
   created_at: string;
   updated_at: string;
