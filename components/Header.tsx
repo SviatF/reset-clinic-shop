@@ -44,6 +44,12 @@ export default function Header() {
   return (
     <>
       <header className="site-header">
+        <div className="header-topline">
+          <div className="shell header-topline-inner">
+            <span>RESET CLINIC · PROFESSIONAL SKINCARE · LVIV</span>
+            <Link href="/consultation">Підбір догляду косметологом <b>↗</b></Link>
+          </div>
+        </div>
         <div className="header-inner shell">
           <Link href="/" className="brand" aria-label="Reset Clinic — головна"><Image src={logo} alt="RESET Clinic" priority /></Link>
           <nav className="desktop-nav" aria-label="Основна навігація">
