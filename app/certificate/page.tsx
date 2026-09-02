@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import certMain from "@/assets/img/certificak-main.webp";
+import certMain from "@/assets/img/certificak-main2.webp";
 import certSecond from "@/assets/img/certificat-second.webp";
 import interierImg from "@/assets/img/interier.webp";
 import { Arrow, TrustStrip } from "@/components/MarketingBlocks";
