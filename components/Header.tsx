@@ -23,7 +23,7 @@ function SearchIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><circ
 function BagIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.5h14l-1 11H6l-1-11Z"/><path d="M9 8.5V6.7A3 3 0 0 1 12 4a3 3 0 0 1 3 2.7v1.8"/></svg>; }
 
 export default function Header() {
-  const { count } = useCart();
+  const { count, openCart } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -60,7 +60,7 @@ export default function Header() {
           <div className="header-actions">
             <Link href="/account" className="icon-btn" aria-label="Особистий кабінет"><UserIcon /></Link>
             <button className="icon-btn" aria-label="Пошук" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
-            <Link href="/cart" className="icon-btn bag-btn" aria-label="Кошик"><BagIcon /><span className="cart-count">{count}</span></Link>
+            <button className="icon-btn bag-btn" aria-label="Кошик" onClick={openCart}><BagIcon /><span className="cart-count">{count}</span></button>
             <button className="mobile-toggle" aria-label="Меню" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)}><span/><span/></button>
           </div>
         </div>
