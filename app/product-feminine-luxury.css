@@ -350,6 +350,40 @@
   color: #fff9f5 !important;
 }
 
+/* Quantity selector: always render minus, value and plus as three stable cells. */
+.product-page-feminine .product-actions-panel .qty-control {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.product-page-feminine .product-actions-panel .qty-control button,
+.product-page-feminine .product-actions-panel .qty-control button:first-child,
+.product-page-feminine .product-actions-panel .qty-control button:last-child {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  inset: auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+.product-page-feminine .product-actions-panel .qty-control > span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+}
+
 @media (max-width: 700px) {
   .product-for-whom {
     margin: 14px 0;
