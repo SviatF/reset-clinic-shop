@@ -26,6 +26,7 @@ import "./product-readable-details.css";
 import "./mono-payment.css";
 import "./admin.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
+import favicon from "@/assets/img/favicon.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
@@ -46,6 +47,10 @@ export const metadata: Metadata = {
   creator: "RESET Clinic",
   publisher: "RESET Clinic",
   category: "beauty",
+  icons: {
+    icon: [{ url: favicon.src, type: "image/webp" }],
+    shortcut: favicon.src,
+  },
   keywords: [
     "професійна косметика",
     "косметика Львів",
