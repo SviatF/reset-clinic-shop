@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import type { ProductRecord } from "@/lib/commerce-types";
-import { appendActivity, mutateProducts } from "@/lib/commerce-json";
+import { appendActivity, mutateProducts, readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const allowed = new Set([
-  "slug","name","brand","sku","category","status","short_description","description","price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at",
-]);
+const allowed = new Set(["slug","name","brand","sku","category","status","short_description","description","price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
 
 function sanitize(body: Record<string, unknown>) {
   const next: Record<string, unknown> = {};
@@ -29,25 +27,19 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   const { id } = await context.params;
   try {
     const changes = sanitize(await request.json());
-    let updated: ProductRecord | null = null;
-    await mutateProducts(`Admin: update product ${id}`, (products) => {
+    const nextProducts = await mutateProducts(`Admin: update product ${id}`, (products) => {
       const index = products.findIndex((item) => item.id === id);
       if (index < 0) throw new Error("Товар не знайдено");
       if (typeof changes.slug === "string" && products.some((item, i) => i !== index && item.slug === changes.slug)) throw new Error("Товар з таким slug вже існує");
       const current = products[index];
       const now = new Date().toISOString();
       const status = (changes.status || current.status) as ProductRecord["status"];
-      updated = {
-        ...current,
-        ...changes,
-        status,
-        published_at: status === "active" ? current.published_at || now : current.published_at,
-        updated_at: now,
-      } as ProductRecord;
+      const updated = { ...current, ...changes, status, published_at: status === "active" ? current.published_at || now : current.published_at, updated_at: now } as ProductRecord;
       const copy = [...products];
       copy[index] = updated;
       return copy;
     });
+    const updated = nextProducts.find((item) => item.id === id);
     if (!updated) return NextResponse.json({ error: "Товар не знайдено" }, { status: 404 });
     await appendActivity({ event_type: "product_updated", entity_type: "product", entity_id: id, title: `Оновлено товар: ${updated.name}`, metadata: { fields: Object.keys(changes), status: updated.status, price: updated.price, stock: updated.stock_quantity } });
     return NextResponse.json({ product: updated });
@@ -62,16 +54,13 @@ export async function DELETE(_: Request, context: { params: Promise<{ id: string
   if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "GITHUB_TOKEN не налаштований" }, { status: 503 });
   const { id } = await context.params;
   try {
-    let removed: ProductRecord | null = null;
-    await mutateProducts(`Admin: delete product ${id}`, (products) => {
-      removed = products.find((item) => item.id === id) || null;
-      if (!removed) throw new Error("Товар не знайдено");
-      return products.filter((item) => item.id !== id);
-    });
-    await appendActivity({ event_type: "product_deleted", entity_type: "product", entity_id: id, title: `Товар видалено: ${removed?.name || id}`, metadata: { slug: removed?.slug } });
+    const before = await readProducts();
+    const removed = before.find((item) => item.id === id);
+    if (!removed) return NextResponse.json({ error: "Товар не знайдено" }, { status: 404 });
+    await mutateProducts(`Admin: delete product ${id}`, (products) => products.filter((item) => item.id !== id));
+    await appendActivity({ event_type: "product_deleted", entity_type: "product", entity_id: id, title: `Товар видалено: ${removed.name}`, metadata: { slug: removed.slug } });
     return NextResponse.json({ ok: true });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Не вдалося видалити товар";
-    return NextResponse.json({ error: message }, { status: message === "Товар не знайдено" ? 404 : 400 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Не вдалося видалити товар" }, { status: 400 });
   }
 }
