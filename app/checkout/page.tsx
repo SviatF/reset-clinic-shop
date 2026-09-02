@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import productImg from "@/assets/img/tovar1.webp";
+import logo from "@/assets/img/logo.webp";
 import CheckoutForm from "@/components/CheckoutForm";
 import { useCart } from "@/components/CartProvider";
 
@@ -15,6 +16,7 @@ export default function CheckoutPage() {
   return (
     <section className="checkout-page">
       <div className="shell checkout-shell">
+        <div className="checkout-brand-row"><Link href="/" aria-label="RESET Clinic"><Image src={logo} alt="RESET Clinic" /></Link><span>SECURE CHECKOUT · RESET CLINIC</span></div>
         <div className="checkout-top"><h1>Оформлення</h1><Link href="/face">← Продовжити покупки</Link></div>
         <div className="checkout-grid">
           <CheckoutForm />
