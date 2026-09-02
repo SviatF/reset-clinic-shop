@@ -1,0 +1,18 @@
+.real-trust-layer { background: #f7f6ee; padding: 82px 0 88px; border-top: 1px solid rgba(17,17,15,.13); }
+.real-trust-heading { display: grid; grid-template-columns: .75fr 1.25fr; gap: 64px; align-items: start; margin-bottom: 42px; }
+.real-trust-heading span { font-size: 10px; letter-spacing: .17em; color: #716e67; }
+.real-trust-heading h2 { margin: 0; font-size: clamp(36px,4.4vw,58px); line-height: .98; letter-spacing: -.055em; max-width: 780px; }
+.real-trust-grid { display: grid; grid-template-columns: 1.15fr .85fr .85fr; gap: 14px; }
+.real-trust-card { background: #fff; display: flex; flex-direction: column; min-height: 520px; transition: transform .28s ease, box-shadow .28s ease; overflow: hidden; }
+.real-trust-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,.07); }
+.real-trust-image { height: 300px; overflow: hidden; background: #edeae2; display: flex; align-items: center; justify-content: center; }
+.real-trust-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.22,.75,.2,1); }
+.real-trust-card:hover .real-trust-image img { transform: scale(1.018); }
+.trust-certificate .real-trust-image img { object-fit: contain; padding: 20px; }
+.trust-partners .real-trust-image img { object-fit: contain; padding: 20px; }
+.real-trust-card > div:last-child { padding: 22px 22px 26px; }
+.real-trust-card > div:last-child span { font-size: 9px; letter-spacing: .15em; color: #757169; }
+.real-trust-card > div:last-child strong { display: block; font-size: 19px; line-height: 1.12; letter-spacing: -.03em; margin: 16px 0 10px; }
+.real-trust-card > div:last-child p { font-size: 12px; line-height: 1.5; color: #615e57; margin: 0; }
+@media (max-width: 980px) { .real-trust-heading { grid-template-columns: 1fr; gap: 16px; } .real-trust-grid { grid-template-columns: 1fr 1fr; } .trust-doctors { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .real-trust-layer { padding: 54px 0 58px; } .real-trust-heading { margin-bottom: 28px; } .real-trust-grid { grid-template-columns: 1fr; } .trust-doctors { grid-column: auto; } .real-trust-card { min-height: auto; } .real-trust-image { height: 240px; } }
