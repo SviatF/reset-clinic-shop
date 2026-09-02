@@ -1,7 +1,7 @@
 import "server-only";
 
+import productsData from "@/data/products.json";
 import type { ProductRecord } from "@/lib/commerce-types";
-import { PRODUCTS_PATH, readJsonStore } from "@/lib/json-store";
 
 export type StoreProduct = {
   id: string | null;
@@ -29,6 +29,10 @@ export type StoreProduct = {
   featured: boolean;
   updatedAt: string;
 };
+
+function rows(): ProductRecord[] {
+  return productsData as unknown as ProductRecord[];
+}
 
 function mapRecord(row: ProductRecord): StoreProduct {
   return {
@@ -60,14 +64,12 @@ function mapRecord(row: ProductRecord): StoreProduct {
 }
 
 export async function getAllProductRecords() {
-  const { data } = await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, []);
-  return Array.isArray(data) ? data : [];
+  return rows();
 }
 
 export async function getStoreProducts(options: { category?: string; featured?: boolean; limit?: number } = {}) {
-  const rows = await getAllProductRecords();
   const limit = Math.max(1, Math.min(100, options.limit || 50));
-  return rows
+  return rows()
     .filter((row) => row.status === "active")
     .filter((row) => !options.category || row.category === options.category)
     .filter((row) => options.featured === undefined || row.featured === options.featured)
@@ -77,7 +79,6 @@ export async function getStoreProducts(options: { category?: string; featured?: 
 }
 
 export async function getStoreProductBySlug(slug: string) {
-  const rows = await getAllProductRecords();
-  const row = rows.find((item) => item.slug === slug && item.status === "active");
+  const row = rows().find((item) => item.slug === slug && item.status === "active");
   return row ? mapRecord(row) : null;
 }
