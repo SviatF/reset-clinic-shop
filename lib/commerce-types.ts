@@ -1,0 +1,66 @@
+export type ProductRecord = {
+  id: string;
+  slug: string;
+  name: string;
+  brand: string;
+  sku: string | null;
+  category: "face" | "body" | "hair" | "other";
+  status: "draft" | "active" | "archived";
+  short_description: string;
+  description: string;
+  price: number | string;
+  currency: string;
+  stock_quantity: number;
+  track_stock: boolean;
+  size: string | null;
+  image_url: string | null;
+  secondary_image_url: string | null;
+  hover_label: string | null;
+  hover_title: string | null;
+  hover_text: string | null;
+  how_to_use: string | null;
+  key_ingredients: string[];
+  inci: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  seo_keywords: string[];
+  featured: boolean;
+  sort_order: number;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OrderRecord = {
+  id: string;
+  order_number: string;
+  invoice_id: string | null;
+  reference: string | null;
+  status: "new" | "awaiting_payment" | "paid" | "processing" | "shipped" | "completed" | "cancelled" | "refunded";
+  payment_status: string;
+  customer_name: string;
+  phone: string;
+  email: string;
+  delivery_method: string;
+  city: string;
+  branch: string;
+  comment: string;
+  tracking_number: string | null;
+  subtotal: number | string;
+  shipping: number | string;
+  total: number | string;
+  currency: string;
+  paid_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ActivityRecord = {
+  id: number;
+  event_type: string;
+  entity_type: string;
+  entity_id: string | null;
+  title: string;
+  metadata: Record<string, unknown>;
+  created_at: string;
+};
