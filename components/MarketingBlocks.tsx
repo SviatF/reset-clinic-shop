@@ -5,6 +5,8 @@ import buyInHandImg from "@/assets/img/buyinhand.webp";
 import PremiumProductCard from "@/components/PremiumProductCard";
 import { getStoreProducts } from "@/lib/store-products";
 
+const CATEGORY_IMAGE_REVISION = "20260903-canonical";
+
 export function Arrow() {
   return <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M1 8h37M32 2l6 6-6 6" /></svg>;
 }
@@ -50,7 +52,17 @@ export function CategoryLanding({ eyebrow, title, description, image, imageAlt, 
           <div className="problem-discovery"><span>ПОЧНІТЬ НЕ З БАНОЧКИ, А З ПОТРЕБИ</span><div className="problem-chip-list">{problems.map((problem) => <Link key={problem} href="/consultation" className="problem-chip">{problem}</Link>)}</div></div>
           <div className="category-proof-line"><b>Професійний догляд</b><span>•</span><span>Оригінальність</span><span>•</span><span>Консультація</span></div>
         </div>
-        <div className="category-hero-visual"><Image src={image} alt={imageAlt} priority /><div className="floating-note">Підібрано<br/>під потреби<br/>вашої шкіри</div></div>
+        <div className="category-hero-visual">
+          <Image
+            src={`${image.src}?v=${CATEGORY_IMAGE_REVISION}`}
+            width={image.width}
+            height={image.height}
+            alt={imageAlt}
+            priority
+            unoptimized
+          />
+          <div className="floating-note">Підібрано<br/>під потреби<br/>вашої шкіри</div>
+        </div>
       </section>
       <section className="category-products" id="products">
         <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Асортимент керується з RESET Commerce Admin: активні товари, ціни та залишки оновлюються без зміни дизайну сайту.</p></div><ProductGrid category={tone} /></div>
