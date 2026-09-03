@@ -5,10 +5,21 @@ import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "..");
-const shopDataDir = process.env.SHOP_DATA_DIR?.trim();
+
+function readEnvValue(name) {
+  const envFile = path.join(repoRoot, ".env.production.local");
+  if (!fs.existsSync(envFile)) return "";
+  const line = fs.readFileSync(envFile, "utf8")
+    .split(/\r?\n/)
+    .find((entry) => entry.trim().startsWith(`${name}=`));
+  if (!line) return "";
+  return line.slice(line.indexOf("=") + 1).trim().replace(/^['"]|['"]$/g, "");
+}
+
+const shopDataDir = process.env.SHOP_DATA_DIR?.trim() || readEnvValue("SHOP_DATA_DIR");
 
 if (!shopDataDir) {
-  console.error("SHOP_DATA_DIR is not configured");
+  console.error("SHOP_DATA_DIR is not configured in process.env or .env.production.local");
   process.exit(1);
 }
 
