@@ -20,6 +20,8 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const CATEGORY_IMAGE_REVISION = "20260903-canonical";
+
 function Arrow() {
   return <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M0 8h38M31 1l7 7-7 7" /></svg>;
 }
@@ -80,7 +82,17 @@ export default async function HomePage() {
           <div className="precision-category-grid">
             {directions.map((item, index) => (
               <Link href={item.href} className="precision-category-card" key={item.href}>
-                <div className="precision-category-image"><Image src={item.image} alt={item.title} sizes="(max-width: 700px) 100vw, 33vw" /><span>0{index + 1}</span></div>
+                <div className="precision-category-image">
+                  <Image
+                    src={`${item.image.src}?v=${CATEGORY_IMAGE_REVISION}`}
+                    width={item.image.width}
+                    height={item.image.height}
+                    alt={item.title}
+                    sizes="(max-width: 700px) 100vw, 33vw"
+                    unoptimized
+                  />
+                  <span>0{index + 1}</span>
+                </div>
                 <div className="precision-category-info"><div><h3>{item.title}</h3><p>{item.note}</p></div><b>↗</b></div>
               </Link>
             ))}
