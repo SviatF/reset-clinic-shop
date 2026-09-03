@@ -65,7 +65,7 @@ export function CategoryLanding({ eyebrow, title, description, image, imageAlt, 
         </div>
       </section>
       <section className="category-products" id="products">
-        <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Асортимент керується з RESET Commerce Admin: активні товари, ціни та залишки оновлюються без зміни дизайну сайту.</p></div><ProductGrid category={tone} /></div>
+        <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Асортимент керується з RESET Commerce Admin: активні товари, ціни та залишки оновлюються без зміни дизайну сайту.</p></div><ProductGrid category={tone} count={tone === "hair" ? 100 : 8} /></div>
       </section>
       <section className="consultation-sell shell">
         <div className="consultation-image"><Image src={consultationImg} alt="Консультація косметолога RESET Clinic" /></div>
