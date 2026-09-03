@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node ./server.js"
+    "start": "node ./server.js",
+    "sync:hair-products": "node ./scripts/sync-hair-products.mjs"
   },
   "engines": {
     "node": ">=20 <23"
