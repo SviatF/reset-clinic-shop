@@ -1,24 +1,21 @@
-# RESET Clinic Shop — Cityhost → Cloudflare Workers
+# RESET Clinic Shop — Cloudflare Workers deployment
 
-Target hostname: `shop.resetclinic.org`. The main `resetclinic.org` Worker remains independent.
+Target: `shop.resetclinic.org` (separate Worker from main `resetclinic.org`).
 
-## Deployment preparation
+## Scope
+- Keep product records and all images already committed in GitHub. No product import.
+- New `ADMIN_LOGIN` and `ADMIN_PASS` stored as Cloudflare Worker secrets.
+- Existing Cityhost order records are not imported. New Worker orders/activity persist in D1 `SHOP_DB`.
+- GitHub product editing/upload requires a scoped GitHub token (contents write), and newly uploaded media must be deployed.
+- Image URLs that point at Cityhost-only `/shop-media/` storage need manual assessment.
 
-1. Install the platform packages (this repository currently has no lockfile):
-   `npm install @opennextjs/cloudflare && npm install -D wrangler`
-2. Add the following scripts to package.json after verifying compatible package versions:
-   - `cf:build`: `opennextjs-cloudflare build`
-   - `cf:preview`: `opennextjs-cloudflare build && opennextjs-cloudflare preview`
-   - `cf:deploy`: `opennextjs-cloudflare build && opennextjs-cloudflare deploy`
-3. Check locally: `npm run build`, `npm run cf:build`, `npm run cf:preview`.
-4. Configure Worker runtime secrets `MONOPAY_TOKEN`, `ADMIN_LOGIN`, `ADMIN_PASS`, `SITE_URL=https://shop.resetclinic.org`.
-5. **Do not set SHOP_DATA_DIR** in Workers; `node:fs` is not persistent there.
-6. Before any production traffic, migrate the active Cityhost storage for products, orders, activity and uploaded photos to durable storage (recommended D1 + R2). Current GitHub JSON fallback requires GITHUB_TOKEN, commits mutable customer data to the repository, and is **not** a safe substitute for migration.
-7. Check live commerce flows, order persistence, admin edits, stock updates, uploads, Monobank invoice creation, webhook signatures and payment redirects. Confirm existing Cityhost data was transferred without losing orders.
-8. Only after validation, attach custom domain `shop.resetclinic.org` to this Worker in the Cloudflare dashboard, remove conflicting DNS routing and update Monobank webhook settings. Keep Cityhost available for rollback until verified.
+## Steps
+1. `npm install` (generate and commit lockfile). Validate OpenNext compatibility and successful `npm run build` / `npm run cf:build`.
+2. Create Cloudflare D1 DB; bind `SHOP_DB` using its actual database_id in wrangler.jsonc.
+3. Apply `migrations/0001_shop_documents.sql` to that database.
+4. Set `SHOP_STORAGE_BACKEND=cloudflare` and `SITE_URL=https://shop.resetclinic.org`. Set secrets `ADMIN_LOGIN`, `ADMIN_PASS`, `GITHUB_TOKEN`, `MONOPAY_TOKEN` via Cloudflare securely.
+5. Deploy to a staging Workers URL. Verify pages, assets, admin sign-in, catalog updates, test orders, payment callbacks, stock decrement, GitHub-backed upload/redeployment.
+6. Confirm domain routing/DNS for `shop.resetclinic.org` is within the Cloudflare zone before binding. Do not change main website Worker.
+7. Cut over the shop hostname only after verification; keep Cityhost rollback path.
 
-## Restrictions
-
-The legacy `server.js` is Cityhost-specific and does not run as the Workers entry point. The Cloudflare entry point is the OpenNext-generated `.open-next/worker.js`.
-
-This branch contains **only staging configuration**, not a completed production migration. Do not publish the shop to production until durable data storage and payments are validated.
+No live DNS/deployment/secret changes have been made.
