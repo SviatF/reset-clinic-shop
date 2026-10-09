@@ -4,15 +4,11 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 type Database = {
   prepare(sql: string): { bind(...values: unknown[]): { first<T>(): Promise<T | null>; run(): Promise<{ meta?: { changes?: number } }> } };
 };
-type Bucket = {
-  put(key: string, value: ArrayBuffer, options?: { httpMetadata?: { contentType: string } }): Promise<unknown>;
-  get(key: string): Promise<{ arrayBuffer(): Promise<ArrayBuffer> } | null>;
-};
-type Bindings = { SHOP_DB: Database; SHOP_MEDIA: Bucket };
+type Bindings = { SHOP_DB: Database };
 
 function bindings(): Bindings {
   const env = getCloudflareContext().env as unknown as Partial<Bindings>;
-  if (!env.SHOP_DB || !env.SHOP_MEDIA) throw new Error("Cloudflare SHOP_DB / SHOP_MEDIA bindings missing");
+  if (!env.SHOP_DB) throw new Error("Cloudflare SHOP_DB binding missing");
   return env as Bindings;
 }
 function key(path: string) { return path.replace(/^\/+/, ""); }
@@ -42,19 +38,4 @@ export async function cloudflareMutateJson<T>(pathname: string, fallback: T, mut
     if ((result.meta?.changes ?? 0) > 0) return next;
   }
   throw new Error("SHOP_D1_CONCURRENT_UPDATE_RETRY_EXHAUSTED");
-}
-export async function cloudflareWriteBinary(relativePath: string, bytes: ArrayBuffer) {
-  const { SHOP_MEDIA } = bindings();
-  const clean = key(relativePath);
-  if (clean.includes("..")) throw new Error("Invalid asset path");
-  const ext = clean.split(".").pop()?.toLowerCase();
-  const mime: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", avif: "image/avif" };
-  await SHOP_MEDIA.put("uploads/" + clean, bytes, { httpMetadata: { contentType: mime[ext || ""] || "application/octet-stream" } });
-  return "/shop-media/" + clean;
-}
-export async function cloudflareReadBinary(relativePath: string): Promise<Uint8Array | null> {
-  const clean = key(relativePath);
-  if (clean.includes("..")) return null;
-  const object = await bindings().SHOP_MEDIA.get("uploads/" + clean);
-  return object ? new Uint8Array(await object.arrayBuffer()) : null;
 }
