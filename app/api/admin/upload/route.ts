@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       url,
       note: usingLocalJsonStore()
         ? "Фото збережене у persistent storage CityHost і доступне одразу."
-        : "Фото записане в GitHub і стане доступним після автоматичного Vercel deploy.",
+        : "Фото записане в GitHub і стане доступним після деплою.",
     });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Upload failed" }, { status: 500 });

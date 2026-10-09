@@ -2,6 +2,7 @@ import "server-only";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { cloudflareReadJson, cloudflareWriteJson, cloudflareMutateJson } from "@/lib/cloudflare-store";
 
 const OWNER = process.env.GITHUB_REPO_OWNER || "SviatF";
 const REPO = process.env.GITHUB_REPO_NAME || "reset-clinic-shop";
@@ -17,6 +18,14 @@ type RepoFile<T> = { data: T; sha: string | null };
 function localRoot() {
   const configured = process.env.SHOP_DATA_DIR?.trim();
   return configured ? path.resolve(configured) : null;
+}
+
+export function usingCloudflareStore() {
+  return process.env.SHOP_STORAGE_BACKEND === "cloudflare";
+}
+
+function useD1ForPath(pathname: string) {
+  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH);
 }
 
 export function usingLocalJsonStore() {
@@ -67,6 +76,7 @@ function headers(write = false) {
 }
 
 export async function readJsonStore<T>(pathname: string, fallback: T): Promise<RepoFile<T>> {
+  if (useD1ForPath(pathname)) return cloudflareReadJson(pathname, fallback);
   if (usingLocalJsonStore()) return readLocalJson(pathname, fallback);
 
   const response = await fetch(`${API}/${pathname}?ref=${encodeURIComponent(BRANCH)}`, {
@@ -82,6 +92,7 @@ export async function readJsonStore<T>(pathname: string, fallback: T): Promise<R
 }
 
 export async function writeJsonStore<T>(pathname: string, value: T, message: string, sha?: string | null) {
+  if (useD1ForPath(pathname)) return cloudflareWriteJson(pathname, value);
   if (usingLocalJsonStore()) return writeLocalJson(pathname, value);
 
   const body: Record<string, unknown> = {
@@ -101,6 +112,7 @@ export async function writeJsonStore<T>(pathname: string, value: T, message: str
 }
 
 export async function mutateJsonStore<T>(pathname: string, fallback: T, message: string, mutate: (current: T) => T | Promise<T>) {
+  if (useD1ForPath(pathname)) return cloudflareMutateJson(pathname, fallback, mutate);
   if (usingLocalJsonStore()) {
     const current = await readJsonStore(pathname, fallback);
     const next = await mutate(current.data);
