@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { jsonStoreWriteConfigured, usingLocalJsonStore, usingCloudflareStore, writeBinaryAsset } from "@/lib/json-store";
+import { jsonStoreWriteConfigured, usingLocalJsonStore, writeBinaryAsset } from "@/lib/json-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,11 +22,9 @@ export async function POST(request: Request) {
     const url = await writeBinaryAsset(relativePath, await file.arrayBuffer(), `Admin: upload product image ${file.name || "image"}`);
     return NextResponse.json({
       url,
-      note: usingCloudflareStore()
-        ? "Фото збережене в Cloudflare R2 і доступне одразу."
-        : usingLocalJsonStore()
-          ? "Фото збережене у persistent storage CityHost і доступне одразу."
-          : "Фото записане в GitHub і стане доступним після деплою.",
+      note: usingLocalJsonStore()
+        ? "Фото збережене у persistent storage CityHost і доступне одразу."
+        : "Фото записане в GitHub і стане доступним після деплою.",
     });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Upload failed" }, { status: 500 });
