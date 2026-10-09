@@ -2,7 +2,7 @@ import "server-only";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { cloudflareReadJson, cloudflareWriteJson, cloudflareMutateJson, cloudflareWriteBinary, cloudflareReadBinary } from "@/lib/cloudflare-store";
+import { cloudflareReadJson, cloudflareWriteJson, cloudflareMutateJson } from "@/lib/cloudflare-store";
 
 const OWNER = process.env.GITHUB_REPO_OWNER || "SviatF";
 const REPO = process.env.GITHUB_REPO_NAME || "reset-clinic-shop";
@@ -22,6 +22,10 @@ function localRoot() {
 
 export function usingCloudflareStore() {
   return process.env.SHOP_STORAGE_BACKEND === "cloudflare";
+}
+
+function useD1ForPath(pathname: string) {
+  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH);
 }
 
 export function usingLocalJsonStore() {
@@ -72,7 +76,7 @@ function headers(write = false) {
 }
 
 export async function readJsonStore<T>(pathname: string, fallback: T): Promise<RepoFile<T>> {
-  if (usingCloudflareStore()) return cloudflareReadJson(pathname, fallback);
+  if (useD1ForPath(pathname)) return cloudflareReadJson(pathname, fallback);
   if (usingLocalJsonStore()) return readLocalJson(pathname, fallback);
 
   const response = await fetch(`${API}/${pathname}?ref=${encodeURIComponent(BRANCH)}`, {
@@ -88,7 +92,7 @@ export async function readJsonStore<T>(pathname: string, fallback: T): Promise<R
 }
 
 export async function writeJsonStore<T>(pathname: string, value: T, message: string, sha?: string | null) {
-  if (usingCloudflareStore()) return cloudflareWriteJson(pathname, value);
+  if (useD1ForPath(pathname)) return cloudflareWriteJson(pathname, value);
   if (usingLocalJsonStore()) return writeLocalJson(pathname, value);
 
   const body: Record<string, unknown> = {
@@ -108,7 +112,7 @@ export async function writeJsonStore<T>(pathname: string, value: T, message: str
 }
 
 export async function mutateJsonStore<T>(pathname: string, fallback: T, message: string, mutate: (current: T) => T | Promise<T>) {
-  if (usingCloudflareStore()) return cloudflareMutateJson(pathname, fallback, mutate);
+  if (useD1ForPath(pathname)) return cloudflareMutateJson(pathname, fallback, mutate);
   if (usingLocalJsonStore()) {
     const current = await readJsonStore(pathname, fallback);
     const next = await mutate(current.data);
@@ -133,7 +137,6 @@ export async function mutateJsonStore<T>(pathname: string, fallback: T, message:
 
 export async function writeBinaryAsset(relativePath: string, bytes: ArrayBuffer, message: string) {
   const clean = relativePath.replace(/^\/+/, "");
-  if (usingCloudflareStore()) return cloudflareWriteBinary(clean, bytes);
   if (usingLocalJsonStore()) {
     const destination = localPath(`uploads/${clean}`);
     await fs.mkdir(path.dirname(destination), { recursive: true });
@@ -159,7 +162,6 @@ export async function writeBinaryAsset(relativePath: string, bytes: ArrayBuffer,
 }
 
 export async function readLocalBinaryAsset(relativePath: string) {
-  if (usingCloudflareStore()) return cloudflareReadBinary(relativePath);
   if (!usingLocalJsonStore()) return null;
   try {
     return await fs.readFile(localPath(`uploads/${relativePath.replace(/^\/+/, "")}`));
@@ -169,5 +171,5 @@ export async function readLocalBinaryAsset(relativePath: string) {
 }
 
 export function jsonStoreWriteConfigured() {
-  return usingCloudflareStore() || usingLocalJsonStore() || Boolean(process.env.GITHUB_TOKEN);
+  return usingLocalJsonStore() || Boolean(process.env.GITHUB_TOKEN);
 }
