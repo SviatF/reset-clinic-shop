@@ -1,0 +1,27 @@
+name: Prepare image bytes for deployment copy
+on:
+  push:
+    branches:
+      - transfer/clinic-sasha-assets
+permissions:
+  contents: write
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Encode oversized original images into safe text chunks
+        run: |
+          mkdir -p .asset-transfer
+          for asset in assets/img/main-certificate.webp assets/img/certificak-main.webp; do
+            name="$(basename "$asset")"
+            base64 -w 0 "$asset" | fold -w 500000 | awk -v prefix=".asset-transfer/$name" '{ print > prefix ".part" sprintf("%02d", NR) }'
+          done
+          git config user.name "clinic-asset-transfer"
+          git config user.email "transfer@users.noreply.github.com"
+          git add .asset-transfer
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Encode original large certificate images for temporary transfer"
+          git push
