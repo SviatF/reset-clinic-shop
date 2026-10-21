@@ -2,23 +2,17 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 import productsData from "@/data/products.json";
-import { hairSeeds } from "@/lib/hair-seed";
 import type { ActivityRecord, OrderRecord, ProductRecord } from "@/lib/commerce-types";
 import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonStore } from "@/lib/json-store";
 
-const productSeed = [...(productsData as unknown as ProductRecord[]), ...hairSeeds];
-function mergeLegacySeeds(stored: ProductRecord[]): ProductRecord[] {
-  if(stored.some(item => item.id.startsWith("oliere_hair_"))) return stored;
-  const slugs = new Set(stored.map(item => item.slug));
-  return [...stored, ...hairSeeds.filter(item => !slugs.has(item.slug))];
-}
+const productSeed = productsData as ProductRecord[];
 
 export async function readProducts() {
-  return mergeLegacySeeds((await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data);
+  return (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data;
 }
 
 export async function mutateProducts(message: string, mutate: (products: ProductRecord[]) => ProductRecord[] | Promise<ProductRecord[]>) {
-  return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed, message, products => mutate(mergeLegacySeeds(products)) );
+  return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed, message, mutate);
 }
 
 export async function readOrders() {

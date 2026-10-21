@@ -7,7 +7,7 @@ import { shopMediaBucket,productMime } from "@/lib/r2-media";
 
 const OWNER = process.env.GITHUB_REPO_OWNER || "SviatF";
 const REPO = process.env.GITHUB_REPO_NAME || "reset-clinic-shop";
-const BRANCH = process.env.GITHUB_REPO_BRANCH || "main";
+const BRANCH = process.env.GITHUB_REPO_BRANCH || "main-SASHA";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 
 export const PRODUCTS_PATH = "data/products.json";
