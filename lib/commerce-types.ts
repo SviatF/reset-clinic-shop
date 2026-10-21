@@ -5,6 +5,8 @@ export type ProductRecord = {
   brand: string;
   sku: string | null;
   category: "face" | "body" | "hair" | "other";
+  subcategory_slugs?: string[];
+  product_line?: string | null;
   status: "draft" | "active" | "archived";
   short_description: string;
   description: string;

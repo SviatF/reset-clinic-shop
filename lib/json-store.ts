@@ -10,6 +10,7 @@ const BRANCH = process.env.GITHUB_REPO_BRANCH || "main";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 
 export const PRODUCTS_PATH = "data/products.json";
+export const CATEGORIES_PATH = "data/categories.json";
 export const ORDERS_PATH = "data/orders.json";
 export const ACTIVITY_PATH = "data/activity.json";
 
@@ -25,7 +26,7 @@ export function usingCloudflareStore() {
 }
 
 function useD1ForPath(pathname: string) {
-  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH);
+  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH || (process.env.SHOP_PRODUCTS_BACKEND === "d1" && (pathname === PRODUCTS_PATH || pathname === CATEGORIES_PATH)));
 }
 
 export function usingLocalJsonStore() {
@@ -171,5 +172,5 @@ export async function readLocalBinaryAsset(relativePath: string) {
 }
 
 export function jsonStoreWriteConfigured() {
-  return usingLocalJsonStore() || Boolean(process.env.GITHUB_TOKEN);
+  return usingLocalJsonStore() || Boolean(process.env.GITHUB_TOKEN) || (usingCloudflareStore() && process.env.SHOP_PRODUCTS_BACKEND === "d1");
 }

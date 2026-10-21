@@ -2,17 +2,22 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 import productsData from "@/data/products.json";
+import { hairSeeds } from "@/lib/hair-seed";
 import type { ActivityRecord, OrderRecord, ProductRecord } from "@/lib/commerce-types";
 import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonStore } from "@/lib/json-store";
 
-const productSeed = productsData as unknown as ProductRecord[];
+const productSeed = [...(productsData as unknown as ProductRecord[]), ...hairSeeds];
+function mergeLegacySeeds(stored: ProductRecord[]): ProductRecord[] {
+  const slugs = new Set(stored.map(item => item.slug));
+  return [...stored, ...hairSeeds.filter(item => !slugs.has(item.slug))];
+}
 
 export async function readProducts() {
-  return (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data;
+  return mergeLegacySeeds((await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data);
 }
 
 export async function mutateProducts(message: string, mutate: (products: ProductRecord[]) => ProductRecord[] | Promise<ProductRecord[]>) {
-  return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed, message, mutate);
+  return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed, message, products => mutate(mergeLegacySeeds(products)) );
 }
 
 export async function readOrders() {
