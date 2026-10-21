@@ -35,7 +35,8 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       const index = products.findIndex((item) => item.id === id);
       if (index < 0) throw new Error("Товар не знайдено");
       if (typeof changes.slug === "string" && products.some((item, i) => i !== index && item.slug === changes.slug)) throw new Error("Товар з таким slug вже існує");
-      if(typeof changes.sku==="string"&&changes.sku&&products.some((item,i)=>i!==index&&item.sku?.toLowerCase()===changes.sku?.toLowerCase()))throw new Error("Товар з таким SKU вже існує");
+      const requestedSku=typeof changes.sku==="string"?changes.sku.toLowerCase():"";
+      if(requestedSku&&products.some((item,i)=>i!==index&&item.sku?.toLowerCase()===requestedSku))throw new Error("Товар з таким SKU вже існує");
       const current = products[index];
       const now = new Date().toISOString();
       const status = (changes.status || current.status) as ProductRecord["status"];
