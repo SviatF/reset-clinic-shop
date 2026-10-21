@@ -4,6 +4,7 @@ import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { slugifyUkr } from "@/lib/slugify";
+import { readCategories } from "@/lib/catalog-categories";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -29,13 +30,19 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   const { id } = await context.params;
   try {
     const changes = sanitize(await request.json());
+    const categories=await readCategories();
     const nextProducts = await mutateProducts(`Admin: update product ${id}`, (products) => {
       const index = products.findIndex((item) => item.id === id);
       if (index < 0) throw new Error("Товар не знайдено");
       if (typeof changes.slug === "string" && products.some((item, i) => i !== index && item.slug === changes.slug)) throw new Error("Товар з таким slug вже існує");
+      if(typeof changes.sku==="string"&&changes.sku&&products.some((item,i)=>i!==index&&item.sku?.toLowerCase()===changes.sku?.toLowerCase()))throw new Error("Товар з таким SKU вже існує");
       const current = products[index];
       const now = new Date().toISOString();
       const status = (changes.status || current.status) as ProductRecord["status"];
+      const category=(changes.category || current.category) as ProductRecord["category"];
+      const subs=Array.isArray(changes.subcategory_slugs)?changes.subcategory_slugs:current.subcategory_slugs||[];
+      if(subs.some((slug:string)=>!categories.some(c=>c.parent_slug===category&&c.slug===slug&&c.status==="active")))throw new Error("Підкатегорія не належить до вибраного розділу");
+      if(status==="active" && Number(changes.price ?? current.price)<=0)throw new Error("Не можна публікувати товар із нульовою ціною");
       const updated = { ...current, ...changes, status, published_at: status === "active" ? current.published_at || now : current.published_at, updated_at: now } as ProductRecord;
       const copy = [...products];
       copy[index] = updated;

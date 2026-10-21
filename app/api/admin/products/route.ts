@@ -4,6 +4,7 @@ import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, newId, readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { slugifyUkr } from "@/lib/slugify";
+import { readCategories } from "@/lib/catalog-categories";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,8 +76,12 @@ export async function POST(request: Request) {
     const id = newId("product");
     const now = new Date().toISOString();
     const product = normalizeProduct(body, id, now);
+    const categories=await readCategories();
+    if(product.status==="active" && Number(product.price)<=0)throw new Error("Не можна публікувати товар із нульовою ціною");
+    if((product.subcategory_slugs||[]).some(slug=>!categories.some(c=>c.parent_slug===product.category&&c.slug===slug&&c.status==="active")))throw new Error("Підкатегорія не належить до вибраного розділу");
     await mutateProducts(`Admin: add product ${product.slug}`, (products) => {
       if (products.some((item) => item.slug === product.slug)) throw new Error("Товар з таким slug вже існує");
+      if(product.sku && products.some(item=>item.sku?.toLowerCase()===product.sku?.toLowerCase()))throw new Error("Товар з таким SKU вже існує");
       return [...products, product];
     });
     await appendActivity({ event_type: "product_created", entity_type: "product", entity_id: product.id, title: `Створено товар: ${product.name}`, metadata: { slug: product.slug, status: product.status, price: product.price } });

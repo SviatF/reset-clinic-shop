@@ -139,7 +139,7 @@ export default function AdminProductsClient() {
   return (
     <div className="admin-products-page">
       <div className="admin-page-head"><div><span>CATALOG CONTROL</span><h1>Товари</h1><p>Ціна, stock, статус, фото, контент і SEO кожної позиції.</p></div><button className="admin-primary" onClick={createNew}>+ ДОДАТИ ТОВАР</button></div>
-      {configured === false && <div className="admin-connect-card"><span>DATABASE</span><h2>Потрібне підключення Supabase</h2><p>CRUD уже реалізований у коді. Після створення бази форма почне записувати товари в каталог.</p></div>}
+      {configured === false && <div className="admin-connect-card"><span>DATABASE</span><h2>Немає доступного сховища</h2><p>Для запису товарів налаштуйте Cloudflare D1 або GitHub API Token для обраної гілки.</p></div>}
       {message && <div className="admin-toast">{message}</div>}
 
       <AdminExcelImport onFinished={load} />
