@@ -14,7 +14,7 @@ const mimeByExt: Record<string, string> = {
 };
 
 export async function GET(_: Request, context: { params: Promise<{ path: string[] }> }) {
-  if (!usingLocalJsonStore() && !usingCloudflareStore()) return new NextResponse("Not found", { status: 404 });
+  if (!usingLocalJsonStore() && !usingCloudflareStore() && !shopMediaBucket()) return new NextResponse("Not found", { status: 404 });
   const { path } = await context.params;
   const relative = (path || []).join("/");
   if (!relative || relative.includes("..")) return new NextResponse("Not found", { status: 404 });

@@ -1,5 +1,6 @@
 # Excel importer — staging only
-1. Run `python scripts/prepare-excel-import.py supplier.xlsx ./prepared`.
+1. Preferred: on staging open /admin/products and use the integrated Excel upload. It analyzes all 39 products and embedded images in the browser; new items go to drafts. SHOP_MEDIA R2 must be bound. No 45MB POST body to Worker is needed.
+2. Offline alternative: `python scripts/prepare-excel-import.py supplier.xlsx ./prepared`.
 2. Inspect `prepared/products.json`: 39 draft products, manufacturer name anomalies, prices, categories. Photos extracted to `prepared/images`.
 3. Authenticate to the isolated staging admin and POST JSON content to `/api/admin/products/import` for preview. Include `{"products":[...],"preview":false}` to commit draft products. Existing slugs are skipped, not overwritten.
 4. Upload each extracted image through the current admin uploader (backed by R2 after binding `SHOP_MEDIA`) and link it to the draft. Do NOT publish while image, SKU, claims, prices, or stock are unverified.

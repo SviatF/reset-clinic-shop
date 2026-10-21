@@ -36,6 +36,6 @@
 
 ## Not completed / deployment blockers
 - Production D1/R2 resources have NOT been provisioned or migrated.
-- Bulk Excel import and the 39 Dermafirm/Braderm images have NOT been published yet. They require data normalization, original embedded-image extraction and stock/price verification.
-- No end-to-end build, runtime, image-upload, monobank or deployment test has yet been run.
+- Browser-side Excel import and original-image extraction are implemented in the staging admin. Prepared offline ZIP contains 39 image/product drafts. Actual draft upload to staging needs SHOP_MEDIA R2 binding. Prices/claims and stock are unverified, so all new products remain unpublished.
+- GitHub Actions runs a TypeScript and Next production build on main-SASHA. This does not replace staging runtime tests, image upload and monobank test payment. SHOP_STAGING=true disallows crawler indexing on preview.
 - Never assume a build or successful migration solely because code was committed.
