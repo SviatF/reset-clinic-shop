@@ -3,6 +3,7 @@ import "server-only";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { cloudflareReadJson, cloudflareWriteJson, cloudflareMutateJson } from "@/lib/cloudflare-store";
+import { shopMediaBucket,productMime } from "@/lib/r2-media";
 
 const OWNER = process.env.GITHUB_REPO_OWNER || "SviatF";
 const REPO = process.env.GITHUB_REPO_NAME || "reset-clinic-shop";
@@ -138,6 +139,11 @@ export async function mutateJsonStore<T>(pathname: string, fallback: T, message:
 
 export async function writeBinaryAsset(relativePath: string, bytes: ArrayBuffer, message: string) {
   const clean = relativePath.replace(/^\/+/, "");
+  const bucket = shopMediaBucket();
+  if (bucket) {
+    await bucket.put(clean, bytes, {httpMetadata:{contentType:productMime(clean)}});
+    return `/shop-media/${clean}`;
+  }
   if (usingLocalJsonStore()) {
     const destination = localPath(`uploads/${clean}`);
     await fs.mkdir(path.dirname(destination), { recursive: true });
