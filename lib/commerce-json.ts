@@ -8,6 +8,7 @@ import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonSto
 
 const productSeed = [...(productsData as unknown as ProductRecord[]), ...hairSeeds];
 function mergeLegacySeeds(stored: ProductRecord[]): ProductRecord[] {
+  if(stored.some(item => item.id.startsWith("oliere_hair_"))) return stored;
   const slugs = new Set(stored.map(item => item.slug));
   return [...stored, ...hairSeeds.filter(item => !slugs.has(item.slug))];
 }
