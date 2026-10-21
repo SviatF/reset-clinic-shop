@@ -93,7 +93,7 @@ export async function parseSupplierWorkbook(file:File):Promise<Parsed>{
    if(found.has(base))warnings.push(`${brand} рядок ${rowIndex}: однакові міжнародні назви, перевірте дубль`);
    found.add(base);
    const raw=data.D||"";
-   const inciMarker=/(?:Ingredients\s*\/\s*Склад\s*\(INCI\)|(?:^|\n)\s*склад)\s*:\s*/im.exec(raw);
+   const inciMarker=/(?:Ingredients\s*\/\s*Склад\s*\(INCI\)|(?:^|\n)\s*(?:Повний\s+)?склад)\s*:\s*/im.exec(raw);
    const mainPart=inciMarker?raw.slice(0,inciMarker.index).trim():raw;
    const inciText=inciMarker?raw.slice(inciMarker.index+inciMarker[0].length).trim():"";
    const usageMarker=/(?:Спосіб\s*(?:використання|застосування)|Використання)\s*:\s*/i.exec(mainPart);
