@@ -40,6 +40,7 @@ function fromProduct(product: Product) {
 export default function AdminProductsClient() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
+  const [brands,setBrands] = useState<any[]>([]);
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [form, setForm] = useState<any>(empty);
@@ -56,6 +57,8 @@ export default function AdminProductsClient() {
     setProducts(data.products || []);
     const response2=await fetch("/api/admin/categories",{cache:"no-store"});
     if(response2.ok)setCategories((await response2.json()).categories||[]);
+    const response3=await fetch("/api/admin/brands",{cache:"no-store"});
+    if(response3.ok)setBrands((await response3.json()).brands||[]);
   }
 
   useEffect(() => { load().catch((err) => setMessage(err.message)); }, []);
@@ -155,12 +158,12 @@ export default function AdminProductsClient() {
 
           <section className="admin-form-section"><h3>Основне</h3><div className="admin-form-grid">
             <label className="wide"><span>Назва товару *</span><input value={form.name} onChange={(e) => update("name", e.target.value)} required /></label>
-            <label><span>Бренд</span><input value={form.brand} onChange={(e) => update("brand", e.target.value)} /></label>
+            <label><span>Бренд</span><input list="reset-brands" value={form.brand} onChange={(e) => update("brand", e.target.value)} /><datalist id="reset-brands">{brands.filter(b=>b.status==="active").map(b=><option key={b.id} value={b.name}/>)}</datalist></label>
             <label><span>SKU</span><input value={form.sku} onChange={(e) => update("sku", e.target.value)} /></label>
             <label><span>Slug</span><input value={form.slug} onChange={(e) => update("slug", e.target.value)} placeholder="auto-from-name" /></label>
             <label><span>Категорія</span><select value={form.category} onChange={(e) => setForm((f:any)=>({...f,category:e.target.value,subcategory_slugs:[]}))}><option value="face">Обличчя</option><option value="body">Тіло</option><option value="hair">Волосся</option><option value="other">Інше</option></select></label>
             <label><span>Підкатегорія</span><select value={form.subcategory_slugs?.[0]||""} onChange={(e)=>update("subcategory_slugs",e.target.value?[e.target.value]:[])}><option value="">Без підкатегорії</option>{categories.filter(c=>c.parent_slug===form.category).map(c=><option key={c.id} value={c.slug}>{c.name}</option>)}</select></label>
-            <label><span>Продуктова лінійка</span><input value={form.product_line||""} onChange={(e)=>update("product_line",e.target.value)} placeholder="Peptology / Soothing Repair R4"/></label>
+            <label><span>Продуктова лінійка</span><input list="reset-lines" value={form.product_line||""} onChange={(e)=>update("product_line",e.target.value)} placeholder="Peptology / Soothing Repair R4"/><datalist id="reset-lines">{brands.find(b=>b.name===form.brand)?.lines.map((line:string)=><option key={line} value={line}/>)}</datalist></label>
             <label><span>Статус</span><select value={form.status} onChange={(e) => update("status", e.target.value)}><option value="draft">Draft</option><option value="active">Active</option><option value="archived">Archived</option></select></label>
             <label><span>Ціна, грн</span><input type="number" step="0.01" min="0" value={form.price} onChange={(e) => update("price", e.target.value)} /></label>
             <label><span>Залишок, шт.</span><input type="number" min="0" value={form.stock_quantity} onChange={(e) => update("stock_quantity", e.target.value)} /></label>

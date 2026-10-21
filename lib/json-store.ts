@@ -12,6 +12,7 @@ const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 
 export const PRODUCTS_PATH = "data/products.json";
 export const CATEGORIES_PATH = "data/categories.json";
+export const BRANDS_PATH = "data/brands.json";
 export const ORDERS_PATH = "data/orders.json";
 export const ACTIVITY_PATH = "data/activity.json";
 
@@ -27,7 +28,7 @@ export function usingCloudflareStore() {
 }
 
 function useD1ForPath(pathname: string) {
-  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH || (process.env.SHOP_PRODUCTS_BACKEND === "d1" && (pathname === PRODUCTS_PATH || pathname === CATEGORIES_PATH)));
+  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH || (process.env.SHOP_PRODUCTS_BACKEND === "d1" && (pathname === PRODUCTS_PATH || pathname === CATEGORIES_PATH || pathname === BRANDS_PATH)));
 }
 
 export function usingLocalJsonStore() {
