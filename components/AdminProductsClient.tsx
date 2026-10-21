@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import AdminExcelImport from "@/components/AdminExcelImport";
 
 type Product = any;
 
@@ -138,6 +139,7 @@ export default function AdminProductsClient() {
       {configured === false && <div className="admin-connect-card"><span>DATABASE</span><h2>Потрібне підключення Supabase</h2><p>CRUD уже реалізований у коді. Після створення бази форма почне записувати товари в каталог.</p></div>}
       {message && <div className="admin-toast">{message}</div>}
 
+      <AdminExcelImport onFinished={load} />
       <div className="admin-product-workspace">
         <aside className="admin-product-list">
           <div className="admin-list-head"><strong>{products.length} позицій</strong><span>ACTIVE / DRAFT / ARCHIVED</span></div>
