@@ -5,7 +5,7 @@ import productsData from "@/data/products.json";
 import type { ActivityRecord, OrderRecord, ProductRecord } from "@/lib/commerce-types";
 import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonStore } from "@/lib/json-store";
 
-const productSeed = productsData as ProductRecord[];
+const productSeed = productsData as unknown as ProductRecord[];
 
 export async function readProducts() {
   return (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data;

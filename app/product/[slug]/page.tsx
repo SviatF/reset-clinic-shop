@@ -53,7 +53,7 @@ export default async function DynamicProductPage({ params }: Props) {
     description: item.description,
     image: [absoluteUrl(imageSrc)],
     url: absoluteUrl(path),
-    sku: item.slug,
+    ...(item.sku ? {sku:item.sku} : {}),
     brand: { "@type": "Brand", name: item.brand },
     category: categoryName,
     offers: {

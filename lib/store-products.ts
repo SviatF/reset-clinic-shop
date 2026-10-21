@@ -3,7 +3,7 @@ import type { ProductRecord } from "@/lib/commerce-types";
 import { readProducts } from "@/lib/commerce-json";
 import { inferredSubcategories } from "@/lib/catalog-taxonomy";
 export type StoreProduct = {
-  id: string | null; slug: string; name: string; brand: string;
+  id: string | null; slug: string; name: string; brand: string; sku: string | null;
   category: "face" | "body" | "hair" | "other"; subcategories: string[]; productLine: string;
   price: number; currency: string; stockQuantity: number; trackStock: boolean;
   size: string; imageUrl: string | null; secondaryImageUrl: string | null;
@@ -17,6 +17,7 @@ function mapRecord(row: ProductRecord): StoreProduct {
     slug: row.slug,
     name: row.name,
     brand: row.brand,
+    sku: row.sku,
     category: row.category,
     subcategories: row.subcategory_slugs?.length ? row.subcategory_slugs : inferredSubcategories(row.name,row.category),
     productLine: row.product_line || "",
@@ -44,7 +45,7 @@ function mapRecord(row: ProductRecord): StoreProduct {
 
 
 export async function getAllProductRecords(){return readProducts();}
-export type CatalogQuery = {category?:string;subcategory?:string;brand?:string;featured?:boolean;limit?:number;page?:number;search?:string;sort?:"default"|"price-asc"|"price-desc"|"name"};
+export type CatalogQuery = {category?:string;subcategory?:string;brand?:string;featured?:boolean;limit?:number;page?:number;search?:string;line?:string;sort?:"default"|"price-asc"|"price-desc"|"name"};
 export async function getStoreProductsPage(options:CatalogQuery={}){
   const data=await readProducts();
   const query=(options.search||"").toLocaleLowerCase("uk").trim();
@@ -52,6 +53,7 @@ export async function getStoreProductsPage(options:CatalogQuery={}){
     .filter(row=>!options.category||row.category===options.category)
     .filter(row=>!options.subcategory||(row.subcategory_slugs?.length ? row.subcategory_slugs : inferredSubcategories(row.name,row.category)).includes(options.subcategory))
     .filter(row=>!options.brand||row.brand.toLocaleLowerCase("uk")===options.brand.toLocaleLowerCase("uk"))
+    .filter(row=>!options.line||row.product_line===options.line)
     .filter(row=>options.featured===undefined||row.featured===options.featured)
     .filter(row=>!query||[row.name,row.brand,row.description,row.sku||""].some(v=>v.toLocaleLowerCase("uk").includes(query)));
   if(options.sort==="price-asc")filtered.sort((a,b)=>Number(a.price)-Number(b.price));
