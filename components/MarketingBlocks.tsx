@@ -4,6 +4,7 @@ import consultationImg from "@/assets/img/consultation.webp";
 import buyInHandImg from "@/assets/img/buyinhand.webp";
 import PremiumProductCard from "@/components/PremiumProductCard";
 import { getStoreProducts } from "@/lib/store-products";
+import { readCategories } from "@/lib/catalog-categories";
 
 const CATEGORY_IMAGE_REVISION = "20260903-canonical";
 
@@ -13,7 +14,7 @@ export function Arrow() {
 
 export async function ProductGrid({ count = 8, category }: { count?: number; category?: "face" | "body" | "hair" }) {
   const products = await getStoreProducts({ category, limit: count });
-  const visible = products.length === 1 ? Array.from({ length: count }, () => products[0]) : products.slice(0, count);
+  const visible = products;
   return (
     <div className="category-product-grid">
       {visible.map((item, index) => <PremiumProductCard key={`${item.slug}-${index}`} index={index + 1} productData={item} />)}
@@ -21,6 +22,12 @@ export async function ProductGrid({ count = 8, category }: { count?: number; cat
   );
 }
 
+export async function CategorySubnav({category}:{category:"face"|"body"|"hair"}) {
+ const groups=(await readCategories()).filter(item=>item.parent_slug===category&&item.status==="active").sort((a,b)=>a.sort_order-b.sort_order);
+ return <nav aria-label="Підкатегорії" className="catalog-filters" style={{marginBottom:30}}>
+  {groups.map(item=><Link key={item.id} href={`/${category}/${item.slug}`}>{item.name}</Link>)}
+ </nav>;
+}
 export function TrustStrip() {
   return (
     <section className="page-trust-strip">
@@ -65,7 +72,7 @@ export function CategoryLanding({ eyebrow, title, description, image, imageAlt, 
         </div>
       </section>
       <section className="category-products" id="products">
-        <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Асортимент керується з RESET Commerce Admin: активні товари, ціни та залишки оновлюються без зміни дизайну сайту.</p></div><ProductGrid category={tone} count={tone === "hair" ? 100 : 8} /></div>
+        <div className="shell"><div className="section-heading split-heading"><div><span>КАТАЛОГ ~ {eyebrow}</span><h2>Точний догляд.<br/>Без зайвого.</h2></div><p>Асортимент керується з RESET Commerce Admin: активні товари, ціни та залишки оновлюються без зміни дизайну сайту.</p></div><CategorySubnav category={tone} /><ProductGrid category={tone} count={100} /></div>
       </section>
       <section className="consultation-sell shell">
         <div className="consultation-image"><Image src={consultationImg} alt="Консультація косметолога RESET Clinic" /></div>
