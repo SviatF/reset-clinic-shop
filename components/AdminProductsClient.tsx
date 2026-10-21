@@ -5,7 +5,7 @@ import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 type Product = any;
 
 const empty = {
-  name: "", slug: "", brand: "", sku: "", category: "face", status: "draft",
+  name: "", slug: "", brand: "", sku: "", category: "face", subcategory_slugs: [], product_line: "", status: "draft",
   price: "", stock_quantity: "0", size: "", short_description: "", description: "",
   image_url: "", secondary_image_url: "", hover_label: "ПРИЗНАЧЕННЯ", hover_title: "", hover_text: "",
   how_to_use: "", key_ingredients_text: "", inci: "", seo_title: "", seo_description: "",
@@ -23,6 +23,8 @@ function fromProduct(product: Product) {
     image_url: product.image_url || "",
     secondary_image_url: product.secondary_image_url || "",
     sku: product.sku || "",
+    product_line: product.product_line || "",
+    subcategory_slugs: Array.isArray(product.subcategory_slugs)?product.subcategory_slugs:[],
     size: product.size || "",
     hover_label: product.hover_label || "ПРИЗНАЧЕННЯ",
     hover_title: product.hover_title || "",
@@ -36,6 +38,7 @@ function fromProduct(product: Product) {
 
 export default function AdminProductsClient() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [form, setForm] = useState<any>(empty);
@@ -50,6 +53,8 @@ export default function AdminProductsClient() {
     if (!response.ok) throw new Error(data?.error || "Не вдалося завантажити товари");
     setConfigured(data.configured);
     setProducts(data.products || []);
+    const response2=await fetch("/api/admin/categories",{cache:"no-store"});
+    if(response2.ok)setCategories((await response2.json()).categories||[]);
   }
 
   useEffect(() => { load().catch((err) => setMessage(err.message)); }, []);
@@ -151,7 +156,9 @@ export default function AdminProductsClient() {
             <label><span>Бренд</span><input value={form.brand} onChange={(e) => update("brand", e.target.value)} /></label>
             <label><span>SKU</span><input value={form.sku} onChange={(e) => update("sku", e.target.value)} /></label>
             <label><span>Slug</span><input value={form.slug} onChange={(e) => update("slug", e.target.value)} placeholder="auto-from-name" /></label>
-            <label><span>Категорія</span><select value={form.category} onChange={(e) => update("category", e.target.value)}><option value="face">Обличчя</option><option value="body">Тіло</option><option value="hair">Волосся</option><option value="other">Інше</option></select></label>
+            <label><span>Категорія</span><select value={form.category} onChange={(e) => setForm((f:any)=>({...f,category:e.target.value,subcategory_slugs:[]}))}><option value="face">Обличчя</option><option value="body">Тіло</option><option value="hair">Волосся</option><option value="other">Інше</option></select></label>
+            <label><span>Підкатегорія</span><select value={form.subcategory_slugs?.[0]||""} onChange={(e)=>update("subcategory_slugs",e.target.value?[e.target.value]:[])}><option value="">Без підкатегорії</option>{categories.filter(c=>c.parent_slug===form.category).map(c=><option key={c.id} value={c.slug}>{c.name}</option>)}</select></label>
+            <label><span>Продуктова лінійка</span><input value={form.product_line||""} onChange={(e)=>update("product_line",e.target.value)} placeholder="Peptology / Soothing Repair R4"/></label>
             <label><span>Статус</span><select value={form.status} onChange={(e) => update("status", e.target.value)}><option value="draft">Draft</option><option value="active">Active</option><option value="archived">Archived</option></select></label>
             <label><span>Ціна, грн</span><input type="number" step="0.01" min="0" value={form.price} onChange={(e) => update("price", e.target.value)} /></label>
             <label><span>Залишок, шт.</span><input type="number" min="0" value={form.stock_quantity} onChange={(e) => update("stock_quantity", e.target.value)} /></label>

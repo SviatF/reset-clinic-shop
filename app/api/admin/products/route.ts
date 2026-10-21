@@ -30,6 +30,8 @@ function normalizeProduct(body: any, id: string, createdAt: string): ProductReco
     brand: clean(body?.brand, 120) || "RESET Clinic",
     sku: clean(body?.sku, 120) || null,
     category,
+    subcategory_slugs: Array.isArray(body?.subcategory_slugs) ? body.subcategory_slugs.map((v:unknown)=>clean(v,80)).filter(Boolean).slice(0,20) : [],
+    product_line: clean(body?.product_line,120)||null,
     status,
     short_description: clean(body?.short_description, 500),
     description: clean(body?.description, 5000),

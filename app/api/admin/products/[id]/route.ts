@@ -7,7 +7,7 @@ import { jsonStoreWriteConfigured } from "@/lib/json-store";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const allowed = new Set(["slug","name","brand","sku","category","status","short_description","description","price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
+const allowed = new Set(["slug","name","brand","sku","category","subcategory_slugs","product_line","status","short_description","description","price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
 
 function sanitize(body: Record<string, unknown>) {
   const next: Record<string, unknown> = {};
@@ -18,6 +18,7 @@ function sanitize(body: Record<string, unknown>) {
   if ("sort_order" in next) next.sort_order = Math.trunc(Number(next.sort_order) || 0);
   if ("key_ingredients" in next && !Array.isArray(next.key_ingredients)) next.key_ingredients = [];
   if ("seo_keywords" in next && !Array.isArray(next.seo_keywords)) next.seo_keywords = [];
+  if ("subcategory_slugs" in next && !Array.isArray(next.subcategory_slugs)) next.subcategory_slugs = [];
   return next;
 }
 
