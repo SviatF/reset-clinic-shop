@@ -93,19 +93,26 @@ export async function parseSupplierWorkbook(file:File):Promise<Parsed>{
    if(found.has(base))warnings.push(`${brand} рядок ${rowIndex}: однакові міжнародні назви, перевірте дубль`);
    found.add(base);
    const raw=data.D||"";
+   const inciMarker=/(?:Ingredients\s*\/\s*Склад\s*\(INCI\)|(?:^|\n)\s*склад)\s*:\s*/im.exec(raw);
+   const mainPart=inciMarker?raw.slice(0,inciMarker.index).trim():raw;
+   const inciText=inciMarker?raw.slice(inciMarker.index+inciMarker[0].length).trim():"";
+   const usageMarker=/(?:Спосіб\s*(?:використання|застосування)|Використання)\s*:\s*/i.exec(mainPart);
+   const descriptionText=(usageMarker?mainPart.slice(0,usageMarker.index):mainPart).trim();
+   const usageText=usageMarker?mainPart.slice(usageMarker.index+usageMarker[0].length).trim():"";
+
    const classification=classify(title+" "+english);
    const filename=anchorPhotos.get(rowIndex);
    if(filename&&archive[filename]){
     const extension=filename.split(".").pop()||"png";
     photos.push({slug,file:await imageFile(archive[filename],slug+"."+extension)});
    }else warnings.push(`${brand} рядок ${rowIndex}: фотографію не знайдено`);
-   if(raw.length>5000)warnings.push(`${brand} рядок ${rowIndex}: опис перевищує 5000 символів`);
+   if(descriptionText.length>5000)warnings.push(`${brand} рядок ${rowIndex}: опис перевищує 5000 символів`);
    if(brand==="Dermafirm"&&rowIndex===4)warnings.push("Dermafirm рядок 4: міжнародна назва PDRN суперечить опису Niacinamide Vita C+");
    results.push({
     slug,name:title.replace(/\s+/g," ").trim(),brand,product_line:line(brand,english),category:classification.category,
     subcategory_slugs:classification.sub,status:"draft",price:priceNumber,currency:"UAH",size:data.E||"",
-    stock_quantity:0,track_stock:true,short_description:raw.split(/\n\s*\n/)[0].slice(0,500),
-    description:raw.slice(0,5000),how_to_use:"",inci:""
+    stock_quantity:0,track_stock:true,short_description:descriptionText.split(/\n\s*\n/)[0].slice(0,500),
+    description:descriptionText.slice(0,5000),how_to_use:usageText.slice(0,3000),inci:inciText.slice(0,8000)
    });
   }
  }

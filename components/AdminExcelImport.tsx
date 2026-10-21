@@ -63,6 +63,7 @@ export default function AdminExcelImport({onFinished}:{onFinished:()=>Promise<vo
   {error&&<p role="alert" style={{color:"#a11"}}>{error}</p>}
   {ready&&<div style={{marginTop:14}}>
     <p><b>{ready.products.length} товарів</b> / {ready.photos.length} фото. Нових: {preview?.new_count??0}. Дублі: {preview?.duplicates.length??0}.</p>
+    <div style={{maxHeight:250,overflow:"auto",border:"1px solid #ddd",marginBottom:16}}><table style={{width:"100%",borderCollapse:"collapse"}}><thead><tr><th>Товар</th><th>Розділ</th><th>Ціна</th></tr></thead><tbody>{ready.products.map(product=><tr key={product.slug}><td style={{padding:8}}>{product.name}</td><td style={{padding:8}}>{product.category} / {product.subcategory_slugs.join(", ")}</td><td style={{padding:8}}>{product.price} грн</td></tr>)}</tbody></table></div>
     {ready.warnings.length>0&&<details><summary>Зауваження ({ready.warnings.length})</summary><ul>{ready.warnings.map((w,i)=><li key={i}>{w}</li>)}</ul></details>}
     <p><b>Увага:</b> ціни та товарні твердження з Excel не перевірені. Статус товарів після імпорту — Draft.</p>
     <button className="admin-primary" disabled={busy||!preview?.new_count} onClick={commit} type="button">Імпортувати чернетки та фотографії</button>
