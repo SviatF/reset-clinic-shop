@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "reset-clinic-shop",
+  "name": "reset-clinic-shop-sasha",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-09",
   "compatibility_flags": [
@@ -12,6 +12,10 @@
   },
   "observability": {
     "enabled": true
+  },
+  "vars": {
+    "SHOP_STAGING": "true",
+    "GITHUB_REPO_BRANCH": "main-SASHA"
   },
   "workers_dev": true
 }
