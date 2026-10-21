@@ -3,6 +3,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
+import { slugifyUkr } from "@/lib/slugify";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,7 +13,7 @@ const allowed = new Set(["slug","name","brand","sku","category","subcategory_slu
 function sanitize(body: Record<string, unknown>) {
   const next: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(body || {})) if (allowed.has(key)) next[key] = value;
-  if ("slug" in next && typeof next.slug === "string") next.slug = next.slug.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 120);
+  if ("slug" in next && typeof next.slug === "string") next.slug = slugifyUkr(next.slug);
   if ("price" in next) next.price = Math.max(0, Number(next.price) || 0);
   if ("stock_quantity" in next) next.stock_quantity = Math.max(0, Math.trunc(Number(next.stock_quantity) || 0));
   if ("sort_order" in next) next.sort_order = Math.trunc(Number(next.sort_order) || 0);

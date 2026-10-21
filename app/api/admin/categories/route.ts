@@ -3,6 +3,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { readCategories,mutateCategories } from "@/lib/catalog-categories";
 import { readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
+import { inferredSubcategories } from "@/lib/catalog-taxonomy";
 import type { StoreCategory } from "@/lib/catalog-taxonomy";
 export const runtime="nodejs";
 export const dynamic="force-dynamic";
@@ -30,6 +31,7 @@ export async function POST(request:Request){
    if(rows.some(row=>row.id!==category.id&&row.slug===category.slug&&row.parent_slug===category.parent_slug))throw new Error("У цій категорії такий slug уже існує");
    const previous=rows.find(row=>row.id===category.id);
    if(previous&&previous.parent_slug!==category.parent_slug)throw new Error("Переміщення підкатегорії між розділами потребує окремої міграції");
+   if(previous&&previous.slug!==category.slug)throw new Error("Slug підкатегорії не можна змінювати без перенесення зв'язків товарів та редиректів");
    return previous?rows.map(row=>row.id===category.id?category:row):[...rows,category];
   });
   return NextResponse.json({category,categories:next});
@@ -43,7 +45,7 @@ export async function DELETE(request:Request){
   const rows=await readCategories();
   const candidate=rows.find(row=>row.id===id);
   if(!candidate||!candidate.parent_slug)throw new Error("Підкатегорію не знайдено або це основна категорія");
-  const used=(await readProducts()).some(row=>row.category===candidate.parent_slug && row.subcategory_slugs?.includes(candidate.slug));
+  const used=(await readProducts()).some(row=>row.category===candidate.parent_slug && (row.subcategory_slugs?.length?row.subcategory_slugs:inferredSubcategories(row.name,row.category)).includes(candidate.slug));
   if(used)throw new Error("До цієї підкатегорії прив'язані товари. Спочатку перепризначте їх.");
   const categories=await mutateCategories("Admin: delete subcategory "+id,current=>current.filter(row=>row.id!==id));
   return NextResponse.json({ok:true,categories});

@@ -3,6 +3,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, newId, readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
+import { slugifyUkr } from "@/lib/slugify";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,14 +12,11 @@ function clean(value: unknown, max = 5000) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
-function slugify(value: string) {
-  return value.toLowerCase().normalize("NFKD").replace(/[’']/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 120);
-}
 
 function normalizeProduct(body: any, id: string, createdAt: string): ProductRecord {
   const name = clean(body?.name, 180);
   if (!name) throw new Error("Назва товару обов’язкова");
-  const slug = slugify(clean(body?.slug, 140) || name);
+  const slug = slugifyUkr(clean(body?.slug, 140) || name);
   if (!slug) throw new Error("Не вдалося сформувати slug");
   const status: ProductRecord["status"] = ["draft", "active", "archived"].includes(body?.status) ? body.status : "draft";
   const category: ProductRecord["category"] = ["face", "body", "hair", "other"].includes(body?.category) ? body.category : "face";
