@@ -109,6 +109,8 @@ def main():
         for sheet_no,brand in [(1, "Dermafirm"),(2, "Braderm")]:
             pictures = photo_anchors(z, sheet_no)
             for row_index, cells in read_rows(z, sheet_no, shared):
+                if row_index == 1:  # Header contains a date and must never become a product.
+                    continue
                 title = cells.get("A", "")
                 international = cells.get("B", "")
                 price = price_number(cells.get("F", ""))
