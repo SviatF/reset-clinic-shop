@@ -17,7 +17,7 @@ for(const row of snapshot.products){
  slugs.add(row.slug);
 }
 const escape=(value)=>String(value).replace(/'/g,"''");
-const rows=[["data/products.json",snapshot.products],["data/categories.json",snapshot.categories]];
+const rows=[["data/products.json",snapshot.products],["data/categories.json",snapshot.categories],...(Array.isArray(snapshot.brands)?[["data/brands.json",snapshot.brands]]:[])];
 const sql=["BEGIN TRANSACTION;",...rows.map(([path,data])=>
  `INSERT INTO shop_documents (pathname,content,version,updated_at)
  VALUES ('${escape(path)}','${escape(JSON.stringify(data))}',1,datetime('now'))

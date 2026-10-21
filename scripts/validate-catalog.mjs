@@ -1,6 +1,8 @@
 import fs from "node:fs";
 const products=JSON.parse(fs.readFileSync("data/products.json","utf8"));
 const categories=JSON.parse(fs.readFileSync("data/categories.json","utf8"));
+const brands=JSON.parse(fs.readFileSync("data/brands.json","utf8"));
+if(!Array.isArray(brands)||brands.length<4)throw new Error("Default brands missing");
 if(!Array.isArray(products)||products.length<54)throw new Error("Legacy catalog unexpectedly lost items");
 const slugSet=new Set();
 const idSet=new Set();

@@ -15,7 +15,7 @@
 ## New catalogue structure
 - Parent categories: hair, face, body (existing routes preserved).
 - Subcategories (editable in `/admin/categories`) are stored at `data/categories.json` or D1 when opted in.
-- Visible pages: `/hair/shampoo`, `/hair/conditioner`, `/hair/mask`, `/hair/styling`; `/face/cream`, `/face/cleansing`, `/face/toning`, `/face/serums`, `/face/spf`; `/body/cleansing`, `/body/cream`, `/body/spf`.
+- Brand directory is editable at `/admin/brands` (brands and product-line suggestions in product editor). Stored at `data/brands.json` or D1.\n- Visible pages: `/hair/shampoo`, `/hair/conditioner`, `/hair/mask`, `/hair/styling`; `/face/cream`, `/face/cleansing`, `/face/toning`, `/face/serums`, `/face/spf`; `/body/cleansing`, `/body/cream`, `/body/spf`.
 - Products with no explicit subcategory assignment fall back to name-based classification. Review this inferred mapping before public release.
 
 ## Safe D1 cutover — staging only
