@@ -26,7 +26,7 @@ async function decrementStock(order: OrderRecord) {
     if (line.product_id === null) continue;
     await appendActivity({ event_type: "stock_decremented", entity_type: "product", entity_id: line.product_id, title: `Stock списано: ${line.name} · ${line.quantity} шт.`, metadata: { orderId: order.id, quantity: line.quantity } });
   }
-
+}
 
 export async function POST(request: Request) {
   const rawBody = await request.text();
