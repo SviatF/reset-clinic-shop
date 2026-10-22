@@ -2,7 +2,6 @@ import "server-only";
 
 import { createPublicKey, verify } from "node:crypto";
 import { readProducts } from "@/lib/commerce-json";
-import { certificateTitle, parseCertificateSlug } from "@/lib/gift-certificates";
 
 const MONO_API = "https://api.monobank.ua";
 export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.vercel.app";
@@ -10,7 +9,7 @@ export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.verce
 export type CheckoutCartItem = { slug: string; qty: number };
 
 export type NormalizedCheckoutItem = {
-  productId: string | null;
+  productId: string;
   slug: string;
   name: string;
   sku: string | null;
@@ -54,18 +53,12 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
   const merged = new Map<string, number>();
   for (const item of items) {
     const slug = typeof item?.slug === "string" ? item.slug : "";
-    if (!slug || (!bySlug.has(slug) && !parseCertificateSlug(slug))) throw new Error("У кошику є недоступний товар");
+    if (!slug || !bySlug.has(slug)) throw new Error("У кошику є недоступний товар");
     const qty = Math.max(1, Math.min(20, Math.trunc(Number(item.qty) || 1)));
     merged.set(slug, Math.min(20, (merged.get(slug) || 0) + qty));
   }
   const normalized: NormalizedCheckoutItem[] = [];
   for (const [slug, qty] of merged) {
-    const gift = parseCertificateSlug(slug);
-    if (gift) {
-      const unitAmount = gift.amount * 100;
-      normalized.push({ productId: null, slug, name: certificateTitle(gift.amount, gift.format), sku: null, qty, unitAmount, totalAmount: unitAmount * qty });
-      continue;
-    }
     const item = bySlug.get(slug)!;
     if (item.track_stock && Number(item.stock_quantity) < qty) throw new Error(`Недостатньо товару «${item.name}» у наявності`);
     const unitAmount = Math.round(Number(item.price) * 100);
