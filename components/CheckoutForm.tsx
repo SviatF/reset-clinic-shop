@@ -2,9 +2,11 @@
 
 import { FormEvent, useState } from "react";
 import { useCart } from "@/components/CartProvider";
+import { parseCertificateSlug } from "@/lib/gift-certificates";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
+  const digitalOnly = items.length > 0 && items.every((item) => parseCertificateSlug(item.slug)?.format === "digital");
   const [delivery, setDelivery] = useState("nova");
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +26,7 @@ export default function CheckoutForm() {
       city: String(form.get("city") || "").trim(),
       branch: String(form.get("branch") || "").trim(),
       comment: String(form.get("comment") || "").trim(),
-      delivery,
+      delivery: digitalOnly ? "email" : delivery,
       items,
       total,
       createdAt: new Date().toISOString(),
@@ -67,18 +69,20 @@ export default function CheckoutForm() {
         <div className="checkout-fields">
           <div className="checkout-field"><label htmlFor="name">Ім’я та прізвище</label><input id="name" name="name" required autoComplete="name" /></div>
           <div className="checkout-field"><label htmlFor="phone">Телефон</label><input id="phone" name="phone" required autoComplete="tel" placeholder="+380" /></div>
-          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" /></div>
+          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" required={digitalOnly} /></div>
         </div>
       </section>
 
       <section className="checkout-section">
-        <h2>Доставка</h2>
-        <div className="delivery-options">
+        <h2>Отримання</h2>
+        {digitalOnly ? (
+          <div className="delivery-options"><div className="delivery-option"><span><strong>Електронний сертифікат · на email</strong><span>Після обробки замовлення сертифікат надішлють на вказану вище електронну адресу. Доставка не потрібна.</span></span></div></div>
+        ) : <div className="delivery-options">
           <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
           <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
           <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
-        </div>
-        {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
+        </div>}
+        {!digitalOnly && delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
           <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required={delivery !== "pickup"} /></div>
           <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
         </div>}
