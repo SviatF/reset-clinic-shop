@@ -3,6 +3,7 @@ import "./globals.css";
 import "./refinements.css";
 import "./secondary-pages.css";
 import "./certificate-fixes.css";
+import "./certificate-purchase.css";
 import "./conversion.css";
 import "./conversion-extras.css";
 import "./account-conversion.css";
