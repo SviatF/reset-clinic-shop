@@ -4,6 +4,7 @@ import type { OrderRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateOrders, newId } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { monoFetch, normalizeOrder, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
+import { parseCertificateSlug } from "@/lib/gift-certificates";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -86,6 +87,9 @@ export async function POST(request: Request) {
     const reference = randomUUID().replaceAll("-", "");
     const orderCode = reference.slice(0, 8).toUpperCase();
     const email = clean(body.email, 120);
+    const digitalOnly = items.length > 0 && items.every((item) => parseCertificateSlug(item.slug)?.format === "digital");
+    if (digitalOnly && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) throw new Error("Вкажіть email для електронного сертифіката");
+    if (body.delivery === "email" && !digitalOnly) throw new Error("Електронна доставка доступна лише для онлайн-сертифікатів");
     const monoPayload = {
       amount,
       ccy: 980,
