@@ -1,0 +1,32 @@
+/* Certificate purchase — consistent with existing RESET editorial style. */
+.certificate-order-section{scroll-margin-top:115px;display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(35px,6vw,90px);padding:90px 0;border-top:1px solid #cfcac1}
+.certificate-order-heading h2{font-size:clamp(36px,4.4vw,62px);line-height:1;letter-spacing:-.055em;margin:20px 0 25px;max-width:590px}
+.certificate-order-heading p{font-size:16px;line-height:1.75;color:#625e57;max-width:480px}
+.certificate-order-caption{display:block;margin-top:34px;color:#858076;font-size:12px}
+.certificate-order-form{background:#f2f0e9;border:1px solid #ded9d0;padding:clamp(20px,3vw,42px)}
+.certificate-choose{border:0;padding:0;margin:0 0 34px;min-width:0}
+.certificate-choose legend{font-size:15px;font-weight:650;letter-spacing:-.01em;margin-bottom:18px}
+.certificate-choose legend span{font-size:11px;font-weight:400;color:#999186;margin-right:13px}
+.certificate-purpose-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.certificate-purpose-choice,.certificate-denomination{position:relative;background:#fff;border:1px solid #d8d3ca;cursor:pointer;transition:border-color .2s,background .2s;display:flex}
+.certificate-purpose-choice:hover,.certificate-denomination:hover{border-color:#716b61}
+.certificate-purpose-choice.selected,.certificate-denomination.selected{background:#eae6db;border-color:#27251f}
+.certificate-purpose-choice:focus-within,.certificate-denomination:focus-within{outline:2px solid #444038;outline-offset:2px}
+.certificate-purpose-choice input,.certificate-denomination input{position:absolute;opacity:0;width:1px;height:1px}
+.certificate-purpose-choice{min-height:185px;padding:24px 18px;flex-direction:column;align-items:flex-start}
+.certificate-choice-tag{font-size:10px;color:#797368;letter-spacing:.11em;margin-bottom:22px}
+.certificate-purpose-choice strong{font-size:17px;line-height:1.24;font-weight:650;letter-spacing:-.025em;margin-bottom:13px}
+.certificate-choice-desc{font-size:12px;color:#79746c;line-height:1.55}
+.certificate-purpose-choice.selected:after,.certificate-denomination.selected:after{content:"✓";font-size:14px;position:absolute;top:8px;right:10px}
+.certificate-denomination-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.certificate-denomination{min-height:66px;align-items:center;justify-content:center;font-size:21px;letter-spacing:-.025em;font-weight:600}
+.certificate-denomination small{font-size:13px;color:#827d73;font-weight:400}
+.certificate-order-summary{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-top:27px;border-top:1px solid #d4cfc4}
+.certificate-order-summary>div{display:flex;flex-direction:column;gap:8px}
+.certificate-order-summary>div>span{color:#898175;font-size:10px;letter-spacing:.11em}
+.certificate-order-summary strong{font-size:13px;font-weight:500}
+.certificate-order-summary b{font-size:30px;letter-spacing:-.035em;font-weight:600}
+.certificate-buy-button{font-size:11px;min-height:58px;border:0;display:flex;align-items:center;justify-content:center;gap:16px;cursor:pointer;white-space:nowrap}
+.certificate-order-footnote{font-size:11px;line-height:1.65;color:#827c73;margin:19px 0 0}
+@media(max-width:1080px){.certificate-order-section{grid-template-columns:1fr;gap:35px}.certificate-order-heading h2{max-width:720px}.certificate-order-heading p{max-width:680px}}
+@media(max-width:650px){.certificate-order-section{padding:60px 0;scroll-margin-top:88px}.certificate-order-form{padding:20px}.certificate-purpose-options{grid-template-columns:1fr}.certificate-purpose-choice{min-height:auto;padding:22px 20px}.certificate-choice-tag{margin-bottom:14px}.certificate-denomination-options{grid-template-columns:repeat(2,minmax(0,1fr))}.certificate-order-summary{align-items:stretch;flex-direction:column}.certificate-buy-button{width:100%}}
