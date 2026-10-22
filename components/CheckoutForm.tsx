@@ -6,6 +6,7 @@ import { parseCertificateSlug } from "@/lib/gift-certificates";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
+  const hasDigitalCertificate = items.some((item) => parseCertificateSlug(item.slug)?.format === "digital");
   const digitalOnly = items.length > 0 && items.every((item) => parseCertificateSlug(item.slug)?.format === "digital");
   const [delivery, setDelivery] = useState("nova");
   const [isPaying, setIsPaying] = useState(false);
@@ -69,7 +70,7 @@ export default function CheckoutForm() {
         <div className="checkout-fields">
           <div className="checkout-field"><label htmlFor="name">Ім’я та прізвище</label><input id="name" name="name" required autoComplete="name" /></div>
           <div className="checkout-field"><label htmlFor="phone">Телефон</label><input id="phone" name="phone" required autoComplete="tel" placeholder="+380" /></div>
-          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" required={digitalOnly} /></div>
+          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" required={hasDigitalCertificate} /></div>
         </div>
       </section>
 
@@ -86,6 +87,7 @@ export default function CheckoutForm() {
           <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required={delivery !== "pickup"} /></div>
           <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
         </div>}
+        {!digitalOnly && hasDigitalCertificate && <p className="checkout-note">Електронні сертифікати з цього замовлення надішлють на email, а фізичні товари доставлять вибраним способом.</p>}
       </section>
 
       <section className="checkout-section checkout-payment-section">
