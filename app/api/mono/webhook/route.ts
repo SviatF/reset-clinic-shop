@@ -3,6 +3,7 @@ import type { OrderRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateOrders, mutateProducts, readOrders } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { verifyMonoWebhook } from "@/lib/mono";
+import { isCertificateSlug } from "@/lib/gift-certificates";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,7 +23,10 @@ async function decrementStock(order: OrderRecord) {
     return { ...product, stock_quantity: Math.max(0, Number(product.stock_quantity || 0) - Number(line.quantity || 0)), updated_at: new Date().toISOString() };
   }));
   await mutateOrders(`Order ${order.order_number}: mark stock`, (orders) => orders.map((item) => item.id === order.id ? { ...item, stock_decremented: true, updated_at: new Date().toISOString() } : item));
-  for (const line of order.items) await appendActivity({ event_type: "stock_decremented", entity_type: "product", entity_id: line.product_id, title: `Stock списано: ${line.name} · ${line.quantity} шт.`, metadata: { orderId: order.id, quantity: line.quantity } });
+  for (const line of order.items) {
+    if (isCertificateSlug(line.slug)) continue;
+    await appendActivity({ event_type: "stock_decremented", entity_type: "product", entity_id: line.product_id, title: `Stock списано: ${line.name} · ${line.quantity} шт.`, metadata: { orderId: order.id, quantity: line.quantity } });
+  }
 }
 
 export async function POST(request: Request) {
