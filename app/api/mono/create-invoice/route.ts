@@ -4,6 +4,7 @@ import type { OrderRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateOrders, newId } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { monoFetch, normalizeOrder, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
+import { parseCertificateSlug } from "@/lib/gift-certificates";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -86,6 +87,10 @@ export async function POST(request: Request) {
     const reference = randomUUID().replaceAll("-", "");
     const orderCode = reference.slice(0, 8).toUpperCase();
     const email = clean(body.email, 120);
+    const hasCertificate = items.some((item) => parseCertificateSlug(item.slug) !== null);
+    const onlyCertificates = items.every((item) => parseCertificateSlug(item.slug) !== null);
+    if (hasCertificate && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Для оформлення сертифіката вкажіть коректний email");
+    if (body.delivery === "certificate" && !onlyCertificates) throw new Error("Оформлення без доставки доступне лише для замовлень із сертифікатами");
     const monoPayload = {
       amount,
       ccy: 980,
