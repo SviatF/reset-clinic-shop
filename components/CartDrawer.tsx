@@ -47,7 +47,7 @@ export default function CartDrawer() {
                 <article className="drawer-item" key={item.slug}>
                   <Link className="drawer-thumb" href={cartItemUrl(item.slug)} onClick={closeCart}><Image src={isCertificateSlug(item.slug) ? certificateImg : productImg} alt={item.name} /></Link>
                   <div className="drawer-item-copy">
-                    <Link href={`/product/${item.slug}`} onClick={closeCart}>{item.name}</Link>
+                    <Link href={cartItemUrl(item.slug)} onClick={closeCart}>{item.name}</Link>
                     <span>{item.price}.00₴</span>
                     <div className="drawer-item-controls">
                       <div className="qty-control"><button onClick={() => setQty(item.slug, item.qty - 1)}>−</button><span>{item.qty}</span><button onClick={() => setQty(item.slug, item.qty + 1)}>+</button></div>
