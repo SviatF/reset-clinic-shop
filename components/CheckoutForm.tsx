@@ -2,9 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import { useCart } from "@/components/CartProvider";
+import { parseCertificateSlug } from "@/lib/gift-certificates";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
+  const hasCertificate = items.some((item) => parseCertificateSlug(item.slug) !== null);
+  const certificatesOnly = items.length > 0 && items.every((item) => parseCertificateSlug(item.slug) !== null);
   const [delivery, setDelivery] = useState("nova");
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +27,7 @@ export default function CheckoutForm() {
       city: String(form.get("city") || "").trim(),
       branch: String(form.get("branch") || "").trim(),
       comment: String(form.get("comment") || "").trim(),
-      delivery,
+      delivery: certificatesOnly ? "certificate" : delivery,
       items,
       total,
       createdAt: new Date().toISOString(),
@@ -67,21 +70,32 @@ export default function CheckoutForm() {
         <div className="checkout-fields">
           <div className="checkout-field"><label htmlFor="name">Ім’я та прізвище</label><input id="name" name="name" required autoComplete="name" /></div>
           <div className="checkout-field"><label htmlFor="phone">Телефон</label><input id="phone" name="phone" required autoComplete="tel" placeholder="+380" /></div>
-          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" /></div>
+          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" required={hasCertificate} /></div>
         </div>
       </section>
 
       <section className="checkout-section">
-        <h2>Доставка</h2>
-        <div className="delivery-options">
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
-        </div>
-        {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
-          <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required={delivery !== "pickup"} /></div>
-          <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
-        </div>}
+        <h2>{certificatesOnly ? "Оформлення сертифіката" : "Доставка"}</h2>
+        {certificatesOnly ? (
+          <div className="delivery-options">
+            <div className="delivery-option">
+              <span><strong>Без доставки товарів</strong><span>Після підтвердження оплати спосіб отримання сертифіката узгоджується з клінікою. На контактний email надходитиме інформація щодо замовлення.</span></span>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="delivery-options">
+              <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
+              <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
+              <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
+            </div>
+            {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
+              <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required /></div>
+              <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required /></div>
+            </div>}
+          </>
+        )}
+        {!certificatesOnly && hasCertificate && <p className="checkout-note">Товари доставляються вибраним способом. Сертифікат оформлюється окремо відповідно до його призначення — покупки в магазині або процедури в клініці.</p>}
       </section>
 
       <section className="checkout-section checkout-payment-section">
