@@ -1,4 +1,4 @@
-export const SITE_URL = (process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://reset-clinic-shop.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://shop.resetclinic.org").replace(/\/$/, "");
 
 export const siteConfig = {
   name: "RESET Clinic",

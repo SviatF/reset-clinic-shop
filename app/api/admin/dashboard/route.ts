@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { readActivity, readOrders, readProducts } from "@/lib/commerce-json";
-import { jsonStoreWriteConfigured } from "@/lib/json-store";
+import { jsonStoreWriteAvailable } from "@/lib/json-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,7 +22,7 @@ export async function GET() {
     const lowStock = products.filter((product) => product.status === "active" && product.track_stock && Number(product.stock_quantity) <= 5);
     return NextResponse.json({
       configured: true,
-      writable: jsonStoreWriteConfigured(),
+      writable: await jsonStoreWriteAvailable(),
       metrics: {
         revenue,
         monthRevenue: monthPaid.reduce((sum, order) => sum + Number(order.total || 0), 0),

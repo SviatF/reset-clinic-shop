@@ -1,0 +1,55 @@
+{
+  "source_at": "2026-10-22",
+  "guidance": "Imported as provisional catalog entries from public sites. Validate prices, official supply and images against merchant inventory before enabling real checkout. CU SKIN from third-party prices remains draft.",
+  "references": [
+    {
+      "brand": "Histolab",
+      "url": "https://histolab.com.ua/syrovatky",
+      "items": 9,
+      "status": "active",
+      "note": null
+    },
+    {
+      "brand": "HydroPeptide",
+      "url": "https://hydropeptide.ua/shop/",
+      "items": 14,
+      "status": "active",
+      "note": "Reference listing prices, seasonal discounts may differ."
+    },
+    {
+      "brand": "Cetaphil",
+      "url": "https://avepharm.com.ua/magazyn/brands/cetaphil/",
+      "items": 11,
+      "status": "active",
+      "note": "Reference regular prices, not temporary promotional discounts."
+    },
+    {
+      "brand": "Sensilis",
+      "url": "https://sensilis.com.ua/katalog/",
+      "items": 11,
+      "status": "active",
+      "note": null
+    },
+    {
+      "brand": "DÉCAAR",
+      "url": "https://decaar.com.ua/domashnij-dogljad/",
+      "items": 17,
+      "status": "active",
+      "note": null
+    },
+    {
+      "brand": "CU SKIN",
+      "url": "https://www.acosm.com.ua/category/brendy-cu-skin",
+      "items": 10,
+      "status": "draft",
+      "note": null
+    }
+  ],
+  "sourceSheet": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit?gid=866063096",
+  "sheetItems": {
+    "Dermafirm": 28,
+    "Braderm": 11
+  },
+  "missingImages": 111,
+  "importer": "static source list (non-recurring)"
+}

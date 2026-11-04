@@ -3,13 +3,16 @@ import "server-only";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { cloudflareReadJson, cloudflareWriteJson, cloudflareMutateJson } from "@/lib/cloudflare-store";
+import { shopMediaBucket,productMime } from "@/lib/r2-media";
 
 const OWNER = process.env.GITHUB_REPO_OWNER || "SviatF";
 const REPO = process.env.GITHUB_REPO_NAME || "reset-clinic-shop";
-const BRANCH = process.env.GITHUB_REPO_BRANCH || "main";
+const BRANCH = process.env.GITHUB_REPO_BRANCH || "main-SASHA";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 
 export const PRODUCTS_PATH = "data/products.json";
+export const CATEGORIES_PATH = "data/categories.json";
+export const BRANDS_PATH = "data/brands.json";
 export const ORDERS_PATH = "data/orders.json";
 export const ACTIVITY_PATH = "data/activity.json";
 
@@ -25,7 +28,10 @@ export function usingCloudflareStore() {
 }
 
 function useD1ForPath(pathname: string) {
-  return usingCloudflareStore() && (pathname === ORDERS_PATH || pathname === ACTIVITY_PATH);
+  if (!usingCloudflareStore()) return false;
+  if (process.env.SHOP_PRODUCTS_BACKEND !== "d1")
+    throw new Error("SHOP_D1_CUTOVER_INCOMPLETE: set SHOP_PRODUCTS_BACKEND=d1");
+  return [PRODUCTS_PATH,CATEGORIES_PATH,BRANDS_PATH,ORDERS_PATH,ACTIVITY_PATH].includes(pathname);
 }
 
 export function usingLocalJsonStore() {
@@ -79,16 +85,36 @@ export async function readJsonStore<T>(pathname: string, fallback: T): Promise<R
   if (useD1ForPath(pathname)) return cloudflareReadJson(pathname, fallback);
   if (usingLocalJsonStore()) return readLocalJson(pathname, fallback);
 
-  const response = await fetch(`${API}/${pathname}?ref=${encodeURIComponent(BRANCH)}`, {
-    headers: headers(),
-    cache: "no-store",
-  });
-  if (response.status === 404) return { data: fallback, sha: null };
-  if (!response.ok) throw new Error(`JSON_STORE_READ_${response.status}: ${(await response.text()).slice(0, 300)}`);
-  const body = (await response.json()) as { content?: string; encoding?: string; sha?: string };
-  if (!body.content || body.encoding !== "base64") throw new Error("JSON_STORE_INVALID_CONTENT");
-  const text = Buffer.from(body.content.replace(/\n/g, ""), "base64").toString("utf8");
-  return { data: JSON.parse(text) as T, sha: body.sha || null };
+  // An isolated staging Worker may be deployed before GitHub or D1 storage is
+  // connected. Treat only known snapshot resources as read-only in that case.
+  // Never guess data for an unknown path and never treat a failed authenticated
+  // GitHub request as proof that orders/products do not exist.
+  const snapshotPaths = new Set([PRODUCTS_PATH, CATEGORIES_PATH, BRANDS_PATH, ORDERS_PATH, ACTIVITY_PATH]);
+  const canUseSnapshot = process.env.SHOP_STAGING === "true" && snapshotPaths.has(pathname);
+  if (canUseSnapshot && !process.env.GITHUB_TOKEN) return { data: fallback, sha: null };
+
+  try {
+    const response = await fetch(`${API}/${pathname}?ref=${encodeURIComponent(BRANCH)}`, {
+      headers: headers(),
+      cache: "no-store",
+    });
+    if (response.status === 404) {
+      if (canUseSnapshot) {
+        console.warn(`Staging GitHub document ${pathname} is inaccessible; using read-only bundled fallback`);
+        return { data: fallback, sha: null };
+      }
+      throw new Error("GitHub не повернув дані сховища (404). Перевірте GITHUB_TOKEN, права доступу до приватного репозиторію та GITHUB_REPO_BRANCH.");
+    }
+    if (!response.ok) throw new Error(`JSON_STORE_READ_${response.status}`);
+    const body = (await response.json()) as { content?: string; encoding?: string; sha?: string };
+    if (!body.content || body.encoding !== "base64") throw new Error("JSON_STORE_INVALID_CONTENT");
+    const text = Buffer.from(body.content.replace(/\n/g, ""), "base64").toString("utf8");
+    return { data: JSON.parse(text) as T, sha: body.sha || null };
+  } catch (error) {
+    // Fail visibly once persistent GitHub storage is explicitly configured,
+    // rather than silently replacing real orders or edited products with seeds.
+    throw error;
+  }
 }
 
 export async function writeJsonStore<T>(pathname: string, value: T, message: string, sha?: string | null) {
@@ -137,6 +163,14 @@ export async function mutateJsonStore<T>(pathname: string, fallback: T, message:
 
 export async function writeBinaryAsset(relativePath: string, bytes: ArrayBuffer, message: string) {
   const clean = relativePath.replace(/^\/+/, "");
+  if (usingCloudflareStore() || process.env.SHOP_MEDIA_BACKEND === "r2") {
+    if (process.env.SHOP_MEDIA_BACKEND !== "r2")
+      throw new Error("SHOP_R2_CUTOVER_INCOMPLETE: set SHOP_MEDIA_BACKEND=r2");
+    const bucket = shopMediaBucket();
+    if (!bucket) throw new Error("SHOP_R2_BINDING_MISSING");
+    await bucket.put(clean, bytes, {httpMetadata:{contentType:productMime(clean)}});
+    return `/shop-media/${clean}`;
+  }
   if (usingLocalJsonStore()) {
     const destination = localPath(`uploads/${clean}`);
     await fs.mkdir(path.dirname(destination), { recursive: true });
@@ -171,5 +205,27 @@ export async function readLocalBinaryAsset(relativePath: string) {
 }
 
 export function jsonStoreWriteConfigured() {
+  if (usingCloudflareStore()) return process.env.SHOP_PRODUCTS_BACKEND === "d1";
   return usingLocalJsonStore() || Boolean(process.env.GITHUB_TOKEN);
+}
+
+/** Admin-only readiness check: a configured but inaccessible GitHub token is not writable. */
+export async function jsonStoreWriteAvailable() {
+  if (usingCloudflareStore()) {
+    if (process.env.SHOP_PRODUCTS_BACKEND !== "d1") return false;
+    try { await cloudflareReadJson(PRODUCTS_PATH, []); return true; } catch { return false; }
+  }
+  if (usingLocalJsonStore()) return true;
+  if (!process.env.GITHUB_TOKEN) return false;
+  try {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}`, {
+      headers: headers(),
+      cache: "no-store",
+    });
+    if (!response.ok) return false;
+    const repository = (await response.json()) as { permissions?: { push?: boolean } };
+    return repository.permissions?.push === true;
+  } catch {
+    return false;
+  }
 }

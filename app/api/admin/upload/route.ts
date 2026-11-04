@@ -1,7 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { jsonStoreWriteConfigured, usingLocalJsonStore, writeBinaryAsset } from "@/lib/json-store";
+import { jsonStoreWriteConfigured, usingLocalJsonStore, usingCloudflareStore, writeBinaryAsset } from "@/lib/json-store";
+import {shopMediaBucket} from "@/lib/r2-media";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,7 +11,9 @@ const allowed = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"])
 
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "Shop storage не налаштований" }, { status: 503 });
+  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "Збереження даних магазину не налаштовано" }, { status: 503 });
+  if (usingCloudflareStore() && (process.env.SHOP_MEDIA_BACKEND !== "r2" || !shopMediaBucket()))
+    return NextResponse.json({ error: "R2 ще не підключено. Фотографію не збережено." }, { status: 503 });
   try {
     const form = await request.formData();
     const file = form.get("file");
@@ -22,7 +25,7 @@ export async function POST(request: Request) {
     const url = await writeBinaryAsset(relativePath, await file.arrayBuffer(), `Admin: upload product image ${file.name || "image"}`);
     return NextResponse.json({
       url,
-      note: usingLocalJsonStore()
+      note: process.env.SHOP_MEDIA_BACKEND === "r2" && shopMediaBucket() ? "Фото збережено в Cloudflare R2 і доступне одразу." : usingLocalJsonStore()
         ? "Фото збережене у persistent storage CityHost і доступне одразу."
         : "Фото записане в GitHub і стане доступним після деплою.",
     });

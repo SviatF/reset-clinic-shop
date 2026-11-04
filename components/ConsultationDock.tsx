@@ -8,7 +8,11 @@ export default function ConsultationDock() {
   if (
     pathname === "/checkout" ||
     pathname === "/consultation" ||
-    pathname.startsWith("/product/")
+    pathname.startsWith("/product/") ||
+    pathname === "/catalog" ||
+    pathname === "/face" || pathname.startsWith("/face/") ||
+    pathname === "/body" || pathname.startsWith("/body/") ||
+    pathname === "/hair" || pathname.startsWith("/hair/")
   ) return null;
 
   return (

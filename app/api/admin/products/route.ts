@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, newId, readProducts } from "@/lib/commerce-json";
-import { jsonStoreWriteConfigured } from "@/lib/json-store";
+import { jsonStoreWriteConfigured, jsonStoreWriteAvailable } from "@/lib/json-store";
+import { productSubcategories } from "@/lib/catalog-taxonomy";
+import { slugifyUkr } from "@/lib/slugify";
+import { readCategories } from "@/lib/catalog-categories";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,14 +14,11 @@ function clean(value: unknown, max = 5000) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
-function slugify(value: string) {
-  return value.toLowerCase().normalize("NFKD").replace(/[’']/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 120);
-}
 
 function normalizeProduct(body: any, id: string, createdAt: string): ProductRecord {
   const name = clean(body?.name, 180);
   if (!name) throw new Error("Назва товару обов’язкова");
-  const slug = slugify(clean(body?.slug, 140) || name);
+  const slug = slugifyUkr(clean(body?.slug, 140) || name);
   if (!slug) throw new Error("Не вдалося сформувати slug");
   const status: ProductRecord["status"] = ["draft", "active", "archived"].includes(body?.status) ? body.status : "draft";
   const category: ProductRecord["category"] = ["face", "body", "hair", "other"].includes(body?.category) ? body.category : "face";
@@ -30,6 +30,8 @@ function normalizeProduct(body: any, id: string, createdAt: string): ProductReco
     brand: clean(body?.brand, 120) || "RESET Clinic",
     sku: clean(body?.sku, 120) || null,
     category,
+    subcategory_slugs: Array.isArray(body?.subcategory_slugs) ? body.subcategory_slugs.map((v:unknown)=>clean(v,80)).filter(Boolean).slice(0,20) : [],
+    product_line: clean(body?.product_line,120)||null,
     status,
     short_description: clean(body?.short_description, 500),
     description: clean(body?.description, 5000),
@@ -60,8 +62,11 @@ function normalizeProduct(body: any, id: string, createdAt: string): ProductReco
 export async function GET() {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
-    const products = (await readProducts()).sort((a, b) => a.sort_order - b.sort_order || new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-    return NextResponse.json({ configured: true, writable: jsonStoreWriteConfigured(), products });
+    const products = (await readProducts()).map(product => ({
+      ...product,
+      subcategory_slugs: productSubcategories(product),
+    })).sort((a, b) => a.sort_order - b.sort_order || new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    return NextResponse.json({ configured: true, writable: await jsonStoreWriteAvailable(), products });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "JSON read error" }, { status: 500 });
   }
@@ -75,8 +80,12 @@ export async function POST(request: Request) {
     const id = newId("product");
     const now = new Date().toISOString();
     const product = normalizeProduct(body, id, now);
+    const categories=await readCategories();
+    if(product.status==="active" && Number(product.price)<=0)throw new Error("Не можна публікувати товар із нульовою ціною");
+    if((product.subcategory_slugs||[]).some(slug=>!categories.some(c=>c.parent_slug===product.category&&c.slug===slug&&c.status==="active")))throw new Error("Підкатегорія не належить до вибраного розділу");
     await mutateProducts(`Admin: add product ${product.slug}`, (products) => {
       if (products.some((item) => item.slug === product.slug)) throw new Error("Товар з таким slug вже існує");
+      if(product.sku && products.some(item=>item.sku?.toLowerCase()===product.sku?.toLowerCase()))throw new Error("Товар з таким SKU вже існує");
       return [...products, product];
     });
     await appendActivity({ event_type: "product_created", entity_type: "product", entity_id: product.id, title: `Створено товар: ${product.name}`, metadata: { slug: product.slug, status: product.status, price: product.price } });

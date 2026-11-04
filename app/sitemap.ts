@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
-import { getStoreProducts } from "@/lib/store-products";
+import { getAllProductRecords } from "@/lib/store-products";
+import { readCategories } from "@/lib/catalog-categories";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
   const entries: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number; lastModified?: Date }> = [
     { path: "/", changeFrequency: "weekly", priority: 1 },
     { path: "/face", changeFrequency: "weekly", priority: 0.9 },
@@ -20,8 +20,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/clients/delivery", changeFrequency: "monthly", priority: 0.5 },
     { path: "/clients/returns", changeFrequency: "monthly", priority: 0.5 },
     { path: "/clients/faq", changeFrequency: "monthly", priority: 0.65 },
+    { path: "/clients/privacy", changeFrequency: "yearly", priority: 0.2 },
+    { path: "/clients/terms", changeFrequency: "yearly", priority: 0.2 },
   ];
-  const products = await getStoreProducts({ limit: 100 });
-  for (const item of products) entries.push({ path: `/product/${item.slug}`, changeFrequency: "weekly", priority: 0.95, lastModified: item.updatedAt ? new Date(item.updatedAt) : now });
-  return entries.map((entry) => ({ url: absoluteUrl(entry.path), lastModified: entry.lastModified || now, changeFrequency: entry.changeFrequency, priority: entry.priority }));
+  const categories=await readCategories();
+  for(const group of categories.filter(c=>c.parent_slug&&c.status==="active"))entries.push({path:`/${group.parent_slug}/${group.slug}`,changeFrequency:"weekly",priority:0.75});
+  const products = (await getAllProductRecords()).filter(item=>item.status==="active");
+  for (const item of products) entries.push({ path: `/product/${item.slug}`, changeFrequency: "weekly", priority: 0.8, lastModified: item.updated_at ? new Date(item.updated_at) : undefined });
+  return entries.map((entry) => ({ url: absoluteUrl(entry.path), ...(entry.lastModified ? { lastModified: entry.lastModified } : {}), changeFrequency: entry.changeFrequency, priority: entry.priority }));
 }

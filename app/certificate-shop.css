@@ -1,0 +1,91 @@
+/* Gift-certificate purchase interface; scoped to existing editorial certificate page */
+.cert-shop-section{background:#f2f0e9;padding:78px 0 88px;border-top:1px solid #e1ded5;border-bottom:1px solid #e1ded5;scroll-margin-top:110px;color:#201f1a}
+.cert-shop-layout{display:grid;grid-template-columns:minmax(0,.91fr) minmax(450px,1fr);gap:clamp(36px,7vw,110px);align-items:center}
+.cert-shop-intro{max-width:470px}
+.cert-shop-intro .editorial-kicker{font-size:10px;letter-spacing:.15em}
+.cert-shop-intro h2{font-family:inherit;font-weight:500;font-size:clamp(40px,4.2vw,65px);letter-spacing:-.055em;line-height:1.02;margin:20px 0 24px}
+.cert-shop-intro>p{font-size:15px;line-height:1.75;color:#67645e;max-width:430px}
+.cert-shop-facts{display:grid;gap:22px;margin-top:55px;padding-top:25px;border-top:1px solid #d1cec5}
+.cert-shop-facts>div{display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;gap:4px 16px;align-items:start}
+.cert-shop-facts span{font-size:10px;color:#99948b;grid-row:1/3;padding-top:2px}
+.cert-shop-facts strong{font-size:13px;letter-spacing:-.01em;font-weight:600}
+.cert-shop-facts small{font-size:12px;color:#7b776f}
+.cert-shop-form{background:#faf9f5;padding:clamp(24px,3vw,40px);border:1px solid #dedbd3;box-shadow:0 14px 45px rgba(32,27,20,.035)}
+.cert-shop-form-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;margin-bottom:27px;border-bottom:1px solid #dedbd3;color:#7b776d;font-size:10px;font-weight:700;letter-spacing:.15em}
+.cert-shop-fieldset{padding:0;margin:0 0 30px;border:0;min-width:0}
+.cert-shop-fieldset>legend{font-size:14px;font-weight:650;letter-spacing:-.01em;margin:0 0 14px;padding:0}
+.cert-amounts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.cert-choice{display:flex;min-width:0;position:relative;align-items:center;justify-content:center;height:62px;border:1px solid #d4d0c6;background:#fff;cursor:pointer;transition:border-color .2s,background .2s}
+.cert-choice.is-active,.cert-choice:has(input:focus-visible){border-color:#191915;background:#eeeae0}
+.cert-choice:has(input:focus-visible){outline:2px solid #171714;outline-offset:2px}
+.cert-choice input,.cert-format input{position:absolute;width:100%;height:100%;inset:0;opacity:0;cursor:pointer;margin:0}
+.cert-choice>span{font-size:17px;font-weight:600;letter-spacing:-.045em;white-space:nowrap;pointer-events:none}
+.cert-choice>span small{font-size:12px;font-weight:400}
+.cert-formats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cert-format{position:relative;display:flex;align-items:start;min-height:105px;border:1px solid #d4d0c6;background:#fff;padding:21px 19px;cursor:pointer;transition:border-color .2s,background .2s}
+.cert-format.is-active{border-color:#191915;background:#eeeae0}
+.cert-format:has(input:focus-visible){outline:2px solid #171714;outline-offset:2px}
+.cert-format>span{display:flex;flex-direction:column;gap:9px;pointer-events:none}
+.cert-format strong{font-size:16px;font-weight:600;letter-spacing:-.025em}
+.cert-format small{font-size:11px;line-height:1.5;color:#77736b;max-width:205px}
+.cert-shop-bottom{display:flex;gap:20px;align-items:end;justify-content:space-between;border-top:1px solid #dedbd3;padding:24px 0}
+.cert-quantity>span,.cert-shop-total>span{display:block;font-size:10px;font-weight:600;color:#7b776e;margin-bottom:11px}
+.cert-quantity>div{height:40px;display:flex;align-items:center;border:1px solid #dad6cc;background:#fff}
+.cert-quantity button{width:39px;height:38px;background:transparent;border:0;cursor:pointer;font-size:21px}
+.cert-quantity strong{min-width:32px;text-align:center;font-size:13px}
+.cert-shop-total{text-align:right}
+.cert-shop-total strong{font-size:27px;font-weight:500;letter-spacing:-.04em}
+.cert-shop-add{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 24px;border:1px solid #1b1a17;background:#1b1a17;color:#fff;height:60px;cursor:pointer;letter-spacing:.09em;font-size:11px;font-weight:700;transition:background .2s}
+.cert-shop-add:hover{background:#3b3933}
+.cert-shop-add span{font-size:24px;font-weight:400}
+.cert-shop-footnote{font-size:10px;line-height:1.6;color:#858077;margin:17px 0 0}
+@media(max-width:980px){.cert-shop-layout{grid-template-columns:1fr;gap:32px}.cert-shop-intro{max-width:none}.cert-shop-facts{grid-template-columns:1fr 1fr;margin-top:28px}.cert-shop-section{padding:56px 0}}
+@media(max-width:580px){.cert-shop-section{padding:42px 0 53px;scroll-margin-top:80px}.cert-shop-intro h2{font-size:40px}.cert-shop-facts{grid-template-columns:1fr;gap:15px}.cert-shop-form{padding:20px 16px}.cert-amounts{grid-template-columns:1fr 1fr}.cert-choice{height:55px}.cert-formats{grid-template-columns:1fr}.cert-format{min-height:77px;padding:16px}.cert-shop-add{height:56px}}
+@media(prefers-reduced-motion:reduce){.cert-choice,.cert-format,.cert-shop-add{transition:none}}
+
+.checkout-certificate-note{margin:0 0 20px;color:#655f57;font-size:13px;line-height:1.6}
+.checkout-digital-delivery{display:flex;flex-direction:column;gap:9px;padding:21px 24px;background:#f2f0e9;border:1px solid #d9d4c9}
+.checkout-digital-delivery strong{font-size:14px;font-weight:600}
+.checkout-digital-delivery span{font-size:12px;color:#716a62;line-height:1.5}
+
+/* Purpose selector: usage and delivery are independent, visibly distinct. */
+.cert-shop-intro>p strong{color:#25231f;font-weight:650}
+.cert-shop-form-head{margin-bottom:30px}
+.cert-shop-fieldset>legend{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:14px;line-height:1.5}
+.cert-step-number{font-size:11px;letter-spacing:.03em;color:#918c82;font-weight:600;min-width:21px}
+.cert-required{font-size:9px;color:#8b5b44;letter-spacing:.06em;font-weight:700;text-transform:uppercase}
+.cert-purpose-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cert-purpose{position:relative;display:flex;flex-direction:column;gap:12px;min-height:145px;padding:18px 16px;background:#fff;border:1px solid #d4d0c6;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s}
+.cert-purpose.is-active{background:#ebe8df;border-color:#24221d;box-shadow:inset 0 0 0 1px #24221d}
+.cert-purpose:has(input:focus-visible){outline:2px solid #24221d;outline-offset:3px}
+.cert-purpose>input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0}
+.cert-purpose-title{display:flex;gap:10px;align-items:flex-start;pointer-events:none}
+.cert-purpose-title strong{font-size:14px;line-height:1.4;font-weight:650;letter-spacing:-.02em}
+.cert-purpose-tick{display:grid;place-items:center;width:19px;height:19px;flex:none;border:1px solid #9a958b;border-radius:50%;font-size:12px;color:#fff}
+.cert-purpose.is-active .cert-purpose-tick{border-color:#24221d;background:#24221d}
+.cert-purpose>small{font-size:11px;line-height:1.55;color:#77736b;pointer-events:none}
+.cert-shop-hint{margin:-4px 0 12px;font-size:11px;line-height:1.5;color:#7c756b}
+.cert-shop-recap{display:flex;flex-direction:column;gap:8px;padding:20px 22px;background:#eceae3;border:1px solid #d7d3c8}
+.cert-shop-recap-kicker{font-size:9px;font-weight:750;letter-spacing:.14em;color:#78736b}
+.cert-shop-recap>strong{font-size:17px;line-height:1.25;letter-spacing:-.03em;font-weight:650}
+.cert-shop-recap>span:not(.cert-shop-recap-kicker){font-size:12px;color:#55514b}
+.cert-shop-recap>small{font-size:11px;color:#77736b;line-height:1.45}
+.cert-shop-add:disabled{background:#aca89e;border-color:#aca89e;color:#fff;cursor:not-allowed}
+.cert-shop-add:disabled:hover{background:#aca89e}
+@media(max-width:580px){.cert-purpose-options{grid-template-columns:1fr}.cert-purpose{min-height:auto;padding:17px}.cert-shop-recap{padding:18px 16px}}
+
+/* Clearly disclose gift-certificate purpose throughout checkout. */
+.cert-cart-detail{display:block;font-size:11px!important;line-height:1.7!important;color:#59554e!important;margin:5px 0;font-weight:400!important}
+.cert-cart-detail b{font-weight:700;color:#38342f}
+.cert-cart-legacy{display:block!important;color:#9b3527!important;font-size:12px!important;line-height:1.6!important;padding:10px 0;font-weight:550}
+.cert-cart-legacy a{color:#6b241b!important;text-decoration:underline!important}
+.cert-admin-lines p{padding:8px 0;border-top:1px solid #e2ded5;line-height:1.6}
+.cert-admin-lines p:first-of-type{margin-top:10px}
+.cert-admin-lines strong{font-weight:650}
+.cert-admin-lines small{font-size:11px;color:#7b766d}
+
+/* Universal gift card: only denomination is selectable. */
+.cert-shop-form .cert-amounts{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cert-shop-form .cert-choice>span{font-size:16px}
+.cert-shop-form .cert-shop-recap{margin-top:4px}
+@media(max-width:580px){.cert-shop-form .cert-amounts{grid-template-columns:repeat(2,minmax(0,1fr))}}

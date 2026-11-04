@@ -2,64 +2,61 @@
 
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
-import { CERTIFICATE_DENOMINATIONS, certificateName, certificateSlug, type CertificatePurpose } from "@/lib/gift-certificates";
+import { CERTIFICATE_DENOMINATIONS, certificateFromSlug, certificateSlug } from "@/lib/certificate-products";
+
+const money = (amount: number) => new Intl.NumberFormat("uk-UA", { maximumFractionDigits: 0 }).format(amount);
 
 export default function CertificatePurchase() {
-  const [purpose, setPurpose] = useState<CertificatePurpose>("shop");
-  const [amount, setAmount] = useState<number>(CERTIFICATE_DENOMINATIONS[1]);
+  const [amount, setAmount] = useState<number>(1500);
+  const [qty, setQty] = useState(1);
   const { add } = useCart();
+  const selected = certificateFromSlug(certificateSlug(amount));
+
+  function submit() {
+    if (!selected) return;
+    add({ slug: selected.slug, name: selected.name, price: selected.price }, qty);
+  }
 
   return (
-    <section className="certificate-order-section shell" id="certificate-order" aria-labelledby="certificate-order-title">
-      <div className="certificate-order-heading">
-        <span className="editorial-kicker">RESET CLINIC · ПОДАРУНКОВИЙ СЕРТИФІКАТ</span>
-        <h2 id="certificate-order-title">Подарунок, який дає свободу вибору.</h2>
-        <p>Оберіть, на що саме діятиме сертифікат, і його номінал. Сертифікат для магазину та сертифікат для процедур — це два різні варіанти.</p>
-        <span className="certificate-order-caption">Термін дії — 3 місяці з моменту придбання.</span>
-      </div>
-
-      <div className="certificate-order-form">
-        <fieldset className="certificate-choose">
-          <legend><span>01</span> На що подарунковий сертифікат?</legend>
-          <div className="certificate-purpose-options">
-            <label className={"certificate-purpose-choice " + (purpose === "shop" ? "selected" : "")}>
-              <input type="radio" name="certificate-purpose" value="shop" checked={purpose === "shop"} onChange={() => setPurpose("shop")} />
-              <span className="certificate-choice-tag">ONLINE · МАГАЗИН</span>
-              <strong>На покупки в інтернет-магазині</strong>
-              <span className="certificate-choice-desc">Для придбання професійної косметики в онлайн-магазині RESET Clinic.</span>
-            </label>
-            <label className={"certificate-purpose-choice " + (purpose === "clinic" ? "selected" : "")}>
-              <input type="radio" name="certificate-purpose" value="clinic" checked={purpose === "clinic"} onChange={() => setPurpose("clinic")} />
-              <span className="certificate-choice-tag">OFFLINE · КЛІНІКА</span>
-              <strong>На процедури в клініці</strong>
-              <span className="certificate-choice-desc">Для оплати процедур під час відвідування RESET Clinic. Запис узгоджується окремо.</span>
-            </label>
+    <section className="cert-shop-section" id="certificate-order" aria-labelledby="cert-shop-title">
+      <div className="shell cert-shop-layout">
+        <div className="cert-shop-intro">
+          <span className="editorial-kicker">GIFT CERTIFICATE / RESET CLINIC</span>
+          <h2 id="cert-shop-title">Один сертифікат. Безліч можливостей.</h2>
+          <p><strong>Універсальний подарунковий сертифікат</strong> діє і на професійну косметику в магазині, і на процедури RESET Clinic. Нічого додатково обирати не потрібно — лише номінал.</p>
+          <div className="cert-shop-facts">
+            <div><span>01</span><strong>Косметика та процедури</strong><small>Єдиний сертифікат для обох напрямів</small></div>
+            <div><span>02</span><strong>Дійсний 3 місяці</strong><small>З моменту придбання</small></div>
           </div>
-        </fieldset>
-
-        <fieldset className="certificate-choose">
-          <legend><span>02</span> Оберіть номінал</legend>
-          <div className="certificate-denomination-options">
-            {CERTIFICATE_DENOMINATIONS.map((value) => (
-              <label className={"certificate-denomination " + (amount === value ? "selected" : "")} key={value}>
-                <input type="radio" name="certificate-amount" value={value} checked={amount === value} onChange={() => setAmount(value)} />
-                <span>{value.toLocaleString("uk-UA")} <small>₴</small></span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        <div className="certificate-order-summary">
-          <div>
-            <span>ВИБРАНИЙ СЕРТИФІКАТ</span>
-            <strong>{purpose === "shop" ? "Покупки в інтернет-магазині" : "Процедури в клініці"}</strong>
-            <b>{amount.toLocaleString("uk-UA")} ₴</b>
-          </div>
-          <button type="button" className="black-button certificate-buy-button" onClick={() => add({ slug: certificateSlug(amount, purpose), name: certificateName(amount, purpose), price: amount })}>
-            ДОДАТИ ДО КОШИКА <span aria-hidden="true">↗</span>
-          </button>
         </div>
-        <p className="certificate-order-footnote">Призначення сертифіката фіксується в замовленні та не змінюється при оформленні. Після оплати отримання сертифіката узгоджується з клінікою.</p>
+
+        <div className="cert-shop-form" aria-label="Придбати універсальний подарунковий сертифікат">
+          <div className="cert-shop-form-head"><span>УНІВЕРСАЛЬНИЙ СЕРТИФІКАТ</span><span>RESET CLINIC</span></div>
+          <fieldset className="cert-shop-fieldset">
+            <legend>Оберіть номінал</legend>
+            <div className="cert-amounts">
+              {CERTIFICATE_DENOMINATIONS.map(value => (
+                <label className={`cert-choice ${amount === value ? "is-active" : ""}`} key={value}>
+                  <input type="radio" name="certificate-amount" value={value} checked={amount === value} onChange={() => setAmount(value)} />
+                  <span>{money(value)} <small>₴</small></span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="cert-shop-recap" aria-live="polite">
+            <span className="cert-shop-recap-kicker">ВАШ СЕРТИФІКАТ</span>
+            <strong>Універсальний сертифікат · {money(amount)} грн</strong>
+            <span>На косметику в магазині та процедури в клініці</span>
+          </div>
+
+          <div className="cert-shop-bottom">
+            <div className="cert-quantity"><span>Кількість</span><div><button type="button" onClick={() => setQty(Math.max(1,qty-1))} aria-label="Зменшити кількість">−</button><strong>{qty}</strong><button type="button" onClick={() => setQty(Math.min(20,qty+1))} aria-label="Збільшити кількість">+</button></div></div>
+            <div className="cert-shop-total"><span>Разом</span><strong>{money(amount * qty)} ₴</strong></div>
+          </div>
+          <button type="button" onClick={submit} className="cert-shop-add">ДОДАТИ СЕРТИФІКАТ ДО КОШИКА <span aria-hidden="true">↗</span></button>
+          <p className="cert-shop-footnote">Номінал сертифіката збережеться в кошику й замовленні. Спосіб отримання узгоджується під час оформлення замовлення.</p>
+        </div>
       </div>
     </section>
   );

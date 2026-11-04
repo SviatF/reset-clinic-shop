@@ -89,11 +89,12 @@ if (fs.existsSync(target)) {
   fs.copyFileSync(target, `${target}.backup-${Date.now()}`);
 }
 
-const nonHair = Array.isArray(current) ? current.filter((item) => item?.category !== "hair") : baseSeed;
-const next = [...nonHair, ...imported];
+const existing = Array.isArray(current) ? current : baseSeed;
+const slugs = new Set(existing.map((item) => item.slug));
+const missing = imported.filter((item) => !slugs.has(item.slug));
+const next = [...existing, ...missing];
 const temporary = `${target}.tmp-${process.pid}`;
 fs.writeFileSync(temporary, `${JSON.stringify(next, null, 2)}\n`, "utf8");
 fs.renameSync(temporary, target);
 
-console.log(`Synced ${imported.length} OLIE'RE hair products to ${target}`);
-console.log(`Preserved ${nonHair.length} non-hair products`);
+console.log(`Inserted ${missing.length} missing hair products; preserved ${existing.length} existing products including manual edits.`);

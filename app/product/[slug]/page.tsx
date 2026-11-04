@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = await getStoreProductBySlug(slug);
   if (!item) return { title: "Товар не знайдено", robots: { index: false, follow: false } };
   const path = `/product/${item.slug}`;
-  const image = item.imageUrl ? absoluteUrl(item.imageUrl) : absoluteUrl(productFallback.src);
+  const image = item.imageUrl ? absoluteUrl(item.imageUrl) : (item.slug === "parsley-seed-anti-oxidant-eye-cream" ? absoluteUrl(productFallback.src) : null);
   return {
     title: item.seoTitle || item.name,
     description: item.seoDescription || item.description,
@@ -30,9 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "RESET Clinic Shop",
       locale: siteConfig.locale,
       type: "website",
-      images: [{ url: image, alt: item.name }],
+      ...(image ? { images: [{ url: image, alt: item.name }] } : {}),
     },
-    twitter: { card: "summary_large_image", title: item.name, description: item.seoDescription || item.description, images: [image] },
+    twitter: { card: "summary_large_image", title: item.name, description: item.seoDescription || item.description, ...(image ? { images: [image] } : {}) },
   };
 }
 
@@ -51,9 +51,9 @@ export default async function DynamicProductPage({ params }: Props) {
     "@id": `${absoluteUrl(path)}#product`,
     name: item.name,
     description: item.description,
-    image: [absoluteUrl(imageSrc)],
+    ...(item.imageUrl || item.slug === "parsley-seed-anti-oxidant-eye-cream" ? { image: [absoluteUrl(imageSrc)] } : {}),
     url: absoluteUrl(path),
-    sku: item.slug,
+    ...(item.sku ? {sku:item.sku} : {}),
     brand: { "@type": "Brand", name: item.brand },
     category: categoryName,
     offers: {
@@ -84,7 +84,7 @@ export default async function DynamicProductPage({ params }: Props) {
                 <span className="product-gallery-tag">RESET SELECT</span>
                 <span className="product-object-index">01 / PRODUCT</span>
                 <span className="product-object-halo" aria-hidden="true" />
-                <img src={imageSrc} alt={item.name} className="dynamic-product-image" />
+                {item.imageUrl || item.slug === "parsley-seed-anti-oxidant-eye-cream" ? <img src={imageSrc} alt={item.name} className="dynamic-product-image" /> : <div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>}
                 <div className="product-object-footer"><span>{item.brand.toUpperCase()}</span><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
               </div>
             </div>

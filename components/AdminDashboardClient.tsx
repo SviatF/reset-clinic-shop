@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 type DashboardData = {
   configured: boolean;
+  writable?: boolean;
   metrics: null | {
     revenue: number;
     monthRevenue: number;
@@ -39,7 +40,7 @@ export default function AdminDashboardClient() {
 
   if (error) return <div className="admin-state admin-state-error">{error}</div>;
   if (!data) return <div className="admin-state">Завантажуємо дані магазину…</div>;
-  if (!data.configured || !data.metrics) return <div className="admin-connect-card"><span>DATABASE</span><h2>Supabase ще не підключений</h2><p>Інтерфейс адмінки вже готовий. Після створення окремої бази RESET і додавання server env тут автоматично з’являться продажі, товари, залишки та активність.</p></div>;
+  if (!data.configured || !data.metrics) return <div className="admin-connect-card"><span>СХОВИЩЕ</span><h2>Дані магазину тимчасово недоступні</h2><p>Перевірте Cloudflare D1 або підключення GitHub до приватного репозиторію.</p></div>;
 
   const m = data.metrics;
   const cards = [
@@ -53,7 +54,8 @@ export default function AdminDashboardClient() {
 
   return (
     <div className="admin-dashboard">
-      <div className="admin-page-head"><div><span>LIVE COMMERCE</span><h1>Dashboard</h1><p>Продажі, замовлення, stock та активність RESET Shop.</p></div><div className="admin-live"><i /> LIVE</div></div>
+      <div className="admin-page-head"><div><span>{data.writable ? "LIVE COMMERCE" : "STAGING / READ ONLY"}</span><h1>Dashboard</h1><p>Продажі, замовлення, stock та активність RESET Shop.</p></div><div className="admin-live"><i /> {data.writable ? "LIVE" : "ДЕМО"}</div></div>
+      {!data.writable && <div className="admin-connect-card" role="status"><span>ТЕСТОВИЙ РЕЖИМ</span><h2>Дані показуються з резервної копії</h2><p>Каталог можна переглядати, але редагування, імпорт і запис замовлень не працюватимуть, доки не підключити Cloudflare D1 або GitHub Token із правом запису до цього репозиторію.</p></div>}
       <div className="admin-metric-grid">{cards.map(([label, value, note]) => <article key={label}><span>{label}</span><strong>{value}</strong><small>{note}</small></article>)}</div>
 
       <div className="admin-two-col">

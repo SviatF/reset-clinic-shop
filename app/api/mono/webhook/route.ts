@@ -3,6 +3,7 @@ import type { OrderRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateOrders, mutateProducts, readOrders } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { verifyMonoWebhook } from "@/lib/mono";
+import { isCertificateSlug } from "@/lib/certificate-products";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,16 +17,14 @@ function orderStatus(paymentStatus: string): OrderRecord["status"] {
 
 async function decrementStock(order: OrderRecord) {
   if (order.stock_decremented) return;
-  await mutateProducts(`Order ${order.order_number}: decrement stock`, (products) => products.map((product) => {
-    const line = order.items.find((item) => item.product_id === product.id || item.slug === product.slug);
+  const physicalProducts = order.items.filter(line => !isCertificateSlug(line.slug));
+  if (physicalProducts.length) await mutateProducts(`Order ${order.order_number}: decrement stock`, (products) => products.map((product) => {
+    const line = physicalProducts.find((item) => item.product_id === product.id || item.slug === product.slug);
     if (!line || !product.track_stock) return product;
     return { ...product, stock_quantity: Math.max(0, Number(product.stock_quantity || 0) - Number(line.quantity || 0)), updated_at: new Date().toISOString() };
   }));
   await mutateOrders(`Order ${order.order_number}: mark stock`, (orders) => orders.map((item) => item.id === order.id ? { ...item, stock_decremented: true, updated_at: new Date().toISOString() } : item));
-  for (const line of order.items) {
-    if (line.product_id === null) continue;
-    await appendActivity({ event_type: "stock_decremented", entity_type: "product", entity_id: line.product_id, title: `Stock списано: ${line.name} · ${line.quantity} шт.`, metadata: { orderId: order.id, quantity: line.quantity } });
-  }
+  for (const line of physicalProducts) await appendActivity({ event_type: "stock_decremented", entity_type: "product", entity_id: line.product_id, title: `Stock списано: ${line.name} · ${line.quantity} шт.`, metadata: { orderId: order.id, quantity: line.quantity } });
 }
 
 export async function POST(request: Request) {

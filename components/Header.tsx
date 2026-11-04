@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import logo from "@/assets/img/logo.webp";
 import { useCart } from "@/components/CartProvider";
@@ -29,6 +29,16 @@ export default function Header() {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const pathname = usePathname();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchTriggerRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!searchOpen) return;
+    searchInputRef.current?.focus();
+    const onKeyDown=(event:KeyboardEvent)=>{ if(event.key==="Escape") {setSearchOpen(false);searchTriggerRef.current?.focus();} };
+    window.addEventListener("keydown",onKeyDown);
+    return ()=>window.removeEventListener("keydown",onKeyDown);
+  },[searchOpen]);
+  useEffect(() => setMenuOpen(false),[pathname]);
   const active = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
   const aboutActive = aboutLinks.some(([, href]) => active(href));
   const clientActive = clientLinks.some(([, href]) => active(href));
@@ -37,7 +47,7 @@ export default function Header() {
     e.preventDefault();
     if (query.trim()) {
       setSearchOpen(false);
-      router.push("/product/parsley-seed-anti-oxidant-eye-cream");
+      router.push(`/catalog?q=${encodeURIComponent(query.trim())}`);
     }
   }
 
@@ -65,7 +75,7 @@ export default function Header() {
           </nav>
           <div className="header-actions">
             <Link href="/account" className="icon-btn" aria-label="Особистий кабінет"><UserIcon /></Link>
-            <button className="icon-btn" aria-label="Пошук" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
+            <button ref={searchTriggerRef} className="icon-btn" aria-label="Пошук" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
             <button className="icon-btn bag-btn" aria-label="Кошик" onClick={openCart}><BagIcon /><span className="cart-count">{count}</span></button>
             <button className="mobile-toggle" aria-label="Меню" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)}><span/><span/></button>
           </div>
@@ -82,10 +92,10 @@ export default function Header() {
       </header>
       {searchOpen && (
         <div className="search-overlay" role="dialog" aria-modal="true" aria-label="Пошук">
-          <button className="search-close" onClick={() => setSearchOpen(false)} aria-label="Закрити">×</button>
+          <button className="search-close" onClick={() => {setSearchOpen(false);searchTriggerRef.current?.focus();}} aria-label="Закрити">×</button>
           <form onSubmit={submitSearch} className="search-form">
             <label htmlFor="site-search">Що шукаєте?</label>
-            <div><input id="site-search" autoFocus value={query} onChange={e => setQuery(e.target.value)} placeholder="Наприклад, крем для очей"/><button type="submit">Знайти</button></div>
+            <div><input id="site-search" ref={searchInputRef} value={query} onChange={e => setQuery(e.target.value)} placeholder="Наприклад, крем для очей"/><button type="submit">Знайти</button></div>
           </form>
         </div>
       )}

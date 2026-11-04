@@ -33,11 +33,12 @@ const directions = [
 ];
 
 export default async function HomePage() {
-  let recommendations = await getStoreProducts({ featured: true, limit: 8 });
-  if (!recommendations.length) recommendations = await getStoreProducts({ limit: 8 });
-  const visibleProducts = recommendations.length === 1
-    ? Array.from({ length: 8 }, () => recommendations[0])
-    : recommendations;
+  // Manual featured items first, then other active products without duplicates.
+  const catalog = await getStoreProducts({ limit: 500 });
+  const visibleProducts = [
+    ...catalog.filter((item) => item.featured),
+    ...catalog.filter((item) => !item.featured),
+  ].slice(0, 8);
   const featureHref = visibleProducts[0] ? `/product/${visibleProducts[0].slug}` : "/face";
 
   return (

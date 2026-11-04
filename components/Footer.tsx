@@ -30,8 +30,8 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <span>© 2026 RESET Clinic</span>
-          <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noreferrer">Instagram ↗</a>
-          <div><Link href="/clients/faq">Політика конфіденційності</Link><Link href="/clients/returns">Публічна оферта</Link></div>
+          
+          <div><Link href="/clients/privacy">Політика конфіденційності</Link><Link href="/clients/terms">Умови замовлення</Link></div>
         </div>
       </div>
     </footer>

@@ -13,6 +13,8 @@ type CardProduct = {
   brand?: string;
   category?: "face" | "body" | "hair" | "other";
   price: number;
+  trackStock?: boolean;
+  stockQuantity?: number;
   size?: string;
   imageUrl?: string | null;
   shortDescription?: string;
@@ -75,7 +77,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
               <span className="premium-orbit premium-orbit-one" aria-hidden="true" />
               <span className="premium-orbit premium-orbit-two" aria-hidden="true" />
               <span className="premium-product-shadow" aria-hidden="true" />
-              {current.imageUrl ? <img src={current.imageUrl} alt={current.name} loading="lazy" /> : <Image src={productImg} alt={current.name} sizes="(max-width: 700px) 92vw, 310px" />}
+              {current.imageUrl ? <img src={current.imageUrl} alt={current.name} loading="lazy" /> : current.slug === product.slug ? <Image src={productImg} alt={current.name} sizes="(max-width: 700px) 92vw, 310px" /> : <div className="reset-product-image-placeholder" aria-label={`Фото товару ${current.brand || ""} буде додано`}><span>{current.brand || "RESET CLINIC"}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>}
               <div className="premium-hover-note"><span>{current.hoverLabel || "ПРИЗНАЧЕННЯ"}</span><strong>{current.hoverTitle || current.shortDescription}</strong><small>{current.hoverText || current.size || current.brand}</small></div>
             </div>
             <div className="premium-media-footer"><span>{categoryLabels[current.category || "other"]}</span><span>{current.brand || "RESET SELECT"}</span></div>
@@ -86,7 +88,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
             <div className="premium-product-meta"><strong>{Number(current.price).toFixed(2)} грн</strong><span>Детальніше <b>↗</b></span></div>
           </div>
         </Link>
-        <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price) }} />
+        <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: current.trackStock !== true || Number(current.stockQuantity ?? 0) > 0 }} />
       </div>
     </article>
   );

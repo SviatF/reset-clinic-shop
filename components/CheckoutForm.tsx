@@ -1,20 +1,21 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
-import { parseCertificateSlug } from "@/lib/gift-certificates";
+import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
-  const hasCertificate = items.some((item) => parseCertificateSlug(item.slug) !== null);
-  const certificatesOnly = items.length > 0 && items.every((item) => parseCertificateSlug(item.slug) !== null);
+  const legacyCertificateInCart = items.some(item => isLegacyCertificateSlug(item.slug));
   const [delivery, setDelivery] = useState("nova");
+  const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!items.length || isPaying) return;
+    if (!items.length || isPaying || legacyCertificateInCart) return;
 
     setError("");
     setIsPaying(true);
@@ -27,7 +28,9 @@ export default function CheckoutForm() {
       city: String(form.get("city") || "").trim(),
       branch: String(form.get("branch") || "").trim(),
       comment: String(form.get("comment") || "").trim(),
-      delivery: certificatesOnly ? "certificate" : delivery,
+      certificate_recipient_email: String(form.get("certificate_recipient_email") || "").trim(),
+      certificate_message: String(form.get("certificate_message") || "").trim(),
+      delivery,
       items,
       total,
       createdAt: new Date().toISOString(),
@@ -70,32 +73,30 @@ export default function CheckoutForm() {
         <div className="checkout-fields">
           <div className="checkout-field"><label htmlFor="name">Ім’я та прізвище</label><input id="name" name="name" required autoComplete="name" /></div>
           <div className="checkout-field"><label htmlFor="phone">Телефон</label><input id="phone" name="phone" required autoComplete="tel" placeholder="+380" /></div>
-          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" required={hasCertificate} /></div>
+          <div className="checkout-field full"><label htmlFor="email">Email</label><input id="email" name="email" type="email" autoComplete="email" /></div>
         </div>
       </section>
 
+      {hasCertificate && <section className="checkout-section">
+        <h2>Дані для подарункового сертифіката</h2>
+        <p className="checkout-certificate-note">Сертифікат універсальний — для косметики та процедур. Контакт одержувача й побажання можна залишити за бажанням. Формат вручення можна уточнити з менеджером.</p>
+        <div className="checkout-fields">
+          <div className="checkout-field full"><label htmlFor="certificate_recipient_email">Email одержувача (необов’язково)</label><input id="certificate_recipient_email" name="certificate_recipient_email" type="email" autoComplete="off" placeholder="recipient@example.com" /></div>
+          <div className="checkout-field full"><label htmlFor="certificate_message">Побажання до сертифіката (необов’язково)</label><textarea id="certificate_message" name="certificate_message" maxLength={500} rows={2} placeholder="Коротке привітання для отримувача" /></div>
+        </div>
+      </section>}
+
       <section className="checkout-section">
-        <h2>{certificatesOnly ? "Оформлення сертифіката" : "Доставка"}</h2>
-        {certificatesOnly ? (
-          <div className="delivery-options">
-            <div className="delivery-option">
-              <span><strong>Без доставки товарів</strong><span>Після підтвердження оплати спосіб отримання сертифіката узгоджується з клінікою. На контактний email надходитиме інформація щодо замовлення.</span></span>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="delivery-options">
-              <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
-              <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
-              <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
-            </div>
-            {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
-              <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required /></div>
-              <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required /></div>
-            </div>}
-          </>
-        )}
-        {!certificatesOnly && hasCertificate && <p className="checkout-note">Товари доставляються вибраним способом. Сертифікат оформлюється окремо відповідно до його призначення — покупки в магазині або процедури в клініці.</p>}
+        <h2>Доставка / отримання</h2>
+        <div className="delivery-options">
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
+        </div>
+        {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
+          <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required={delivery !== "pickup"} /></div>
+          <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
+        </div>}
       </section>
 
       <section className="checkout-section checkout-payment-section">
@@ -113,7 +114,8 @@ export default function CheckoutForm() {
         <div className="checkout-field full"><label htmlFor="comment">Побажання до замовлення</label><textarea id="comment" name="comment" placeholder="Наприклад, хочу уточнити сумісність із моїм поточним доглядом" /></div>
       </section>
 
-      <button className="checkout-submit mono-checkout-submit" type="submit" disabled={!items.length || isPaying}>
+      {legacyCertificateInCart && <p className="cert-cart-legacy" role="alert">У кошику є старий варіант сертифіката. Видаліть його та <Link href="/certificate#certificate-order">оберіть актуальний номінал універсального сертифіката</Link>.</p>}
+      <button className="checkout-submit mono-checkout-submit" type="submit" disabled={!items.length || isPaying || legacyCertificateInCart}>
         {isPaying ? "СТВОРЮЄМО БЕЗПЕЧНИЙ ПЛАТІЖ…" : `ОПЛАТИТИ ОНЛАЙН · ${total.toFixed(2)} грн`}
       </button>
       <p className="checkout-note">Після натискання ви перейдете на офіційну платіжну сторінку monobank, а після оплати повернетеся в RESET Clinic.</p>

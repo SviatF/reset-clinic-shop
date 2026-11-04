@@ -50,13 +50,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setItems((current) => {
         const exists = current.find((row) => row.slug === item.slug);
         return exists
-          ? current.map((row) => row.slug === item.slug ? { ...row, qty: row.qty + qty } : row)
-          : [...current, { ...item, qty }];
+          ? current.map((row) => row.slug === item.slug ? { ...row, qty: Math.min(20, row.qty + qty) } : row)
+          : [...current, { ...item, qty: Math.max(1,Math.min(20,qty)) }];
       });
       setCartOpen(true);
     },
     remove: (slug) => setItems((current) => current.filter((row) => row.slug !== slug)),
-    setQty: (slug, qty) => setItems((current) => current.map((row) => row.slug === slug ? { ...row, qty: Math.max(1, qty) } : row)),
+    setQty: (slug, qty) => setItems((current) => current.map((row) => row.slug === slug ? { ...row, qty: Math.max(1, Math.min(20,qty)) } : row)),
     clear: () => setItems([]),
     openCart: () => setCartOpen(true),
     closeCart: () => setCartOpen(false),

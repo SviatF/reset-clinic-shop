@@ -4,3 +4,9 @@ out
 .env*
 !.env.example
 .DS_Store
+
+# Private migration exports may contain customer personal data.
+migration-backups/
+reset-clinic-private-storage-backup*.json
+shop-d1-import*.sql
+shop-d1-import*.manifest.json

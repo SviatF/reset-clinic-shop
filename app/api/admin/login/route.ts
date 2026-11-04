@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   try {
     if (!adminCredentialsConfigured()) {
-      return NextResponse.json({ error: "ADMIN_LOGIN / ADMIN_PASS / ADMIN_SESSION_SECRET не налаштовані" }, { status: 503 });
+      return NextResponse.json({ error: "ADMIN_LOGIN або ADMIN_PASS не налаштовані в Cloudflare" }, { status: 503 });
     }
     const body = await request.json();
     const login = typeof body?.login === "string" ? body.login.trim() : "";

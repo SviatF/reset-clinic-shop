@@ -17,7 +17,9 @@ export async function cloudflareReadJson<T>(pathname: string, fallback: T) {
   const { SHOP_DB } = bindings();
   const row = await SHOP_DB.prepare("SELECT content, version FROM shop_documents WHERE pathname = ?")
     .bind(key(pathname)).first<{ content: string; version: number }>();
-  return { data: row ? JSON.parse(row.content) as T : fallback, sha: row ? String(row.version) : null };
+  // A missing document after cutover is a data-loss warning, not an empty catalog/order list.
+  if (!row) throw new Error("SHOP_D1_DOCUMENT_MISSING:" + key(pathname));
+  return { data: JSON.parse(row.content) as T, sha: String(row.version) };
 }
 export async function cloudflareWriteJson<T>(pathname: string, value: T) {
   const { SHOP_DB } = bindings();

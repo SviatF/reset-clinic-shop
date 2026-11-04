@@ -2,7 +2,7 @@ import "server-only";
 
 import { createPublicKey, verify } from "node:crypto";
 import { readProducts } from "@/lib/commerce-json";
-import { certificateName, parseCertificateSlug } from "@/lib/gift-certificates";
+import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
 
 const MONO_API = "https://api.monobank.ua";
 export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.vercel.app";
@@ -10,7 +10,7 @@ export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.verce
 export type CheckoutCartItem = { slug: string; qty: number };
 
 export type NormalizedCheckoutItem = {
-  productId: string | null;
+  productId: string;
   slug: string;
   name: string;
   sku: string | null;
@@ -49,21 +49,29 @@ export async function monoFetch(path: string, init: RequestInit = {}) {
 
 export async function normalizeOrder(items: CheckoutCartItem[]) {
   if (!Array.isArray(items) || !items.length) throw new Error("Кошик порожній");
-  const products = await readProducts();
+  // Reject abandoned gift-card SKUs before accessing any external product store.
+  if (items.some(item => isLegacyCertificateSlug(String(item?.slug || "")))) {
+    throw new Error("Сертифікат старого зразка більше недоступний. Видаліть його з кошика та оберіть універсальний сертифікат з актуальним номіналом.");
+  }
+  // Universal gift certificates have fixed denominations checked on the server,
+  // independently of the optional cosmetic products store.
+  const needsStore = items.some(item => !certificateFromSlug(String(item?.slug || "")));
+  const products = needsStore ? await readProducts() : [];
   const bySlug = new Map(products.filter((item) => item.status === "active").map((item) => [item.slug, item]));
   const merged = new Map<string, number>();
   for (const item of items) {
     const slug = typeof item?.slug === "string" ? item.slug : "";
-    if (!slug || (!bySlug.has(slug) && !parseCertificateSlug(slug))) throw new Error("У кошику є недоступний товар");
+    if (isLegacyCertificateSlug(slug)) throw new Error("Сертифікат старого зразка більше недоступний. Видаліть його з кошика та оберіть універсальний сертифікат із актуальним номіналом.");
+    if (!slug || (!bySlug.has(slug) && !certificateFromSlug(slug))) throw new Error("У кошику є недоступний товар");
     const qty = Math.max(1, Math.min(20, Math.trunc(Number(item.qty) || 1)));
     merged.set(slug, Math.min(20, (merged.get(slug) || 0) + qty));
   }
   const normalized: NormalizedCheckoutItem[] = [];
   for (const [slug, qty] of merged) {
-    const certificate = parseCertificateSlug(slug);
-    if (certificate) {
-      const unitAmount = certificate.amount * 100;
-      normalized.push({ productId: null, slug, name: certificateName(certificate.amount, certificate.purpose), sku: null, qty, unitAmount, totalAmount: unitAmount * qty });
+    const gift = certificateFromSlug(slug);
+    if (gift) {
+      const unitAmount = gift.price * 100;
+      normalized.push({ productId: gift.productId, slug: gift.slug, name: gift.name, sku: gift.sku, qty, unitAmount, totalAmount: unitAmount * qty });
       continue;
     }
     const item = bySlug.get(slug)!;

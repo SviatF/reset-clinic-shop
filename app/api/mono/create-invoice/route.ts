@@ -1,10 +1,10 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import type { OrderRecord } from "@/lib/commerce-types";
-import { appendActivity, mutateOrders, newId } from "@/lib/commerce-json";
+import { appendActivity, mutateOrders, readOrders, newId } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { monoFetch, normalizeOrder, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
-import { parseCertificateSlug } from "@/lib/gift-certificates";
+import { certificateFromSlug } from "@/lib/certificate-products";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,6 +17,8 @@ type CreateInvoiceBody = {
   city?: string;
   branch?: string;
   comment?: string;
+  certificate_recipient_email?: string;
+  certificate_message?: string;
   items?: Array<{ slug: string; qty: number }>;
 };
 
@@ -52,6 +54,8 @@ async function persistOrder(args: {
       city: clean(args.body.city, 160),
       branch: clean(args.body.branch, 240),
       comment: clean(args.body.comment, 1000),
+      certificate_recipient_email: clean(args.body.certificate_recipient_email, 120) || null,
+      certificate_message: clean(args.body.certificate_message, 500) || null,
       tracking_number: null,
       admin_notes: null,
       subtotal: args.amount / 100,
@@ -74,23 +78,45 @@ async function persistOrder(args: {
       updated_at: now,
     };
     await mutateOrders(`Order ${order.order_number}: created`, (orders) => [order, ...orders]);
-    await appendActivity({ event_type: "order_created", entity_type: "order", entity_id: order.id, title: `Нове замовлення ${order.order_number}`, metadata: { invoiceId: args.invoiceId, total: args.amount / 100 } });
+    // Audit event failure must not hide a successfully stored order from the payer.
+    try {
+      await appendActivity({ event_type: "order_created", entity_type: "order", entity_id: order.id, title: `Нове замовлення ${order.order_number}`, metadata: { invoiceId: args.invoiceId, total: args.amount / 100 } });
+    } catch (auditError) {
+      console.error("Order activity log failed", auditError);
+    }
   } catch (error) {
     console.error("Failed to persist commerce order", error);
+    throw new Error("Не вдалося зберегти замовлення. Оплату не запущено — перевірте налаштування сховища.");
   }
 }
 
 export async function POST(request: Request) {
+  // A preview branch must not create chargeable bank invoices.
+  if (process.env.SHOP_STAGING === "true") {
+    return NextResponse.json({
+      error: "Онлайн-оплата вимкнена на тестовій версії. Сертифікат можна додати до кошика та перевірити оформлення без списання коштів.",
+    }, { status: 503 });
+  }
+  if (!jsonStoreWriteConfigured()) {
+    return NextResponse.json({ error: "Сховище замовлень не налаштоване" }, { status: 503 });
+  }
   try {
     const body = (await request.json()) as CreateInvoiceBody;
     const { items, amount } = await normalizeOrder(body.items || []);
+    const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
+    const email = clean(body.email, 120);
+    if (!clean(body.name) || !clean(body.phone, 80)) throw new Error("Вкажіть ім’я та номер телефону");
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Перевірте email покупця");
+    if (body.certificate_recipient_email && (!hasCertificate || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.certificate_recipient_email))) throw new Error("Перевірте email одержувача сертифіката");
+    if (!["nova", "courier", "pickup"].includes(body.delivery || "")) throw new Error("Оберіть спосіб доставки або самовивіз");
+    if (body.delivery !== "pickup" && (!clean(body.city) || !clean(body.branch,240))) throw new Error("Вкажіть місто та відділення або адресу доставки");
+    // Never create a charge for an order that cannot be stored and fulfilled.
+    if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "Замовлення не можна оплатити, доки не підключено сховище замовлень." }, { status: 503 });
+    // Read the order store before creating a bank invoice. Reject inaccessible
+    // private GitHub/D1 storage instead of charging without an order record.
+    await readOrders();
     const reference = randomUUID().replaceAll("-", "");
     const orderCode = reference.slice(0, 8).toUpperCase();
-    const email = clean(body.email, 120);
-    const hasCertificate = items.some((item) => parseCertificateSlug(item.slug) !== null);
-    const onlyCertificates = items.every((item) => parseCertificateSlug(item.slug) !== null);
-    if (hasCertificate && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Для оформлення сертифіката вкажіть коректний email");
-    if (body.delivery === "certificate" && !onlyCertificates) throw new Error("Оформлення без доставки доступне лише для замовлень із сертифікатами");
     const monoPayload = {
       amount,
       ccy: 980,
@@ -122,7 +148,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ invoiceId: data.invoiceId, pageUrl: data.pageUrl, appUrl: data.appUrl || null, reference, orderNumber: `RST-${orderCode}`, amount, currency: "UAH" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Помилка створення платежу";
-    const status = message.includes("MONOPAY_TOKEN") ? 503 : 400;
+    const status = message.includes("MONOPAY_TOKEN") || message.includes("JSON_STORE") || message.includes("Cloudflare SHOP_DB") || message.includes("Не вдалося зберегти") ? 503 : 400;
     return NextResponse.json({ error: message }, { status });
   }
 }

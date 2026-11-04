@@ -23,7 +23,7 @@ export default function DeliveryPage() {
 
       <section className="delivery-details shell">
         <div><span className="editorial-kicker">ВАРТІСТЬ</span><h2>Від 5000 грн — доставка за наш рахунок.</h2><p>Інші замовлення доставляються за актуальними тарифами перевізника «Нова Пошта».</p></div>
-        <div><span className="editorial-kicker">ОПЛАТА</span><h2>Безпечно онлайн або у клініці.</h2><p>Онлайн-оплата через WayForPay картками Visa / Mastercard, а також готівкою чи карткою через термінал при самовивозі.</p></div>
+        <div><span className="editorial-kicker">ОПЛАТА</span><h2>Онлайн-оплата та самовивіз.</h2><p>Онлайн-оплата банківською карткою через monobank. Вартість доставки, якщо вона не безкоштовна, оплачується окремо за тарифами перевізника; доступні способи оплати під час самовивозу уточнюйте в RESET Clinic.</p></div>
       </section>
 
       <section className="pickup-banner shell"><div><Image src={interierImg} alt="RESET Clinic у Львові" /></div><div><span>САМОВИВІЗ</span><h2>Заберіть замовлення там, де його можуть одразу пояснити.</h2><p>Якщо потрібно — під час візиту уточніть схему використання або сумісність засобу з вашим поточним доглядом.</p><Link className="text-link" href="/contacts">Контакти клініки →</Link></div></section>
