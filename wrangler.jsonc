@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "reset-clinic-sasha",
+  "name": "reset-clinic-shop",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-09",
   "compatibility_flags": [
@@ -15,8 +15,8 @@
   },
   "vars": {
     "SHOP_STAGING": "true",
-    "GITHUB_REPO_OWNER": "sanechka272",
-    "GITHUB_REPO_NAME": "reset-clinic-SASHA",
+    "GITHUB_REPO_OWNER": "SviatF",
+    "GITHUB_REPO_NAME": "reset-clinic-shop",
     "GITHUB_REPO_BRANCH": "main"
   },
   "workers_dev": true,
@@ -24,7 +24,7 @@
     {
       "binding": "SHOP_DB",
       "database_name": "reset-clinic-shop-db",
-      "database_id": "b2cd7fd5-88b7-4483-95f5-4dcc5223402a"
+      "database_id": "38a072d9-bb85-4417-bf92-4f0652cc4056"
     }
   ],
   "r2_buckets": [
