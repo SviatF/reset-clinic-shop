@@ -1,3 +1,4 @@
+import ArrowUpRight from "@/components/ArrowUpRight";
 import Link from "next/link";
 import ShopProductCard from "@/components/ShopProductCard";
 import {readCategories} from "@/lib/catalog-categories";
@@ -59,12 +60,12 @@ export default async function ShopListing({category,subcategory,query={},inCatal
     <span>{child.name}</span><small>{scoped.filter(row=>productSubcategories(row).includes(child.slug)).length}</small></Link>)}
   </nav>}
   {!category&&<nav className="rs-featured" aria-label="Обрати напрям">
-   {groups.map(c=><Link key={c.slug} href={mainHref(c.slug)}><strong>{c.label}</strong><small>{allCount(c.slug)} товарів</small><b aria-hidden="true">↗</b></Link>)}
+   {groups.map(c=><Link key={c.slug} href={mainHref(c.slug)}><strong>{c.label}</strong><small>{allCount(c.slug)} товарів</small><b aria-hidden="true"><ArrowUpRight /></b></Link>)}
   </nav>}
   <nav className="rs-brand-nav" id="brands" aria-label="Каталог за брендом">
    <span className="rs-brand-nav-label">БРЕНДИ</span>
    <Link href="/catalog" aria-current={!query.brand?"page":undefined}>Усі бренди</Link>
-   {allBrands.map(brand=><Link key={brand} href={makeUrl("/catalog",{brand})} aria-current={query.brand?.toLocaleLowerCase("uk")===brand.toLocaleLowerCase("uk")?"page":undefined}>{brand} ↗</Link>)}
+   {allBrands.map(brand=><Link key={brand} href={makeUrl("/catalog",{brand})} aria-current={query.brand?.toLocaleLowerCase("uk")===brand.toLocaleLowerCase("uk")?"page":undefined}>{brand} <ArrowUpRight /></Link>)}
   </nav>
   <div className="rs-tools">
    <p><strong>{result.total}</strong> {result.total===1?"товар":"товарів"}</p>

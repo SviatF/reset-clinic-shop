@@ -1,4 +1,5 @@
 "use client";
+import ArrowUpRight from "@/components/ArrowUpRight";
 
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
@@ -54,7 +55,7 @@ export default function CertificatePurchase() {
             <div className="cert-quantity"><span>Кількість</span><div><button type="button" onClick={() => setQty(Math.max(1,qty-1))} aria-label="Зменшити кількість">−</button><strong>{qty}</strong><button type="button" onClick={() => setQty(Math.min(20,qty+1))} aria-label="Збільшити кількість">+</button></div></div>
             <div className="cert-shop-total"><span>Разом</span><strong>{money(amount * qty)} ₴</strong></div>
           </div>
-          <button type="button" onClick={submit} className="cert-shop-add">ДОДАТИ СЕРТИФІКАТ ДО КОШИКА <span aria-hidden="true">↗</span></button>
+          <button type="button" onClick={submit} className="cert-shop-add">ДОДАТИ СЕРТИФІКАТ ДО КОШИКА <span aria-hidden="true"><ArrowUpRight /></span></button>
           <p className="cert-shop-footnote">Номінал сертифіката збережеться в кошику й замовленні. Спосіб отримання узгоджується під час оформлення замовлення.</p>
         </div>
       </div>

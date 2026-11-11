@@ -1,3 +1,4 @@
+import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -94,7 +95,7 @@ export default async function HomePage() {
                   />
                   <span>0{index + 1}</span>
                 </div>
-                <div className="precision-category-info"><div><h3>{item.title}</h3><p>{item.note}</p></div><b>↗</b></div>
+                <div className="precision-category-info"><div><h3>{item.title}</h3><p>{item.note}</p></div><b><ArrowUpRight /></b></div>
               </Link>
             ))}
           </div>
@@ -105,7 +106,7 @@ export default async function HomePage() {
         <div className="shell">
           <div className="precision-section-head precision-products-head">
             <div><span>RESET РЕКОМЕНДУЄ</span><h2>Засоби для щоденного догляду</h2></div>
-            <Link href="/catalog">Переглянути каталог <b>↗</b></Link>
+            <Link href="/catalog">Переглянути каталог <b><ArrowUpRight /></b></Link>
           </div>
           <div className="precision-filter-row"><button className="active">Рекомендовані</button><Link href="/face">Обличчя</Link><Link href="/catalog">Нове</Link></div>
           <div className="products-grid precision-product-grid">
@@ -120,11 +121,11 @@ export default async function HomePage() {
           <div className="precision-feature-grid">
             <Link href={featureHref} className="precision-feature precision-feature-large">
               <Image src={block1} alt="Добірка професійної косметики" fill sizes="(max-width: 800px) 100vw, 62vw" />
-              <div className="precision-feature-overlay"><span>НОВЕ В RESET</span><h3>Професійні засоби для холодного сезону</h3><b>Переглянути добірку ↗</b></div>
+              <div className="precision-feature-overlay"><span>НОВЕ В RESET</span><h3>Професійні засоби для холодного сезону</h3><b>Переглянути добірку <ArrowUpRight /></b></div>
             </Link>
             <Link href="/face" className="precision-feature precision-feature-small">
               <Image src={block2} alt="Професійний догляд для сяйва" fill sizes="(max-width: 800px) 100vw, 38vw" />
-              <div className="precision-feature-overlay"><span>ФОКУС</span><h3>Догляд для рівного тону та сяйва</h3><b>Переглянути ↗</b></div>
+              <div className="precision-feature-overlay"><span>ФОКУС</span><h3>Догляд для рівного тону та сяйва</h3><b>Переглянути <ArrowUpRight /></b></div>
             </Link>
           </div>
         </div>

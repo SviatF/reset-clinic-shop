@@ -1,4 +1,5 @@
 "use client";
+import ArrowUpRight from "@/components/ArrowUpRight";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -85,7 +86,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
           <div className="premium-product-copy">
             <div className="premium-product-heading"><span>{current.category === "hair" ? "ДОГЛЯД ЗА ВОЛОССЯМ" : current.category === "body" ? "ДОГЛЯД ЗА ТІЛОМ" : "ПРОФЕСІЙНИЙ ДОГЛЯД"}</span><h3>{current.name}</h3></div>
             <p>{current.shortDescription || "Професійний засіб, відібраний RESET Clinic."}</p>
-            <div className="premium-product-meta"><strong>{Number(current.price).toFixed(2)} грн</strong><span>Детальніше <b>↗</b></span></div>
+            <div className="premium-product-meta"><strong>{Number(current.price).toFixed(2)} грн</strong><span>Детальніше <b><ArrowUpRight /></b></span></div>
           </div>
         </Link>
         <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: current.trackStock !== true || Number(current.stockQuantity ?? 0) > 0 }} />

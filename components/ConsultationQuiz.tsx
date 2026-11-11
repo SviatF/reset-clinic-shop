@@ -1,4 +1,5 @@
 "use client";
+import ArrowUpRight from "@/components/ArrowUpRight";
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -93,7 +94,7 @@ export default function ConsultationQuiz() {
               >
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <strong>{option}</strong>
-                <b>↗</b>
+                <b><ArrowUpRight /></b>
               </button>
             ))}
           </div>

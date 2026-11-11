@@ -1,4 +1,5 @@
 "use client";
+import ArrowUpRight from "@/components/ArrowUpRight";
 import Link from "next/link";
 import Image from "next/image";
 import aesopProductImage from "@/assets/img/tovar1.webp";
@@ -18,7 +19,7 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
     <div className="rs-card-placeholder"><strong>{item.brand}</strong><small>Фото додається</small></div>}
   </Link>
   <div className="rs-card-body">
-   <Link className="rs-card-brand" href={`/catalog?brand=${encodeURIComponent(item.brand)}`} title={`Усі товари бренду ${item.brand}`}>{item.brand} ↗</Link>
+   <Link className="rs-card-brand" href={`/catalog?brand=${encodeURIComponent(item.brand)}`} title={`Усі товари бренду ${item.brand}`}>{item.brand} <ArrowUpRight /></Link>
    <Link className="rs-card-name" href={"/product/"+item.slug}>{item.name}</Link>
    {item.size&&<span className="rs-card-size">{item.size}</span>}
    <div className="rs-card-footer">

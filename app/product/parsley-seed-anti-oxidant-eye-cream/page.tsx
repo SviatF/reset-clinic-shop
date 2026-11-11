@@ -1,3 +1,4 @@
+import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -52,7 +53,7 @@ export default function ProductPage() {
                 <span className="product-review-stars" aria-hidden="true">★★★★★</span>
                 <strong>{product.manufacturerRating.toFixed(1)}</strong>
                 <span>{product.manufacturerReviewCount} відгуки на сайті Aesop</span>
-                <a href={product.manufacturerReviewUrl} target="_blank" rel="noreferrer">Джерело ↗</a>
+                <a href={product.manufacturerReviewUrl} target="_blank" rel="noreferrer">Джерело <ArrowUpRight /></a>
               </div>
 
               <div className="product-meta-strip">
@@ -141,7 +142,7 @@ export default function ProductPage() {
             <span>ВІДГУКИ ПРО ПРОДУКТ · AESOP</span>
             <h2>{product.manufacturerRating.toFixed(1)} / 5</h2>
             <p>{product.manufacturerReviewCount} customer reflections на офіційному сайті бренду. Це не відгуки клієнтів RESET.</p>
-            <a href={product.manufacturerReviewUrl} target="_blank" rel="noreferrer">Переглянути оригінал ↗</a>
+            <a href={product.manufacturerReviewUrl} target="_blank" rel="noreferrer">Переглянути оригінал <ArrowUpRight /></a>
           </div>
           <div className="manufacturer-review-cards">
             {product.manufacturerReviewNotes.map((review, index) => (

@@ -1,3 +1,4 @@
+import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -93,7 +94,7 @@ export default async function DynamicProductPage({ params }: Props) {
             </div>
 
             <div className="product-detail-panel product-premium-detail">
-              <span className="eyebrow"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} ↗</Link> · {categoryName.toUpperCase()}</span>
+              <span className="eyebrow"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} <ArrowUpRight /></Link> · {categoryName.toUpperCase()}</span>
               <h1>{item.name}</h1>
               <p className="product-benefit-lead">{productIntro(item.description || item.shortDescription)}</p>
 
@@ -109,7 +110,7 @@ export default async function DynamicProductPage({ params }: Props) {
               <div className="product-meta-strip">
                 {item.size && <span><b>{item.size}</b> ОБ’ЄМ</span>}
                 <span className="product-order-status"><i /> {inStock ? "ДОСТУПНО ДО ЗАМОВЛЕННЯ" : "НЕМАЄ В НАЯВНОСТІ"}</span>
-                <Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} ↗</Link>
+                <Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} <ArrowUpRight /></Link>
               </div>
 
               {item.keyIngredients.length > 0 && <div className="product-quick-facts product-quick-facts-icons">
