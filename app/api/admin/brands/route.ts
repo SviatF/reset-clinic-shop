@@ -2,7 +2,7 @@ import {NextResponse} from "next/server";
 import {isAdminAuthenticated} from "@/lib/admin-auth";
 import {readBrands,mutateBrands} from "@/lib/brands-store";
 import {readProducts} from "@/lib/commerce-json";
-import {jsonStoreWriteConfigured,jsonStoreWriteAvailable} from "@/lib/json-store";
+import {jsonStoreWriteConfigured,jsonStoreWriteAvailable,usingCloudflareStore} from "@/lib/json-store";
 import {slugifyUkr} from "@/lib/slugify";
 import type {StoreBrand} from "@/lib/catalog-brands";
 export const runtime="nodejs";
@@ -16,9 +16,20 @@ function normalize(body:any):StoreBrand{
  const lines=Array.isArray(body.lines)?[...new Set(body.lines.map((v:unknown)=>clean(v,100)).filter(Boolean))] as string[]:[];
  return {id:clean(body.id,120)||slug,slug,name,status:body.status==="hidden"?"hidden":"active",sort_order:Math.trunc(Number(body.sort_order)||0),lines};
 }
+function storageIssue(): string {
+ if (usingCloudflareStore()) {
+  if (process.env.SHOP_PRODUCTS_BACKEND !== "d1") return "Для D1 потрібно встановити SHOP_PRODUCTS_BACKEND=d1 після перевірки міграції даних.";
+  return "D1 підключена в конфігурації, але data/products.json недоступний для читання. Перевірте SHOP_DB, таблицю shop_documents та імпорт п'яти документів.";
+ }
+ if (process.env.GITHUB_TOKEN) return "GitHub Token не надав підтвердженого права запису. Перевірте права доступу або налаштуйте D1.";
+ return "Сайт працює без активного сховища для запису. Після резервного копіювання та імпорту в D1 встановіть SHOP_STORAGE_BACKEND=cloudflare і SHOP_PRODUCTS_BACKEND=d1.";
+}
 export async function GET(){
  if(!(await isAdminAuthenticated()))return NextResponse.json({error:"Unauthorized"},{status:401});
- try{return NextResponse.json({brands:await readBrands(),writable:await jsonStoreWriteAvailable()});}catch(e){return error(e)}
+ try {
+  const [brands,writable]=await Promise.all([readBrands(),jsonStoreWriteAvailable()]);
+  return NextResponse.json({brands,writable,storageIssue:writable?null:storageIssue()});
+ }catch(e){return error(e)}
 }
 export async function POST(req:Request){
  if(!(await isAdminAuthenticated()))return NextResponse.json({error:"Unauthorized"},{status:401});
