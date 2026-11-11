@@ -17,6 +17,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Validate product seeds
         run: node scripts/validate-catalog.mjs
+      - name: Validate supplier import staging
+        run: node scripts/validate-supplier-import.mjs
       - name: Verify safe D1 import generator
         run: npm run shop:d1:test
       - name: TypeScript check

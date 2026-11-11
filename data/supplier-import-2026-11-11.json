@@ -1,0 +1,1186 @@
+{
+  "imported_at": "2026-11-11",
+  "import_type": "non_destructive_verified_public_listing_seed",
+  "review_required": true,
+  "source_guidance": "These are product candidates from third-party/brand public catalog pages. Prices are observations only, not merchant approved. All additions are draft and out-of-stock; no live checkout, no order or existing product overwrite.",
+  "notes": [
+    "CU SKIN homepage was inaccessible directly; names come from indexed public snapshot, thus prices intentionally 0.",
+    "Source listing pages may be older than the current merchant price list; reconfirm availability, pricing, sizes and images.",
+    "This changes GitHub-bundled data only; active Cloudflare D1 is not modified. Use admin catalog recovery only after backing up the D1 database.",
+    "No source imagery was copied or hotlinked."
+  ],
+  "totals": {
+    "candidates": 114,
+    "added": 114,
+    "duplicates_skipped": 0
+  },
+  "by_brand": {
+    "Histolab": {
+      "added": 24,
+      "skipped": 0
+    },
+    "HydroPeptide": {
+      "added": 9,
+      "skipped": 0
+    },
+    "Cetaphil": {
+      "added": 1,
+      "skipped": 0
+    },
+    "Sensilis": {
+      "added": 37,
+      "skipped": 0
+    },
+    "DÉCAAR": {
+      "added": 24,
+      "skipped": 0
+    },
+    "CU SKIN": {
+      "added": 19,
+      "skipped": 0
+    }
+  },
+  "items": [
+    {
+      "slug": "supplier-histolab-product",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Крем післяпроцедурний з вітаміном К",
+      "observed_price_uah": 1495,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-2",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Постпроцедурна пудра компактна матуюча",
+      "observed_price_uah": 2174,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-3",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Крем омолоджуючий з пептидним комплексом",
+      "observed_price_uah": 5182,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-4",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Омолоджуюча пре-сироватка тонер з пептидним комплексом",
+      "observed_price_uah": 4584,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-5",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Крем для шкіри навколо очей з пептидним комплексом",
+      "observed_price_uah": 4684,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-6",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Освітлюючий коректор для обличчя",
+      "observed_price_uah": 3860,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-egf",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Крем післяпроцедурний з EGF",
+      "observed_price_uah": 1495,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-spf-50",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Сонцезахисна есенція для чутливої шкіри SPF 50+",
+      "observed_price_uah": 3375,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-bb-spf-35",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "BB крем «Сяйво шкіри» з SPF 35",
+      "observed_price_uah": 3470,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-7",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Зволожуюча емульсія",
+      "observed_price_uah": 4131,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-8",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Зволожуюча пре-сироватка тонер",
+      "observed_price_uah": 3986,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-spf-50-2",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Крем сонцезахисний після процедурний для обличчя SPF 50+",
+      "observed_price_uah": 3089,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-9",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Освітлююча пре-сироватка тонер",
+      "observed_price_uah": 4485,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-10",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Тонуючий крем з азуленом",
+      "observed_price_uah": 5182,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-azulene-dna-cream",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "Azulene DNA Cream — заспокійливий крем для чутливої шкіри з азуленом",
+      "observed_price_uah": 5889,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-glyzin-azulene-ampoule-complex-sheet-mask-72",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "GLYZIN AZULENE AMPOULE COMPLEX SHEET MASK 72 — маска для проблемної шкіри",
+      "observed_price_uah": 652,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-salmon-wrinkle-ampoule-complex-sheet-mask-50",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/",
+      "source_name": "SALMON WRINKLE AMPOULE COMPLEX SHEET MASK 50 — маска проти зморшок",
+      "observed_price_uah": 652,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-gluthin-vita-c-complex-sheet-mask",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/vidbilennya",
+      "source_name": "GLUTHIN VITA C COMPLEX SHEET MASK — маска освітлююча з вітаміном С",
+      "observed_price_uah": 652,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-11",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/aqua-science",
+      "source_name": "Крем інтенсивного зволоження",
+      "observed_price_uah": 4131,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-12",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/aqua-science",
+      "source_name": "Крем зволожуючий з церамідами",
+      "observed_price_uah": 4186,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-13",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/vidbilennya",
+      "source_name": "Освітлюючий крем для шкіри",
+      "observed_price_uah": 5481,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-14",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/vidbilennya",
+      "source_name": "Двофазний засіб для зняття макіяжу",
+      "observed_price_uah": 4231,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-15",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/vidbilennya",
+      "source_name": "Ензимний пілінг порошок багатофункціональний",
+      "observed_price_uah": 2473,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-histolab-product-16",
+      "brand": "Histolab",
+      "source_url": "https://histolab.com.ua/vidbilennya",
+      "source_name": "Маска на нетканній основі «Мультивітамінна з освітлюючим комплексом»",
+      "observed_price_uah": 507,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-sun-sleep",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Sun & Sleep — тревел-набір для догляду вдень і вночі",
+      "observed_price_uah": 4342.17,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-sun-slick-spf-50",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Sun Slick — мінеральний стік SPF 50",
+      "observed_price_uah": 1708.1,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-solar-defense-spf-50-non-tinted",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Solar Defense SPF 50 Non-Tinted — сонцезахисний крем",
+      "observed_price_uah": 2382.35,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-silk-glow",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Silk Glow — набір для сяяння, захисту та зволоження",
+      "observed_price_uah": 5349.05,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-age-reversal-regimen",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Age Reversal Regimen — антивікова програма",
+      "observed_price_uah": 6337.95,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-solar-defense-body-spf-30",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Solar Defense Body SPF 30 — сонцезахисний спрей",
+      "observed_price_uah": 2202.55,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-summer-skin-rescue-kit",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Summer Skin Rescue Kit — набір для регенерації шкіри",
+      "observed_price_uah": 5839.01,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-pre-treatment-toner",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/ru/product/antivozrastnoy-toniziruyuschiy-losion/",
+      "source_name": "Pre-Treatment Toner — тонізуючий лосьйон",
+      "observed_price_uah": 2103.25,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cetaphil-500",
+      "brand": "Cetaphil",
+      "source_url": "https://avepharm.com.ua/magazyn/brands/cetaphil/",
+      "source_name": "Міцелярна емульсія для очищення нормальної, сухої та чутливої шкіри, 500 мл",
+      "observed_price_uah": 1575,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-eternalist-age-retinol-serum",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/",
+      "source_name": "Eternalist AGE Retinol Serum — сироватка з ретинолом",
+      "observed_price_uah": 3142,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-hyaluronic-filler-serum",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Hyaluronic [Filler Serum] — сироватка-філер",
+      "observed_price_uah": 2300,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-hydra-essence-confort-mask",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Hydra Essence Confort Mask — ультразволожувальна маска",
+      "observed_price_uah": 1700,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-hydra-essence-fondant-cream",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Hydra Essence Fondant Cream — зволожувальний крем",
+      "observed_price_uah": 1500,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-hydra-essence-gel-sorbet",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Hydra Essence Gel Sorbet — зволожувальний гель-сорбет",
+      "observed_price_uah": 1500,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-invisible-matt",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Invisible Matt — матуюча пудра",
+      "observed_price_uah": 1400,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-lip-balm",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Lip Balm — бальзам для губ",
+      "observed_price_uah": 450,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-lotion-spray-50-kids",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Lotion Spray 50+ KIDS — сонцезахисний спрей для дітей",
+      "observed_price_uah": 1550,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-mascara",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Mascara — туш для вій",
+      "observed_price_uah": 1400,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-matt-gel-oilfree-spf50-spf50",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Matt Gel Oilfree SPF50+ — матуючий гель SPF50+",
+      "observed_price_uah": 1550,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-micellar-water",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Micellar Water — міцелярна вода",
+      "observed_price_uah": 900,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-origin-pro-egf5-cream",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Origin Pro EGF5 Cream — крем зі стовбуровими клітинами",
+      "observed_price_uah": 4950,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-origin-pro-egf5-eyes-contour",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=2",
+      "source_name": "Origin Pro EGF5 Eyes Contour — крем для зони навколо очей",
+      "observed_price_uah": 2700,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-bb-oxygen-cream-spf-50-bb",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/",
+      "source_name": "BB Oxygen Cream SPF 50 — BB-крем кисневий з перфтордекаліном",
+      "observed_price_uah": 3286,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-rebalancing-cream-24hr-24",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/",
+      "source_name": "Rebalancing Cream 24hr — балансувальний крем 24 години",
+      "observed_price_uah": 2616,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-absolute-hydro-cream",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/",
+      "source_name": "Absolute Hydro Cream — зволожувальний крем",
+      "observed_price_uah": 3094,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-oxygen-hydro-24-hours",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/",
+      "source_name": "Oxygen Hydro 24 Hours — кисневий крем",
+      "observed_price_uah": 2626,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-oxygen-cream-spf-30-anti-pollution",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/",
+      "source_name": "Oxygen Cream SPF 30 Anti-Pollution",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-lumi-intimate-cream",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Lumi Intimate Cream — освітлювальний крем для інтимної зони",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-dream-glow-cream",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Dream Glow Cream — крем-ілюмінатор",
+      "observed_price_uah": 3687,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-oxygen-gel",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Oxygen Gel — кисневий крем-гель",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-youth-elixir-day-cream",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Youth Elixir Day Cream — омолоджувальний денний крем",
+      "observed_price_uah": 3765,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-youth-elixir-night-cream",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Youth Elixir Night Cream — омолоджувальний нічний крем",
+      "observed_price_uah": 3848,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-advanced-luminous-spf50",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Advanced Luminous SPF50 — сонцезахисний крем-фільтр",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-ph-balancing-lotion-ph",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "PH Balancing Lotion — лосьйон для відновлення pH",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-calming-mask",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=2",
+      "source_name": "Calming Mask — заспокійлива маска",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-oxygen-mask",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=3",
+      "source_name": "Oxygen Mask — киснева маска з детокс-ефектом",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-cleansing-milk",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=3",
+      "source_name": "Cleansing Milk — очищувальне молочко",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-delicate-serum",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=3",
+      "source_name": "Delicate Serum — сироватка для чутливої шкіри",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-lumi-drops-serum",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=3",
+      "source_name": "Lumi Drops Serum — освітлювальна сироватка",
+      "observed_price_uah": 2361,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-age-defying-serum",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=3",
+      "source_name": "Age Defying Serum — ліфтинг-сироватка",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-natural-exfoliation-scrub",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=4",
+      "source_name": "Natural Exfoliation Scrub — натуральний скраб-ексфоліант",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-phyto-lotion",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=4",
+      "source_name": "Phyto Lotion — фіто-лосьйон для жирної шкіри",
+      "observed_price_uah": 1726,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-dual-phase-make-up-remover",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=4",
+      "source_name": "Dual Phase Make-up Remover — двофазний лосьйон для демакіяжу",
+      "observed_price_uah": 2361,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-delicate-soothing-gel",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=4",
+      "source_name": "Delicate Soothing Gel — делікатний заспокійливий гель",
+      "observed_price_uah": 1804,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-delicate-touch-cream",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/?page=4",
+      "source_name": "Delicate Touch Cream — крем з бакучіолом для чутливої шкіри",
+      "observed_price_uah": 2891,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-ac-solution-b6",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution AC Solution B6",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-cicaming-b5-madeca-cream",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution Cicaming B5 Madeca Cream",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-av-free-purifying-foam-cleanser",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up AV Free Purifying Foam Cleanser",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-vitamin-u-oil-to-foam-cleanser",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Vitamin U Oil To Foam Cleanser",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-aha-30-bha-0-5-washable-peel-serum",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution AHA 30% BHA 0.5% Washable Peel Serum",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-b6-enzyme-powder-wash-sachet",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution B6 Enzyme Powder Wash Sachet",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-vitamin-u-ampoule-toner",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Vitamin U Ampoule Toner",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-pdrn-bakuchiol-toner-100",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution PDRN Bakuchiol Toner 100",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-dual-activator-retinol-0-3-bakuchiol-0-75",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up Dual Activator Retinol 0.3% Bakuchiol 0.75%",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-pdrn-bakuchiol-cream-100",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution PDRN Bakuchiol Cream 100",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-vitamin-u-eye-cream",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Vitamin U Eye Cream",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-retinol-activator-for-eye-0-1",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up Retinol Activator For Eye 0.1%",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-ex-c-after-cream",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up EX-C After Cream",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-collagen-sleep-mask",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up Collagen Sleep Mask",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-moisture-sleeping-mask",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution Moisture Sleeping Mask",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-vitamin-u-sun-serum-spf-50-pa",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Vitamin U Sun Serum SPF 50+ PA++++",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-super-sun-screen-spf-50-pa",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up Super Sun Screen SPF 50+ PA++++",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-cu-dr-solution-daisy-lady-wash",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "CU Dr. Solution Daisy Lady Wash",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-cuskin-clean-up-soothing-lotion",
+      "brand": "CU SKIN",
+      "source_url": "https://cu.ua/",
+      "source_name": "Clean-Up Soothing Lotion",
+      "observed_price_uah": null,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-hydropeptide-travel-size-solar-defense-spf-50-non-tinted",
+      "brand": "HydroPeptide",
+      "source_url": "https://hydropeptide.ua/shop/categories/zaschita_spf/",
+      "source_name": "Travel Size Solar Defense SPF 50 Non-Tinted — сонцезахисний крем",
+      "observed_price_uah": 1033.85,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-decaar-absolute-hydro-cream-2",
+      "brand": "DÉCAAR",
+      "source_url": "https://decaar.com.ua/domashnij-dogljad/",
+      "source_name": "Absolute Hydro Cream+ — зволожувальний крем",
+      "observed_price_uah": 3255,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-pure-age-perfection-make-up-04-04",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Pure Age Perfection Make-Up 04 — матуючий флюїд з тоном 04",
+      "observed_price_uah": 2000,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-pure-age-perfection-make-up-05-05",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Pure Age Perfection Make-Up 05 — матуючий флюїд з тоном 05",
+      "observed_price_uah": 2000,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-pure-age-perfection-retinal",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Pure Age Perfection Retinal — нічний крем з ретиналем",
+      "observed_price_uah": 2650,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-purify-balancing-toner",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Purify Balancing Toner — очищувальний балансувальний тонер",
+      "observed_price_uah": 900,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-purify-essential-cleanser",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Purify Essential Cleanser — очищувальний гель",
+      "observed_price_uah": 1050,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-resurfacing-black-peel",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Resurfacing Black Peel — чорний пілінг",
+      "observed_price_uah": 1750,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-skin-barrier",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Skin Barrier — відновлювальний крем",
+      "observed_price_uah": 2300,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-skin-d-pigment-aha10-overnight",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Skin D-Pigment AHA10 Overnight — нічний освітлювальний засіб",
+      "observed_price_uah": 2200,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-skin-d-pigment-serum-atx-b3",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Skin D-Pigment Serum ATX B3 — сироватка з транексамовою кислотою",
+      "observed_price_uah": 2550,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-skin-glow-beyond-c-serum",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Skin Glow Beyond C Serum — сироватка для сяяння",
+      "observed_price_uah": 2650,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-skin-glow-glycolic",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Skin Glow Glycolic — нічний гель з гліколевою кислотою",
+      "observed_price_uah": 2900,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-skin-glow-juicy-cream",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=4",
+      "source_name": "Skin Glow Juicy Cream — зволожувальний крем",
+      "observed_price_uah": 2100,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-the-cool-rescue",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "The Cool Rescue — заспокійливий тонер-міст",
+      "observed_price_uah": 969,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-ultrafluido-100-solar-allergy",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Ultrafluido 100 Solar Allergy — сонцезахисний флюїд",
+      "observed_price_uah": 1581,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-ampoules",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Ampoules — ліфтинг-ампули",
+      "observed_price_uah": 1836,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-ar",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade AR — крем-сорбет",
+      "observed_price_uah": 3009,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-day-cream",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Day Cream — ліфтинг-крем",
+      "observed_price_uah": 3009,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-day-fluid",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Day Fluid — антивіковий флюїд",
+      "observed_price_uah": 3009,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-eyes-contour",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Eyes Contour — крем для повік",
+      "observed_price_uah": 2346,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-make-up-01-01",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Make-Up 01 — тональний крем 01",
+      "observed_price_uah": 2142,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-make-up-02-02",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Make-Up 02 — тональний крем 02",
+      "observed_price_uah": 2142,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-make-up-03-03",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Make-Up 03 — тональний крем 03",
+      "observed_price_uah": 2142,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-night-cream",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Night Cream — нічний антивіковий крем",
+      "observed_price_uah": 3009,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    },
+    {
+      "slug": "supplier-sensilis-upgrade-serum-gel",
+      "brand": "Sensilis",
+      "source_url": "https://sensilis.com.ua/katalog/?page=6",
+      "source_name": "Upgrade Serum Gel — антивіковий гель",
+      "observed_price_uah": 3162,
+      "source_checked_at": "2026-11-11",
+      "status": "draft_pending_merchant_verification",
+      "image_status": "not_imported"
+    }
+  ],
+  "skipped_duplicates": []
+}
