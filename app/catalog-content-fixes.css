@@ -1,0 +1,12 @@
+/* Clickable brand discovery and complete product details, including mobile view. */
+.rs-brand-nav{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 0 24px;margin-bottom:8px}
+.rs-brand-nav-label{font-size:10px;letter-spacing:.16em;color:#777166;margin-right:9px;font-weight:700}
+.rs-brand-nav a{display:inline-flex;align-items:center;min-height:36px;border:1px solid #ded8cb;background:rgba(255,255,255,.45);padding:8px 12px;font-size:11px;line-height:1.25;transition:border-color .2s ease,background .2s ease}
+.rs-brand-nav a:hover,.rs-brand-nav a[aria-current="page"]{border-color:#28241f;background:#28241f;color:#fff}
+.rs-card-brand{display:inline-block;align-self:flex-start;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}
+.rs-card-brand:hover{text-decoration-color:currentColor}
+.product-brand-link{text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px}
+.product-full-description .product-disclosure-body p{display:block;overflow:visible;max-height:none;white-space:pre-line;overflow-wrap:anywhere;-webkit-line-clamp:unset;-webkit-box-orient:initial}
+.product-detail-disclosures .product-full-description .product-disclosure-body{overflow:visible;max-height:none;height:auto}
+.product-benefit-lead{overflow:visible;text-overflow:clip;-webkit-line-clamp:unset}
+@media(max-width:720px){.rs-brand-nav{gap:6px;margin-top:12px;padding-bottom:17px}.rs-brand-nav-label{width:100%;margin-bottom:2px}.rs-brand-nav a{font-size:10px;min-height:34px;padding:7px 9px}}

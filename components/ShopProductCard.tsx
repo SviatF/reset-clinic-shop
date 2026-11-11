@@ -18,7 +18,7 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
     <div className="rs-card-placeholder"><strong>{item.brand}</strong><small>Фото додається</small></div>}
   </Link>
   <div className="rs-card-body">
-   <span className="rs-card-brand">{item.brand}</span>
+   <Link className="rs-card-brand" href={`/catalog?brand=${encodeURIComponent(item.brand)}`} title={`Усі товари бренду ${item.brand}`}>{item.brand} ↗</Link>
    <Link className="rs-card-name" href={"/product/"+item.slug}>{item.name}</Link>
    {item.size&&<span className="rs-card-size">{item.size}</span>}
    <div className="rs-card-footer">

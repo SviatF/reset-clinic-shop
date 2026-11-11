@@ -6,6 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import ProductActions from "@/components/ProductActions";
 import { absoluteUrl, breadcrumbSchema, siteConfig } from "@/lib/seo";
 import { getStoreProductBySlug } from "@/lib/store-products";
+import { productIntro } from "@/lib/product-display";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -41,6 +42,7 @@ export default async function DynamicProductPage({ params }: Props) {
   const item = await getStoreProductBySlug(slug);
   if (!item) notFound();
   const path = `/product/${item.slug}`;
+  const brandUrl = `/catalog?brand=${encodeURIComponent(item.brand)}`;
   const imageSrc = item.imageUrl || productFallback.src;
   const categoryName = item.category === "body" ? "Тіло" : item.category === "hair" ? "Волосся" : item.category === "face" ? "Обличчя" : "Каталог";
   const categoryPath = item.category === "body" ? "/body" : item.category === "hair" ? "/hair" : item.category === "face" ? "/face" : "/catalog";
@@ -69,6 +71,7 @@ export default async function DynamicProductPage({ params }: Props) {
   const breadcrumbs = breadcrumbSchema([
     { name: "Головна", path: "/" },
     { name: categoryName, path: categoryPath },
+    { name: item.brand, path: brandUrl },
     { name: item.name, path },
   ]);
 
@@ -85,14 +88,14 @@ export default async function DynamicProductPage({ params }: Props) {
                 <span className="product-object-index">01 / PRODUCT</span>
                 <span className="product-object-halo" aria-hidden="true" />
                 {item.imageUrl || item.slug === "parsley-seed-anti-oxidant-eye-cream" ? <img src={imageSrc} alt={item.name} className="dynamic-product-image" /> : <div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>}
-                <div className="product-object-footer"><span>{item.brand.toUpperCase()}</span><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
+                <div className="product-object-footer"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()}</Link><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
               </div>
             </div>
 
             <div className="product-detail-panel product-premium-detail">
-              <span className="eyebrow">{item.brand.toUpperCase()} · {categoryName.toUpperCase()}</span>
+              <span className="eyebrow"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} ↗</Link> · {categoryName.toUpperCase()}</span>
               <h1>{item.name}</h1>
-              <p className="product-benefit-lead">{item.shortDescription || item.description}</p>
+              <p className="product-benefit-lead">{productIntro(item.description || item.shortDescription)}</p>
 
               <div className="product-purchase-deck product-purchase-deck-light">
                 <div className="product-price-row product-price-card product-price-card-light">
@@ -106,7 +109,7 @@ export default async function DynamicProductPage({ params }: Props) {
               <div className="product-meta-strip">
                 {item.size && <span><b>{item.size}</b> ОБ’ЄМ</span>}
                 <span className="product-order-status"><i /> {inStock ? "ДОСТУПНО ДО ЗАМОВЛЕННЯ" : "НЕМАЄ В НАЯВНОСТІ"}</span>
-                <span>{item.brand.toUpperCase()}</span>
+                <Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} ↗</Link>
               </div>
 
               {item.keyIngredients.length > 0 && <div className="product-quick-facts product-quick-facts-icons">
@@ -116,6 +119,7 @@ export default async function DynamicProductPage({ params }: Props) {
               <div className="product-consult-inline-v2"><div><span>НЕ ВПЕВНЕНІ У ВИБОРІ?</span><strong>Перевіримо сумісність із вашим поточним доглядом.</strong></div><Link href="/consultation">Підібрати догляд →</Link></div>
 
               <div className="product-detail-disclosures">
+                {item.description && <details open className="product-full-description"><summary><span>Повний опис засобу</span><b>+</b></summary><div className="product-disclosure-body"><p>{item.description}</p></div></details>}
                 {item.howToUse && <details open><summary><span>Як застосовувати</span><b>+</b></summary><div className="product-disclosure-body"><p>{item.howToUse}</p></div></details>}
                 {item.keyIngredients.length > 0 && <details open><summary><span>Ключові компоненти</span><b>+</b></summary><div className="product-disclosure-body"><p>{item.keyIngredients.join(" · ")}</p></div></details>}
                 {item.inci && <details><summary><span>Повний склад · INCI</span><b>+</b></summary><div className="product-disclosure-body product-inci"><p>{item.inci}</p></div></details>}

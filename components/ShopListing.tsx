@@ -29,14 +29,17 @@ export default async function ShopListing({category,subcategory,query={},inCatal
  const active=records.filter(row=>row.status==="active");
  const scoped=active.filter(row=>!category||row.category===category);
  const brands=[...new Set(scoped.map(row=>row.brand))].sort((a,b)=>a.localeCompare(b,"uk"));
+ const allBrands=[...new Set(active.map(row=>row.brand))].sort((a,b)=>a.localeCompare(b,"uk"));
  const children=category?taxonomy.filter(c=>c.parent_slug===category&&c.status==="active").sort((a,b)=>a.sort_order-b.sort_order):[];
  const currentChild=children.find(c=>c.slug===subcategory);
  const group=groups.find(c=>c.slug===category);
- const heading=currentChild?.name||group?.label||"Каталог косметики";
+ const heading=query.brand
+   ? (group ? `${group.label} · ${query.brand}` : `Товари бренду ${query.brand}`)
+   : currentChild?.name||group?.label||"Каталог косметики";
  const root=inCatalog?"/catalog":category?"/"+category:"/catalog";
  const action=inCatalog?"/catalog":subcategory?"/"+category+"/"+subcategory:root;
- const mainHref=(c?:ShopCategory)=>inCatalog?makeUrl("/catalog",{category:c}):c?"/"+c:"/catalog";
- const subHref=(sub?:string)=>inCatalog?makeUrl("/catalog",{category,subcategory:sub}):sub?"/"+category+"/"+sub:root;
+ const mainHref=(c?:ShopCategory)=>inCatalog?makeUrl("/catalog",{category:c,brand:query.brand}):c?"/"+c:"/catalog";
+ const subHref=(sub?:string)=>inCatalog?makeUrl("/catalog",{category,subcategory:sub,brand:query.brand}):sub?"/"+category+"/"+sub:root;
  const pagination=(n:number)=>makeUrl(action,{...(inCatalog?{category,subcategory}:{}),q:query.q,brand:query.brand,sort,page:String(n)});
  const hasFilters=Boolean(query.q||query.brand||(sort&&sort!=="default"));
  const allCount=(c:ShopCategory)=>active.filter(x=>x.category===c).length;
@@ -58,6 +61,11 @@ export default async function ShopListing({category,subcategory,query={},inCatal
   {!category&&<nav className="rs-featured" aria-label="Обрати напрям">
    {groups.map(c=><Link key={c.slug} href={mainHref(c.slug)}><strong>{c.label}</strong><small>{allCount(c.slug)} товарів</small><b aria-hidden="true">↗</b></Link>)}
   </nav>}
+  <nav className="rs-brand-nav" id="brands" aria-label="Каталог за брендом">
+   <span className="rs-brand-nav-label">БРЕНДИ</span>
+   <Link href="/catalog" aria-current={!query.brand?"page":undefined}>Усі бренди</Link>
+   {allBrands.map(brand=><Link key={brand} href={makeUrl("/catalog",{brand})} aria-current={query.brand?.toLocaleLowerCase("uk")===brand.toLocaleLowerCase("uk")?"page":undefined}>{brand} ↗</Link>)}
+  </nav>
   <div className="rs-tools">
    <p><strong>{result.total}</strong> {result.total===1?"товар":"товарів"}</p>
    <details className="rs-filters">
@@ -74,7 +82,7 @@ export default async function ShopListing({category,subcategory,query={},inCatal
       <option value="price-desc">Спочатку дорожчі</option><option value="name">За назвою</option>
      </select></label>
      <button type="submit">Показати товари →</button>
-     {hasFilters&&<Link href={inCatalog?mainHref(category):action}>Скинути</Link>}
+     {hasFilters&&<Link href={inCatalog?makeUrl("/catalog",{category}):action}>Скинути</Link>}
     </form>
    </details>
   </div>

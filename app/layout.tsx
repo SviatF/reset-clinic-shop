@@ -29,6 +29,7 @@ import "./admin.css";
 import "./reset-catalog.css";
 import "./product-media-placeholder.css";
 import "./shop-categories.css";
+import "./catalog-content-fixes.css";
 import "./recommended-grid.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
 import favicon from "@/assets/img/favicon.webp";

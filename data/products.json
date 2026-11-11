@@ -3203,16 +3203,16 @@
   {
     "id": "sheet_braderm_002",
     "slug": "braderm-kurac-mousse-2",
-    "name": "Braderm Ніжна пінка для вмивання з Пребіотиками",
+    "name": "Braderm Kurac mousse — Ніжна пінка для вмивання з Пребіотиками",
     "brand": "Braderm",
     "sku": "BRADERM-002",
     "category": "face",
     "subcategory_slugs": [
       "cleansing"
     ],
-    "product_line": null,
+    "product_line": "Kurac mousse",
     "status": "active",
-    "short_description": "Підтримує мікробіом дружню флору шкіри. Унікальна дія нікотинаміду відновлює та пом’якшує. Глибоко очищує чорні цятки та вирівнює тон. Надає вираженний ліфтинг, відчуття неймовірної чистоти та свіжості. Зменшує видимість недоліків, особливо чорних цяток, відновлює природну бар’єр",
+    "short_description": "Підтримує мікробіом дружню флору шкіри.",
     "description": "Підтримує мікробіом дружню флору шкіри. Унікальна дія нікотинаміду відновлює та пом’якшує. Глибоко очищує чорні цятки та вирівнює тон. Надає вираженний ліфтинг, відчуття неймовірної чистоти та свіжості. Зменшує видимість недоліків, особливо чорних цяток, відновлює природну бар’єрну функцію",
     "price": 1290,
     "currency": "UAH",
@@ -3233,7 +3233,7 @@
       "Panthenol"
     ],
     "inci": "Aqua, Disodium cocoamphodiacetate, Olive oil glycereth-8 esters, Sodium lauroyl glutamate, Potassium azeloyl diglycinate, Citric acid, Niacinamide, Zinc sulfate, Inulin, Alpha-glucan oligosaccharide, Arctium lappa root extract, Citrus bergamia peel oil expressed, Glycerin, Panthenol, Tocopheryl acetate, Cocamidopropyl betaine, Potassium sorbate, Propylene glycol, Sodium benzoate, Tetrasodium glutamate diacetate, Sodium chloride, Polyglyceryl-3 cocoate, Polyglyceryl-4 caprate, Polyglyceryl-6 caprylate, Polyglyceryl-6 ricinoleate, Ethylhexylglycerin, Phenoxyethanol, d-Limonene, Linalool, Gamma-terpinene.",
-    "seo_title": "Braderm Ніжна пінка для вмивання з Пребіотиками — купити в RESET Clinic",
+    "seo_title": "Braderm Kurac mousse — Ніжна пінка для вмивання з Пребіотиками — купити в RESET Clinic",
     "seo_description": "Ніжна пінка для вмивання з Пребіотиками 100 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3249,16 +3249,16 @@
   {
     "id": "sheet_braderm_003",
     "slug": "braderm-azn-cream-3",
-    "name": "Braderm Сонцезахисний крем з протизапальним ефектом",
+    "name": "Braderm AZN cream — Сонцезахисний крем з протизапальним ефектом",
     "brand": "Braderm",
     "sku": "BRADERM-003",
     "category": "face",
     "subcategory_slugs": [
       "spf"
     ],
-    "product_line": null,
+    "product_line": "AZN cream",
     "status": "active",
-    "short_description": "Денний зволожуючий крем з пребіотиками для всіх типів шкіри. Завдяки унікальній формулі з азелогліцином, зменшує надмірне вироблення шкірного сала та запалення. Дія нікотинаміду, заспокоює та відновлює подразнену шкіру. Високий ступінь захисту від УФ-випромінювання SPF30. Зволожу",
+    "short_description": "Денний зволожуючий крем з пребіотиками для всіх типів шкіри.",
     "description": "Денний зволожуючий крем з пребіотиками для всіх типів шкіри. Завдяки унікальній формулі з азелогліцином, зменшує надмірне вироблення шкірного сала та запалення. Дія нікотинаміду, заспокоює та відновлює подразнену шкіру. Високий ступінь захисту від УФ-випромінювання SPF30. Зволожує, живить, відновлює.",
     "price": 1690,
     "currency": "UAH",
@@ -3279,7 +3279,7 @@
       "SPF 30"
     ],
     "inci": "Aqua, Niacinamide, Glycerin, Hydroxyethyl acrylate/sodium acryloyldimethyl taurate copolymer, Potassium azeloyl diglycinate, C12-15 alkyl benzoate, Caprylic/capric triglyceride, Water, Squalane, Butyl methoxydibenzoylmethane, Ethylhexyl methoxycinnamate, Panthenol, Phenoxyethanol, Inulin, Butylene glycol, Octocrylene, Tocopheryl acetate, Polysorbate 60, Aloe barbadensis leaf juice powder, Alpha-glucan oligosaccharide, Undecylenic acid, Xanthan gum, Lactic acid, Ethylhexylglycerin, Lecithin, Arctium lappa root extract.",
-    "seo_title": "Braderm Сонцезахисний крем з протизапальним ефектом — купити в RESET Clinic",
+    "seo_title": "Braderm AZN cream — Сонцезахисний крем з протизапальним ефектом — купити в RESET Clinic",
     "seo_description": "Сонцезахисний крем з протизапальним ефектом 30 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3295,16 +3295,16 @@
   {
     "id": "sheet_braderm_004",
     "slug": "braderm-kurac-cream-4",
-    "name": "Braderm Активний протизапальний крем з Бнзоїл пероксидом 4%",
+    "name": "Braderm Kurac cream — Активний протизапальний крем з Бнзоїл пероксидом 4%",
     "brand": "Braderm",
     "sku": "BRADERM-004",
     "category": "face",
     "subcategory_slugs": [
       "cream"
     ],
-    "product_line": null,
+    "product_line": "Kurac cream",
     "status": "active",
-    "short_description": "Інноваційний засіб для комплексної терапії акне 1-2 ступеня. Унікальна формула поєднує антибактеріальний ефект бензоїл пероксиду, який зменшує кількість Propionibacterium acnes та запобігає закупорці пор, з регенеруючою дією ретиніл пальмітату. Це сприяє прискоренню клітинної рег",
+    "short_description": "Інноваційний засіб для комплексної терапії акне 1-2 ступеня.",
     "description": "Інноваційний засіб для комплексної терапії акне 1-2 ступеня. Унікальна формула поєднує антибактеріальний ефект бензоїл пероксиду, який зменшує кількість Propionibacterium acnes та запобігає закупорці пор, з регенеруючою дією ретиніл пальмітату. Це сприяє прискоренню клітинної регенерації, відлущенню ороговілого шару епідермісу та зниженню запального процесу, що прямо впливає на покращення текстури та стану шкіри. Його застосування забезпечує одночасну антибактеріальну, протизапальну та відлущувальну дію, що оптимально підходить для терапії вугрової хвороби.",
     "price": 1890,
     "currency": "UAH",
@@ -3325,7 +3325,7 @@
       "Zinc Sulphate 1%"
     ],
     "inci": "Aqua, Cetearyl alcohol, Hamamelis virginiana leaf water, Benzoyl peroxide, Ethylene Glycol Dibenzoate, Cetearyl ethylhexanoate, Glyceryl stearate, Triethyl citrate, Potassium palmitoyl hydrolyzed wheat protein, C10-18 triglycerides, Oenothera biennis oil, Sodium lactate, Dimethyl sulfone, Lactobionic acid, Mandelic acid, Olea europaea oil unsaponifiables, Sodium PCA, Zinc sulfate, Acrylamide/sodium acryloyldimethyltaurate copolymer, Aluminum starch octenylsuccinate, Undecylenic acid, C13-14 isoparaffin, Glycyrrhetinic acid, Tocopheryl acetate, Retinyl palmitate, Imidazolidinyl urea, Undecylenoyl glycine, Helianthus annuus seed oil, Phytosphingosine, Laureth-7, Disodium EDTA, Sodium hyaluronate, Betaglucan, Tocopherol, Benzyl alcohol, Quercus robur root extract, Dehydroacetic acid.",
-    "seo_title": "Braderm Активний протизапальний крем з Бнзоїл пероксидом 4% — купити в RESET Clinic",
+    "seo_title": "Braderm Kurac cream — Активний протизапальний крем з Бнзоїл пероксидом 4% — купити в RESET Clinic",
     "seo_description": "Активний протизапальний крем з Бнзоїл пероксидом 4% 30 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3341,16 +3341,16 @@
   {
     "id": "sheet_braderm_005",
     "slug": "braderm-dorsak-spray-5",
-    "name": "Braderm Активний протизапальний спрей з Бензоїл пероксидом 6%",
+    "name": "Braderm Dorsak spray — Активний протизапальний спрей з Бензоїл пероксидом 6%",
     "brand": "Braderm",
     "sku": "BRADERM-005",
     "category": "body",
     "subcategory_slugs": [
       "treatment"
     ],
-    "product_line": null,
+    "product_line": "Dorsak spray",
     "status": "active",
-    "short_description": "Унікальний на ринку України потужний протизапальний засіб на основі бензоїл пероксиду 6% у формі емульсії, розроблений для швидкого зменшення висипів по тілу, працює із закритими комедономи та чорними цятками. Перевага цього засобу полягає в зручності нанесення та вражаючих резул",
+    "short_description": "Унікальний на ринку України потужний протизапальний засіб на основі бензоїл пероксиду 6% у формі емульсії, розроблений для швидкого зменшення висипів по тілу, працює із закритими комедономи та чорними цятками.",
     "description": "Унікальний на ринку України потужний протизапальний засіб на основі бензоїл пероксиду 6% у формі емульсії, розроблений для швидкого зменшення висипів по тілу, працює із закритими комедономи та чорними цятками. Перевага цього засобу полягає в зручності нанесення та вражаючих результатах. Застосування бензоїл пероксиду один раз на день зменшує кількість бактерій акне (C.acnes) на 95%. Азелогліцин та нікотинамід зменшують вироблення шкірного сала і мають протизапальну дію, знижуючи ризик утворення нових висипів. Ретиніл пальмітат стимулює оновлення клітин, а лактобіонова кислота покращує зволоження, запобігаючи подразненню.",
     "price": 2400,
     "currency": "UAH",
@@ -3372,7 +3372,7 @@
       "Zinc Sulphate 1%"
     ],
     "inci": "Aqua, Dicaprylyl ether, Benzoyl peroxide, Ethylene Glycol Dibenzoate, Hamamelis virginiana leaf water, Potassium azeloyl diglycinate, Niacinamide, Lactobionic acid, Glyceryl stearate, PEG-100 stearate, Glycerin, Sodium lactate, Cetearyl alcohol, Ethylhexyl palmitate, Zinc sulfate, Retinyl palmitate, Helianthus annuus seed oil, Tocopherol, Tocopheryl acetate, Imidazolidinyl urea, Xanthan gum, Disodium EDTA.",
-    "seo_title": "Braderm Активний протизапальний спрей з Бензоїл пероксидом 6% — купити в RESET Clinic",
+    "seo_title": "Braderm Dorsak spray — Активний протизапальний спрей з Бензоїл пероксидом 6% — купити в RESET Clinic",
     "seo_description": "Активний протизапальний спрей з Бензоїл пероксидом 6% 100 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3388,16 +3388,16 @@
   {
     "id": "sheet_braderm_006",
     "slug": "braderm-tramexal-cream-6",
-    "name": "Braderm Освітлююча емульсія проти пігментації",
+    "name": "Braderm Tramexal cream — Освітлююча емульсія проти пігментації",
     "brand": "Braderm",
     "sku": "BRADERM-006",
     "category": "face",
     "subcategory_slugs": [
       "cream"
     ],
-    "product_line": null,
+    "product_line": "Tramexal cream",
     "status": "active",
-    "short_description": "Революційне рішення для лікування всіх видів гіперпігментації. Транексамова кислота - це амінокислота, що уповільнює синтез тирозинази, та знижує ризик повторного потемніння плям. Коєва кислота підсилює цей процес. Його можна використовувати всесезонно не викликає фоточутливості.",
+    "short_description": "Революційне рішення для лікування всіх видів гіперпігментації.",
     "description": "Революційне рішення для лікування всіх видів гіперпігментації. Транексамова кислота - це амінокислота, що уповільнює синтез тирозинази, та знижує ризик повторного потемніння плям. Коєва кислота підсилює цей процес. Його можна використовувати всесезонно не викликає фоточутливості.",
     "price": 1890,
     "currency": "UAH",
@@ -3418,7 +3418,7 @@
       "Retinol"
     ],
     "inci": "Aqua, Cetearyl alcohol, Caprylic/capric triglyceride, Glycerin, Methyl glucose sesquistearate, C12-15 alkyl benzoate, Dicaprylyl ether, Tranexamic acid, Caprylic/capric glycerides, Glyceryl stearate, Pentylene glycol, Potassium palmitoyl hydrolyzed wheat protein, Phenylethyl resorcinol, Butyrospermum parkii butter, Kojic acid, Phenoxyethanol, Hydroxyethyl Acrylate/Sodium Acryloyldimethyl Taurate Copolymer, Squalane, Dimethicone, Tocopheryl acetate, Lactic acid, Bisabolol, Ascorbyl palmitate, Potassium metabisulfite, Sodium hyaluronate, Polysorbate 60, Xanthan gum, Retinyl palmitate, BHT, Disodium EDTA, Ethylhexylglycerin, Helianthus annuus seed oil, Parfum, Sorbitan isostearate, Butyl methoxydibenzoylmethane, Tocopherol, d-Limonene.",
-    "seo_title": "Braderm Освітлююча емульсія проти пігментації — купити в RESET Clinic",
+    "seo_title": "Braderm Tramexal cream — Освітлююча емульсія проти пігментації — купити в RESET Clinic",
     "seo_description": "Освітлююча емульсія проти пігментації 30 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3434,16 +3434,16 @@
   {
     "id": "sheet_braderm_007",
     "slug": "braderm-rosac-cream-7",
-    "name": "Braderm Заспокійливий крем для чутливої шкіри",
+    "name": "Braderm Rosac cream — Заспокійливий крем для чутливої шкіри",
     "brand": "Braderm",
     "sku": "BRADERM-007",
     "category": "face",
     "subcategory_slugs": [
       "cream"
     ],
-    "product_line": null,
+    "product_line": "Rosac cream",
     "status": "active",
-    "short_description": "Комбінація азелаїнової кислоти та ніацинаміду дають потужний ефект з першого використання. Фітосфінгозини підтримують шкірний бар’єр. Екстракт кінського каштану та рускусу, разом з олією виноградних кісточок і троксерутином позитивно впливають на мікроциркуляцію шкіри.",
+    "short_description": "Комбінація азелаїнової кислоти та ніацинаміду дають потужний ефект з першого використання.",
     "description": "Комбінація азелаїнової кислоти та ніацинаміду дають потужний ефект з першого використання. Фітосфінгозини підтримують шкірний бар’єр. Екстракт кінського каштану та рускусу, разом з олією виноградних кісточок і троксерутином позитивно впливають на мікроциркуляцію шкіри.",
     "price": 1890,
     "currency": "UAH",
@@ -3465,7 +3465,7 @@
       "Phytosphingosine"
     ],
     "inci": "Aqua, Azelaic acid, Niacinamide, PEG-4, Glyceryl stearate, PEG-100 stearate, Isodecyl salicylate, Titanium dioxide, Dicaprylyl ether, Glycerin, Polyglyceryl-3 cocoate, Polyglyceryl-4 caprate, Polyglyceryl-6 caprylate, Polyglyceryl-6 ricinoleate, Acetylated glycol stearate, Panthenol, Mica, Propylene glycol, Phenoxyethanol, Vitis vinifera seed oil, Butyrospermum parkii butter, Troxerutin, Sodium hydroxide, Polyacrylamide, Phytosphingosine, C13-14 isoparaffin, Sodium hyaluronate, Ethylhexylglycerin, Disodium EDTA, CI 77288, Aesculus hippocastanum seed extract, Ruscus aculeatus root extract, Tin oxide, Laureth-7, Tetrasodium glutamate diacetate.",
-    "seo_title": "Braderm Заспокійливий крем для чутливої шкіри — купити в RESET Clinic",
+    "seo_title": "Braderm Rosac cream — Заспокійливий крем для чутливої шкіри — купити в RESET Clinic",
     "seo_description": "Заспокійливий крем для чутливої шкіри 30 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3481,16 +3481,16 @@
   {
     "id": "sheet_braderm_008",
     "slug": "braderm-oxage-cream-8",
-    "name": "Braderm Антивіковий крем з Ботокс-ефектом",
+    "name": "Braderm Oxage cream — Антивіковий крем з Ботокс-ефектом",
     "brand": "Braderm",
     "sku": "BRADERM-008",
     "category": "face",
     "subcategory_slugs": [
       "cream"
     ],
-    "product_line": null,
+    "product_line": "Oxage cream",
     "status": "active",
-    "short_description": "Денний антивіковий крем з SPF30. Містить революційну Anti-age систему на основі 4-х найдієвіших пептидів-міорелаксантів у високій концентрації. Зменшує видимість поверхневих зморшок на 52% через 30-35 днів використання.  Завдяки надлегкій текстурі ідеально підходить як базовий кр",
+    "short_description": "Денний антивіковий крем з SPF30.",
     "description": "Денний антивіковий крем з SPF30. Містить революційну Anti-age систему на основі 4-х найдієвіших пептидів-міорелаксантів у високій концентрації. Зменшує видимість поверхневих зморшок на 52% через 30-35 днів використання.  Завдяки надлегкій текстурі ідеально підходить як базовий крем під макіяж.",
     "price": 2100,
     "currency": "UAH",
@@ -3511,7 +3511,7 @@
       "C vitamin"
     ],
     "inci": "Aqua, Glycerin, Ethylhexyl methoxycinnamate, C12-15 alkyl benzoate, Butyl methoxydibenzoylmethane, Ethoxydiglycol, Ethylhexyl triazine, Butyrospermum parkii butter, Caprylic/capric triglyceride, Cetearyl alcohol, Hydroxyethyl acrylate/sodium acryloyldimethyl taurate copolymer, Squalane, Alcohol, Sodium hyaluronate, Mimosa tenuiflora bark extract, Potassium palmitoyl hydrolyzed wheat protein, Olea europaea oil unsaponifiables, Aloe barbadensis leaf juice powder, Acmella oleracea extract, Dipeptide diaminobutyroyl benzylamide diacetate, Tocopheryl acetate, Ascorbyl palmitate, Palmitoyl dipeptide-5 diaminobutyroyl hydroxythreonine, Palmitoyl dipeptide-5 acetyl diaminobutyroyl hydroxybutyrate, Acetyl hexapeptide-8, Glyceryl stearate, Aluminum starch octenylsuccinate, Polysorbate 60, Acrylates/C10-30 alkyl acrylate crosspolymer, Sorbitan isostearate, Ethylhexylglycerin, Caprylyl glycol, CI 16255, Dimethicone, Phenoxyethanol, Geraniol, Citral, d-Limonene, Linalool, Benzyl alcohol, Coumarin, Parfum.",
-    "seo_title": "Braderm Антивіковий крем з Ботокс-ефектом — купити в RESET Clinic",
+    "seo_title": "Braderm Oxage cream — Антивіковий крем з Ботокс-ефектом — купити в RESET Clinic",
     "seo_description": "Антивіковий крем з Ботокс-ефектом 30 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3527,16 +3527,16 @@
   {
     "id": "sheet_braderm_009",
     "slug": "braderm-kurage-cream-9",
-    "name": "Braderm Крем-пілінг з ретинолом та кислотами",
+    "name": "Braderm Kurage cream — Крем-пілінг з ретинолом та кислотами",
     "brand": "Braderm",
     "sku": "BRADERM-009",
     "category": "face",
     "subcategory_slugs": [
       "serums"
     ],
-    "product_line": null,
+    "product_line": "Kurage cream",
     "status": "active",
-    "short_description": "Відлущувальний крем на основі 1% ретинолу та комплексу кислот. Регулярне використання сприяє відлущенню клітин та прискорює регенерацію. Ефективно зменшує видимість зморшок, покращує текстуру шкіри та вирівнює її тон. Завдяки поєднанню ретинолу, кислот та зволожувальних компонент",
+    "short_description": "Відлущувальний крем на основі 1% ретинолу та комплексу кислот.",
     "description": "Відлущувальний крем на основі 1% ретинолу та комплексу кислот. Регулярне використання сприяє відлущенню клітин та прискорює регенерацію. Ефективно зменшує видимість зморшок, покращує текстуру шкіри та вирівнює її тон. Завдяки поєднанню ретинолу, кислот та зволожувальних компонентів, шкіра стає більш сяючою, гладкою та здоровою на вигляд.",
     "price": 2100,
     "currency": "UAH",
@@ -3555,7 +3555,7 @@
       "Ferulic acid 0.5% Lactobionic acid 1%"
     ],
     "inci": "Aqua, Hamamelis virginiana leaf water, Cetearyl alcohol, Cetearyl ethylhexanoate, Hydroxyethyl acrylate/sodium acryloyldimethyl taurate copolymer, C10-18 triglycerides, Ethoxydiglycol, Glyceryl stearate, Potassium palmitoyl hydrolyzed wheat protein, Squalane, Mandelic acid, Lactobionic acid, Ferulic acid, Retinyl palmitate, Sodium hyaluronate, Tocopheryl acetate, Oenothera biennis oil, Helianthus annuus seed oil, Tocopherol, Sodium lactate, Olea europaea oil unsaponifiables, Arginine, Imidazolidinyl urea, Sodium PCA, Polysorbate 60, Undecylenoyl glycine, Parfum, Disodium EDTA, CI 42090, Linalool, Hexyl cinnamal, Alpha-isomethyl ionone, Hexamethylindanopyran, Benzyl alcohol, Quercus robur root extract, Citronellol, Dehydroacetic acid.",
-    "seo_title": "Braderm Крем-пілінг з ретинолом та кислотами — купити в RESET Clinic",
+    "seo_title": "Braderm Kurage cream — Крем-пілінг з ретинолом та кислотами — купити в RESET Clinic",
     "seo_description": "Крем-пілінг з ретинолом та кислотами 30 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3571,16 +3571,16 @@
   {
     "id": "sheet_braderm_010",
     "slug": "braderm-kerato-psor-10",
-    "name": "Braderm Лікувальний шампунь для шкіри голови",
+    "name": "Braderm Kerato psor — Лікувальний шампунь для шкіри голови",
     "brand": "Braderm",
     "sku": "BRADERM-010",
     "category": "hair",
     "subcategory_slugs": [
       "shampoo"
     ],
-    "product_line": null,
+    "product_line": "Kerato psor",
     "status": "active",
-    "short_description": "Засіб для лікування та догляду за шкірою голови з порушенням роботи сальних залоз - лупа, жирність, сухість шкіри, себорея, чутливість, свербіж, симптоми псоріазу. Помітний ефект вже через декілька перших використань. Контролює кількість дріжджових грибів роду Malassezia, що пров",
+    "short_description": "Засіб для лікування та догляду за шкірою голови з порушенням роботи сальних залоз - лупа, жирність, сухість шкіри, себорея, чутливість, свербіж, симптоми псоріазу.",
     "description": "Засіб для лікування та догляду за шкірою голови з порушенням роботи сальних залоз - лупа, жирність, сухість шкіри, себорея, чутливість, свербіж, симптоми псоріазу. Помітний ефект вже через декілька перших використань. Контролює кількість дріжджових грибів роду Malassezia, що провокують появу лупи. Відновлює процес відлущення ороговіваючого епітелію. Завдяки 10% сечовини, шампунь інтенсивно зволожує та поліпшує стан шкіри голови, сприяючи м'якій ексфоліації.",
     "price": 1490,
     "currency": "UAH",
@@ -3602,7 +3602,7 @@
       "Glyceritic acid 0.2%"
     ],
     "inci": "Aqua, Sodium Laureth Sulfate, Disodium Laureth Sulfosuccinate, Urea, PEG-18 Glyceryl Oleate/Cocoate, Cocamidopropyl Betaine, Citric Acid, Propylene Glycol, Arginine, Laureth-9, Glycol Distearate, Steareth-4, Sodium Benzoate, Malic Acid, Salicylic Acid, Nicotinamide, Glycerin, C12-13 Alkyl Lactate, Lauramidopropylamine Oxide, PEG-40 Hydrogenated Castor Oil, Polyquaternium-7, Pseudoalteromonas Ferment Extract, Sodium Salicylate, Fumaric Acid, Phenoxyethanol, Ethylhexylglycerin, Ciclopirox Olamine, Propanediol Caprylate, Butylene Glycol, Acetyl Hexapeptide-49, Panthenol, Tioconazole, Glycyrrhetinic Acid, Guar Hydroxypropyltrimonium Chloride, Rosmarinus Officinalis Leaf Oil, D-Limonene, Linalool",
-    "seo_title": "Braderm Лікувальний шампунь для шкіри голови — купити в RESET Clinic",
+    "seo_title": "Braderm Kerato psor — Лікувальний шампунь для шкіри голови — купити в RESET Clinic",
     "seo_description": "Лікувальний шампунь для шкіри голови 150 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3618,16 +3618,16 @@
   {
     "id": "sheet_braderm_011",
     "slug": "braderm-axatopic-cleanser-11",
-    "name": "Braderm Делікатний засіб для очищення шкіри",
+    "name": "Braderm Axatopic cleanser — Делікатний засіб для очищення шкіри",
     "brand": "Braderm",
     "sku": "BRADERM-011",
     "category": "body",
     "subcategory_slugs": [
       "cleansing"
     ],
-    "product_line": null,
+    "product_line": "Axatopic cleanser",
     "status": "active",
-    "short_description": "Гель для очищення сухої, чутливої, схильної до атопії шкіри, або на терапії лікування акне. Делікатно очищує та забезпечує зволоження до 24 годин. Відновлює захисний бар’єр і збалансувати мікробіом. Завдяки своїй формулі з м'якою, шовковистою текстурою не викликає подразнення та ",
+    "short_description": "Гель для очищення сухої, чутливої, схильної до атопії шкіри, або на терапії лікування акне.",
     "description": "Гель для очищення сухої, чутливої, схильної до атопії шкіри, або на терапії лікування акне. Делікатно очищує та забезпечує зволоження до 24 годин. Відновлює захисний бар’єр і збалансувати мікробіом. Завдяки своїй формулі з м'якою, шовковистою текстурою не викликає подразнення та відчуття cухості. Дозволено дітям з 3-х років",
     "price": 1650,
     "currency": "UAH",
@@ -3648,7 +3648,7 @@
       "Bisabolol"
     ],
     "inci": "Aqua, Coco-Glucoside, PEG-18 Glyceryl Oleate/Cocoate, Cocamidopropyl Betaine, Sodium Lauroyl Sarcosinate, Olive Oil Glycereth-8 Esters, Sodium Chloride, Bisabolol, Panthenol, Allantoin, Phenoxyethanol, Ceramide NP, Betaglucan, Ceramide AP, Ceramide EOP, Lactic Acid, Phytosphingosine, Cholesterol, Sodium Lauroyl Lactylate, Laureth-9, PEG-40 Hydrogenated Castor Oil, Glycol Distearate, Steareth-4, Undecylenic Acid, Ethylhexylglycerin, Carbomer, Xanthan Gum, Disodium EDTA, Parfum, CI 19140, CI 42090.",
-    "seo_title": "Braderm Делікатний засіб для очищення шкіри — купити в RESET Clinic",
+    "seo_title": "Braderm Axatopic cleanser — Делікатний засіб для очищення шкіри — купити в RESET Clinic",
     "seo_description": "Делікатний засіб для очищення шкіри 500 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
@@ -3664,16 +3664,16 @@
   {
     "id": "sheet_braderm_012",
     "slug": "braderm-axatopic-cream-12",
-    "name": "Braderm Зволожуальна емульсія миттєвої дії",
+    "name": "Braderm Axatopic cream — Зволожуальна емульсія миттєвої дії",
     "brand": "Braderm",
     "sku": "BRADERM-012",
     "category": "body",
     "subcategory_slugs": [
       "cream"
     ],
-    "product_line": null,
+    "product_line": "Axatopic cream",
     "status": "active",
-    "short_description": "Заспокійлива емульсія для чутливої, сухої, схильної до атопії шкіри. Допомагає зменшити свербіж, подразнення та лущення. Містить кераміди та масло ши, які зміцнюють захисний бар'єр, запобігаючи проникненню алергенів та інших подразнюючих факторів. В складі відсутні барвники, відд",
+    "short_description": "Заспокійлива емульсія для чутливої, сухої, схильної до атопії шкіри.",
     "description": "Заспокійлива емульсія для чутливої, сухої, схильної до атопії шкіри. Допомагає зменшити свербіж, подразнення та лущення. Містить кераміди та масло ши, які зміцнюють захисний бар'єр, запобігаючи проникненню алергенів та інших подразнюючих факторів. В складі відсутні барвники, віддушки та жорсткі ПАВ. Безпечний для щоденного використання, навіть в періоди загострення, щоб допомогти зберегти шкіру в здоровому стані. Дозволено дітям з 3-х років",
     "price": 1650,
     "currency": "UAH",
@@ -3696,7 +3696,7 @@
       "Aloe Vera 5%"
     ],
     "inci": "Aqua, Glycerin, Aloe Barbadensis Leaf Juice, Dicaprylyl Ether, Pyrus Malus Seed Oil, Butyrospermum Parkii Butter, Cetearyl Alcohol, Caprylic/Capric Triglyceride, Coco-Caprylate/Caprate, PEG-100 Glyceryl Stearate, PEG-100 Stearate, Niacinamide, Inulin, Alpha-Glucan Oligosaccharide, Oenothera Biennis Oil, Olea Europaea Oil Unsaponifiables, Perilla Ocymoides Seed Oil, Phytosphingosine, Tocopheryl Acetate, Ceramide NP, Xanthan Gum, Ceramide AP, Cholesterol, Carbomer, Ceramide EOP, Disodium EDTA, Sodium Lauroyl Lactylate, Ethylhexyl-glycerin, Phenoxyethanol, Sodium Hydroxide.",
-    "seo_title": "Braderm Зволожуальна емульсія миттєвої дії — купити в RESET Clinic",
+    "seo_title": "Braderm Axatopic cream — Зволожуальна емульсія миттєвої дії — купити в RESET Clinic",
     "seo_description": "Зволожуальна емульсія миттєвої дії 250 мл. Braderm, професійний догляд у RESET Clinic.",
     "seo_keywords": [
       "Braderm",
