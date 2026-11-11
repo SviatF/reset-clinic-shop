@@ -29,7 +29,7 @@ export function productDisplayName(product: { slug: string; name: string; brand:
 export function productIntro(fullText: string): string {
   const text = fullText.trim();
   if (!text) return "";
-  const firstSentence = text.match(/^.*?[.!?](?=\s|$)/su)?.[0] || text;
+  const firstSentence = text.match(/^[\s\S]*?[.!?](?=\s|$)/u)?.[0] || text;
   if (firstSentence.length <= 280) return firstSentence;
   const words = firstSentence.slice(0, 240).replace(/\s+\S*$/u, "").trim();
   return `${words || firstSentence.slice(0, 240)}…`;
