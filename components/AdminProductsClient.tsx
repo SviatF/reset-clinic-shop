@@ -44,6 +44,7 @@ export default function AdminProductsClient() {
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [writable, setWritable] = useState(false);
   const [recovery, setRecovery] = useState<{ available: boolean; persisted: number; visible: number; missing?: number; sourceTotal?: number; needsRecovery: boolean } | null>(null);
+  const [supplierImport, setSupplierImport] = useState<{ available: boolean; sourceCount: number; missing: number | null; alreadyPresent?: number; persisted?: number; reason?: string } | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [form, setForm] = useState<any>(empty);
   const [message, setMessage] = useState("");
@@ -64,6 +65,8 @@ export default function AdminProductsClient() {
     if(response3.ok)setBrands((await response3.json()).brands||[]);
     const recoveryResponse = await fetch("/api/admin/catalog-recovery", { cache: "no-store" });
     if (recoveryResponse.ok) setRecovery(await recoveryResponse.json());
+    const supplierResponse = await fetch("/api/admin/supplier-draft-import", { cache: "no-store" });
+    if (supplierResponse.ok) setSupplierImport(await supplierResponse.json());
   }
 
   useEffect(() => { load().catch((err) => setMessage(err.message)); }, []);
@@ -80,6 +83,50 @@ export default function AdminProductsClient() {
       setMessage(`Каталог D1 перевірено: ${data.persisted} товарів, додано ${data.added}.`);
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Помилка синхронізації");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function importSupplierDrafts() {
+    if (!supplierImport?.available || !supplierImport.missing) return;
+    if (!window.confirm(
+      `Імпортувати ${supplierImport.missing} відсутніх чернеток із 114 товарів до тестової D1? Спочатку буде завантажено приватну резервну копію каталогу, замовлень і налаштувань. Збережіть її в захищеному місці.`
+    )) return;
+    setSaving(true);
+    setMessage("");
+    try {
+      // Require a successful private, authenticated full-storage export before write.
+      // Backup contains customer/order data, and must never be uploaded to GitHub.
+      const exportResponse = await fetch("/api/admin/storage-export", { cache: "no-store" });
+      if (!exportResponse.ok) throw new Error("Резервну копію сховища не створено — імпорт зупинено");
+      const blob = await exportResponse.blob();
+      if (blob.size < 10) throw new Error("Порожня резервна копія — імпорт зупинено");
+      const href = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = href;
+      link.download = `reset-clinic-d1-backup-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => window.URL.revokeObjectURL(href), 30000);
+      if (!window.confirm(
+        "Резервну копію завантажено? Перевір, що файл збережено. Натисни OK лише після перевірки — тоді 114 нових товарів буде додано як чернетки без перезапису наявних."
+      )) {
+        setMessage("Резервну копію створено. Імпорт скасовано до підтвердження.");
+        return;
+      }
+      const response = await fetch("/api/admin/supplier-draft-import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirm: "IMPORT_114_SUPPLIER_DRAFTS" }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Імпорт у D1 не завершився");
+      await load();
+      setMessage(`Імпорт D1 виконано: додано ${data.added} чернеток із 114, залишилось ${data.missing}. Наявні товари й замовлення не перезаписано.`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Помилка імпорту");
     } finally {
       setSaving(false);
     }
@@ -161,6 +208,12 @@ export default function AdminProductsClient() {
   return (
     <div className="admin-products-page">
       <div className="admin-page-head"><div><span>CATALOG CONTROL</span><h1>Товари</h1><p>Ціна, stock, статус, фото, контент і SEO кожної позиції.</p></div><button className="admin-primary" onClick={createNew} disabled={!writable}>+ ДОДАТИ ТОВАР</button></div>
+      {supplierImport?.available && supplierImport.missing !== null && supplierImport.missing > 0 && <div className="admin-connect-card">
+        <span>ІМПОРТ ПОСТАЧАЛЬНИКІВ · D1</span>
+        <h2>Додати нові товари до бази як чернетки</h2>
+        <p>У вихідному імпорті 114 позицій. Із них у D1 ще відсутні {supplierImport.missing}. Перед записом система завантажить повну резервну копію сховища. Існуючі товари, ціни, залишки й замовлення не змінюються.</p>
+        <button className="admin-primary" type="button" disabled={saving || !writable} onClick={importSupplierDrafts}>Зробити резервну копію та перенести {supplierImport.missing} чернеток у D1</button>
+      </div>}
       {recovery?.needsRecovery && <div className="admin-connect-card">
         <span>ІМПОРТ У D1</span>
         <h2>У базі відсутні товари з вихідного каталогу</h2>
