@@ -17,6 +17,7 @@ export default async function SecureAdminLayout({ children }: { children: React.
           <Link href="/admin/categories"><i>03</i><span>Категорії</span></Link>
           <Link href="/admin/brands"><i>04</i><span>Бренди</span></Link>
           <Link href="/admin/orders"><i>05</i><span>Замовлення</span></Link>
+          <Link href="/admin/bootstrap"><i>06</i><span>Ініціалізація D1</span></Link>
           <Link href="/" target="_blank"><i><ArrowUpRight /></i><span>Відкрити магазин</span></Link>
         </nav>
         <div className="admin-sidebar-foot"><span>RESET CLINIC SHOP</span><AdminLogoutButton /></div>
