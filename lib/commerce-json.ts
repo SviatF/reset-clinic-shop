@@ -2,11 +2,22 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 import productsData from "@/data/products.json";
+import supplierPhotoMap from "@/data/supplier-photo-map.json";
 import type { ActivityRecord, OrderRecord, ProductRecord } from "@/lib/commerce-types";
 import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonStore, usingCloudflareStore } from "@/lib/json-store";
 
 const productSeed = productsData as unknown as ProductRecord[];
 export const bundledProductCount = productSeed.length;
+
+/** Image enrichment is read-only: existing D1 merchant photos always win. */
+function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
+  const bySlug = supplierPhotoMap as Record<string, { image_url: string }>;
+  return rows.map(row => {
+    const source = bySlug[row.slug];
+    if (row.image_url || !source?.image_url || !source.image_url.startsWith("/supplier-photos/")) return row;
+    return { ...row, image_url: source.image_url };
+  });
+}
 
 /** Add only missing bundled products; never overwrite merchant-edited records. */
 export function missingBundledProducts(current: ProductRecord[]): ProductRecord[] {
@@ -41,7 +52,7 @@ function recoverLegacyStagingProducts(current: ProductRecord[]): ProductRecord[]
 
 export async function readProducts() {
   const rows = (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data;
-  return recoverLegacyStagingProducts(rows).filter(row => row.slug !== "parsley-seed-anti-oxidant-eye-cream");
+  return withVerifiedSourcePhotos(recoverLegacyStagingProducts(rows).filter(row => row.slug !== "parsley-seed-anti-oxidant-eye-cream"));
 }
 
 export async function mutateProducts(
