@@ -1,7 +1,7 @@
 name: Retrieve verified supplier product photos
 on:
   push:
-    branches: [main, fix/consistent-product-photo-studio-20261114]
+    branches: [main]
     paths:
       - 'scripts/sync-supplier-photos.mjs'
       - 'scripts/sync-supplier-workbook-photos.py'
