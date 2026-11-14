@@ -101,18 +101,44 @@ async function imageBytes(url){const ctrl=new AbortController(),timer=setTimeout
  if(Number(res.headers.get('content-length')||0)>5_000_000)throw Error('Image > 5MB');const buffer=Buffer.from(await res.arrayBuffer());if(buffer.length<1000||buffer.length>5_000_000)throw Error('Invalid image length');
  return {buffer,ext};
  }finally{clearTimeout(timer)}}
+
+/** Exact official product detail URLs confirmed by catalog verification.
+ * The page heading and image are still verified; this is not blind photo assignment. */
+const verifiedProductPages={
+ 'cetaphil-catalog-003':'https://avepharm.com.ua/product/cetaphil-pro-redness-control-ochishchuvalna-pinka-dlya-chutlivoji-shkiri-oblichchya-shilnoji-do-pochervonin-236-ml/',
+ 'cetaphil-catalog-004':'https://avepharm.com.ua/product/cetaphil-pro-itch-control-zvolozhuvalniy-losyon-proti-sverbinnya-dlya-atopichnoji-suhoji-ta-chutlivoji-shkiri-236-ml/',
+ 'cetaphil-catalog-007':'https://avepharm.com.ua/product/cetaphil-nichniy-zvolozhuvalniy-krem-dlya-normalnoji-chutlivoji-ta-duzhe-suhoji-shkiri-oblichchya-48-g/',
+ 'cetaphil-catalog-008':'https://avepharm.com.ua/product/cetaphil-nizhniy-gel-eksfoliant-dlya-ochishchennya-suhoji-masnoji-ta-kombinovanoji-shkiri-oblichchya-178-ml/',
+ 'cetaphil-catalog-009':'https://avepharm.com.ua/product/cetaphil-zvolozhuvalniy-balzam-dlya-suhoji-normalnoji-ta-chutlivoji-shkiri-oblichchya-i-tila-500-ml/',
+ 'cetaphil-catalog-010':'https://avepharm.com.ua/product/cetaphil-zvolozhuvalniy-balzam-dlya-suhoji-normalnoji-ta-chutlivoji-shkiri-oblichchya-i-tila-236-ml/',
+ 'cetaphil-catalog-011':'https://avepharm.com.ua/product/cetaphil-micelyarna-emulsiya-dlya-ochishchennya-normalnoji-suhoji-ta-chutlivoji-shkiri-236-ml/',
+ 'sensilis-catalog-002':'https://sensilis.com.ua/azelaic-peel/'
+};
+
 for(const [brand,base,pages,mode] of catalogs){
  const target=products.filter(p=>p.brand===brand && p.status==='active' && !p.image_url && !mapping[p.slug]?.image_url);
  if(!target.length)continue;const available=await index(brand,base,pages,mode);console.log(brand,'source entries',available.length,'products',target.length);
- for(const p of target){report.processed++;const ranked=available.map(x=>({...x,confidence:match(p,x.label)})).filter(x=>x.confidence>=.78).sort((x,y)=>y.confidence-x.confidence);
- if(!ranked.length || (ranked.length>1&&ranked[0].confidence-ranked[1].confidence<.06 &&
-     new URL(ranked[0].href).pathname.replace(/\/$/,'')!==new URL(ranked[1].href).pathname.replace(/\/$/,''))) {report.unmatched.push({slug:p.slug,brand,reason:'Ambiguous or absent product name'});continue}
- const candidate=ranked[0];try{
+ for(const p of target){report.processed++;
+ const exactUrl=verifiedProductPages[p.slug];
+ let exact=null;
+ if(exactUrl && origin(exactUrl)===origin(base)){
+   try {
+     const verifiedHtml=await get(exactUrl);
+     const verifiedTitle=strip(verifiedHtml.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]);
+     const confidence=match(p,verifiedTitle);
+     if(confidence>=.74) exact={href:exactUrl,label:verifiedTitle,confidence,image:photo(verifiedHtml,exactUrl,p)};
+     else report.errors.push({brand,url:exactUrl,error:'Verified URL title did not match SKU: '+p.sku});
+   } catch(error) {report.errors.push({brand,url:exactUrl,error:String(error)})}
+ }
+ const ranked=available.map(x=>({...x,confidence:match(p,x.label)})).filter(x=>x.confidence>=.78).sort((x,y)=>y.confidence-x.confidence);
+ if(!exact && (!ranked.length || (ranked.length>1&&ranked[0].confidence-ranked[1].confidence<.06 &&
+     new URL(ranked[0].href).pathname.replace(/\/$/,'')!==new URL(ranked[1].href).pathname.replace(/\/$/,'')))) {report.unmatched.push({slug:p.slug,brand,reason:'Ambiguous or absent product name'});continue}
+ const candidate=exact||ranked[0];try{
  const page=candidate.image?null:await get(candidate.href);const h1=page?strip(page.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]):candidate.label;
  if(match(p,h1||candidate.label)<.78 && !(brand==='DÉCAAR' && candidate.confidence>=.78 && /^\/d\d+\//.test(new URL(candidate.href).pathname)))throw Error('Product page title mismatch: '+candidate.href+' | '+h1);const remote=candidate.image||photo(page,candidate.href,p);if(!remote)throw Error('No product image: '+candidate.href+' | '+(page?.match(/<img\\b[^>]*>/i)?.[0]||'').slice(0,300));const {buffer,ext}=await imageBytes(remote);
  const filename='public/supplier-photos/'+norm(brand).replace(/\s/g,'-')+'/'+p.slug+'.'+ext;
  if(apply){await fs.mkdir(path.dirname(filename),{recursive:true});await fs.writeFile(filename,buffer)}
- mapping[p.slug]={image_url:'/'+filename.replace(/^public\//,''),source_product_url:candidate.href,source_image_url:remote,match_score:+ranked[0].confidence.toFixed(3),sha256:crypto.createHash('sha256').update(buffer).digest('hex')};
+ mapping[p.slug]={image_url:'/'+filename.replace(/^public\//,''),source_product_url:candidate.href,source_image_url:remote,match_score:+candidate.confidence.toFixed(3),sha256:crypto.createHash('sha256').update(buffer).digest('hex')};
  report.attached++;console.log('PHOTO',p.sku,filename);
  }catch(e){report.unmatched.push({slug:p.slug,brand,reason:String(e)})}
  }
