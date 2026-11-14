@@ -4,6 +4,7 @@ on:
     branches: [fix/supplier-photo-sync-remove-demo-20261114]
     paths:
       - 'scripts/sync-supplier-photos.mjs'
+      - 'scripts/sync-supplier-workbook-photos.py'
       - '.github/workflows/sync-supplier-photos.yml'
   workflow_dispatch:
 
@@ -33,6 +34,13 @@ jobs:
           NODE
       - name: Fetch supplier photos and save audited matches
         run: node scripts/sync-supplier-photos.mjs --apply
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image compression support
+        run: python -m pip install Pillow==11.1.0
+      - name: Recover all 39 verified workbook images (Dermafirm and Braderm)
+        run: python scripts/sync-supplier-workbook-photos.py --apply
       - name: Attach full match and error report
         if: always()
         uses: actions/upload-artifact@v4
