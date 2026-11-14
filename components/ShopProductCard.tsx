@@ -1,8 +1,6 @@
 "use client";
 import ArrowUpRight from "@/components/ArrowUpRight";
 import Link from "next/link";
-import Image from "next/image";
-import aesopProductImage from "@/assets/img/tovar1.webp";
 import SmartProductImage from "@/components/SmartProductImage";
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
@@ -15,7 +13,7 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
  const canBuy=!item.trackStock||item.stockQuantity>0;
  return <article className="rs-card">
   <Link className="rs-card-media" href={"/product/"+item.slug} aria-label={"Переглянути "+item.name}>
-   <SmartProductImage src={item.imageUrl} alt={item.name} fallback={item.slug === "parsley-seed-anti-oxidant-eye-cream" ? <Image src={aesopProductImage} alt={item.name} sizes="(max-width:720px) 46vw, 23vw"/> : <div className="rs-card-placeholder"><strong>{item.brand}</strong><small>Фото додається</small></div>} />
+   <SmartProductImage src={item.imageUrl} alt={item.name} fallback={<div className="rs-card-placeholder"><strong>{item.brand}</strong><small>Фото додається</small></div>} />
   </Link>
   <div className="rs-card-body">
    <Link className="rs-card-brand" href={`/catalog?brand=${encodeURIComponent(item.brand)}`} title={`Усі товари бренду ${item.brand}`}>{item.brand} <ArrowUpRight /></Link>

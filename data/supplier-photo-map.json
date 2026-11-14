@@ -1,0 +1,692 @@
+{
+  "histolab-catalog-001": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-001.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/ferulic-boosting-ampoule-antyoksydantna-osvitlyuyucha-syrovatka-ampula",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/bd1663_fddfe691be4f41e2adcff59f02ed5112~mv2-300x300.jpg",
+    "match_score": 0.94,
+    "sha256": "06c8ee1f1933c908dda46a6c11a49cbc152eb20f798cc273edd46ab53ad08ed2"
+  },
+  "histolab-catalog-002": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-002.png",
+    "source_product_url": "https://histolab.com.ua/syrovatky/triple-whitening-effect-ampoule-osvitlyuyucha-ampulna-syrovatka-z-potrijnoyu-diyeyu",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/bd1663_c5133eab33bc40f0ab0a65e9ddf72e8b~mv2-300x300.png",
+    "match_score": 0.94,
+    "sha256": "513f1fccd0ebd508f3c4e8b352611f40631c872eafa7e2e9bf80ecbaab49a5de"
+  },
+  "histolab-catalog-003": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-003.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-gialuronovoyu-kyslotoyu-83",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/histolab-hyaluron-complex-ampoule-83-1200x1200-300x300.jpg",
+    "match_score": 0.96,
+    "sha256": "46701ba25465424bb8dd84ce99270e103a08a9bf0dab095ef0ebe1826d4bcd6e"
+  },
+  "histolab-catalog-004": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-004.png",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-epidermalnym-chynnykom-zrostannya-egf-63",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/%20%D0%B1%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B8%20(3)-300x300.png",
+    "match_score": 0.972,
+    "sha256": "843233dd09c3a6544018b4b2b1820343e8ef2d82506b150ffa704438a639d0d5"
+  },
+  "histolab-catalog-005": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-005.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-kompleksom-azulena-72",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/derma/2020_Dec21_Histolab-1-8-300x300.jpg",
+    "match_score": 0.96,
+    "sha256": "eb03a2308f26ecd487f219070e59b2361ec146a92c78063036da941d6a0c8d20"
+  },
+  "histolab-catalog-006": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-006.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-osvitlyuvalnyj-z-vitaminom-s-47",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/derma/2020_Dec21_Histolab-1-15-300x300.jpg",
+    "match_score": 0.96,
+    "sha256": "d2a2fbef0bc5d23b9aae8dd0dd8398596b69101d68d88a003c72e097fef0838f"
+  },
+  "histolab-catalog-007": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-007.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/osvitlyuyucha-syrovatka-dlya-oblychchya",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/white/T_a_0_0_683_0_01-300x300.jpg",
+    "match_score": 0.94,
+    "sha256": "6c99f52fccc946cb6d90c31f6c8705e8c93a94b6fe209239ca10d548e26925d2"
+  },
+  "histolab-catalog-008": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-008.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/syrovatka-dlya-likuvannya-akne",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/acnex/crystal%20serum-300x300.jpg",
+    "match_score": 0.949,
+    "sha256": "d653c42d34929b588a7d6cb2321968b5f2d106095895e90c6c8610c55e0176f5"
+  },
+  "histolab-catalog-009": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-009.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/syrovatka-protyzapalna-dlya-lokalnogo-zastosuvannya-%C2%ABomega%C2%BB",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/acnex/omega%20spot-300x300.jpg",
+    "match_score": 0.967,
+    "sha256": "dba04058a938ae23e93e1de1558c55fe0cab69a58c8badb3aa3811d23ee1d9f4"
+  },
+  "hydropeptide-catalog-001": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-001.webp",
+    "source_product_url": "https://hydropeptide.ua/product/resurface-and-repair-peptide-pads/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/03/resurface-repair-pads.webp",
+    "match_score": 0.949,
+    "sha256": "55f5a880b69f15812ec2d483ec5c2ba2cacd9efc0baf4255edddaa5f6ba67a44"
+  },
+  "hydropeptide-catalog-002": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-002.webp",
+    "source_product_url": "https://hydropeptide.ua/product/collagen-reactivate-pm/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/05/collagen-reactivate-pm.webp",
+    "match_score": 1,
+    "sha256": "1bd7e6969e2d1fac6b127c0bfc2e49678cd2ab937e33359819375e08cfe08ff3"
+  },
+  "hydropeptide-catalog-003": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-003.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/micro-dose-glow-booster/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/10/micro-doseglowbooster.jpg",
+    "match_score": 0.972,
+    "sha256": "41d595d840aac9017fa07fc65a0ce0d0e5ec5d43398a7204711ce6318b3cb9e3"
+  },
+  "hydropeptide-catalog-004": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-004.webp",
+    "source_product_url": "https://hydropeptide.ua/product/power-supply/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/10/powersupplykit-1.webp",
+    "match_score": 1,
+    "sha256": "9d8e53606da0631a1591aac39578fb072c1ada0c45f9fc421ba65792214e9027"
+  },
+  "hydropeptide-catalog-005": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-005.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/barrier-builder/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/10/barrier-builder.jpg",
+    "match_score": 1,
+    "sha256": "9264f753f0a9e7ecc9df9003d391f83e58a8b0d58ae38a2d042ff50339709731"
+  },
+  "hydropeptide-catalog-006": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-006.webp",
+    "source_product_url": "https://hydropeptide.ua/product/barrier-builder-travel-size/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/05/travel-size-barrier-builder.webp",
+    "match_score": 1,
+    "sha256": "2470312b004605957fe6a1d840f0cda5842f1331a6a6b7a2ff8d1e63c59b18b0"
+  },
+  "hydropeptide-catalog-007": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-007.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/clear-resque-serum/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/08/clear-rescue.jpg",
+    "match_score": 0.967,
+    "sha256": "6ef050d59ffdf399153cee45a7a90c013ac907e5d69ab3e1abe2d831d6660df7"
+  },
+  "hydropeptide-catalog-008": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-008.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/ochischayuschiy-gel-s-effektom-tonizatsii-dlya-snyatiya-makiyazha/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2015/12/new_retail_packaging_cleansinggel_pdp_950x.progressive.jpg",
+    "match_score": 1,
+    "sha256": "e89f7d754b176c1472cff0c2b24f1e2c43297dde2921e60a1945dc349db4bbb3"
+  },
+  "hydropeptide-catalog-009": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-009.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/solar-dew-spf-30/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/05/solar-dew.jpg",
+    "match_score": 1,
+    "sha256": "4b3d86fef353849559675079a44ed5f176456e46ed90a239c03bfe17cd46d422"
+  },
+  "hydropeptide-catalog-010": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-010.webp",
+    "source_product_url": "https://hydropeptide.ua/product/travel-solar-dew/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/03/travel-solardew.webp",
+    "match_score": 1,
+    "sha256": "bced6263422681ab55b67b4b32630a00e69df007b87a31a5a097504a2a0abf86"
+  },
+  "hydropeptide-catalog-011": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-011.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/foaming-cream-cleanser/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/04/foaming-cleanser-3.jpg",
+    "match_score": 0.96,
+    "sha256": "adff78b16bb0d310df9a602a31cbf25bec7a6ae25d580c578864071e0f0ebf07"
+  },
+  "hydropeptide-catalog-012": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-012.webp",
+    "source_product_url": "https://hydropeptide.ua/product/travel-foaming-cream-cleanser/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/05/travel-foamingcreamcleanser.webp",
+    "match_score": 0.972,
+    "sha256": "26134e0c0d44d49b7b393884c8b52b4d1b84424640b4b736eaa4f86b0ed4c475"
+  },
+  "hydropeptide-catalog-013": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-013.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/solar-defense-tinted-spf-30/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2017/05/solar-defense-tinted-spf-30-new-2.jpg",
+    "match_score": 1,
+    "sha256": "909cc08ba6e70540d128573ec8d66eccaa8241d93f503a2c21784743fd713e06"
+  },
+  "hydropeptide-catalog-014": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-014.webp",
+    "source_product_url": "https://hydropeptide.ua/product/travel-size-solar-defense-tinted/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/11/travel-size-solar-defense-tinted.webp",
+    "match_score": 1,
+    "sha256": "61e5af36bbbddf68f8be2fa6382dbe6446f7b2785c1cb56ab5fd63d86fbcf651"
+  },
+  "cetaphil-catalog-001": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-001.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-oil-control-zvolozhuvalniy-losyon-dlya-chutlivoji-masnoji-ta-shilnoji-do-akne-shkiri-oblichchya-spf-30-118-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8697/conversions/1-preview.jpg?v=1794686514",
+    "match_score": 0.94,
+    "sha256": "13bc869d1d3483e98a00880a1e7ea1e7a30fd78d3d4d1b9ead438b909b9f431f"
+  },
+  "cetaphil-catalog-002": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-002.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-oil-control-ochishchuvalna-pinka-dlya-chutlivoji-masnoji-ta-shilnoji-do-akne-shkiri-oblichchya-236-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8709/conversions/6-preview.jpg?v=1794686515",
+    "match_score": 0.94,
+    "sha256": "e9d42caca8eedbdea0b9c6c48243d09698cc1fa5669e9629c4ef8f88dac23a45"
+  },
+  "cetaphil-catalog-005": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-005.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-redness-control-denniy-zvolozhuvalniy-tonuvalniy-krem-dlya-chutlivoji-shkiri-oblichchya-shilnoji-do-pochervonin-spf-30-50-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8715/conversions/9-preview.jpg?v=1794686515",
+    "match_score": 0.94,
+    "sha256": "067b323e9a198a3d4f45e04b5f3db0083ce9e3e75ae76bc2df0ddec5dd911b69"
+  },
+  "cetaphil-catalog-006": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-006.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-shchodenniy-zvolozhuvalniy-losyon-dlya-suhoji-duzhe-suhoji-ta-chutlivoji-shkiri-oblichchya-88-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8717/conversions/10-preview.jpg?v=1794686516",
+    "match_score": 0.897,
+    "sha256": "09d896722e8be235f1ac962f12068daba971a64aaf85b17f9b5d28891898b59f"
+  },
+  "sensilis-catalog-001": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-001.png",
+    "source_product_url": "https://sensilis.com.ua/body-retinol-lotion/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/%D0%A0%D0%95%D0%AC%D0%A2%D0%9D%D0%9E%D0%9B-750x1000.PNG",
+    "match_score": 0.94,
+    "sha256": "ca3a6a8bef8493fdcc8d1a616dddae09b986cb520bbc4fe588259bcf5b3ac478"
+  },
+  "sensilis-catalog-003": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-003.png",
+    "source_product_url": "https://sensilis.com.ua/biphasic-eyes-lips-remover/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Bi-Phasic-Make-Up-Remover/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "9029a57c54949ba5effbb6f8522e4cc7dd6fa6a5f82ad5935b712b264901a818"
+  },
+  "sensilis-catalog-004": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-004.png",
+    "source_product_url": "https://sensilis.com.ua/body-spray-spf-50/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/PHOTOPROTECTION%20/Body-Spray-SPF-50+/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "3ffe4c9654a00ccd6cc70c9c034de7ac1c5be813f4f99b78d0f123b86ca594c7"
+  },
+  "sensilis-catalog-005": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-005.png",
+    "source_product_url": "https://sensilis.com.ua/calm-in-a-balm/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Calm-in-a-Balm/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "78cc1ec326533065ec858499b25b9f2ab067d36fa683a59eadbf37c959c77f94"
+  },
+  "sensilis-catalog-006": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-006.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-a-g-e-serum-al/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Serum-AI/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "1c9aa88ddf381242ffe7e6fa8cf6c0bede88bde62a2ccfd45de80b13f6227d5c"
+  },
+  "sensilis-catalog-007": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-007.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-day-cream/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Day-cream/ETERNALIST_DAY_CREAM-555x740.png",
+    "match_score": 0.94,
+    "sha256": "6fd3ee93b31a8362554b6e07966699e186c0997a9789093227094dd268e29109"
+  },
+  "sensilis-catalog-008": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-008.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-eyes-contour/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGEEyes/ETERNALIST_EYES-555x740.png",
+    "match_score": 0.94,
+    "sha256": "1f829deb43f7335f2f4777390a9d86fb3f44c140b50f3cd371bdcf348a022eb9"
+  },
+  "sensilis-catalog-009": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-009.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-retinol-cream/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Retinol/ETERNALIST__RETINOl-555x740.png",
+    "match_score": 0.94,
+    "sha256": "ce3e0a76ac2cae35841a7308576d48e6ee435e162c7c8eaacc1c5e2d72f8ef02"
+  },
+  "sensilis-catalog-010": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-010.png",
+    "source_product_url": "https://sensilis.com.ua/gel-cream-spf-50/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/GEL%20CREMA%20SPF%2050%20+%20PNG-555x740.png",
+    "match_score": 0.94,
+    "sha256": "6d19ed5143dd4ebefebf483e934c4f763fa2ea3381e68c3e31ea560e519d8057"
+  },
+  "sensilis-catalog-011": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-011.png",
+    "source_product_url": "https://sensilis.com.ua/gentle-cleansing-mousse/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Gentle-Cleansing-Mousse/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "50beb89e351eda0eac621b284b55de5e69778428d9635bdbb410a4a675d295f6"
+  },
+  "decaar-catalog-001": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-001.png",
+    "source_product_url": "https://decaar.com.ua/d712/",
+    "source_image_url": "https://decaar.com.ua/image/catalog/pics/cleansing/d712.png",
+    "match_score": 1,
+    "sha256": "59a52da1b7a8eebcb8d92fe5e1085eabd919e0df432a12975cb4cb7ede192c92"
+  },
+  "decaar-catalog-002": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-002.png",
+    "source_product_url": "https://decaar.com.ua/d724/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/cleansing/PurifyingCleansingGel150ml.png",
+    "match_score": 1,
+    "sha256": "382405711984f109b3ec271fb6b9f1973383eab6864b8ac9ad09f8305429c079"
+  },
+  "decaar-catalog-003": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-003.png",
+    "source_product_url": "https://decaar.com.ua/d860/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/lumi/complexbooster.png",
+    "match_score": 0.967,
+    "sha256": "3fc4f5afd7b4562f154f5961fcbd7893e92b82ce8ad4da8fc643651bb6b17385"
+  },
+  "decaar-catalog-004": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-004.png",
+    "source_product_url": "https://decaar.com.ua/d837/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/lifteye.png",
+    "match_score": 0.94,
+    "sha256": "f084455f833ce3ff2061838407f896797efef328d27911f6731cfc7834541e79"
+  },
+  "decaar-catalog-005": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-005.png",
+    "source_product_url": "https://decaar.com.ua/d768/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/antiacnecream.png",
+    "match_score": 0.94,
+    "sha256": "e637b922e92108474f9400ca3931624df8ba8351cc9cf2786f5d0e2d41c2c861"
+  },
+  "decaar-catalog-006": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-006.png",
+    "source_product_url": "https://decaar.com.ua/d800/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/cleansing/handcream.png",
+    "match_score": 0.94,
+    "sha256": "bd2d48eb8b09ad70401193666a825b58eac4cd49a6547e4008b18bb5f4adf2c4"
+  },
+  "decaar-catalog-007": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-007.png",
+    "source_product_url": "https://decaar.com.ua/d846/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agespf.png",
+    "match_score": 0.94,
+    "sha256": "52cc45d959122b2adee0686f52ecd1d4c794b2f71c96b94344474918f8c32dfb"
+  },
+  "decaar-catalog-008": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-008.png",
+    "source_product_url": "https://decaar.com.ua/d758/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygeneye.png",
+    "match_score": 0.94,
+    "sha256": "d33c31a12e1640a352387524c9c974b2bc30b4f3a5f1973678fe09dabbdb41c4"
+  },
+  "decaar-catalog-009": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-009.png",
+    "source_product_url": "https://decaar.com.ua/d841/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agesuperior.png",
+    "match_score": 0.976,
+    "sha256": "9163bc6f95908e4d06f86ea870e9ba7dc6fa8ed92e329ba111150ac790d209ac"
+  },
+  "decaar-catalog-010": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-010.png",
+    "source_product_url": "https://decaar.com.ua/d777/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/antiacnemask.png",
+    "match_score": 0.949,
+    "sha256": "a7d34d2e8838c3afafeca55d858aa338bc6676197d7db5a9fe18973703fd7ac7"
+  },
+  "decaar-catalog-011": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-011.png",
+    "source_product_url": "https://decaar.com.ua/d790/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/delicate/foam.png",
+    "match_score": 0.967,
+    "sha256": "022aafbb91deb28f8c80176f45bcb7e67c0963d87277fe805139008d820ea8fb"
+  },
+  "decaar-catalog-012": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-012.png",
+    "source_product_url": "https://decaar.com.ua/d776/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/acneserum.png",
+    "match_score": 0.94,
+    "sha256": "27c8b24d50f79222a26a269736e64530547b61a61df1574a8e053d36684a2ef4"
+  },
+  "decaar-catalog-013": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-013.png",
+    "source_product_url": "https://decaar.com.ua/d864/",
+    "source_image_url": "https://decaar.com.ua/image/catalog/BLEMISH-DEFENCE%C2%A0SERUM-30ml-1080X1080.png",
+    "match_score": 0.94,
+    "sha256": "51faa5311d4ee6eb138bb3d23835b1b6298075a7e98497391d62a37c80e0f7cc"
+  },
+  "decaar-catalog-015": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-015.png",
+    "source_product_url": "https://decaar.com.ua/d859/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/lumi/ccbooster.png",
+    "match_score": 0.967,
+    "sha256": "de3f1729166f9aae703b319bfd15cc11c160a393e8c50b26b4a2f4cc44010509"
+  },
+  "decaar-catalog-016": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-016.png",
+    "source_product_url": "https://decaar.com.ua/d836/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agefiller.png",
+    "match_score": 0.94,
+    "sha256": "180b4b9d442ffa148e4e4ef228f3702f089353db6b71c2adbe2b6ede935545f2"
+  },
+  "decaar-catalog-017": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-017.png",
+    "source_product_url": "https://decaar.com.ua/d740/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygenscrub50ml.png",
+    "match_score": 1,
+    "sha256": "afddd1967a45fa715c0d2f1bcf54e814413a691d5760eac06f0b825c135a2d8a"
+  },
+  "dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 6,
+    "match_score": 1.0,
+    "sha256": "a38cd4c15f56558b4e4804f05e6a5c769b14a7f16c6a803db9b3fe21f743ce1c"
+  },
+  "dermafirm-soothing-repair-toning-serum-r4-23": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-serum-r4-23.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 23,
+    "match_score": 1.0,
+    "sha256": "da941e306fdd386bd17759f727e2acc0030337ebd319ff66c457ee78e6b214e3"
+  },
+  "dermafirm-soothing-repair-toning-cream-r4-24": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-cream-r4-24.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 24,
+    "match_score": 1.0,
+    "sha256": "839926fa1b0571edae265a9e1f779e84991e3bb2b970146bb7f63e32b8910994"
+  },
+  "decaar-catalog-014": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-014.png",
+    "source_product_url": "https://decaar.com.ua/d757/",
+    "source_image_url": "https://decaar.com.ua/image/catalog/Oxygen%20Serum%2030ml%201080x1080.png",
+    "match_score": 0.928,
+    "sha256": "01ec41736cb5ef58cc0d1d1bfddb0ddbc9d2b50cc5353a1987ecc74068501d48"
+  },
+  "dermafirm-peptology-boosting-ampoule-retinoid-3": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-retinoid-3.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 3,
+    "match_score": 1.0,
+    "sha256": "c5a98d4076432beca92fc6d151f8f8b6e5c9b149cf1b367eb5f9e76b50e523af"
+  },
+  "dermafirm-peptology-boosting-ampoule-pdrn-4": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 4,
+    "match_score": 1.0,
+    "sha256": "98b7f85385628af5f1e6879e20fd0438cf3c9d41efda43f7bdb017da532f6e19"
+  },
+  "dermafirm-peptology-boosting-ampoule-pdrn-4d-5": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4d-5.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 5,
+    "match_score": 1.0,
+    "sha256": "1f2a77a191e26fb4b190c93c00dfe552fea44af2f04c6b2dc8909501f371a01f"
+  },
+  "dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 7,
+    "match_score": 1.0,
+    "sha256": "7b2d85a61f1715e1a705ed284e8e16d5cb7749067562f95caad55f1f4d03d9ce"
+  },
+  "dermafirm-age-reviving-essential-toner-a4-8": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-essential-toner-a4-8.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 8,
+    "match_score": 1.0,
+    "sha256": "35e6810b6b389723e4a0acda1fdbc8978d4994b305214baa1016828d5ba8c575"
+  },
+  "dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 9,
+    "match_score": 1.0,
+    "sha256": "4ac1a43ab2ce4a7b56277a39ba6e4489d4154cc5d59e20b15088d2d03e3e8a37"
+  },
+  "dermafirm-age-reviving-firming-cream-a4-10": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-firming-cream-a4-10.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 10,
+    "match_score": 1.0,
+    "sha256": "21d181e6bed8b43fddd26d142612b3a6428702e83a745aca308fcecd7e7ad525"
+  },
+  "dermafirm-age-reviving-lifting-eye-cream-a4-11": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-lifting-eye-cream-a4-11.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 11,
+    "match_score": 1.0,
+    "sha256": "271a90ebffdb0bd44debf58c5c974f7b86c00e984e63f1a7bbd907d98d031b9c"
+  },
+  "dermafirm-age-reviving-advanced-neck-cream-a4-12": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-advanced-neck-cream-a4-12.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 12,
+    "match_score": 1.0,
+    "sha256": "725f9fae3fe702f2fecbff9340bd5ce2e7ef9672777f777d89a5be9f8cac5839"
+  },
+  "dermafirm-the-peptide-wrinkle-serum-p4-14": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-wrinkle-serum-p4-14.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 14,
+    "match_score": 1.0,
+    "sha256": "0c912650cdab7d162c40b3b5526f792fe33455f72e0b7da1ff33441617555a0b"
+  },
+  "dermafirm-the-peptide-firming-cream-p4-15": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-firming-cream-p4-15.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 15,
+    "match_score": 1.0,
+    "sha256": "b6187bd7e83d1680ff7588359965f9dc0ee447db00a658df91b4a85cd9f22275"
+  },
+  "dermafirm-moist-barrier-balancing-toner-m4-17": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-balancing-toner-m4-17.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 17,
+    "match_score": 1.0,
+    "sha256": "e5e8ee3ecede1f6ae1ab369554711cdeca772abe93253ce6c45e3e753b786371"
+  },
+  "dermafirm-bio-correction-ampoule-cera-drop-m4-18": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-bio-correction-ampoule-cera-drop-m4-18.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 18,
+    "match_score": 1.0,
+    "sha256": "e74508e0a7ace40cd6518451716b9dc011d347578a71fd7b628d08a3a545d916"
+  },
+  "dermafirm-moist-barrier-intensive-cream-m4-19": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-intensive-cream-m4-19.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 19,
+    "match_score": 1.0,
+    "sha256": "779b4c093c46b5008dad376df162b3f4d509d4a2da844774117ffdd1e793b706"
+  },
+  "dermafirm-soothing-repair-toner-r4-21": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toner-r4-21.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 21,
+    "match_score": 1.0,
+    "sha256": "184d99ebb7315d4852a82a70a4a9e65f828856b5f3f2e6d12d496a0b8c926c9d"
+  },
+  "dermafirm-soothing-repair-serum-mist-r4-22": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-mist-r4-22.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 22,
+    "match_score": 1.0,
+    "sha256": "cd2a219873c09313afe550de9d8f85e58e4db26ed38b5d350244f1fdf8670c15"
+  },
+  "dermafirm-soothing-repair-serum-r4-25": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-r4-25.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 25,
+    "match_score": 1.0,
+    "sha256": "f9d912500fc39af392bfee66fbef143a1a4988f343e3f898b42f5a84fb7f3acc"
+  },
+  "dermafirm-soothing-repair-mask-r4-26": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-mask-r4-26.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 26,
+    "match_score": 1.0,
+    "sha256": "af11327690b1542ab360b49d8e1bb0515e5449d918b44086b4c3f2f876c56c5b"
+  },
+  "dermafirm-soothing-repair-emulsion-r4-27": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-emulsion-r4-27.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 27,
+    "match_score": 1.0,
+    "sha256": "340e4008439fecaab4fb6acd14bb726e2f869d83adbe9884fc66a2cf5d5c392c"
+  },
+  "dermafirm-hydra-foaming-cleanser-r4-28": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-hydra-foaming-cleanser-r4-28.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 28,
+    "match_score": 1.0,
+    "sha256": "cbc1aad74e8c5fdb76550c91c60ee1ab540469432d4144d04f9c68d35fd7b7cc"
+  },
+  "dermafirm-soothing-repair-cream-r4-29": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-cream-r4-29.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 29,
+    "match_score": 1.0,
+    "sha256": "98a4ec385fe6319cf4598d99abbd259b00b843abd32acca5e29477a92a680df9"
+  },
+  "dermafirm-cicaa-c-cleansing-foam-31": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-cleansing-foam-31.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 31,
+    "match_score": 1.0,
+    "sha256": "959a5254957dacc2a106a9957063dd713175576f69d432ef2f760e40b32ebd1a"
+  },
+  "dermafirm-cicaa-c-essence-toner-32": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-essence-toner-32.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 32,
+    "match_score": 1.0,
+    "sha256": "e10356eaa0e7bf4aee00ba5c58a30e0fa7eaa990e05fd9d0b15299a152790389"
+  },
+  "dermafirm-cicaa-c-serum-33": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-serum-33.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 33,
+    "match_score": 1.0,
+    "sha256": "3e3f28315f0ba6144f9c7c690d2accff423e198acc9fe2b63608e02805d95c86"
+  },
+  "dermafirm-pepteyed-dark-circle-cream-35": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-pepteyed-dark-circle-cream-35.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 35,
+    "match_score": 1.0,
+    "sha256": "303b3172fa8e506d6521b59b46c7cda70e09f5f71a9ddc8433b83eced44831b0"
+  },
+  "braderm-kurac-mousse-2": {
+    "image_url": "/supplier-photos/braderm/braderm-kurac-mousse-2.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 2,
+    "match_score": 1.0,
+    "sha256": "0d81d33c69750f17ee5cb0d97e6f0ab3ed5bbb03162d9bc57b946f9fc3100e2f"
+  },
+  "braderm-azn-cream-3": {
+    "image_url": "/supplier-photos/braderm/braderm-azn-cream-3.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 3,
+    "match_score": 1.0,
+    "sha256": "5046b7bd20ed2c1dbf053b015b522d64811134d25fe90235b849b7264075495f"
+  },
+  "braderm-kurac-cream-4": {
+    "image_url": "/supplier-photos/braderm/braderm-kurac-cream-4.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 4,
+    "match_score": 1.0,
+    "sha256": "2ed26b34f9f975f65b85c286b27b99278e2c67352e6ceb0f089b0da57edda727"
+  },
+  "braderm-dorsak-spray-5": {
+    "image_url": "/supplier-photos/braderm/braderm-dorsak-spray-5.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 5,
+    "match_score": 1.0,
+    "sha256": "eb260343ec92c44cb6b2ade9675470eeaa5a9b9995ae4c8d07569e485477dcaf"
+  },
+  "braderm-tramexal-cream-6": {
+    "image_url": "/supplier-photos/braderm/braderm-tramexal-cream-6.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 6,
+    "match_score": 1.0,
+    "sha256": "25c8e31012bcecfdfc0c1499ae61d947c1636ad7ddee5bc009557a68306a390c"
+  },
+  "braderm-rosac-cream-7": {
+    "image_url": "/supplier-photos/braderm/braderm-rosac-cream-7.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 7,
+    "match_score": 1.0,
+    "sha256": "1600bbce5a001937349105314d1eadd815d6a45cb0493eff65454f659cffd96c"
+  },
+  "braderm-oxage-cream-8": {
+    "image_url": "/supplier-photos/braderm/braderm-oxage-cream-8.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 8,
+    "match_score": 1.0,
+    "sha256": "1b8edd507225aa2e719f02617f5955a6056305edd73e840f580c87af44420f4f"
+  },
+  "braderm-kurage-cream-9": {
+    "image_url": "/supplier-photos/braderm/braderm-kurage-cream-9.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 9,
+    "match_score": 1.0,
+    "sha256": "df12abbf2c02038957fdd23a9c0dc28f3a79d1bd604ddb71ecdb176e1a48d70d"
+  },
+  "braderm-kerato-psor-10": {
+    "image_url": "/supplier-photos/braderm/braderm-kerato-psor-10.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 10,
+    "match_score": 1.0,
+    "sha256": "0adb25c1fa8b7815a60cff177675d4a395a0526ffb97a05b40c533c066a0b9b8"
+  },
+  "braderm-axatopic-cleanser-11": {
+    "image_url": "/supplier-photos/braderm/braderm-axatopic-cleanser-11.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 11,
+    "match_score": 1.0,
+    "sha256": "8cc5a98d0575e1273690b3744b10ba4e1ec247af14ddf53f3adf9f27c55b0f3e"
+  },
+  "braderm-axatopic-cream-12": {
+    "image_url": "/supplier-photos/braderm/braderm-axatopic-cream-12.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 12,
+    "match_score": 1.0,
+    "sha256": "c0591d134e9fd456ae7e23cc7d07ab0c1f0e986b6c997126972dc93d08b5d8d8"
+  }
+}

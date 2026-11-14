@@ -44,7 +44,7 @@ function expectedDocuments(): Document[] {
       sha256: createHash("sha256").update(content).digest("hex"),
     };
   });
-  if (documents.length !== 5 || documents[0].records !== 279 || documents[1].records !== 16 ||
+  if (documents.length !== 5 || documents[0].records !== 278 || documents[1].records !== 16 ||
       documents[2].records !== 10 || documents[3].records !== 0 || documents[4].records !== 0) {
     throw new Error("UNEXPECTED_SEED_COUNTS");
   }
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
   let input: { confirmation?: string };
   try { input = await request.json() as { confirmation?: string }; }
   catch { return noStore({ error: "Invalid JSON body" }, 400); }
-  if (input.confirmation !== "CREATE_NEW_D1_279") return noStore({ error: "Потрібне підтвердження створення нової бази." }, 400);
+  if (input.confirmation !== "CREATE_NEW_D1_278") return noStore({ error: "Потрібне підтвердження створення нової бази." }, 400);
   try {
     const { database, expected, rows } = await state();
     if (rows.length > 0) {

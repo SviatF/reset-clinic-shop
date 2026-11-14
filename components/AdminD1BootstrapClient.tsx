@@ -47,7 +47,7 @@ export default function AdminD1BootstrapClient() {
       const response = await fetch("/api/admin/bootstrap-d1", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ confirmation: "CREATE_NEW_D1_279" }),
+        body: JSON.stringify({ confirmation: "CREATE_NEW_D1_278" }),
       });
       const body = await response.json() as { error?: string; message?: string; ok?: boolean };
       if (!response.ok || !body.ok) throw new Error(body.error || body.message || "Не вдалося заповнити базу");
