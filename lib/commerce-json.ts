@@ -9,12 +9,15 @@ import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonSto
 const productSeed = productsData as unknown as ProductRecord[];
 export const bundledProductCount = productSeed.length;
 
-/** Image enrichment is read-only: existing D1 merchant photos always win. */
+/** Prefer verified locally hosted photos, never overwrite merchant-edited D1 image URLs.
+ * Existing unchanged Shopify CDN URLs can be replaced by an exact mirrored copy.
+ * This is read-only enrichment: no updates to stored inventory or orders. */
 function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
-  const bySlug = supplierPhotoMap as Record<string, { image_url: string }>;
+  const bySlug = supplierPhotoMap as Record<string, { image_url: string; source_image_url?: string }>;
   return rows.map(row => {
     const source = bySlug[row.slug];
-    if (row.image_url || !source?.image_url || !source.image_url.startsWith("/supplier-photos/")) return row;
+    if (!source?.image_url || !source.image_url.startsWith("/supplier-photos/")) return row;
+    if (row.image_url && row.image_url !== source.source_image_url) return row;
     return { ...row, image_url: source.image_url };
   });
 }
