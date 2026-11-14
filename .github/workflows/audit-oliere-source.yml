@@ -1,0 +1,26 @@
+name: Audit official OLIE'RE catalogue
+on:
+  push:
+    branches: [fix/oliere-exact-product-images-20261114]
+    paths:
+      - 'scripts/audit-oliere-source.mjs'
+      - '.github/workflows/audit-oliere-source.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch official public Shopify catalog and variant images
+        run: node scripts/audit-oliere-source.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oliere-official-products-json
+          path: oliere-official-products.json
+          if-no-files-found: ignore
