@@ -1,13 +1,10 @@
 "use client";
 import ArrowUpRight from "@/components/ArrowUpRight";
 
-import Image from "next/image";
 import Link from "next/link";
 import type { PointerEvent } from "react";
-import productImg from "@/assets/img/tovar1.webp";
 import QuickAddButton from "@/components/QuickAddButton";
 import SmartProductImage from "@/components/SmartProductImage";
-import { product } from "@/lib/product";
 
 type CardProduct = {
   slug: string;
@@ -25,25 +22,11 @@ type CardProduct = {
   hoverText?: string;
 };
 
-const fallback: CardProduct = {
-  slug: product.slug,
-  name: product.name,
-  brand: "Aesop",
-  category: "face",
-  price: product.price,
-  size: product.size,
-  imageUrl: null,
-  shortDescription: "Зволоження, комфорт і антиоксидантний догляд для делікатної зони.",
-  hoverLabel: "ПРИЗНАЧЕННЯ",
-  hoverTitle: "Зволоження + антиоксидантний догляд",
-  hoverText: "Для делікатної зони навколо очей",
-};
-
 const categoryLabels: Record<string, string> = { face: "FACE CARE", body: "BODY CARE", hair: "HAIR CARE", other: "PRO CARE" };
 
-export default function PremiumProductCard({ index = 1, productData }: { index?: number; productData?: CardProduct }) {
+export default function PremiumProductCard({ index = 1, productData }: { index?: number; productData: CardProduct }) {
   const cardNumber = String(index).padStart(2, "0");
-  const current = { ...fallback, ...(productData || {}) };
+  const current = productData;
   const href = `/product/${current.slug}`;
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
@@ -79,7 +62,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
               <span className="premium-orbit premium-orbit-one" aria-hidden="true" />
               <span className="premium-orbit premium-orbit-two" aria-hidden="true" />
               <span className="premium-product-shadow" aria-hidden="true" />
-              <SmartProductImage src={current.imageUrl} alt={current.name} fallback={current.slug === product.slug ? <Image src={productImg} alt={current.name} sizes="(max-width: 700px) 92vw, 310px" /> : <div className="reset-product-image-placeholder" aria-label={`Фото товару ${current.brand || ""} буде додано`}><span>{current.brand || "RESET CLINIC"}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
+              <SmartProductImage src={current.imageUrl} alt={current.name} fallback={<div className="reset-product-image-placeholder" aria-label={`Фото товару ${current.brand || ""} буде додано`}><span>{current.brand || "RESET CLINIC"}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
               <div className="premium-hover-note"><span>{current.hoverLabel || "ПРИЗНАЧЕННЯ"}</span><strong>{current.hoverTitle || current.shortDescription}</strong><small>{current.hoverText || current.size || current.brand}</small></div>
             </div>
             <div className="premium-media-footer"><span>{categoryLabels[current.category || "other"]}</span><span>{current.brand || "RESET SELECT"}</span></div>
