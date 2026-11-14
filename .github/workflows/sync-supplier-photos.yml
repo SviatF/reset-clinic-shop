@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/sync-supplier-photos.mjs'
       - 'scripts/sync-supplier-workbook-photos.py'
+      - 'scripts/mirror-supplier-cdn-photos.mjs'
       - '.github/workflows/sync-supplier-photos.yml'
   workflow_dispatch:
 
@@ -24,6 +25,8 @@ jobs:
           node-version: '22'
       - name: Fetch supplier photos and save audited matches
         run: node scripts/sync-supplier-photos.mjs --apply
+      - name: Mirror 53 existing OLIE'RE product photos to this store
+        run: node scripts/mirror-supplier-cdn-photos.mjs --apply
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -36,7 +39,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: supplier-photo-match-report
-          path: supplier-photo-sync-report.json
+          path: |
+            supplier-photo-sync-report.json
+            supplier-cdn-mirror-report.json
           if-no-files-found: ignore
       - name: Commit verified photos to source branch
         run: |
