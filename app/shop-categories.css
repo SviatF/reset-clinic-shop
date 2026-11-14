@@ -69,7 +69,10 @@
 .rs-subnav>a.rs-filter-active{padding-right:40px}
 .rs-filter-chip-text{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0}
 .rs-subnav .rs-filter-chip-text{justify-content:flex-start;text-align:left}
-.rs-filter-chip-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:27px;height:27px;font-size:25px;line-height:1;font-weight:400;color:inherit;border-radius:2px;pointer-events:none;opacity:.9;transition:background .18s ease,opacity .18s ease}
+.rs-filter-chip-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:block;width:18px;height:18px;font-size:0;line-height:0;color:inherit;border-radius:2px;pointer-events:none;opacity:.9;transition:background .18s ease,opacity .18s ease}
+.rs-filter-chip-clear::before,.rs-filter-chip-clear::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:currentColor;border-radius:2px;transform-origin:center;pointer-events:none}
+.rs-filter-chip-clear::before{transform:translate(-50%,-50%) rotate(45deg)}
+.rs-filter-chip-clear::after{transform:translate(-50%,-50%) rotate(-45deg)}
 .rs-mainnav>a.rs-filter-active:hover .rs-filter-chip-clear,.rs-subnav>a.rs-filter-active:hover .rs-filter-chip-clear{background:rgba(255,255,255,.16);opacity:1}
 .rs-mainnav>a:focus-visible,.rs-subnav>a:focus-visible,.rs-brand-nav a:focus-visible,.rs-filters-reset-all:focus-visible{outline:2px solid #6c5b45;outline-offset:3px}
 .rs-filter-actions{display:flex;align-items:center;justify-content:flex-end;gap:13px;flex-wrap:wrap}
@@ -78,7 +81,7 @@
 .rs-filters-reset-all>span{font-size:20px;line-height:1;font-weight:400}
 @media(max-width:720px){
  .rs-mainnav>a.rs-filter-active{padding-left:6px;padding-right:25px}
- .rs-filter-chip-clear{right:3px;width:21px;height:24px;font-size:22px}
+ .rs-filter-chip-clear{right:4px;width:18px;height:18px}
  .rs-subnav>a.rs-filter-active{padding-right:26px}
  .rs-filter-actions{gap:7px}
  .rs-filters-reset-all{min-height:38px;font-size:10px;padding:0 8px}
