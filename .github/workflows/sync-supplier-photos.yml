@@ -1,0 +1,43 @@
+name: Retrieve verified supplier product photos
+on:
+  push:
+    branches: [fix/supplier-photo-sync-remove-demo-20261114]
+    paths:
+      - 'scripts/sync-supplier-photos.mjs'
+      - '.github/workflows/sync-supplier-photos.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch supplier photos and save audited matches
+        run: node scripts/sync-supplier-photos.mjs --apply
+      - name: Attach full match and error report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supplier-photo-match-report
+          path: supplier-photo-sync-report.json
+          if-no-files-found: ignore
+      - name: Commit matched photos and map to fix branch
+        run: |
+          git add data/supplier-photo-map.json public/supplier-photos
+          if git diff --cached --quiet; then
+            echo "No new verified product-specific photos"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets(shop): store verified supplier photos locally"
+          git push origin HEAD:fix/supplier-photo-sync-remove-demo-20261114
