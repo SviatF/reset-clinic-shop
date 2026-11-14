@@ -1,1119 +1,1581 @@
 {
   "histolab-catalog-001": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-001.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-001.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/ferulic-boosting-ampoule-antyoksydantna-osvitlyuyucha-syrovatka-ampula",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/bd1663_fddfe691be4f41e2adcff59f02ed5112~mv2-300x300.jpg",
     "match_score": 0.94,
-    "sha256": "06c8ee1f1933c908dda46a6c11a49cbc152eb20f798cc273edd46ab53ad08ed2"
+    "sha256": "06c8ee1f1933c908dda46a6c11a49cbc152eb20f798cc273edd46ab53ad08ed2",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-001.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "9062374869ac1b7ea5ff1c861d83a8a29492fa73cd3f1ecc49c7d9b93c71fac3"
   },
   "histolab-catalog-002": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-002.png",
+    "image_url": "/supplier-photos/studio/histolab-catalog-002.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/triple-whitening-effect-ampoule-osvitlyuyucha-ampulna-syrovatka-z-potrijnoyu-diyeyu",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/bd1663_c5133eab33bc40f0ab0a65e9ddf72e8b~mv2-300x300.png",
     "match_score": 0.94,
-    "sha256": "513f1fccd0ebd508f3c4e8b352611f40631c872eafa7e2e9bf80ecbaab49a5de"
+    "sha256": "513f1fccd0ebd508f3c4e8b352611f40631c872eafa7e2e9bf80ecbaab49a5de",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-002.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "725767e0e44fd2aaed537faeafd4a4d23860bcbe83f15d18e2654d84ea258a70"
   },
   "histolab-catalog-003": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-003.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-003.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-gialuronovoyu-kyslotoyu-83",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/histolab-hyaluron-complex-ampoule-83-1200x1200-300x300.jpg",
     "match_score": 0.96,
-    "sha256": "46701ba25465424bb8dd84ce99270e103a08a9bf0dab095ef0ebe1826d4bcd6e"
+    "sha256": "46701ba25465424bb8dd84ce99270e103a08a9bf0dab095ef0ebe1826d4bcd6e",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-003.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "59fe903f6efeb90d5f3a309fe2967454cf1fcd127430433d7173152ce0a7333b"
   },
   "histolab-catalog-004": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-004.png",
+    "image_url": "/supplier-photos/studio/histolab-catalog-004.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-epidermalnym-chynnykom-zrostannya-egf-63",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/%20%D0%B1%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B8%20(3)-300x300.png",
     "match_score": 0.972,
-    "sha256": "843233dd09c3a6544018b4b2b1820343e8ef2d82506b150ffa704438a639d0d5"
+    "sha256": "843233dd09c3a6544018b4b2b1820343e8ef2d82506b150ffa704438a639d0d5",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-004.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "ae788c2c97814002556f09ec0a93a1992041e24ee59f4708ce4b5786d080cc38"
   },
   "histolab-catalog-005": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-005.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-005.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-kompleksom-azulena-72",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/derma/2020_Dec21_Histolab-1-8-300x300.jpg",
     "match_score": 0.96,
-    "sha256": "eb03a2308f26ecd487f219070e59b2361ec146a92c78063036da941d6a0c8d20"
+    "sha256": "eb03a2308f26ecd487f219070e59b2361ec146a92c78063036da941d6a0c8d20",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-005.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "33a13b0b8a64ed6a1d15ca765fca7ba08ed1c09e6bf8993b0ddb3655573ca810"
   },
   "histolab-catalog-006": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-006.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-006.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-osvitlyuvalnyj-z-vitaminom-s-47",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/derma/2020_Dec21_Histolab-1-15-300x300.jpg",
     "match_score": 0.96,
-    "sha256": "d2a2fbef0bc5d23b9aae8dd0dd8398596b69101d68d88a003c72e097fef0838f"
+    "sha256": "d2a2fbef0bc5d23b9aae8dd0dd8398596b69101d68d88a003c72e097fef0838f",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-006.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "333e16885a37d0babe0d303fdd2005326e0e1c61fc77d8ba3970163fed3d4924"
   },
   "histolab-catalog-007": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-007.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-007.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/osvitlyuyucha-syrovatka-dlya-oblychchya",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/white/T_a_0_0_683_0_01-300x300.jpg",
     "match_score": 0.94,
-    "sha256": "6c99f52fccc946cb6d90c31f6c8705e8c93a94b6fe209239ca10d548e26925d2"
+    "sha256": "6c99f52fccc946cb6d90c31f6c8705e8c93a94b6fe209239ca10d548e26925d2",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-007.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "55f079b88835abede5eee51950947d113a3be958db59190b40281a6c67fd7a64"
   },
   "histolab-catalog-008": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-008.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-008.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/syrovatka-dlya-likuvannya-akne",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/acnex/crystal%20serum-300x300.jpg",
     "match_score": 0.949,
-    "sha256": "d653c42d34929b588a7d6cb2321968b5f2d106095895e90c6c8610c55e0176f5"
+    "sha256": "d653c42d34929b588a7d6cb2321968b5f2d106095895e90c6c8610c55e0176f5",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-008.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "6d32a3d7f948b3f632e718981628f66599a7c62837fa112c878187b5a5e80717"
   },
   "histolab-catalog-009": {
-    "image_url": "/supplier-photos/histolab/histolab-catalog-009.jpg",
+    "image_url": "/supplier-photos/studio/histolab-catalog-009.webp",
     "source_product_url": "https://histolab.com.ua/syrovatky/syrovatka-protyzapalna-dlya-lokalnogo-zastosuvannya-%C2%ABomega%C2%BB",
     "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/acnex/omega%20spot-300x300.jpg",
     "match_score": 0.967,
-    "sha256": "dba04058a938ae23e93e1de1558c55fe0cab69a58c8badb3aa3811d23ee1d9f4"
+    "sha256": "dba04058a938ae23e93e1de1558c55fe0cab69a58c8badb3aa3811d23ee1d9f4",
+    "source_asset_url": "/supplier-photos/histolab/histolab-catalog-009.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "c4f505b50724f75661fe8a6d67ff9afa02a671faa5dd3579ec7d8f4c4b64220b"
   },
   "hydropeptide-catalog-001": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-001.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-001.webp",
     "source_product_url": "https://hydropeptide.ua/product/resurface-and-repair-peptide-pads/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/03/resurface-repair-pads.webp",
     "match_score": 0.949,
-    "sha256": "55f5a880b69f15812ec2d483ec5c2ba2cacd9efc0baf4255edddaa5f6ba67a44"
+    "sha256": "55f5a880b69f15812ec2d483ec5c2ba2cacd9efc0baf4255edddaa5f6ba67a44",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-001.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "f09fe2094b72509e50f92c485378ee59de021b7114b9e7f4539685ed2d53ed89"
   },
   "hydropeptide-catalog-002": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-002.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-002.webp",
     "source_product_url": "https://hydropeptide.ua/product/collagen-reactivate-pm/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/05/collagen-reactivate-pm.webp",
     "match_score": 1,
-    "sha256": "1bd7e6969e2d1fac6b127c0bfc2e49678cd2ab937e33359819375e08cfe08ff3"
+    "sha256": "1bd7e6969e2d1fac6b127c0bfc2e49678cd2ab937e33359819375e08cfe08ff3",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-002.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "738d09ff6021e44531f0a8158926ab184e8e345a835241668316df5f4e2e5742"
   },
   "hydropeptide-catalog-003": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-003.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-003.webp",
     "source_product_url": "https://hydropeptide.ua/product/micro-dose-glow-booster/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/10/micro-doseglowbooster.jpg",
     "match_score": 0.972,
-    "sha256": "41d595d840aac9017fa07fc65a0ce0d0e5ec5d43398a7204711ce6318b3cb9e3"
+    "sha256": "41d595d840aac9017fa07fc65a0ce0d0e5ec5d43398a7204711ce6318b3cb9e3",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-003.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b52db804ff92d05f948bd64cc4e0d0f7703c495aab1f222659b9961ea58146fb"
   },
   "hydropeptide-catalog-004": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-004.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-004.webp",
     "source_product_url": "https://hydropeptide.ua/product/power-supply/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/10/powersupplykit-1.webp",
     "match_score": 1,
-    "sha256": "9d8e53606da0631a1591aac39578fb072c1ada0c45f9fc421ba65792214e9027"
+    "sha256": "9d8e53606da0631a1591aac39578fb072c1ada0c45f9fc421ba65792214e9027",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-004.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "5788399ef29d02bc685828471ae7196e419b6a0c78f99313cf57bb1e52a92d54"
   },
   "hydropeptide-catalog-005": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-005.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-005.webp",
     "source_product_url": "https://hydropeptide.ua/product/barrier-builder/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/10/barrier-builder.jpg",
     "match_score": 1,
-    "sha256": "9264f753f0a9e7ecc9df9003d391f83e58a8b0d58ae38a2d042ff50339709731"
+    "sha256": "9264f753f0a9e7ecc9df9003d391f83e58a8b0d58ae38a2d042ff50339709731",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-005.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "9be856d0d8cf9fec87c33a236c49327469e12925c3f8f760db94d920302c7741"
   },
   "hydropeptide-catalog-006": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-006.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-006.webp",
     "source_product_url": "https://hydropeptide.ua/product/barrier-builder-travel-size/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/05/travel-size-barrier-builder.webp",
     "match_score": 1,
-    "sha256": "2470312b004605957fe6a1d840f0cda5842f1331a6a6b7a2ff8d1e63c59b18b0"
+    "sha256": "2470312b004605957fe6a1d840f0cda5842f1331a6a6b7a2ff8d1e63c59b18b0",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-006.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "01724a5f349b14dda7b59256e96338fe558681891865055fc3e1206e61225c3d"
   },
   "hydropeptide-catalog-007": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-007.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-007.webp",
     "source_product_url": "https://hydropeptide.ua/product/clear-resque-serum/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/08/clear-rescue.jpg",
     "match_score": 0.967,
-    "sha256": "6ef050d59ffdf399153cee45a7a90c013ac907e5d69ab3e1abe2d831d6660df7"
+    "sha256": "6ef050d59ffdf399153cee45a7a90c013ac907e5d69ab3e1abe2d831d6660df7",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-007.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "875bc89aee36b2f7b408a5dac6aaee6bff78a044371039f02834d3eda5d64dbb"
   },
   "hydropeptide-catalog-008": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-008.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-008.webp",
     "source_product_url": "https://hydropeptide.ua/product/ochischayuschiy-gel-s-effektom-tonizatsii-dlya-snyatiya-makiyazha/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2015/12/new_retail_packaging_cleansinggel_pdp_950x.progressive.jpg",
     "match_score": 1,
-    "sha256": "e89f7d754b176c1472cff0c2b24f1e2c43297dde2921e60a1945dc349db4bbb3"
+    "sha256": "e89f7d754b176c1472cff0c2b24f1e2c43297dde2921e60a1945dc349db4bbb3",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-008.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "6efcd7aa889038fdc74a0e4f5f8277b9f5b7d84b922b32499e23bba51d477444"
   },
   "hydropeptide-catalog-009": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-009.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-009.webp",
     "source_product_url": "https://hydropeptide.ua/product/solar-dew-spf-30/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/05/solar-dew.jpg",
     "match_score": 1,
-    "sha256": "4b3d86fef353849559675079a44ed5f176456e46ed90a239c03bfe17cd46d422"
+    "sha256": "4b3d86fef353849559675079a44ed5f176456e46ed90a239c03bfe17cd46d422",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-009.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "497ee978c061f846893584665640886fe39c67cf22ec0cab9dbb8c4644b1cf42"
   },
   "hydropeptide-catalog-010": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-010.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-010.webp",
     "source_product_url": "https://hydropeptide.ua/product/travel-solar-dew/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/03/travel-solardew.webp",
     "match_score": 1,
-    "sha256": "bced6263422681ab55b67b4b32630a00e69df007b87a31a5a097504a2a0abf86"
+    "sha256": "bced6263422681ab55b67b4b32630a00e69df007b87a31a5a097504a2a0abf86",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-010.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "c79592a091d068bf6c6dccf87845d160a375ea157e7682638a1bd0f324f84876"
   },
   "hydropeptide-catalog-011": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-011.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-011.webp",
     "source_product_url": "https://hydropeptide.ua/product/foaming-cream-cleanser/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/04/foaming-cleanser-3.jpg",
     "match_score": 0.96,
-    "sha256": "adff78b16bb0d310df9a602a31cbf25bec7a6ae25d580c578864071e0f0ebf07"
+    "sha256": "adff78b16bb0d310df9a602a31cbf25bec7a6ae25d580c578864071e0f0ebf07",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-011.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "842b80d0f826a3979986ad1d7aa6c4e6e84686a756b423e9bdc79ff7b17b2231"
   },
   "hydropeptide-catalog-012": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-012.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-012.webp",
     "source_product_url": "https://hydropeptide.ua/product/travel-foaming-cream-cleanser/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/05/travel-foamingcreamcleanser.webp",
     "match_score": 0.972,
-    "sha256": "26134e0c0d44d49b7b393884c8b52b4d1b84424640b4b736eaa4f86b0ed4c475"
+    "sha256": "26134e0c0d44d49b7b393884c8b52b4d1b84424640b4b736eaa4f86b0ed4c475",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-012.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "8a03b3020f668e0512bce0b70d42e4774c50f7e20b4e46496b7a4bf9c8d1bc2e"
   },
   "hydropeptide-catalog-013": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-013.jpg",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-013.webp",
     "source_product_url": "https://hydropeptide.ua/product/solar-defense-tinted-spf-30/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2017/05/solar-defense-tinted-spf-30-new-2.jpg",
     "match_score": 1,
-    "sha256": "909cc08ba6e70540d128573ec8d66eccaa8241d93f503a2c21784743fd713e06"
+    "sha256": "909cc08ba6e70540d128573ec8d66eccaa8241d93f503a2c21784743fd713e06",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-013.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b3769fab96229592956dcad81f6e8737cd2f566fa9d67181763155082ff5b69c"
   },
   "hydropeptide-catalog-014": {
-    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-014.webp",
+    "image_url": "/supplier-photos/studio/hydropeptide-catalog-014.webp",
     "source_product_url": "https://hydropeptide.ua/product/travel-size-solar-defense-tinted/",
     "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/11/travel-size-solar-defense-tinted.webp",
     "match_score": 1,
-    "sha256": "61e5af36bbbddf68f8be2fa6382dbe6446f7b2785c1cb56ab5fd63d86fbcf651"
+    "sha256": "61e5af36bbbddf68f8be2fa6382dbe6446f7b2785c1cb56ab5fd63d86fbcf651",
+    "source_asset_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-014.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "994303903ed1f9e342326b3d17cb2a2247d9d4eaf00ba942c15858440816ba78"
   },
   "cetaphil-catalog-001": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-001.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-001.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-oil-control-zvolozhuvalniy-losyon-dlya-chutlivoji-masnoji-ta-shilnoji-do-akne-shkiri-oblichchya-spf-30-118-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8697/conversions/1-preview.jpg?v=1794686514",
     "match_score": 0.94,
-    "sha256": "13bc869d1d3483e98a00880a1e7ea1e7a30fd78d3d4d1b9ead438b909b9f431f"
+    "sha256": "13bc869d1d3483e98a00880a1e7ea1e7a30fd78d3d4d1b9ead438b909b9f431f",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-001.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "05fc8f3cdbee26eb8d6a581ea2e9f1c70b7e2c2f3d685d0a242a1d740950f277"
   },
   "cetaphil-catalog-002": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-002.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-002.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-oil-control-ochishchuvalna-pinka-dlya-chutlivoji-masnoji-ta-shilnoji-do-akne-shkiri-oblichchya-236-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8709/conversions/6-preview.jpg?v=1794686515",
     "match_score": 0.94,
-    "sha256": "e9d42caca8eedbdea0b9c6c48243d09698cc1fa5669e9629c4ef8f88dac23a45"
+    "sha256": "e9d42caca8eedbdea0b9c6c48243d09698cc1fa5669e9629c4ef8f88dac23a45",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-002.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "50cb6e81588e922698fbecad9a6a8a89623d325a9ebb5852497965fc05b8eb87"
   },
   "cetaphil-catalog-005": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-005.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-005.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-redness-control-denniy-zvolozhuvalniy-tonuvalniy-krem-dlya-chutlivoji-shkiri-oblichchya-shilnoji-do-pochervonin-spf-30-50-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8715/conversions/9-preview.jpg?v=1794686515",
     "match_score": 0.94,
-    "sha256": "067b323e9a198a3d4f45e04b5f3db0083ce9e3e75ae76bc2df0ddec5dd911b69"
+    "sha256": "067b323e9a198a3d4f45e04b5f3db0083ce9e3e75ae76bc2df0ddec5dd911b69",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-005.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b2542e0b4ed5bd59d3df55af1e215be539de8f1eb2fd8206c3a1f6bfaca87395"
   },
   "cetaphil-catalog-006": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-006.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-006.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-shchodenniy-zvolozhuvalniy-losyon-dlya-suhoji-duzhe-suhoji-ta-chutlivoji-shkiri-oblichchya-88-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8717/conversions/10-preview.jpg?v=1794686516",
     "match_score": 0.897,
-    "sha256": "09d896722e8be235f1ac962f12068daba971a64aaf85b17f9b5d28891898b59f"
+    "sha256": "09d896722e8be235f1ac962f12068daba971a64aaf85b17f9b5d28891898b59f",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-006.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "1b51358f26492dd39c6ce3a0ea3d0786c0bd9cb4a7c5242a1746c7a06f814c7b"
   },
   "sensilis-catalog-001": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-001.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-001.webp",
     "source_product_url": "https://sensilis.com.ua/body-retinol-lotion/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/%D0%A0%D0%95%D0%AC%D0%A2%D0%9D%D0%9E%D0%9B-750x1000.PNG",
     "match_score": 0.94,
-    "sha256": "ca3a6a8bef8493fdcc8d1a616dddae09b986cb520bbc4fe588259bcf5b3ac478"
+    "sha256": "ca3a6a8bef8493fdcc8d1a616dddae09b986cb520bbc4fe588259bcf5b3ac478",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-001.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "3fac460baccf8002fdbaa983cc2aa9950effbc4689724b461bbe4bd3a51b428e"
   },
   "sensilis-catalog-003": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-003.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-003.webp",
     "source_product_url": "https://sensilis.com.ua/biphasic-eyes-lips-remover/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Bi-Phasic-Make-Up-Remover/01-555x740.png",
     "match_score": 0.94,
-    "sha256": "9029a57c54949ba5effbb6f8522e4cc7dd6fa6a5f82ad5935b712b264901a818"
+    "sha256": "9029a57c54949ba5effbb6f8522e4cc7dd6fa6a5f82ad5935b712b264901a818",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-003.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "79a7b25d62de2bf74e3f3cf6f9a871c7d25cc62143ac93a5a2cd33568ea0706d"
   },
   "sensilis-catalog-004": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-004.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-004.webp",
     "source_product_url": "https://sensilis.com.ua/body-spray-spf-50/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/PHOTOPROTECTION%20/Body-Spray-SPF-50+/01-555x740.png",
     "match_score": 0.94,
-    "sha256": "3ffe4c9654a00ccd6cc70c9c034de7ac1c5be813f4f99b78d0f123b86ca594c7"
+    "sha256": "3ffe4c9654a00ccd6cc70c9c034de7ac1c5be813f4f99b78d0f123b86ca594c7",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-004.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "5041d58f6e78da9302539b53af5ab0c557e664a025eba112bbe92fe10c99642e"
   },
   "sensilis-catalog-005": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-005.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-005.webp",
     "source_product_url": "https://sensilis.com.ua/calm-in-a-balm/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Calm-in-a-Balm/01-555x740.png",
     "match_score": 0.94,
-    "sha256": "78cc1ec326533065ec858499b25b9f2ab067d36fa683a59eadbf37c959c77f94"
+    "sha256": "78cc1ec326533065ec858499b25b9f2ab067d36fa683a59eadbf37c959c77f94",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-005.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d14a7f462ae735482f5dcb9e40d27fc6cae06b6b581966b4f5d5672653832d90"
   },
   "sensilis-catalog-006": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-006.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-006.webp",
     "source_product_url": "https://sensilis.com.ua/eternalist-a-g-e-serum-al/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Serum-AI/01-555x740.png",
     "match_score": 0.94,
-    "sha256": "1c9aa88ddf381242ffe7e6fa8cf6c0bede88bde62a2ccfd45de80b13f6227d5c"
+    "sha256": "1c9aa88ddf381242ffe7e6fa8cf6c0bede88bde62a2ccfd45de80b13f6227d5c",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-006.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "97237a9fb92584dea4beaec844418e39173253021ee66b6b8e7cf1f261ab7676"
   },
   "sensilis-catalog-007": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-007.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-007.webp",
     "source_product_url": "https://sensilis.com.ua/eternalist-day-cream/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Day-cream/ETERNALIST_DAY_CREAM-555x740.png",
     "match_score": 0.94,
-    "sha256": "6fd3ee93b31a8362554b6e07966699e186c0997a9789093227094dd268e29109"
+    "sha256": "6fd3ee93b31a8362554b6e07966699e186c0997a9789093227094dd268e29109",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-007.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e6bb87799da1480c25b20365cc4d0a78b5ebcb526a3bd0e546600198c7faa80e"
   },
   "sensilis-catalog-008": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-008.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-008.webp",
     "source_product_url": "https://sensilis.com.ua/eternalist-eyes-contour/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGEEyes/ETERNALIST_EYES-555x740.png",
     "match_score": 0.94,
-    "sha256": "1f829deb43f7335f2f4777390a9d86fb3f44c140b50f3cd371bdcf348a022eb9"
+    "sha256": "1f829deb43f7335f2f4777390a9d86fb3f44c140b50f3cd371bdcf348a022eb9",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-008.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "33d79291d7b18ba570ceffe58a4290090ea7bdc9c1a050885889ecf5e91c0d84"
   },
   "sensilis-catalog-009": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-009.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-009.webp",
     "source_product_url": "https://sensilis.com.ua/eternalist-retinol-cream/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Retinol/ETERNALIST__RETINOl-555x740.png",
     "match_score": 0.94,
-    "sha256": "ce3e0a76ac2cae35841a7308576d48e6ee435e162c7c8eaacc1c5e2d72f8ef02"
+    "sha256": "ce3e0a76ac2cae35841a7308576d48e6ee435e162c7c8eaacc1c5e2d72f8ef02",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-009.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d423d5fc1694ba74d9621a9ecb289afda6092ef927c1ae4712aff63271914feb"
   },
   "sensilis-catalog-010": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-010.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-010.webp",
     "source_product_url": "https://sensilis.com.ua/gel-cream-spf-50/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/GEL%20CREMA%20SPF%2050%20+%20PNG-555x740.png",
     "match_score": 0.94,
-    "sha256": "6d19ed5143dd4ebefebf483e934c4f763fa2ea3381e68c3e31ea560e519d8057"
+    "sha256": "6d19ed5143dd4ebefebf483e934c4f763fa2ea3381e68c3e31ea560e519d8057",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-010.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "22f52f216aa0804f919e0327ff12a677134173d0e37fb6bb2f834680ceda2e61"
   },
   "sensilis-catalog-011": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-011.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-011.webp",
     "source_product_url": "https://sensilis.com.ua/gentle-cleansing-mousse/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Gentle-Cleansing-Mousse/01-555x740.png",
     "match_score": 0.94,
-    "sha256": "50beb89e351eda0eac621b284b55de5e69778428d9635bdbb410a4a675d295f6"
+    "sha256": "50beb89e351eda0eac621b284b55de5e69778428d9635bdbb410a4a675d295f6",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-011.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b94dc0cc72af6bf09e0dea8541c34adbf49d27c6585def56fd1ee3516f2d65eb"
   },
   "decaar-catalog-001": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-001.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-001.webp",
     "source_product_url": "https://decaar.com.ua/d712/",
     "source_image_url": "https://decaar.com.ua/image/catalog/pics/cleansing/d712.png",
     "match_score": 1,
-    "sha256": "59a52da1b7a8eebcb8d92fe5e1085eabd919e0df432a12975cb4cb7ede192c92"
+    "sha256": "59a52da1b7a8eebcb8d92fe5e1085eabd919e0df432a12975cb4cb7ede192c92",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-001.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "0d0bb1053207f5a60fb6bdb69246ee97a1903ac7b83a8a8b10427ad0a2d3d5b0"
   },
   "decaar-catalog-002": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-002.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-002.webp",
     "source_product_url": "https://decaar.com.ua/d724/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/cleansing/PurifyingCleansingGel150ml.png",
     "match_score": 1,
-    "sha256": "382405711984f109b3ec271fb6b9f1973383eab6864b8ac9ad09f8305429c079"
+    "sha256": "382405711984f109b3ec271fb6b9f1973383eab6864b8ac9ad09f8305429c079",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-002.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d883a98b5058cb9ae33316df88f6257f6a5372ccd5512572e7f1566d9a46b376"
   },
   "decaar-catalog-003": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-003.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-003.webp",
     "source_product_url": "https://decaar.com.ua/d860/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/lumi/complexbooster.png",
     "match_score": 0.967,
-    "sha256": "3fc4f5afd7b4562f154f5961fcbd7893e92b82ce8ad4da8fc643651bb6b17385"
+    "sha256": "3fc4f5afd7b4562f154f5961fcbd7893e92b82ce8ad4da8fc643651bb6b17385",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-003.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "c2e528bef70266a1d32cc42c28444e2987376e59870c0c63a26eebf30e53c238"
   },
   "decaar-catalog-004": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-004.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-004.webp",
     "source_product_url": "https://decaar.com.ua/d837/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/lifteye.png",
     "match_score": 0.94,
-    "sha256": "f084455f833ce3ff2061838407f896797efef328d27911f6731cfc7834541e79"
+    "sha256": "f084455f833ce3ff2061838407f896797efef328d27911f6731cfc7834541e79",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-004.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b5eb8f41fc5eec4cff70e42d57dcf9435de354e2a066d6fc0abbd6bf7d74105f"
   },
   "decaar-catalog-005": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-005.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-005.webp",
     "source_product_url": "https://decaar.com.ua/d768/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/antiacnecream.png",
     "match_score": 0.94,
-    "sha256": "e637b922e92108474f9400ca3931624df8ba8351cc9cf2786f5d0e2d41c2c861"
+    "sha256": "e637b922e92108474f9400ca3931624df8ba8351cc9cf2786f5d0e2d41c2c861",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-005.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "5801695a8d54ec5c68dffa9c200ce499344bd849c3f8148e679bfa1388d96674"
   },
   "decaar-catalog-006": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-006.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-006.webp",
     "source_product_url": "https://decaar.com.ua/d800/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/cleansing/handcream.png",
     "match_score": 0.94,
-    "sha256": "bd2d48eb8b09ad70401193666a825b58eac4cd49a6547e4008b18bb5f4adf2c4"
+    "sha256": "bd2d48eb8b09ad70401193666a825b58eac4cd49a6547e4008b18bb5f4adf2c4",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-006.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d11b930c98fadac64eaced63394c5dc64ef4856a51b6e53d4e74533642258419"
   },
   "decaar-catalog-007": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-007.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-007.webp",
     "source_product_url": "https://decaar.com.ua/d846/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agespf.png",
     "match_score": 0.94,
-    "sha256": "52cc45d959122b2adee0686f52ecd1d4c794b2f71c96b94344474918f8c32dfb"
+    "sha256": "52cc45d959122b2adee0686f52ecd1d4c794b2f71c96b94344474918f8c32dfb",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-007.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "cbe96fc0279c6f48bc3044961a438bbf5ce68a17f86561e140a495fa90c318ef"
   },
   "decaar-catalog-008": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-008.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-008.webp",
     "source_product_url": "https://decaar.com.ua/d758/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygeneye.png",
     "match_score": 0.94,
-    "sha256": "d33c31a12e1640a352387524c9c974b2bc30b4f3a5f1973678fe09dabbdb41c4"
+    "sha256": "d33c31a12e1640a352387524c9c974b2bc30b4f3a5f1973678fe09dabbdb41c4",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-008.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "39f8e9bca7e7919c3355047498d448852743b19c3afba13bc4fdf0d27335aa8a"
   },
   "decaar-catalog-009": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-009.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-009.webp",
     "source_product_url": "https://decaar.com.ua/d841/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agesuperior.png",
     "match_score": 0.976,
-    "sha256": "9163bc6f95908e4d06f86ea870e9ba7dc6fa8ed92e329ba111150ac790d209ac"
+    "sha256": "9163bc6f95908e4d06f86ea870e9ba7dc6fa8ed92e329ba111150ac790d209ac",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-009.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "cffc7350a5f5e12971fec9b89a2a1216ebd0b23fad25a9ae9dbc7583b3247686"
   },
   "decaar-catalog-010": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-010.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-010.webp",
     "source_product_url": "https://decaar.com.ua/d777/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/antiacnemask.png",
     "match_score": 0.949,
-    "sha256": "a7d34d2e8838c3afafeca55d858aa338bc6676197d7db5a9fe18973703fd7ac7"
+    "sha256": "a7d34d2e8838c3afafeca55d858aa338bc6676197d7db5a9fe18973703fd7ac7",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-010.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "69201fab0b34effcd2a431a6df2ed7d8e17ebaa0667c137d51f86e91e6a1c7d9"
   },
   "decaar-catalog-011": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-011.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-011.webp",
     "source_product_url": "https://decaar.com.ua/d790/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/delicate/foam.png",
     "match_score": 0.967,
-    "sha256": "022aafbb91deb28f8c80176f45bcb7e67c0963d87277fe805139008d820ea8fb"
+    "sha256": "022aafbb91deb28f8c80176f45bcb7e67c0963d87277fe805139008d820ea8fb",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-011.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "6df19251e9ceca8ca7f6448a1c0682793476e1e1b75c5411ebd1427d0e4682a4"
   },
   "decaar-catalog-012": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-012.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-012.webp",
     "source_product_url": "https://decaar.com.ua/d776/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/acneserum.png",
     "match_score": 0.94,
-    "sha256": "27c8b24d50f79222a26a269736e64530547b61a61df1574a8e053d36684a2ef4"
+    "sha256": "27c8b24d50f79222a26a269736e64530547b61a61df1574a8e053d36684a2ef4",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-012.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "5066c83c18ce5c8277b3ac2ef18cc6342923cd1809500e283fddb14554aa305a"
   },
   "decaar-catalog-013": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-013.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-013.webp",
     "source_product_url": "https://decaar.com.ua/d864/",
     "source_image_url": "https://decaar.com.ua/image/catalog/BLEMISH-DEFENCE%C2%A0SERUM-30ml-1080X1080.png",
     "match_score": 0.94,
-    "sha256": "51faa5311d4ee6eb138bb3d23835b1b6298075a7e98497391d62a37c80e0f7cc"
+    "sha256": "51faa5311d4ee6eb138bb3d23835b1b6298075a7e98497391d62a37c80e0f7cc",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-013.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "1c35fa435d695b6e14129802562d8fec2e0d99b080860765e62924ca0023c1a6"
   },
   "decaar-catalog-015": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-015.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-015.webp",
     "source_product_url": "https://decaar.com.ua/d859/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/lumi/ccbooster.png",
     "match_score": 0.967,
-    "sha256": "de3f1729166f9aae703b319bfd15cc11c160a393e8c50b26b4a2f4cc44010509"
+    "sha256": "de3f1729166f9aae703b319bfd15cc11c160a393e8c50b26b4a2f4cc44010509",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-015.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "72824428c754d26f8a6b2603a943d625ab5387e2e9dfc4ed0af5cefbc3d0635b"
   },
   "decaar-catalog-016": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-016.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-016.webp",
     "source_product_url": "https://decaar.com.ua/d836/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agefiller.png",
     "match_score": 0.94,
-    "sha256": "180b4b9d442ffa148e4e4ef228f3702f089353db6b71c2adbe2b6ede935545f2"
+    "sha256": "180b4b9d442ffa148e4e4ef228f3702f089353db6b71c2adbe2b6ede935545f2",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-016.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "53d5d70180b59b463b626162ba73253741134d231eaab83a19bb456b00e3f310"
   },
   "decaar-catalog-017": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-017.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-017.webp",
     "source_product_url": "https://decaar.com.ua/d740/",
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygenscrub50ml.png",
     "match_score": 1,
-    "sha256": "afddd1967a45fa715c0d2f1bcf54e814413a691d5760eac06f0b825c135a2d8a"
+    "sha256": "afddd1967a45fa715c0d2f1bcf54e814413a691d5760eac06f0b825c135a2d8a",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-017.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "4d236a0980945d1bb80b79de05cbda89e3470afa8a8d1e75999d7c6dcbbde053"
   },
   "dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 6,
     "match_score": 1.0,
-    "sha256": "a38cd4c15f56558b4e4804f05e6a5c769b14a7f16c6a803db9b3fe21f743ce1c"
+    "sha256": "17a8099340a15dcbe23b89cf4f83de9360433acd7cbbea53339eed77e9c0185f",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "160707b31500dcdc846c0ac9335fb6a0bc94c72517b8171f823b8ffc793df7d3"
   },
   "dermafirm-soothing-repair-toning-serum-r4-23": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-serum-r4-23.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-toning-serum-r4-23.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 23,
     "match_score": 1.0,
-    "sha256": "da941e306fdd386bd17759f727e2acc0030337ebd319ff66c457ee78e6b214e3"
+    "sha256": "d9b1bf39eb4674b3a066c45adcb928b7afdf3a6e81224174299793fb662a3bd5",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-serum-r4-23.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "01bf2effb1c67f79d0ec483535f2eae07b9ef342e4afb76fb938a474b733f9d0"
   },
   "dermafirm-soothing-repair-toning-cream-r4-24": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-cream-r4-24.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-toning-cream-r4-24.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 24,
     "match_score": 1.0,
-    "sha256": "839926fa1b0571edae265a9e1f779e84991e3bb2b970146bb7f63e32b8910994"
+    "sha256": "a2882cd3f225d00f2708be9d4365d620b0fb0a76e1597fc58826452a5901dcbf",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-cream-r4-24.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "f08c4cf5be9181cf0a85c8444ab8fcdf657141808ee1a7aceee7b173b8bdb7fd"
   },
   "decaar-catalog-014": {
-    "image_url": "/supplier-photos/decaar/decaar-catalog-014.png",
+    "image_url": "/supplier-photos/studio/decaar-catalog-014.webp",
     "source_product_url": "https://decaar.com.ua/d757/",
     "source_image_url": "https://decaar.com.ua/image/catalog/Oxygen%20Serum%2030ml%201080x1080.png",
     "match_score": 0.928,
-    "sha256": "01ec41736cb5ef58cc0d1d1bfddb0ddbc9d2b50cc5353a1987ecc74068501d48"
+    "sha256": "01ec41736cb5ef58cc0d1d1bfddb0ddbc9d2b50cc5353a1987ecc74068501d48",
+    "source_asset_url": "/supplier-photos/decaar/decaar-catalog-014.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "16c156c68bb7f7436c4462cba5748cc3277b12120b0009a4c402a910736d2b79"
   },
   "dermafirm-peptology-boosting-ampoule-retinoid-3": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-retinoid-3.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-peptology-boosting-ampoule-retinoid-3.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 3,
     "match_score": 1.0,
-    "sha256": "c5a98d4076432beca92fc6d151f8f8b6e5c9b149cf1b367eb5f9e76b50e523af"
+    "sha256": "092d0bce71b1868e9691b0f03589c47af2eb69d0d836e03f83c776ee5a12fc0f",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-retinoid-3.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "25864ca157509f87bf578d051b9ee057669c2f639e4df6aaef2ea5a86860dc86"
   },
   "dermafirm-peptology-boosting-ampoule-pdrn-4": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-peptology-boosting-ampoule-pdrn-4.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 4,
     "match_score": 1.0,
-    "sha256": "98b7f85385628af5f1e6879e20fd0438cf3c9d41efda43f7bdb017da532f6e19"
+    "sha256": "828928a2d7b21790c5cab2c7c2ea5d02fc6d5d275007ec436e0e6306005e2e1a",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "f5c551be7e510277876af0c92adf46fa54b48dfc3115028098c770b4fa5d0766"
   },
   "dermafirm-peptology-boosting-ampoule-pdrn-4d-5": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4d-5.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-peptology-boosting-ampoule-pdrn-4d-5.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 5,
     "match_score": 1.0,
-    "sha256": "1f2a77a191e26fb4b190c93c00dfe552fea44af2f04c6b2dc8909501f371a01f"
+    "sha256": "f5d33025e1bffe57acaa5edd3969ecf2a211a8413def609a06f17c2f9a13f4d2",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4d-5.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "5af171c638bf4bd154e9284d2085d85081c653eab8ec07e14ce39126013738be"
   },
   "dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 7,
     "match_score": 1.0,
-    "sha256": "7b2d85a61f1715e1a705ed284e8e16d5cb7749067562f95caad55f1f4d03d9ce"
+    "sha256": "b36b6f115d23fb6fe7416171fbdb5c55daeb3042e1e5578ff54b3aa1781d4fc5",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d1854251a1c1d86896b298b1c798c57879ae17309a623893327b0d25650b3404"
   },
   "dermafirm-age-reviving-essential-toner-a4-8": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-essential-toner-a4-8.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-age-reviving-essential-toner-a4-8.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 8,
     "match_score": 1.0,
-    "sha256": "35e6810b6b389723e4a0acda1fdbc8978d4994b305214baa1016828d5ba8c575"
+    "sha256": "1fca758e1fef4cd26320656b4a88c1a8e1e73ffaaeb910493996d6ca2b1b17f4",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-essential-toner-a4-8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "24dde9c74f0a20ca95e8bf338fa159cb63fb72e46c5de8054387860d6ff4c9ca"
   },
   "dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 9,
     "match_score": 1.0,
-    "sha256": "4ac1a43ab2ce4a7b56277a39ba6e4489d4154cc5d59e20b15088d2d03e3e8a37"
+    "sha256": "4c992b0f0c73429ba8eeea561fca9e613f3e29ce294633428ee9e8c694edd071",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "92b8b5ee7f00d217e644e3433d24cb1291977749028f31ec7c48b7c528c75de6"
   },
   "dermafirm-age-reviving-firming-cream-a4-10": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-firming-cream-a4-10.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-age-reviving-firming-cream-a4-10.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 10,
     "match_score": 1.0,
-    "sha256": "21d181e6bed8b43fddd26d142612b3a6428702e83a745aca308fcecd7e7ad525"
+    "sha256": "983ece3bea66b648e2cfbb68de6e188c6cd218f71fc23aa74eda8530b00fb382",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-firming-cream-a4-10.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "ce835b916c5363cabfea73dadc95d0605b8e8a42135c2e33ef98636d55a1ce15"
   },
   "dermafirm-age-reviving-lifting-eye-cream-a4-11": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-lifting-eye-cream-a4-11.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-age-reviving-lifting-eye-cream-a4-11.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 11,
     "match_score": 1.0,
-    "sha256": "271a90ebffdb0bd44debf58c5c974f7b86c00e984e63f1a7bbd907d98d031b9c"
+    "sha256": "d4a523aa73026213d2de4420290582125ca1b7c25e1f0f55bc2be802be8d1e07",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-lifting-eye-cream-a4-11.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "95d55344292f14039d99523d9c777ff0c7649133fe1d4d4ffba5d8bdab855379"
   },
   "dermafirm-age-reviving-advanced-neck-cream-a4-12": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-advanced-neck-cream-a4-12.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-age-reviving-advanced-neck-cream-a4-12.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 12,
     "match_score": 1.0,
-    "sha256": "725f9fae3fe702f2fecbff9340bd5ce2e7ef9672777f777d89a5be9f8cac5839"
+    "sha256": "9e87c7dc369a9c2f3e84a803c22359bc9e76dadd6a4afff86066d073778104bc",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-advanced-neck-cream-a4-12.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "9aae2ee7766ddda2074c9925de0291d4b1a53a043164dda605ad434ace2153a7"
   },
   "dermafirm-the-peptide-wrinkle-serum-p4-14": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-wrinkle-serum-p4-14.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-the-peptide-wrinkle-serum-p4-14.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 14,
     "match_score": 1.0,
-    "sha256": "0c912650cdab7d162c40b3b5526f792fe33455f72e0b7da1ff33441617555a0b"
+    "sha256": "a1ea9db766cf0efacf921de009c02ed55f6d84d8e4c257573c20dfeaa0a34276",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-wrinkle-serum-p4-14.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "fef20dcfc70354b47c7e1cb87fd2f1eaa5b36ece0749b0f5cf88d1d69696bedf"
   },
   "dermafirm-the-peptide-firming-cream-p4-15": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-firming-cream-p4-15.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-the-peptide-firming-cream-p4-15.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 15,
     "match_score": 1.0,
-    "sha256": "b6187bd7e83d1680ff7588359965f9dc0ee447db00a658df91b4a85cd9f22275"
+    "sha256": "310651a43cff7b00dddb9ced5dc991578bc0faef9679ea6042cb96c80d428c1a",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-firming-cream-p4-15.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "bede67bec866cb2d9c508d1dc6506bd98f96f74e8089555e1a413ec751c1534b"
   },
   "dermafirm-moist-barrier-balancing-toner-m4-17": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-balancing-toner-m4-17.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-moist-barrier-balancing-toner-m4-17.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 17,
     "match_score": 1.0,
-    "sha256": "e5e8ee3ecede1f6ae1ab369554711cdeca772abe93253ce6c45e3e753b786371"
+    "sha256": "40b036d0f0edca29bb9931377b2181f3ae6ac6f279debef11c902045f5fa2bba",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-balancing-toner-m4-17.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "755b720658e0ab6b990e93728987265ba597d4b3917ef7839b26c655fd43796a"
   },
   "dermafirm-bio-correction-ampoule-cera-drop-m4-18": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-bio-correction-ampoule-cera-drop-m4-18.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-bio-correction-ampoule-cera-drop-m4-18.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 18,
     "match_score": 1.0,
-    "sha256": "e74508e0a7ace40cd6518451716b9dc011d347578a71fd7b628d08a3a545d916"
+    "sha256": "c3c07efb3b5d2eda447186d67cc33ed973f6235d8586561fa96cdf08eab26bbe",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-bio-correction-ampoule-cera-drop-m4-18.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "7b280b45212ac72ff26501bc9de6b540e271232913c135e537236de103210349"
   },
   "dermafirm-moist-barrier-intensive-cream-m4-19": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-intensive-cream-m4-19.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-moist-barrier-intensive-cream-m4-19.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 19,
     "match_score": 1.0,
-    "sha256": "779b4c093c46b5008dad376df162b3f4d509d4a2da844774117ffdd1e793b706"
+    "sha256": "3fb7a2220a7d7409a75f2235168a52dc5f709ff211e1b4c2159768463a96f6aa",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-intensive-cream-m4-19.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "854c68848ac77e0b14dceeed3f577b0734c415914d88a1801fd175d0b348d891"
   },
   "dermafirm-soothing-repair-toner-r4-21": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toner-r4-21.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-toner-r4-21.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 21,
     "match_score": 1.0,
-    "sha256": "184d99ebb7315d4852a82a70a4a9e65f828856b5f3f2e6d12d496a0b8c926c9d"
+    "sha256": "0fa2541932ef5a3943032e4c7aae8c10599d1cdf8b283f8e2ec691f7d6fa6675",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toner-r4-21.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "ae0c623b1cf3ae15a5a659858993e7d8087b5b11bc85c32b7aa34023eb80b557"
   },
   "dermafirm-soothing-repair-serum-mist-r4-22": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-mist-r4-22.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-serum-mist-r4-22.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 22,
     "match_score": 1.0,
-    "sha256": "cd2a219873c09313afe550de9d8f85e58e4db26ed38b5d350244f1fdf8670c15"
+    "sha256": "b0ec868c005fc2dcb521b77a2fceb6a52606b83e526cdfcc2c02b962a6b85a2a",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-mist-r4-22.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "9efd0cc6e076e9cbcefee3a1777969d4bb92afbf4eb885bf4e0da8fd046e5ea1"
   },
   "dermafirm-soothing-repair-serum-r4-25": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-r4-25.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-serum-r4-25.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 25,
     "match_score": 1.0,
-    "sha256": "f9d912500fc39af392bfee66fbef143a1a4988f343e3f898b42f5a84fb7f3acc"
+    "sha256": "b19ad6cb2fc4768197ef98eddbc3b9f71c31fcd46cba61a7a462996d0e3ad860",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-r4-25.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "af1a2148ab29ed62d74d5afb1f1dfe95ffc80d8a468bd5831628456352fbeeb6"
   },
   "dermafirm-soothing-repair-mask-r4-26": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-mask-r4-26.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-mask-r4-26.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 26,
     "match_score": 1.0,
-    "sha256": "af11327690b1542ab360b49d8e1bb0515e5449d918b44086b4c3f2f876c56c5b"
+    "sha256": "2a02240a0b6d5040da895116a20bd00f6ae35c499a757e309915fb485ae883cb",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-mask-r4-26.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "260d605e040a036f33ad6eb74fdbb25fac25e5eab996d0be1d7a041a88028df0"
   },
   "dermafirm-soothing-repair-emulsion-r4-27": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-emulsion-r4-27.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-emulsion-r4-27.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 27,
     "match_score": 1.0,
-    "sha256": "340e4008439fecaab4fb6acd14bb726e2f869d83adbe9884fc66a2cf5d5c392c"
+    "sha256": "973e6694c362d5565bae496de4884df9418461d15715b4daa4868a236a88bcda",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-emulsion-r4-27.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d1c56920f71b22b55f28a6726811f9816838cd263eb8e489b012527ee036f135"
   },
   "dermafirm-hydra-foaming-cleanser-r4-28": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-hydra-foaming-cleanser-r4-28.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-hydra-foaming-cleanser-r4-28.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 28,
     "match_score": 1.0,
-    "sha256": "cbc1aad74e8c5fdb76550c91c60ee1ab540469432d4144d04f9c68d35fd7b7cc"
+    "sha256": "16a0c828ebb7355e636078c4fd93a918c5cf8de01c3b8bb9d81454a0de1421ee",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-hydra-foaming-cleanser-r4-28.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "9c48f10c187902702e826914d18d8747bbad48a4e55438c218701bd77f93837e"
   },
   "dermafirm-soothing-repair-cream-r4-29": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-cream-r4-29.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-soothing-repair-cream-r4-29.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 29,
     "match_score": 1.0,
-    "sha256": "98a4ec385fe6319cf4598d99abbd259b00b843abd32acca5e29477a92a680df9"
+    "sha256": "738473bafaed90899d580852c2befc49936d19e25da147326ea79b4321d94545",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-cream-r4-29.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "22a5c8f2692e9e6ac0b8feac3cff4590f2747621e938f94bae651bf7e5dc22db"
   },
   "dermafirm-cicaa-c-cleansing-foam-31": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-cleansing-foam-31.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-cicaa-c-cleansing-foam-31.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 31,
     "match_score": 1.0,
-    "sha256": "959a5254957dacc2a106a9957063dd713175576f69d432ef2f760e40b32ebd1a"
+    "sha256": "e3094dde998a23bc09ee33e2ed3dbae84e0c16269e7ef6e33e05362653a2171f",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-cleansing-foam-31.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "34f51ed322776451ccab1e2525e82609a4a452e0762c0f94f4c2f85f959fa934"
   },
   "dermafirm-cicaa-c-essence-toner-32": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-essence-toner-32.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-cicaa-c-essence-toner-32.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 32,
     "match_score": 1.0,
-    "sha256": "e10356eaa0e7bf4aee00ba5c58a30e0fa7eaa990e05fd9d0b15299a152790389"
+    "sha256": "fc3e712530867793f038a1fbec3b014c6f26f1e49199831c1e9437dd4e6288f0",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-essence-toner-32.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "1e1e3d4af0faeaa8da8da0b876800c1b9553113ba6182b0f9b6d5636f502c576"
   },
   "dermafirm-cicaa-c-serum-33": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-serum-33.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-cicaa-c-serum-33.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 33,
     "match_score": 1.0,
-    "sha256": "3e3f28315f0ba6144f9c7c690d2accff423e198acc9fe2b63608e02805d95c86"
+    "sha256": "d5f7e0e31f20a135258ce17e2fb01acc47e264c969fc70f83a7fc48d36b2875c",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-serum-33.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "8a7533ec42031708b2080346e3aa498c2c83c10bfd5095f1c14a019b78370c57"
   },
   "dermafirm-pepteyed-dark-circle-cream-35": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-pepteyed-dark-circle-cream-35.webp",
+    "image_url": "/supplier-photos/studio/dermafirm-pepteyed-dark-circle-cream-35.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Dermafirm",
     "source_sheet_row": 35,
     "match_score": 1.0,
-    "sha256": "303b3172fa8e506d6521b59b46c7cda70e09f5f71a9ddc8433b83eced44831b0"
+    "sha256": "63bc699522737c58ff09d196e985f6670afca5d927d227b52289beacb5acaf3f",
+    "source_asset_url": "/supplier-photos/dermafirm/dermafirm-pepteyed-dark-circle-cream-35.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e9862f68f5dda77f014f7c14ff555bed73d105c0113f105b685bb6d4bacc9323"
   },
   "braderm-kurac-mousse-2": {
-    "image_url": "/supplier-photos/braderm/braderm-kurac-mousse-2.webp",
+    "image_url": "/supplier-photos/studio/braderm-kurac-mousse-2.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 2,
     "match_score": 1.0,
-    "sha256": "0d81d33c69750f17ee5cb0d97e6f0ab3ed5bbb03162d9bc57b946f9fc3100e2f"
+    "sha256": "e160a34570c3667d0cbea7319f358477dc5ae86af9b9d5efad3f265bfcadcb39",
+    "source_asset_url": "/supplier-photos/braderm/braderm-kurac-mousse-2.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "50cb56e6eb3978b31fc331247c3db9eee8d0d8d594eb5ae4eddc86d5975dd53b"
   },
   "braderm-azn-cream-3": {
-    "image_url": "/supplier-photos/braderm/braderm-azn-cream-3.webp",
+    "image_url": "/supplier-photos/studio/braderm-azn-cream-3.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 3,
     "match_score": 1.0,
-    "sha256": "5046b7bd20ed2c1dbf053b015b522d64811134d25fe90235b849b7264075495f"
+    "sha256": "3c0d71fb915816477ef57cd3626fc8245a07df9610a4c18dd955fd51be7ae59f",
+    "source_asset_url": "/supplier-photos/braderm/braderm-azn-cream-3.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "451f17e4325a08d43a79835c010677a249ec78b3f5d285488a20451c7d2bd3d2"
   },
   "braderm-kurac-cream-4": {
-    "image_url": "/supplier-photos/braderm/braderm-kurac-cream-4.webp",
+    "image_url": "/supplier-photos/studio/braderm-kurac-cream-4.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 4,
     "match_score": 1.0,
-    "sha256": "2ed26b34f9f975f65b85c286b27b99278e2c67352e6ceb0f089b0da57edda727"
+    "sha256": "8bc8162648845d4731e866f9de8c03cd418288a13e3037e613a9b6243dc2650f",
+    "source_asset_url": "/supplier-photos/braderm/braderm-kurac-cream-4.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "7e6d29686d052adf840d4a373879e4b97a4e3408d085551fd50de6734d2ec29b"
   },
   "braderm-dorsak-spray-5": {
-    "image_url": "/supplier-photos/braderm/braderm-dorsak-spray-5.webp",
+    "image_url": "/supplier-photos/studio/braderm-dorsak-spray-5.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 5,
     "match_score": 1.0,
-    "sha256": "eb260343ec92c44cb6b2ade9675470eeaa5a9b9995ae4c8d07569e485477dcaf"
+    "sha256": "458d3d9bd269c2125c4e44ca470d41430fadc074e94a0d748726ac0cc5e28e3b",
+    "source_asset_url": "/supplier-photos/braderm/braderm-dorsak-spray-5.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "58a454b3caffde58fd5f9f7d0d900999b1386b9e047c8ee1eb5e5dd46bb943e4"
   },
   "braderm-tramexal-cream-6": {
-    "image_url": "/supplier-photos/braderm/braderm-tramexal-cream-6.webp",
+    "image_url": "/supplier-photos/studio/braderm-tramexal-cream-6.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 6,
     "match_score": 1.0,
-    "sha256": "25c8e31012bcecfdfc0c1499ae61d947c1636ad7ddee5bc009557a68306a390c"
+    "sha256": "43f3ffc08ef3ca33f6830a210a5117205700393c80ff2ee7260cc173beb97414",
+    "source_asset_url": "/supplier-photos/braderm/braderm-tramexal-cream-6.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "4f57a9ef73cabdfde4d773bf117e2291cb6dc7e5f8aa659a5b269d16cd5c9241"
   },
   "braderm-rosac-cream-7": {
-    "image_url": "/supplier-photos/braderm/braderm-rosac-cream-7.webp",
+    "image_url": "/supplier-photos/studio/braderm-rosac-cream-7.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 7,
     "match_score": 1.0,
-    "sha256": "1600bbce5a001937349105314d1eadd815d6a45cb0493eff65454f659cffd96c"
+    "sha256": "16f556023fab61f7713a4ead0f230c53cd067a6beed43dda86577efd4f56f99b",
+    "source_asset_url": "/supplier-photos/braderm/braderm-rosac-cream-7.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "65e228a32d45dbb2a5e6e14393bdaf94534d1ac0ba285aface477128b528ae4d"
   },
   "braderm-oxage-cream-8": {
-    "image_url": "/supplier-photos/braderm/braderm-oxage-cream-8.webp",
+    "image_url": "/supplier-photos/studio/braderm-oxage-cream-8.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 8,
     "match_score": 1.0,
-    "sha256": "1b8edd507225aa2e719f02617f5955a6056305edd73e840f580c87af44420f4f"
+    "sha256": "085d8e731ab7b747acd253c70c1059be594e20c77ca3332c749af77e697b84eb",
+    "source_asset_url": "/supplier-photos/braderm/braderm-oxage-cream-8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "1bc441bb19f373f3826a26c86a6b5e1496a2099b6e5b8189eed0e2919cc96b3d"
   },
   "braderm-kurage-cream-9": {
-    "image_url": "/supplier-photos/braderm/braderm-kurage-cream-9.webp",
+    "image_url": "/supplier-photos/studio/braderm-kurage-cream-9.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 9,
     "match_score": 1.0,
-    "sha256": "df12abbf2c02038957fdd23a9c0dc28f3a79d1bd604ddb71ecdb176e1a48d70d"
+    "sha256": "9a4d54c7ffc8f939eca703ce360b23b165b81eb87b77cc3a1bf6260a6f4366d7",
+    "source_asset_url": "/supplier-photos/braderm/braderm-kurage-cream-9.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "9c250466682f0634fd63be8bd6637580bf5008139c49a19150e46caacd87acaf"
   },
   "braderm-kerato-psor-10": {
-    "image_url": "/supplier-photos/braderm/braderm-kerato-psor-10.webp",
+    "image_url": "/supplier-photos/studio/braderm-kerato-psor-10.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 10,
     "match_score": 1.0,
-    "sha256": "0adb25c1fa8b7815a60cff177675d4a395a0526ffb97a05b40c533c066a0b9b8"
+    "sha256": "a80a20a09a00b232770f064a8effdbee39c35c3432d00326da0c395cf0a5add2",
+    "source_asset_url": "/supplier-photos/braderm/braderm-kerato-psor-10.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "2130b78bb374b94c28559af3223fd6320956c4fbc69a84bbf59c0b5c322d2890"
   },
   "braderm-axatopic-cleanser-11": {
-    "image_url": "/supplier-photos/braderm/braderm-axatopic-cleanser-11.webp",
+    "image_url": "/supplier-photos/studio/braderm-axatopic-cleanser-11.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 11,
     "match_score": 1.0,
-    "sha256": "8cc5a98d0575e1273690b3744b10ba4e1ec247af14ddf53f3adf9f27c55b0f3e"
+    "sha256": "31d5fe52631f82b697a57f12da41d4704de90112b97318ae34cf563d95c0249a",
+    "source_asset_url": "/supplier-photos/braderm/braderm-axatopic-cleanser-11.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "27962e39b5f437c2f6a319d39a4d89bfc28349c589cdf2bc9d7c960f97ad180c"
   },
   "braderm-axatopic-cream-12": {
-    "image_url": "/supplier-photos/braderm/braderm-axatopic-cream-12.webp",
+    "image_url": "/supplier-photos/studio/braderm-axatopic-cream-12.webp",
     "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
     "source_sheet": "Braderm",
     "source_sheet_row": 12,
     "match_score": 1.0,
-    "sha256": "c0591d134e9fd456ae7e23cc7d07ab0c1f0e986b6c997126972dc93d08b5d8d8"
+    "sha256": "a484a628e362341e45c22861e9b7c85228492fb245a74280aab8bc3e6479c39b",
+    "source_asset_url": "/supplier-photos/braderm/braderm-axatopic-cream-12.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "afd5bf0e2dd367fe653b36b1ed48ed15adbf5ded061b11f7c7870568250fceb8"
   },
   "cetaphil-catalog-003": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-003.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-003.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-redness-control-ochishchuvalna-pinka-dlya-chutlivoji-shkiri-oblichchya-shilnoji-do-pochervonin-236-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8713/conversions/8-preview.jpg?v=1794687456",
     "match_score": 0.94,
-    "sha256": "20105e35f5056d03ba88ee8d068f3518fc7441c84d6b77ef90a67040701f144f"
+    "sha256": "20105e35f5056d03ba88ee8d068f3518fc7441c84d6b77ef90a67040701f144f",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-003.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "4bdaf3e4ec517dfdd9b4403a62de2b03176277cc9a275e9a8b2a47638ae93ec2"
   },
   "cetaphil-catalog-004": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-004.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-004.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-itch-control-zvolozhuvalniy-losyon-proti-sverbinnya-dlya-atopichnoji-suhoji-ta-chutlivoji-shkiri-236-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8691/conversions/3499320018647_Cetaphil-PRO-Itch-Control-%D0%97%D0%B2%D0%BE%D0%BB%D0%BE%D0%B6%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%B9-%D0%BB%D0%BE%D1%81%D1%8C%D0%B9%D0%BE%D0%BD-%D0%BF%D1%80%D0%BE%D1%82%D0%B8-%D1%81%D0%B2%D0%B5%D1%80%D0%B1%D1%96%D0%BD%D0%BD%D1%8F-%D0%B4%D0%BB%D1%8F-%D0%B0%D1%82%D0%BE%D0%BF%D1%96%D1%87%D0%BD%D0%BE%D1%97,-%D1%81%D1%83%D1%85%D0%BE%D1%97-%D1%82%D0%B0-%D1%87%D1%83%D1%82%D0%BB%D0%B8%D0%B2%D0%BE%D1%97-%D1%88%D0%BA%D1%96%D1%80%D0%B8,-236-%D0%BC%D0%BB-preview.jpg?v=1794687458",
     "match_score": 0.94,
-    "sha256": "72bc4e15ca8a2cd4a4a577936b5376a0c49505947edea9e7ac03af606919063b"
+    "sha256": "72bc4e15ca8a2cd4a4a577936b5376a0c49505947edea9e7ac03af606919063b",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-004.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "f3d7eafe68d078cbdee85b152fb2604722379801112368e1681fa99cb9cdac12"
   },
   "cetaphil-catalog-007": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-007.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-007.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-nichniy-zvolozhuvalniy-krem-dlya-normalnoji-chutlivoji-ta-duzhe-suhoji-shkiri-oblichchya-48-g/",
     "source_image_url": "https://avepharm.com.ua/storage/8719/conversions/1-preview.jpg?v=1794687590",
     "match_score": 0.86,
-    "sha256": "7690431e917a2a084932d07763bc128f7da64b66df0bd5c323df3a4830d341a9"
+    "sha256": "7690431e917a2a084932d07763bc128f7da64b66df0bd5c323df3a4830d341a9",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-007.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "c0f72082c1ad7bf5f9a1cd15c8990bf0d7de51996b3408d6be90d7c71faa3598"
   },
   "cetaphil-catalog-008": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-008.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-008.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-nizhniy-gel-eksfoliant-dlya-ochishchennya-suhoji-masnoji-ta-kombinovanoji-shkiri-oblichchya-178-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8721/conversions/2-preview.jpg?v=1794687591",
     "match_score": 0.86,
-    "sha256": "67b0df38f7862adaffd31e1224d086c3faab6cbd2e504c1b36d6a83ddae5d170"
+    "sha256": "67b0df38f7862adaffd31e1224d086c3faab6cbd2e504c1b36d6a83ddae5d170",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-008.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "5589d02e821930d467b99d69de231b1e6f8d57973fd0580f81731e0354e4c67d"
   },
   "cetaphil-catalog-009": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-009.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-009.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-zvolozhuvalniy-balzam-dlya-suhoji-normalnoji-ta-chutlivoji-shkiri-oblichchya-i-tila-500-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8724/conversions/3-preview.jpg?v=1794687592",
     "match_score": 0.86,
-    "sha256": "e045ef682c9944b159d4594a66adcf31c55be5885636e66053ee11d33353b9e9"
+    "sha256": "e045ef682c9944b159d4594a66adcf31c55be5885636e66053ee11d33353b9e9",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-009.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b1007da2f78ccabe59ff547d9adf07dfa839b0bcfff75fc23a29d100681e191b"
   },
   "cetaphil-catalog-010": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-010.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-010.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-zvolozhuvalniy-balzam-dlya-suhoji-normalnoji-ta-chutlivoji-shkiri-oblichchya-i-tila-236-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8726/conversions/4-preview.jpg?v=1794687592",
     "match_score": 0.86,
-    "sha256": "a8124e87810bc4feb17b3e896b0b3423df618ac7cd680512c9b4807b00a332b4"
+    "sha256": "a8124e87810bc4feb17b3e896b0b3423df618ac7cd680512c9b4807b00a332b4",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-010.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "0187348c92317575cc9c597317d1d959bfd2f7e0d3a52aad11e579c1047f0822"
   },
   "cetaphil-catalog-011": {
-    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-011.jpg",
+    "image_url": "/supplier-photos/studio/cetaphil-catalog-011.webp",
     "source_product_url": "https://avepharm.com.ua/product/cetaphil-micelyarna-emulsiya-dlya-ochishchennya-normalnoji-suhoji-ta-chutlivoji-shkiri-236-ml/",
     "source_image_url": "https://avepharm.com.ua/storage/8728/conversions/5-preview.jpg?v=1794687593",
     "match_score": 0.86,
-    "sha256": "3e7ec1600116c13e03f59afddeea6ea3b150d1b4f40facbbd76ae231af2531ee"
+    "sha256": "3e7ec1600116c13e03f59afddeea6ea3b150d1b4f40facbbd76ae231af2531ee",
+    "source_asset_url": "/supplier-photos/cetaphil/cetaphil-catalog-011.jpg",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "bf44a50b6f9c7f3272275c856214dfa87c2ac8f3119cb6cb5a140abbb0e0cf3a"
   },
   "sensilis-catalog-002": {
-    "image_url": "/supplier-photos/sensilis/sensilis-catalog-002.png",
+    "image_url": "/supplier-photos/studio/sensilis-catalog-002.webp",
     "source_product_url": "https://sensilis.com.ua/azelaic-peel/",
     "source_image_url": "https://sensilis.com.ua/image/cache/catalog/AZELAIC%20SOMBRA%20WEB-750x1000.png",
     "match_score": 0.86,
-    "sha256": "e5b3c5e792cbe9de4a3abf94846f31cb2396f150aa3e46d00f83d9aac9802fbd"
+    "sha256": "e5b3c5e792cbe9de4a3abf94846f31cb2396f150aa3e46d00f83d9aac9802fbd",
+    "source_asset_url": "/supplier-photos/sensilis/sensilis-catalog-002.png",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "83a7505f6ea590be358fa168f64d262cfde31c2ef76755a47462c1986e609df0"
   },
   "shampun-proty-lupy-color-e-clat-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/56555fd46602d3b4f92e.webp",
+    "image_url": "/supplier-photos/studio/shampun-proty-lupy-color-e-clat-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/COLOR_E_CLAT_Anti-Dandruff_Shampoo_Meadowfoam_Seed_Oil_Argan_oilCastor_OilAvocado_Oil_Grape_Seed_Oil_Babassu_oil_Jojoba_Seed_Oil_Wheat_Germ_OilLinseed_Oil_Sesame_OilKukui_oilSafflower.png?v=1760137817",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "6ffd714dc63829b6a806f7103e65a6733c234365a15a067d2404b61f6f866552"
+    "sha256": "6ffd714dc63829b6a806f7103e65a6733c234365a15a067d2404b61f6f866552",
+    "source_asset_url": "/supplier-photos/oliere/56555fd46602d3b4f92e.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "a84559afd13bea7b4f2ed000e9bb0ca8d9193d6ef8c13b0b8116498ed60bfe57"
   },
   "shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/6a34ba9df7641366d526.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/Instagram_post_-_324.png?v=1753894585",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "36357c33e96d37002980010c5eaa1b3cd7d659f781c40249d3d47c3316c852de"
+    "sha256": "36357c33e96d37002980010c5eaa1b3cd7d659f781c40249d3d47c3316c852de",
+    "source_asset_url": "/supplier-photos/oliere/6a34ba9df7641366d526.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e81c187d4267da071240cf748e396194e4e9f71121daa2eb8b583f7cf70d7e1b"
   },
   "shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-1000-ml": {
-    "image_url": "/supplier-photos/oliere/6a34ba9df7641366d526.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-1000-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/Instagram_post_-_324.png?v=1753894585",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "36357c33e96d37002980010c5eaa1b3cd7d659f781c40249d3d47c3316c852de"
+    "sha256": "36357c33e96d37002980010c5eaa1b3cd7d659f781c40249d3d47c3316c852de",
+    "source_asset_url": "/supplier-photos/oliere/6a34ba9df7641366d526.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e81c187d4267da071240cf748e396194e4e9f71121daa2eb8b583f7cf70d7e1b"
   },
   "shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/bb85ad91bf47719d2afe.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ORDINAIRE_SHAMPOO1.png?v=1757601518",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "fe1223a83e17f239aa561d8a6416cde861269d0025a30d6863820eefcf2dc27d"
+    "sha256": "fe1223a83e17f239aa561d8a6416cde861269d0025a30d6863820eefcf2dc27d",
+    "source_asset_url": "/supplier-photos/oliere/bb85ad91bf47719d2afe.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e14b6a2bcb982a81bf5c82fb335499009bbcf2eca5ad804c9fd449b601507810"
   },
   "shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml": {
-    "image_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.avif",
+    "image_url": "/supplier-photos/studio/shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/6C5845.png?v=1754465791",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "2febce7d91a70eab6c75db9c2363ecb6416976c3833b1cbbfaeda71959d8b287"
+    "sha256": "bed39ac1f24dc09a659c5a3f927e848255803b38b2baa968ca16fdc28798ad99",
+    "source_asset_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "3afab07510df0284ce688729d31fbf28836525c4fa9b845e7f1e3f777c732655"
   },
   "maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml": {
-    "image_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.avif",
+    "image_url": "/supplier-photos/studio/maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/6C5845.png?v=1754465791",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "2febce7d91a70eab6c75db9c2363ecb6416976c3833b1cbbfaeda71959d8b287"
+    "sha256": "bed39ac1f24dc09a659c5a3f927e848255803b38b2baa968ca16fdc28798ad99",
+    "source_asset_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "3afab07510df0284ce688729d31fbf28836525c4fa9b845e7f1e3f777c732655"
   },
   "hel-iohurtovyi-dlia-ukladannia-volossia-studio-olie-re-paris-100-ml": {
-    "image_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.avif",
+    "image_url": "/supplier-photos/studio/hel-iohurtovyi-dlia-ukladannia-volossia-studio-olie-re-paris-100-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/6C5845.png?v=1754465791",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "2febce7d91a70eab6c75db9c2363ecb6416976c3833b1cbbfaeda71959d8b287"
+    "sha256": "bed39ac1f24dc09a659c5a3f927e848255803b38b2baa968ca16fdc28798ad99",
+    "source_asset_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "3afab07510df0284ce688729d31fbf28836525c4fa9b845e7f1e3f777c732655"
   },
   "visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-50-ml": {
-    "image_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.avif",
+    "image_url": "/supplier-photos/studio/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-50-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/6C5845.png?v=1754465791",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "2febce7d91a70eab6c75db9c2363ecb6416976c3833b1cbbfaeda71959d8b287"
+    "sha256": "bed39ac1f24dc09a659c5a3f927e848255803b38b2baa968ca16fdc28798ad99",
+    "source_asset_url": "/supplier-photos/oliere/4ea06d3c975d82c7e4f2.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "3afab07510df0284ce688729d31fbf28836525c4fa9b845e7f1e3f777c732655"
   },
   "shampun-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/086e0a1e27b00df9fd18.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._02_30_13.png?v=1760197345",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "37e424a1376cf205116fdadcbfbadd155130dbb68f662f38d375a83e6b7d71c8"
+    "sha256": "37e424a1376cf205116fdadcbfbadd155130dbb68f662f38d375a83e6b7d71c8",
+    "source_asset_url": "/supplier-photos/oliere/086e0a1e27b00df9fd18.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "2763e5ef76a345039f4ba6d8a10abbbc33a39e0a5e133d16128e836228a04689"
   },
   "nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par": {
-    "image_url": "/supplier-photos/oliere/086e0a1e27b00df9fd18.webp",
+    "image_url": "/supplier-photos/studio/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._02_30_13.png?v=1760197345",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "37e424a1376cf205116fdadcbfbadd155130dbb68f662f38d375a83e6b7d71c8"
+    "sha256": "37e424a1376cf205116fdadcbfbadd155130dbb68f662f38d375a83e6b7d71c8",
+    "source_asset_url": "/supplier-photos/oliere/086e0a1e27b00df9fd18.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "2763e5ef76a345039f4ba6d8a10abbbc33a39e0a5e133d16128e836228a04689"
   },
   "maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/086e0a1e27b00df9fd18.webp",
+    "image_url": "/supplier-photos/studio/maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._02_30_13.png?v=1760197345",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "37e424a1376cf205116fdadcbfbadd155130dbb68f662f38d375a83e6b7d71c8"
+    "sha256": "37e424a1376cf205116fdadcbfbadd155130dbb68f662f38d375a83e6b7d71c8",
+    "source_asset_url": "/supplier-photos/oliere/086e0a1e27b00df9fd18.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "2763e5ef76a345039f4ba6d8a10abbbc33a39e0a5e133d16128e836228a04689"
   },
   "shampun-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/d0cd835904619678af36.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_1663-ezgif.com-video-to-gif-converter.gif?v=1784804513",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "3fb3ca9b21be4c4f236cb01115f89d23dff6124a027b61a1db27b338be4d5d24"
+    "sha256": "3fb3ca9b21be4c4f236cb01115f89d23dff6124a027b61a1db27b338be4d5d24",
+    "source_asset_url": "/supplier-photos/oliere/d0cd835904619678af36.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "d8f4f1d963b5a4efd5f4bea1e0dbdfa493bba3924805eaafdd98fc892a8f00ff"
   },
   "shampun-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "krem-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/krem-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "hel-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "image_url": "/supplier-photos/studio/hel-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._01_27_17.png?v=1760135254",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c"
+    "sha256": "c5122e1c339fc18b400d5c714e4baa2a533f1b43edb676503a3abe5a33f0024c",
+    "source_asset_url": "/supplier-photos/oliere/2a7c711ec9849e267cb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "518765ffb7618cdb807d6aed1b5c324c175b406f100c6b50a464508f75139644"
   },
   "shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/96491193b5d81ffc4c09.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._00_47_01.png?v=1760133469",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "05d9bfb6fe10404e16265c112692b5dbda1deb5878677943628f22e275b826ec"
+    "sha256": "05d9bfb6fe10404e16265c112692b5dbda1deb5878677943628f22e275b826ec",
+    "source_asset_url": "/supplier-photos/oliere/96491193b5d81ffc4c09.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "8c4ad688cbdd0b5a1bae5ceab4f7c062cd2f6d0773d35f575d27693abbf86b98"
   },
   "shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-1000-ml": {
-    "image_url": "/supplier-photos/oliere/96491193b5d81ffc4c09.webp",
+    "image_url": "/supplier-photos/studio/shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-1000-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._00_47_01.png?v=1760133469",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "05d9bfb6fe10404e16265c112692b5dbda1deb5878677943628f22e275b826ec"
+    "sha256": "05d9bfb6fe10404e16265c112692b5dbda1deb5878677943628f22e275b826ec",
+    "source_asset_url": "/supplier-photos/oliere/96491193b5d81ffc4c09.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "8c4ad688cbdd0b5a1bae5ceab4f7c062cd2f6d0773d35f575d27693abbf86b98"
   },
   "sprei-maska-nezmyvna-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-300-ml": {
-    "image_url": "/supplier-photos/oliere/c015b4e35c461b944fc9.webp",
+    "image_url": "/supplier-photos/studio/sprei-maska-nezmyvna-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-300-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._19_32_47.png?v=1760204565",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "b04194b71fb2fccf348d9c4058a0b770a121e42b95fa49360c010445abed2a56"
+    "sha256": "b04194b71fb2fccf348d9c4058a0b770a121e42b95fa49360c010445abed2a56",
+    "source_asset_url": "/supplier-photos/oliere/c015b4e35c461b944fc9.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e15fc7d0acba6c38641ba7eeba7ebdf78dfe5c3b068daf21747b8e15ddf7b838"
   },
   "kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/c015b4e35c461b944fc9.webp",
+    "image_url": "/supplier-photos/studio/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._19_32_47.png?v=1760204565",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "b04194b71fb2fccf348d9c4058a0b770a121e42b95fa49360c010445abed2a56"
+    "sha256": "b04194b71fb2fccf348d9c4058a0b770a121e42b95fa49360c010445abed2a56",
+    "source_asset_url": "/supplier-photos/oliere/c015b4e35c461b944fc9.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e15fc7d0acba6c38641ba7eeba7ebdf78dfe5c3b068daf21747b8e15ddf7b838"
   },
   "sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml": {
-    "image_url": "/supplier-photos/oliere/362168c4c30d540c1f2d.webp",
+    "image_url": "/supplier-photos/studio/sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/CLM_2_COMP-ezgif.com-resize.gif?v=1760191975",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "641a405366fe2aa60ff1e29ad51a4ab4f8da781c5b8db88a42b3c212c982eb08"
+    "sha256": "641a405366fe2aa60ff1e29ad51a4ab4f8da781c5b8db88a42b3c212c982eb08",
+    "source_asset_url": "/supplier-photos/oliere/362168c4c30d540c1f2d.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "7c30f9cfabde0e0a54b1b44bffefc8f47c64b2b9ff7510e7e6d4a2f8d9ecbf4a"
   },
   "sprei-maska-nezmyvna-dlia-rekonstruktsii-volossia-valour-olie-re-paris-300-ml": {
-    "image_url": "/supplier-photos/oliere/c74ca043f35d54d7af25.webp",
+    "image_url": "/supplier-photos/studio/sprei-maska-nezmyvna-dlia-rekonstruktsii-volossia-valour-olie-re-paris-300-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/Valour_mask_oil.gif?v=1753353239",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "58b4814e86edc6175d43b6c24c22679b985ca3c8d592a6b961ae54d49aa461b6"
+    "sha256": "58b4814e86edc6175d43b6c24c22679b985ca3c8d592a6b961ae54d49aa461b6",
+    "source_asset_url": "/supplier-photos/oliere/c74ca043f35d54d7af25.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "882e0a6a856f49334e2a37d065c51e8b4efac29876ba7210467def4322b88393"
   },
   "sprei-maska-nezmyvna-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-300-ml": {
-    "image_url": "/supplier-photos/oliere/62beefdf57579e7ae52f.webp",
+    "image_url": "/supplier-photos/studio/sprei-maska-nezmyvna-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-300-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ORM.gif?v=1757439913",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "49849016e5b11efbc7d63a5871446e4d0e3a9a602d2792b1eed79742c531f713"
+    "sha256": "49849016e5b11efbc7d63a5871446e4d0e3a9a602d2792b1eed79742c531f713",
+    "source_asset_url": "/supplier-photos/oliere/62beefdf57579e7ae52f.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "3f264dde652cdc67d0a91d58dce9a98d786752f028a653b6357f4533cf238f8a"
   },
   "sprei-termozakhyst-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-150-ml": {
-    "image_url": "/supplier-photos/oliere/2d1a79c717183cf01392.webp",
+    "image_url": "/supplier-photos/studio/sprei-termozakhyst-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-150-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_1674-ezgif.com-video-to-gif-converter.gif?v=1784805467",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "90498b4459d595819894b2724f3087dcab2b3ddd3f22a62bbb3d274f639567a5"
+    "sha256": "90498b4459d595819894b2724f3087dcab2b3ddd3f22a62bbb3d274f639567a5",
+    "source_asset_url": "/supplier-photos/oliere/2d1a79c717183cf01392.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "540745c2dd742d41af0f2e0b9b23bad8e870defdb72973a441fa6dc7e65ef133"
   },
   "syrovatka-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-150-ml": {
-    "image_url": "/supplier-photos/oliere/e7a682c6ad36c4c7bb98.webp",
+    "image_url": "/supplier-photos/studio/syrovatka-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-150-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_7011-ezgif.com-video-to-gif-converter.gif?v=1760191427",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "5bf3031a61f633464eea9b9423d8d0c53091d9beacfd1768f5828eb1019ba528"
+    "sha256": "5bf3031a61f633464eea9b9423d8d0c53091d9beacfd1768f5828eb1019ba528",
+    "source_asset_url": "/supplier-photos/oliere/e7a682c6ad36c4c7bb98.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "de84653876ead961b985cd9b1a8ca9e56b7f0d012a7981a0a03c0c4a4d8cf0d7"
   },
   "syrovatka-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-150-ml": {
-    "image_url": "/supplier-photos/oliere/b5703a03129fc44785c8.webp",
+    "image_url": "/supplier-photos/studio/syrovatka-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-150-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_7006-ezgif.com-video-to-gif-converter.gif?v=1760190458",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "9a7dd5dfdd849c9b0ff9d3bc8b6f76fba63c83310125664341d42627dc2f4fed"
+    "sha256": "9a7dd5dfdd849c9b0ff9d3bc8b6f76fba63c83310125664341d42627dc2f4fed",
+    "source_asset_url": "/supplier-photos/oliere/b5703a03129fc44785c8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "b14cdd4dede91a03260ef202a8851f17c0e915428463f0babedf69297d525afb"
   },
   "syrovatka-dlia-rekonstruktsii-volossia-valour-olie-re-paris-150-ml": {
-    "image_url": "/supplier-photos/oliere/1918411ef419457f04f4.webp",
+    "image_url": "/supplier-photos/studio/syrovatka-dlia-rekonstruktsii-volossia-valour-olie-re-paris-150-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/serum_resize.gif?v=1755873823",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "ded7863d76e84769c8ee969741dc2a11e7fd87a0b153d30eb18f8c99eabe47d2"
+    "sha256": "ded7863d76e84769c8ee969741dc2a11e7fd87a0b153d30eb18f8c99eabe47d2",
+    "source_asset_url": "/supplier-photos/oliere/1918411ef419457f04f4.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e22685861a50d83700711aacdf85382b5f02ef59251c9d796d055a15711c480b"
   },
   "syrovatka-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-150-ml": {
-    "image_url": "/supplier-photos/oliere/6da333c0268532d8d43e.webp",
+    "image_url": "/supplier-photos/studio/syrovatka-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-150-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/seru1-resize.gif?v=1757602677",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "59b30a398f33e3474048012a6b457b057c1fad926c44550980f9473d717fb364"
+    "sha256": "59b30a398f33e3474048012a6b457b057c1fad926c44550980f9473d717fb364",
+    "source_asset_url": "/supplier-photos/oliere/6da333c0268532d8d43e.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "bdc135844c1a4ed7170cf64c4d61d8d41ae5aa97289191263a26da9dfbefa62d"
   },
   "syrovatka-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-100-ml": {
-    "image_url": "/supplier-photos/oliere/b3e36ec6183921c989b4.webp",
+    "image_url": "/supplier-photos/studio/syrovatka-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-100-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_1676-ezgif.com-video-to-gif-converter.gif?v=1784805607",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "a8f7741fea7ddd351996bc2141ddc3b7e3dc1a7d6034cc88686d3f879c0d2a56"
+    "sha256": "a8f7741fea7ddd351996bc2141ddc3b7e3dc1a7d6034cc88686d3f879c0d2a56",
+    "source_asset_url": "/supplier-photos/oliere/b3e36ec6183921c989b4.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "e74f26927199ce44005b18130d13ece8fb61430b7ddc117e92f643b0043a53ac"
   },
   "profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/e19417b6a421a08062c9.webp",
+    "image_url": "/supplier-photos/studio/profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/21.png?v=1760560713",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "d4c4f2f5c59ded16932ee2ec5f40f0fa56871f318f40c86439221de05fa108f0"
+    "sha256": "d4c4f2f5c59ded16932ee2ec5f40f0fa56871f318f40c86439221de05fa108f0",
+    "source_asset_url": "/supplier-photos/oliere/e19417b6a421a08062c9.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "fc37a14f0351aed719188ea5c08abde37476f195715c50c4209052ed788c59cd"
   },
   "mus-profesiinyi-dlia-volossia-studio-olie-re-paris-400-ml": {
-    "image_url": "/supplier-photos/oliere/e19417b6a421a08062c9.webp",
+    "image_url": "/supplier-photos/studio/mus-profesiinyi-dlia-volossia-studio-olie-re-paris-400-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/21.png?v=1760560713",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "d4c4f2f5c59ded16932ee2ec5f40f0fa56871f318f40c86439221de05fa108f0"
+    "sha256": "d4c4f2f5c59ded16932ee2ec5f40f0fa56871f318f40c86439221de05fa108f0",
+    "source_asset_url": "/supplier-photos/oliere/e19417b6a421a08062c9.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "fc37a14f0351aed719188ea5c08abde37476f195715c50c4209052ed788c59cd"
   },
   "profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/2f57547bd70af401486c.webp",
+    "image_url": "/supplier-photos/studio/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/Shampoo2-ezgif.com-resize.gif?v=1753897349",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "de390e5e9812cdc77900f53b6f16460cb468f268c1b343a3e87ecaa84b8835e1"
+    "sha256": "de390e5e9812cdc77900f53b6f16460cb468f268c1b343a3e87ecaa84b8835e1",
+    "source_asset_url": "/supplier-photos/oliere/2f57547bd70af401486c.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "918373081ac269d45e50ef2a8cfb8343ec3d24c7978f7e9af5709f1c23ce8373"
   },
   "nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris": {
-    "image_url": "/supplier-photos/oliere/29a6e8553afac1e20714.webp",
+    "image_url": "/supplier-photos/studio/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/oliere_25.png?v=1760889103",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "f49d431a3b621cf05d8e6ccf148f01ac6285b951b29a40d50d76bcd7a89942e2"
+    "sha256": "f49d431a3b621cf05d8e6ccf148f01ac6285b951b29a40d50d76bcd7a89942e2",
+    "source_asset_url": "/supplier-photos/oliere/29a6e8553afac1e20714.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "45848cf7f9cead58a7ae9843d9f7f12d3e27859456134688eaf93f84cef7dfc3"
   },
   "nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris": {
-    "image_url": "/supplier-photos/oliere/ac9f1d4dbce5b4fb36ee.webp",
+    "image_url": "/supplier-photos/studio/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/oliere_15.png?v=1760206355",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "7380fba2527d9fd52a7ed943e6768151f00013444fd578cdadbd3bcd16f2ccd5"
+    "sha256": "7380fba2527d9fd52a7ed943e6768151f00013444fd578cdadbd3bcd16f2ccd5",
+    "source_asset_url": "/supplier-photos/oliere/ac9f1d4dbce5b4fb36ee.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "0169e9b44077e00e567ae0fdd4f757fcb293913e72cfe73a78e5a790a5b2a5d1"
   },
   "visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml": {
-    "image_url": "/supplier-photos/oliere/ac9f1d4dbce5b4fb36ee.webp",
+    "image_url": "/supplier-photos/studio/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/oliere_15.png?v=1760206355",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "7380fba2527d9fd52a7ed943e6768151f00013444fd578cdadbd3bcd16f2ccd5"
+    "sha256": "7380fba2527d9fd52a7ed943e6768151f00013444fd578cdadbd3bcd16f2ccd5",
+    "source_asset_url": "/supplier-photos/oliere/ac9f1d4dbce5b4fb36ee.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "0169e9b44077e00e567ae0fdd4f757fcb293913e72cfe73a78e5a790a5b2a5d1"
   },
   "nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/f933bb9a1def96352da5.webp",
+    "image_url": "/supplier-photos/studio/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._02_45_05.png?v=1760139927",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "432532be782052e505081df63b89300d7c18b616ba758b79dc1afa0532764bbb"
+    "sha256": "432532be782052e505081df63b89300d7c18b616ba758b79dc1afa0532764bbb",
+    "source_asset_url": "/supplier-photos/oliere/f933bb9a1def96352da5.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "00ed292a9e97ba3a5dd44b4884fca19f76107762262cdb97bcaae7dc17740031"
   },
   "krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/f933bb9a1def96352da5.webp",
+    "image_url": "/supplier-photos/studio/krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._02_45_05.png?v=1760139927",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "432532be782052e505081df63b89300d7c18b616ba758b79dc1afa0532764bbb"
+    "sha256": "432532be782052e505081df63b89300d7c18b616ba758b79dc1afa0532764bbb",
+    "source_asset_url": "/supplier-photos/oliere/f933bb9a1def96352da5.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "00ed292a9e97ba3a5dd44b4884fca19f76107762262cdb97bcaae7dc17740031"
   },
   "maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/526ce46bef4e2bc0deb8.webp",
+    "image_url": "/supplier-photos/studio/maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ORDMASK31-ezgif.com-resize.gif?v=1757606541",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "8f66b68e9156434cd47124d15655c3e41016d5064333d0314786a363a79b1e27"
+    "sha256": "8f66b68e9156434cd47124d15655c3e41016d5064333d0314786a363a79b1e27",
+    "source_asset_url": "/supplier-photos/oliere/526ce46bef4e2bc0deb8.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "dddc9f3e28b77bbc8242386052f6644e5daff2c64c7bb9ab8e50ba7cb4fb6002"
   },
   "maska-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-400-ml": {
-    "image_url": "/supplier-photos/oliere/10288f8aa4f0667f21de.webp",
+    "image_url": "/supplier-photos/studio/maska-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-400-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_1670-ezgif.com-video-to-gif-converter.gif?v=1784805356",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "34c014468a3f0f0ad84d6d1de60a5919fc737d59839ad1cd9c2f04128473a0cb"
+    "sha256": "34c014468a3f0f0ad84d6d1de60a5919fc737d59839ad1cd9c2f04128473a0cb",
+    "source_asset_url": "/supplier-photos/oliere/10288f8aa4f0667f21de.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "699da44def793308af3a68e50f72c8e38242b22faaed188783ff82aed5fb8250"
   },
   "maska-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/a7662a2d9ef9b51bb5f7.webp",
+    "image_url": "/supplier-photos/studio/maska-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/MASKCL_04_COMP-ezgif.com-resize.gif?v=1760191976",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "e75d962eba23b47beacf8d6d7e63be4c4ed373b25240de68982be949fa8dbd3d"
+    "sha256": "e75d962eba23b47beacf8d6d7e63be4c4ed373b25240de68982be949fa8dbd3d",
+    "source_asset_url": "/supplier-photos/oliere/a7662a2d9ef9b51bb5f7.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "bb9a96e6f2f6db2deb884827fe92ec39e7c7593f86fcda5bc24eed47260ba81f"
   },
   "maska-dlia-hlybokoi-rekonstruktsii-i-zmitsnennia-volossia-valour-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/e464f35512638eecbaf4.webp",
+    "image_url": "/supplier-photos/studio/maska-dlia-hlybokoi-rekonstruktsii-i-zmitsnennia-volossia-valour-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/OLIERE-LAB1014_copy.jpg?v=1765908553",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "05d600f56e57b141c9d8ef9218e9a9afd36b398799d56c7bd1ed0e8afea1ae99"
+    "sha256": "05d600f56e57b141c9d8ef9218e9a9afd36b398799d56c7bd1ed0e8afea1ae99",
+    "source_asset_url": "/supplier-photos/oliere/e464f35512638eecbaf4.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "68d1f227d2f92210ffb465b7b62360041b0fa36fb8359537c5c6c96f929297be"
   },
   "lak-dlia-volossia-sylnoi-fiksatsii-studio-olie-re-paris-400-ml": {
-    "image_url": "/supplier-photos/oliere/1795755a75b8d3e6c6d2.webp",
+    "image_url": "/supplier-photos/studio/lak-dlia-volossia-sylnoi-fiksatsii-studio-olie-re-paris-400-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/22.png?v=1760560713",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "3977ece0305c20263dd5440e046180aac0f5834cfb3c571f3c51ec8baff7f125"
+    "sha256": "3977ece0305c20263dd5440e046180aac0f5834cfb3c571f3c51ec8baff7f125",
+    "source_asset_url": "/supplier-photos/oliere/1795755a75b8d3e6c6d2.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "7c277de3123c6b493aeb3d56242b0bc01b4f074d2e02cacd76d6a872b6b52d40"
   },
   "kondytsioner-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml": {
-    "image_url": "/supplier-photos/oliere/253b3810f0138663b355.webp",
+    "image_url": "/supplier-photos/studio/kondytsioner-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._18_18_53.png?v=1760195953",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "a4f454c83269998c86e1431b7d4e3fa8b9d01de302ad84f7b44654cd786818d1"
+    "sha256": "a4f454c83269998c86e1431b7d4e3fa8b9d01de302ad84f7b44654cd786818d1",
+    "source_asset_url": "/supplier-photos/oliere/253b3810f0138663b355.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "11e182eca37c3613edf7dc0cee37614bc376b1a342891bd9eeafaac1c148ef7c"
   },
   "kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/253b3810f0138663b355.webp",
+    "image_url": "/supplier-photos/studio/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._18_18_53.png?v=1760195953",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "a4f454c83269998c86e1431b7d4e3fa8b9d01de302ad84f7b44654cd786818d1"
+    "sha256": "a4f454c83269998c86e1431b7d4e3fa8b9d01de302ad84f7b44654cd786818d1",
+    "source_asset_url": "/supplier-photos/oliere/253b3810f0138663b355.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "11e182eca37c3613edf7dc0cee37614bc376b1a342891bd9eeafaac1c148ef7c"
   },
   "kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/24532219d9131f110cd1.webp",
+    "image_url": "/supplier-photos/studio/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_6976-ezgif.com-video-to-gif-converter.webp?v=1777453184",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "2c94ff89d236605157aa6b0675c63e949bb0332fe5493195812e6ce1990d29bd"
+    "sha256": "2c94ff89d236605157aa6b0675c63e949bb0332fe5493195812e6ce1990d29bd",
+    "source_asset_url": "/supplier-photos/oliere/24532219d9131f110cd1.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "12eb054bafebac3a6e63aa71f2576e88f2c251ce5e686e81ebd773f5e8d3c00f"
   },
   "kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/274f3450b521d493395c.webp",
+    "image_url": "/supplier-photos/studio/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_4620.jpg?v=1768211349",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "96599d4fddb8bfd4e18ba9a1b14f725c95a744f44733b83a1f021158101b4be5"
+    "sha256": "96599d4fddb8bfd4e18ba9a1b14f725c95a744f44733b83a1f021158101b4be5",
+    "source_asset_url": "/supplier-photos/oliere/274f3450b521d493395c.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "2c4908a864ba515f007fea720abef9e5e33b3e4ef956b18fd166de3d9a91fcdc"
   },
   "kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/43997bb065df1f007e75.webp",
+    "image_url": "/supplier-photos/studio/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/AI_-_Ordinaire_4.jpg?v=1770807065",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "4f2ba42cb6bb4f0fbf4cff0bfccf3a2eb5e0c230a5341ae1c01df346530a6b89"
+    "sha256": "4f2ba42cb6bb4f0fbf4cff0bfccf3a2eb5e0c230a5341ae1c01df346530a6b89",
+    "source_asset_url": "/supplier-photos/oliere/43997bb065df1f007e75.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "7de87166c27748b8ed4f466d1511f53263f880f14ceecf3ca62e227350c9bfc0"
   },
   "kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris": {
-    "image_url": "/supplier-photos/oliere/f5457c377b94015d4c4f.webp",
+    "image_url": "/supplier-photos/studio/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/Color_Eclat_Leave-In_Mask.jpg?v=1782762950",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "3ff0b16b9d15f32788afbc5cb473ab7559a86f64a44d6ee7467422bec3df3dda"
+    "sha256": "3ff0b16b9d15f32788afbc5cb473ab7559a86f64a44d6ee7467422bec3df3dda",
+    "source_asset_url": "/supplier-photos/oliere/f5457c377b94015d4c4f.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "78430ddd451fc2547dcfdb1474ad334e2cf31cd351ef828fdb631651d91f01f2"
   },
   "visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml": {
-    "image_url": "/supplier-photos/oliere/cebac4d4cd3d380bb129.webp",
+    "image_url": "/supplier-photos/studio/visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/ChatGPT_Image_11_._2025_._20_30_00.png?v=1760203861",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "20915af6cebe3c11dc4ce4ffded03f78c9c2d7f7ae8e16a35334a930f6ee2349"
+    "sha256": "20915af6cebe3c11dc4ce4ffded03f78c9c2d7f7ae8e16a35334a930f6ee2349",
+    "source_asset_url": "/supplier-photos/oliere/cebac4d4cd3d380bb129.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "c61197d7d98de7b51dd4211014a8947a51d45945cb3ae987f9ad3ad1a3a23701"
   },
   "visk-zvolozhuiuchyi-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml": {
-    "image_url": "/supplier-photos/oliere/626385acf3990327c2e6.webp",
+    "image_url": "/supplier-photos/studio/visk-zvolozhuiuchyi-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/oliere_3.png?v=1760203177",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
-    "sha256": "a5b68330b6a4a9415a2f4993585c25a55ed82ebb3588948ec24e5e3c01419014"
+    "sha256": "a5b68330b6a4a9415a2f4993585c25a55ed82ebb3588948ec24e5e3c01419014",
+    "source_asset_url": "/supplier-photos/oliere/626385acf3990327c2e6.webp",
+    "studio_revision": "studio-v1",
+    "studio_sha256": "61d219616a3b8f3dd76dde09e9d8ec8aef16e731aaeb5ba20e6a9c478f9dd522"
   }
 }

@@ -26,11 +26,11 @@ for(const p of items){
 const mime={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/avif':'avif'};
 const report={products:items.length,uniqueImages:groups.size,completed:0,linked:0,failures:[]};
 for(const [url,products] of groups){
- const allMapped=products.every(p=>entries[p.slug]?.source_image_url===url);
+ const allMapped=products.every(p=>entries[p.slug]?.source_image_url===url && !entries[p.slug]?.image_url?.endsWith('.avif'));
  if(allMapped){report.completed++;report.linked+=products.length;continue}
  const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),18000);
  try{
-  const response=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0','Accept':'image/avif,image/webp,image/png,image/jpeg,image/*;q=.8'},signal:ctl.signal});
+  const response=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0','Accept':'image/png,image/webp,image/jpeg'},signal:ctl.signal});
   if(!response.ok)throw Error('HTTP '+response.status);
   const contentType=(response.headers.get('content-type')||'').split(';')[0].toLowerCase();
   const ext=mime[contentType];if(!ext)throw Error('Invalid image MIME '+contentType);

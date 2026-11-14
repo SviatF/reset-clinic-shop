@@ -95,7 +95,7 @@
 .premium-product-stage > img {
   position: relative;
   z-index: 4;
-  width: min(71%, 235px);
+  width: min(94%, 280px);
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 24px 19px rgba(30,25,17,.13));

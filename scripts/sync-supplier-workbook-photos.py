@@ -60,9 +60,14 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
             picture=Image.open(io.BytesIO(original))
             picture=ImageOps.exif_transpose(picture)
             picture.thumbnail((1200,1200),Image.Resampling.LANCZOS)
-            picture=picture.convert('RGB')
+            # 31/39 supplier assets contain a real alpha channel. Flattening
+            # to RGB previously painted every transparent pixel black.
+            if 'A' in picture.getbands() or 'transparency' in picture.info:
+                picture=picture.convert('RGBA')
+            else:
+                picture=picture.convert('RGB')
             output=io.BytesIO()
-            picture.save(output,format='WEBP',quality=85,method=5)
+            picture.save(output,format='WEBP',quality=89,method=5,exact=True)
             image_bytes=output.getvalue()
             dest=Path('public/supplier-photos')/brand.lower()/(record['slug']+'.webp')
             if APPLY:
