@@ -28,7 +28,6 @@ export default async function ShopListing({category,subcategory,query={},inCatal
  const result=await getStoreProductsPage({category,subcategory,page,limit:24,sort,brand:query.brand,search:query.q},records);
  const active=records.filter(row=>row.status==="active");
  const scoped=active.filter(row=>!category||row.category===category);
- const brands=[...new Set(scoped.map(row=>row.brand))].sort((a,b)=>a.localeCompare(b,"uk"));
  const allBrands=[...new Set(active.map(row=>row.brand))].sort((a,b)=>a.localeCompare(b,"uk"));
  const children=category?taxonomy.filter(c=>c.parent_slug===category&&c.status==="active").sort((a,b)=>a.sort_order-b.sort_order):[];
  const currentChild=children.find(c=>c.slug===subcategory);
@@ -59,7 +58,7 @@ export default async function ShopListing({category,subcategory,query={},inCatal
    <CatalogFilterPanel initialCategory={category} initialSubcategory={subcategory} brands={allBrands} />
   </div>
   <div className="rs-grid">{result.items.map(item=><ShopProductCard key={item.slug} item={item}/>)}</div>
-  {result.total===0&&<div className="rs-empty"><p>За вибраними параметрами товарів немає.</p><Link href={subHref()}>Показати всі засоби →</Link></div>}
+  {result.total===0&&<div className="rs-empty"><p>За вибраними параметрами товарів немає.</p><Link href={makeUrl("/catalog",{category})}>Показати всі засоби →</Link></div>}
   {result.pages>1&&<nav className="rs-pagination" aria-label="Сторінки каталогу">
    {result.page>1&&<Link href={pagination(result.page-1)}>← Назад</Link>}
    <span>{result.page} / {result.pages}</span>
