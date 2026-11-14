@@ -737,5 +737,12 @@
     "source_image_url": "https://avepharm.com.ua/storage/8728/conversions/5-preview.jpg?v=1794687593",
     "match_score": 0.86,
     "sha256": "3e7ec1600116c13e03f59afddeea6ea3b150d1b4f40facbbd76ae231af2531ee"
+  },
+  "sensilis-catalog-002": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-002.png",
+    "source_product_url": "https://sensilis.com.ua/azelaic-peel/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/AZELAIC%20SOMBRA%20WEB-750x1000.png",
+    "match_score": 0.86,
+    "sha256": "e5b3c5e792cbe9de4a3abf94846f31cb2396f150aa3e46d00f83d9aac9802fbd"
   }
 }
