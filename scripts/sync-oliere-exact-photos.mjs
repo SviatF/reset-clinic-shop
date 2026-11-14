@@ -82,6 +82,7 @@ for(const item of shopify) {
 }
 const confirmed=[];
 const selectedIds=new Set();
+const OUT_OF_CURRENT_OFFICIAL_FEED = new Set(["profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris"]);
 for(const row of hair){
  const canonicalName=canonical(row.name);
  const hits=candidates.get(canonicalName)||[];
@@ -130,9 +131,12 @@ if (!APPLY) {
  await fs.writeFile(reportPath,JSON.stringify(report,null,2)+"\n");
  process.exit(0);
 }
-if(report.matched.length!==hair.length||report.ambiguous.length||report.missing.length||report.failures.length){
+// Only the historically listed Studio kit is absent from today's Shopify
+// product API; never attach another Studio image as a guess.
+const unmatchedExpected=report.missing.every(row=>OUT_OF_CURRENT_OFFICIAL_FEED.has(row.slug));
+if(!unmatchedExpected||report.ambiguous.length||report.failures.length||confirmed.length + report.missing.length !== hair.length) {
  await fs.writeFile(reportPath,JSON.stringify(report,null,2)+"\n");
- throw Error("Aborting: all active OLIE'RE product titles must match one exact official Shopify record. No partial publish.");
+ throw Error("Aborting: unexpected mismatch in the official product catalog.");
 }
 const destDir = "public/supplier-photos/oliere-exact";
 const pending=[];
@@ -171,9 +175,9 @@ for(const item of confirmed){
     done.extension,done.bytes.length);
  }catch(e){report.failures.push({sku:item.info.sku,slug:item.row.slug,reason:String(e)})}
 }
-if(report.failures.length!==0||pending.length!==hair.length){
+if(report.failures.length!==0||pending.length!==confirmed.length){
  await fs.writeFile(reportPath,JSON.stringify(report,null,2)+"\n");
- throw Error("Aborting: unable to download all product-specific images; catalog mapping unchanged");
+ throw Error("Aborting: unable to download confirmed product-specific images; catalog mapping unchanged");
 }
 const newMap=JSON.parse(JSON.stringify(currentMap));
 await fs.mkdir(destDir,{recursive:true});
@@ -200,6 +204,21 @@ for(const item of pending){
   sha256:hash,
  };
 }
+for(const unresolved of report.missing){
+ // The former catalog photo is unverified. Mark it for review instead of
+ // leaving the wrong image silently visible in the storefront.
+ const row=hair.find(item=>item.slug===unresolved.slug);
+ const old=newMap[unresolved.slug]||{};
+ newMap[unresolved.slug]={
+  ...old,
+  legacy_image_url:row.image_url,
+  legacy_studio_image_url:old.image_url||null,
+  image_url:null,
+  verification_status:"needs_review",
+  verified_by:"not_present_in_current_official_shopify_catalog"
+ };
+}
 await fs.writeFile(mapPath,JSON.stringify(newMap,null,2)+"\n");
 await fs.writeFile(reportPath,JSON.stringify(report,null,2)+"\n");
-console.log("SUCCESS:",pending.length,"product images are uniquely bound to the matching official source product records");
+console.log("SUCCESS:",pending.length,"confirmed product photos bound to exact official records,",
+ report.missing.length,"unlisted product flagged for manual verification");
