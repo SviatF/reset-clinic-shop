@@ -1,1 +1,191 @@
-{}
+{
+  "histolab-catalog-001": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-001.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/ferulic-boosting-ampoule-antyoksydantna-osvitlyuyucha-syrovatka-ampula",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/bd1663_fddfe691be4f41e2adcff59f02ed5112~mv2-300x300.jpg",
+    "match_score": 0.94,
+    "sha256": "06c8ee1f1933c908dda46a6c11a49cbc152eb20f798cc273edd46ab53ad08ed2"
+  },
+  "histolab-catalog-002": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-002.png",
+    "source_product_url": "https://histolab.com.ua/syrovatky/triple-whitening-effect-ampoule-osvitlyuyucha-ampulna-syrovatka-z-potrijnoyu-diyeyu",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/bd1663_c5133eab33bc40f0ab0a65e9ddf72e8b~mv2-300x300.png",
+    "match_score": 0.94,
+    "sha256": "513f1fccd0ebd508f3c4e8b352611f40631c872eafa7e2e9bf80ecbaab49a5de"
+  },
+  "histolab-catalog-003": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-003.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-gialuronovoyu-kyslotoyu-83",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/histolab-hyaluron-complex-ampoule-83-1200x1200-300x300.jpg",
+    "match_score": 0.96,
+    "sha256": "46701ba25465424bb8dd84ce99270e103a08a9bf0dab095ef0ebe1826d4bcd6e"
+  },
+  "histolab-catalog-004": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-004.png",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-epidermalnym-chynnykom-zrostannya-egf-63",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/%20%D0%B1%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B8%20(3)-300x300.png",
+    "match_score": 0.972,
+    "sha256": "843233dd09c3a6544018b4b2b1820343e8ef2d82506b150ffa704438a639d0d5"
+  },
+  "histolab-catalog-005": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-005.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-z-kompleksom-azulena-72",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/derma/2020_Dec21_Histolab-1-8-300x300.jpg",
+    "match_score": 0.96,
+    "sha256": "eb03a2308f26ecd487f219070e59b2361ec146a92c78063036da941d6a0c8d20"
+  },
+  "histolab-catalog-006": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-006.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/koncentrat-osvitlyuvalnyj-z-vitaminom-s-47",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/derma/2020_Dec21_Histolab-1-15-300x300.jpg",
+    "match_score": 0.96,
+    "sha256": "d2a2fbef0bc5d23b9aae8dd0dd8398596b69101d68d88a003c72e097fef0838f"
+  },
+  "histolab-catalog-007": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-007.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/osvitlyuyucha-syrovatka-dlya-oblychchya",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/white/T_a_0_0_683_0_01-300x300.jpg",
+    "match_score": 0.94,
+    "sha256": "6c99f52fccc946cb6d90c31f6c8705e8c93a94b6fe209239ca10d548e26925d2"
+  },
+  "histolab-catalog-008": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-008.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/syrovatka-dlya-likuvannya-akne",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/acnex/crystal%20serum-300x300.jpg",
+    "match_score": 0.949,
+    "sha256": "d653c42d34929b588a7d6cb2321968b5f2d106095895e90c6c8610c55e0176f5"
+  },
+  "histolab-catalog-009": {
+    "image_url": "/supplier-photos/histolab/histolab-catalog-009.jpg",
+    "source_product_url": "https://histolab.com.ua/syrovatky/syrovatka-protyzapalna-dlya-lokalnogo-zastosuvannya-%C2%ABomega%C2%BB",
+    "source_image_url": "https://histolab.com.ua/image/cache/catalog/products/acnex/omega%20spot-300x300.jpg",
+    "match_score": 0.967,
+    "sha256": "dba04058a938ae23e93e1de1558c55fe0cab69a58c8badb3aa3811d23ee1d9f4"
+  },
+  "hydropeptide-catalog-001": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-001.webp",
+    "source_product_url": "https://hydropeptide.ua/product/resurface-and-repair-peptide-pads/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/03/resurface-repair-pads.webp",
+    "match_score": 0.949,
+    "sha256": "55f5a880b69f15812ec2d483ec5c2ba2cacd9efc0baf4255edddaa5f6ba67a44"
+  },
+  "hydropeptide-catalog-002": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-002.webp",
+    "source_product_url": "https://hydropeptide.ua/product/collagen-reactivate-pm/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/05/collagen-reactivate-pm.webp",
+    "match_score": 1,
+    "sha256": "1bd7e6969e2d1fac6b127c0bfc2e49678cd2ab937e33359819375e08cfe08ff3"
+  },
+  "hydropeptide-catalog-003": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-003.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/micro-dose-glow-booster/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/10/micro-doseglowbooster.jpg",
+    "match_score": 0.972,
+    "sha256": "41d595d840aac9017fa07fc65a0ce0d0e5ec5d43398a7204711ce6318b3cb9e3"
+  },
+  "hydropeptide-catalog-004": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-004.webp",
+    "source_product_url": "https://hydropeptide.ua/product/power-supply/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/10/powersupplykit-1.webp",
+    "match_score": 1,
+    "sha256": "9d8e53606da0631a1591aac39578fb072c1ada0c45f9fc421ba65792214e9027"
+  },
+  "hydropeptide-catalog-005": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-005.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/barrier-builder/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/10/barrier-builder.jpg",
+    "match_score": 1,
+    "sha256": "9264f753f0a9e7ecc9df9003d391f83e58a8b0d58ae38a2d042ff50339709731"
+  },
+  "hydropeptide-catalog-006": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-006.webp",
+    "source_product_url": "https://hydropeptide.ua/product/barrier-builder-travel-size/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/05/travel-size-barrier-builder.webp",
+    "match_score": 1,
+    "sha256": "2470312b004605957fe6a1d840f0cda5842f1331a6a6b7a2ff8d1e63c59b18b0"
+  },
+  "hydropeptide-catalog-007": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-007.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/clear-resque-serum/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/08/clear-rescue.jpg",
+    "match_score": 0.967,
+    "sha256": "6ef050d59ffdf399153cee45a7a90c013ac907e5d69ab3e1abe2d831d6660df7"
+  },
+  "hydropeptide-catalog-008": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-008.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/ochischayuschiy-gel-s-effektom-tonizatsii-dlya-snyatiya-makiyazha/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2015/12/new_retail_packaging_cleansinggel_pdp_950x.progressive.jpg",
+    "match_score": 1,
+    "sha256": "e89f7d754b176c1472cff0c2b24f1e2c43297dde2921e60a1945dc349db4bbb3"
+  },
+  "hydropeptide-catalog-009": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-009.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/solar-dew-spf-30/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/05/solar-dew.jpg",
+    "match_score": 1,
+    "sha256": "4b3d86fef353849559675079a44ed5f176456e46ed90a239c03bfe17cd46d422"
+  },
+  "hydropeptide-catalog-010": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-010.webp",
+    "source_product_url": "https://hydropeptide.ua/product/travel-solar-dew/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/03/travel-solardew.webp",
+    "match_score": 1,
+    "sha256": "bced6263422681ab55b67b4b32630a00e69df007b87a31a5a097504a2a0abf86"
+  },
+  "hydropeptide-catalog-011": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-011.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/foaming-cream-cleanser/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2024/04/foaming-cleanser-3.jpg",
+    "match_score": 0.96,
+    "sha256": "adff78b16bb0d310df9a602a31cbf25bec7a6ae25d580c578864071e0f0ebf07"
+  },
+  "hydropeptide-catalog-012": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-012.webp",
+    "source_product_url": "https://hydropeptide.ua/product/travel-foaming-cream-cleanser/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2026/05/travel-foamingcreamcleanser.webp",
+    "match_score": 0.972,
+    "sha256": "26134e0c0d44d49b7b393884c8b52b4d1b84424640b4b736eaa4f86b0ed4c475"
+  },
+  "hydropeptide-catalog-013": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-013.jpg",
+    "source_product_url": "https://hydropeptide.ua/product/solar-defense-tinted-spf-30/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2017/05/solar-defense-tinted-spf-30-new-2.jpg",
+    "match_score": 1,
+    "sha256": "909cc08ba6e70540d128573ec8d66eccaa8241d93f503a2c21784743fd713e06"
+  },
+  "hydropeptide-catalog-014": {
+    "image_url": "/supplier-photos/hydropeptide/hydropeptide-catalog-014.webp",
+    "source_product_url": "https://hydropeptide.ua/product/travel-size-solar-defense-tinted/",
+    "source_image_url": "https://hydropeptide.ua/wp-content/uploads/2025/11/travel-size-solar-defense-tinted.webp",
+    "match_score": 1,
+    "sha256": "61e5af36bbbddf68f8be2fa6382dbe6446f7b2785c1cb56ab5fd63d86fbcf651"
+  },
+  "cetaphil-catalog-001": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-001.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-oil-control-zvolozhuvalniy-losyon-dlya-chutlivoji-masnoji-ta-shilnoji-do-akne-shkiri-oblichchya-spf-30-118-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8697/conversions/1-preview.jpg?v=1794686514",
+    "match_score": 0.94,
+    "sha256": "13bc869d1d3483e98a00880a1e7ea1e7a30fd78d3d4d1b9ead438b909b9f431f"
+  },
+  "cetaphil-catalog-002": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-002.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-oil-control-ochishchuvalna-pinka-dlya-chutlivoji-masnoji-ta-shilnoji-do-akne-shkiri-oblichchya-236-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8709/conversions/6-preview.jpg?v=1794686515",
+    "match_score": 0.94,
+    "sha256": "e9d42caca8eedbdea0b9c6c48243d09698cc1fa5669e9629c4ef8f88dac23a45"
+  },
+  "cetaphil-catalog-005": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-005.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-redness-control-denniy-zvolozhuvalniy-tonuvalniy-krem-dlya-chutlivoji-shkiri-oblichchya-shilnoji-do-pochervonin-spf-30-50-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8715/conversions/9-preview.jpg?v=1794686515",
+    "match_score": 0.94,
+    "sha256": "067b323e9a198a3d4f45e04b5f3db0083ce9e3e75ae76bc2df0ddec5dd911b69"
+  },
+  "cetaphil-catalog-006": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-006.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-shchodenniy-zvolozhuvalniy-losyon-dlya-suhoji-duzhe-suhoji-ta-chutlivoji-shkiri-oblichchya-88-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8717/conversions/10-preview.jpg?v=1794686516",
+    "match_score": 0.897,
+    "sha256": "09d896722e8be235f1ac962f12068daba971a64aaf85b17f9b5d28891898b59f"
+  }
+}
