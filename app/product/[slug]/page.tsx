@@ -2,7 +2,6 @@ import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import productFallback from "@/assets/img/tovar1.webp";
 import JsonLd from "@/components/JsonLd";
 import ProductActions from "@/components/ProductActions";
 import SmartProductImage from "@/components/SmartProductImage";
@@ -20,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = await getStoreProductBySlug(slug);
   if (!item) return { title: "Товар не знайдено", robots: { index: false, follow: false } };
   const path = `/product/${item.slug}`;
-  const image = item.imageUrl ? absoluteUrl(item.imageUrl) : (item.slug === "parsley-seed-anti-oxidant-eye-cream" ? absoluteUrl(productFallback.src) : null);
+  const image = item.imageUrl ? absoluteUrl(item.imageUrl) : null;
   return {
     title: item.seoTitle || item.name,
     description: item.seoDescription || item.description,
@@ -45,7 +44,6 @@ export default async function DynamicProductPage({ params }: Props) {
   if (!item) notFound();
   const path = `/product/${item.slug}`;
   const brandUrl = `/catalog?brand=${encodeURIComponent(item.brand)}`;
-  const imageSrc = item.imageUrl || productFallback.src;
   const categoryName = item.category === "body" ? "Тіло" : item.category === "hair" ? "Волосся" : item.category === "face" ? "Обличчя" : "Каталог";
   const categoryPath = item.category === "body" ? "/body" : item.category === "hair" ? "/hair" : item.category === "face" ? "/face" : "/catalog";
   const inStock = !item.trackStock || item.stockQuantity > 0;
@@ -55,7 +53,7 @@ export default async function DynamicProductPage({ params }: Props) {
     "@id": `${absoluteUrl(path)}#product`,
     name: item.name,
     description: item.description,
-    ...(item.imageUrl || item.slug === "parsley-seed-anti-oxidant-eye-cream" ? { image: [absoluteUrl(imageSrc)] } : {}),
+    ...(item.imageUrl ? { image: [absoluteUrl(item.imageUrl)] } : {}),
     url: absoluteUrl(path),
     ...(item.sku ? {sku:item.sku} : {}),
     brand: { "@type": "Brand", name: item.brand },
@@ -89,7 +87,7 @@ export default async function DynamicProductPage({ params }: Props) {
                 <span className="product-gallery-tag">RESET SELECT</span>
                 <span className="product-object-index">01 / PRODUCT</span>
                 <span className="product-object-halo" aria-hidden="true" />
-                <SmartProductImage src={item.imageUrl || (item.slug === "parsley-seed-anti-oxidant-eye-cream" ? productFallback.src : null)} alt={item.name} className="dynamic-product-image" loading="eager" fallback={<div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
+                <SmartProductImage src={item.imageUrl} alt={item.name} className="dynamic-product-image" loading="eager" fallback={<div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
                 <div className="product-object-footer"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()}</Link><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
               </div>
             </div>
