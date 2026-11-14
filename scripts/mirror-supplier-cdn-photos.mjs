@@ -13,7 +13,11 @@ const mapFile='data/supplier-photo-map.json';
 const entries=JSON.parse(await fs.readFile(mapFile,'utf8'));
 const host='cdn.shopify.com';
 const allowedPath='/s/files/1/0765/2812/4147/';
-const items=rows.filter(p=>p.status==='active' && p.brand==="OLIE'RE PARIS" && p.image_url);
+// Do not resurrect incorrect legacy images after exact official per-SKU
+// verification has replaced them. Preserve review-required photo placeholders.
+const items=rows.filter(p=>p.status==='active' && p.brand==="OLIE'RE PARIS" && p.image_url
+  && entries[p.slug]?.verified_by!=="exact_official_shopify_product_title_and_size"
+  && entries[p.slug]?.verification_status!=="needs_review");
 const groups=new Map();
 for(const p of items){
  const u=new URL(p.image_url);
