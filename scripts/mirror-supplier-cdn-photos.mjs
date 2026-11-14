@@ -30,7 +30,7 @@ for(const [url,products] of groups){
  if(allMapped){report.completed++;report.linked+=products.length;continue}
  const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),18000);
  try{
-  const response=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0','Accept':'image/png,image/webp,image/jpeg,image/*;q=.8'},signal:ctl.signal});
+  const response=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0','Accept':'image/png,image/webp,image/jpeg'},signal:ctl.signal});
   if(!response.ok)throw Error('HTTP '+response.status);
   const contentType=(response.headers.get('content-type')||'').split(';')[0].toLowerCase();
   const ext=mime[contentType];if(!ext)throw Error('Invalid image MIME '+contentType);
