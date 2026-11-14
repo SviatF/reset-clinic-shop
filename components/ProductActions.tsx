@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
-import { product } from "@/lib/product";
 
 type ActionProduct = { slug: string; name: string; price: number; maxQty?: number };
 
-export default function ProductActions({ item }: { item?: ActionProduct }) {
-  const current = item || { slug: product.slug, name: product.name, price: product.price, maxQty: 20 };
+export default function ProductActions({ item }: { item: ActionProduct }) {
+  const current = item;
   const maxQty = Math.max(1, Math.min(20, current.maxQty || 20));
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
