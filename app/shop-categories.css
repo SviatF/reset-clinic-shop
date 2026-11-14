@@ -37,8 +37,8 @@
 .rs-filter-fields>a{font-size:12px;text-decoration:underline;text-align:center;color:#686157}
 .rs-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;width:100%!important}
 .rs-card{display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid #e7e2d9;background:#fff}
-.rs-card-media{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1.08;background:linear-gradient(135deg,#faf9f6,#f0ede6);padding:10px;overflow:hidden}
-.rs-card-media img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.rs-card-media{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1.08;background:#f7f6f3;padding:18px;overflow:hidden}
+.rs-card-media img{width:100%;height:100%;object-fit:contain;mix-blend-mode:normal;filter:drop-shadow(0 7px 11px rgba(33,28,24,.07));transition:transform .35s ease}
 .rs-card-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:#ebe8e0;color:#726b61;text-align:center;padding:12px}
 .rs-card-placeholder strong{font-size:clamp(13px,1.7vw,23px);line-height:1.15;letter-spacing:-.03em;overflow-wrap:anywhere}
 .rs-card-placeholder small{font-size:10px;color:#989084}
