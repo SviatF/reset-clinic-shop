@@ -2,6 +2,7 @@
 /** Guardrail: never silently reintroduce shared/mismatched hair photos. */
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 const rows=JSON.parse(fs.readFileSync("data/products.json","utf8"));
 const refs=JSON.parse(fs.readFileSync("data/supplier-photo-map.json","utf8"));
 const hair=rows.filter(p=>p.status==="active"&&p.brand==="OLIE'RE PARIS");
@@ -26,12 +27,20 @@ for(const row of hair){
   issues.push(row.sku+": missing or duplicate official Shopify product ID");
  }
  ids.add(ref.source_product_id);
- if(ref.image_url!=="/supplier-photos/studio/"+row.slug+".webp"){
-  issues.push(row.sku+": unexpected local studio image path");
+ if(ref.isolation_revision!=="u2net-v1" ||
+    ref.image_url!=="/supplier-photos/isolated/"+row.slug+".webp"){
+  issues.push(row.sku+": missing exact verified transparent cutout");
  }else{
   const disk=path.join("public",ref.image_url);
   if(!fs.existsSync(disk)||fs.statSync(disk).size<800){
-    issues.push(row.sku+": missing studio image");
+    issues.push(row.sku+": missing transparent image");
+  }else{
+    const bytes=fs.readFileSync(disk);
+    const digest=createHash("sha256").update(bytes).digest("hex");
+    if(digest!==ref.isolation_sha256)
+      issues.push(row.sku+": cutout checksum does not match verified asset");
+    if(bytes.toString("ascii",0,4)!=="RIFF"||bytes.toString("ascii",8,12)!=="WEBP")
+      issues.push(row.sku+": cutout is not WebP");
   }
  }
  if(!ref.source_asset_url?.startsWith("/supplier-photos/oliere-exact/")){

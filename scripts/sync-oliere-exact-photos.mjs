@@ -187,6 +187,8 @@ for(const item of pending){
  await fs.writeFile(file,bytes);
  const old=newMap[row.slug]||{};
  const uri="/"+file.replace(/^public\//,"");
+ // Official media can change. Clear previous cutout claims so the manual
+ // refresh pipeline regenerates alpha masks from the freshly downloaded file.
  newMap[row.slug]={
   ...old,
   image_url:uri,
@@ -203,6 +205,10 @@ for(const item of pending){
   verified_by:"exact_official_shopify_product_title_and_size",
   sha256:hash,
  };
+ delete newMap[row.slug].isolation_revision;
+ delete newMap[row.slug].isolation_sha256;
+ delete newMap[row.slug].isolation_foreground_share;
+ delete newMap[row.slug].pre_isolation_image_url;
 }
 for(const unresolved of report.missing){
  // The former catalog photo is unverified. Mark it for review instead of

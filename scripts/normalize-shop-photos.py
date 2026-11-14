@@ -24,7 +24,7 @@ REVISION = "studio-v1"
 rows = json.loads(PRODUCTS.read_text())
 active = [row for row in rows if row.get("status") == "active"]
 mapped = json.loads(MAP.read_text())
-report = {"active": len(active), "normalized": 0, "backgrounds_removed": 0,
+report = {"active": len(active), "normalized": 0, "preserved_isolated": 0, "backgrounds_removed": 0,
           "original_alpha": 0, "opaque_preserved": 0, "missing": [], "errors": [], "pending_review": []}
 
 
@@ -141,6 +141,23 @@ for product in active:
     if entry and entry.get("verification_status") == "needs_review":
         report["pending_review"].append(slug)
         continue
+    if entry and entry.get("isolation_revision") == "u2net-v1":
+        # Verified, object-only images have a genuine alpha channel. Never
+        # overwrite them from the original opaque backdrop during source sync.
+        isolated_url = entry.get("image_url", "")
+        if not isolated_url.startswith("/supplier-photos/isolated/"):
+            report["errors"].append({"slug": slug, "reason": "Isolation metadata points at non-isolated image"})
+            continue
+        isolated_file = source_path(isolated_url)
+        if not isolated_file.is_file():
+            report["errors"].append({"slug": slug, "reason": "Isolated asset is missing"})
+            continue
+        with Image.open(isolated_file) as existing:
+            if existing.mode != "RGBA" or existing.getchannel("A").getextrema() != (0, 255):
+                report["errors"].append({"slug": slug, "reason": "Isolated asset lacks real transparency"})
+                continue
+        report["preserved_isolated"] += 1
+        continue
     if not entry:
         report["missing"].append({"slug": slug, "reason": "No verified source map"})
         continue
@@ -177,5 +194,5 @@ print(json.dumps({k: v for k, v in report.items() if k not in ("missing", "error
 if report["errors"] or report["missing"]:
     print(json.dumps({"missing": report["missing"], "errors": report["errors"]}, ensure_ascii=False)[:3000])
     sys.exit(1)
-if report["normalized"] + len(report["pending_review"]) != len(active):
+if report["normalized"] + report["preserved_isolated"] + len(report["pending_review"]) != len(active):
     raise RuntimeError("Every active photo must be normalized or explicitly pending verification")
