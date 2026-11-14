@@ -48,8 +48,8 @@ function mapRecord(row: ProductRecord): StoreProduct {
 
 export async function getAllProductRecords(){return readProducts();}
 export type CatalogQuery = {category?:string;subcategory?:string;brand?:string;featured?:boolean;limit?:number;page?:number;search?:string;line?:string;sort?:"default"|"price-asc"|"price-desc"|"name"};
-export async function getStoreProductsPage(options:CatalogQuery={}){
-  const data=await readProducts();
+export async function getStoreProductsPage(options:CatalogQuery={},prefetched?:ProductRecord[]){
+  const data=prefetched ?? await readProducts();
   const query=(options.search||"").toLocaleLowerCase("uk").trim();
   const filtered=data.filter(row=>row.status==="active")
     .filter(row=>!options.category||row.category===options.category)
