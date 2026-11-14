@@ -52,6 +52,28 @@ async function jsonFetch(url) {
   }finally{clearTimeout(timeout)}
 }
 const shopify = await jsonFetch(SOURCE+"/products.json?limit=250");
+
+// One exact product still exists on the official website, but was omitted from
+// Shopify's public /products.json listing. Retrieve its own product JSON by
+// verified exact handle, never substitute a similar Studio product instead.
+const individuallyVerified = [
+  "profesiynyy-nabor-dlya-ukladannya-volossya-studio-oliere-paris",
+];
+for(const handle of individuallyVerified) {
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),22000);
+  try {
+    const url=SOURCE+"/products/"+handle+".json";
+    const response=await fetch(url,{headers:{"Accept":"application/json","User-Agent":"Mozilla/5.0"},signal:controller.signal});
+    if(!response.ok)throw Error("Official product endpoint "+response.status);
+    const payload=await response.json();
+    const product=payload.product;
+    if(!product || !product.title || !product.images?.length)throw Error("No valid official product JSON");
+    if(!shopify.some(item=>item.id===product.id))shopify.push(product);
+    console.log("VERIFIED_INDVIDUAL_PRODUCT",product.title,product.handle,product.images.length);
+  }catch(error){
+    console.warn("Official individual product unavailable:",handle,String(error));
+  }finally{clearTimeout(timeout)}
+}
 const candidates = new Map();
 for(const item of shopify) {
  const key=canonical(item.title);
@@ -114,7 +136,7 @@ if(report.matched.length!==hair.length||report.ambiguous.length||report.missing.
 }
 const destDir = "public/supplier-photos/oliere-exact";
 const pending=[];
-const imagesMime = {"image/jpeg":"jpg","image/png":"png","image/webp":"webp","image/avif":"avif"};
+const imagesMime = {"image/jpeg":"jpg","image/png":"png","image/webp":"webp","image/avif":"avif","image/gif":"gif"};
 async function photoFetch(item) {
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),25000);
  try {
@@ -122,7 +144,7 @@ async function photoFetch(item) {
   // Request a sensible, clear primary image from the exact Shopify product.
   url.searchParams.set("width","1200");
   const response=await fetch(url.toString(),{
-    headers:{"User-Agent":"Mozilla/5.0","Accept":"image/webp,image/png,image/jpeg,image/avif"},
+    headers:{"User-Agent":"Mozilla/5.0","Accept":"image/webp,image/png,image/jpeg,image/gif"},
     signal:controller.signal
   });
   if(!response.ok)throw Error("Image download HTTP "+response.status);
@@ -135,6 +157,7 @@ async function photoFetch(item) {
   const magic=ext==="jpg"?(bytes[0]===255&&bytes[1]===216)
     :ext==="png"?bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))
     :ext==="webp"?bytes.toString("ascii",8,12)==="WEBP"
+    :ext==="gif"?bytes.toString("ascii",0,4)==="GIF8"
     :bytes.toString("ascii",4,16).includes("ftypavif");
   if(!magic)throw Error("Content is not an image matching its MIME");
   return {...item,bytes,extension:ext,hash:createHash("sha256").update(bytes).digest("hex")};
