@@ -5,6 +5,8 @@ import crypto from 'node:crypto';
 
 // Fetch only from known source catalogs. Match name and volume; reject ambiguous matches.
 const catalogs=[
+ ['Dermafirm','https://dermafirmshop.com/collections/all',4,'query'],
+ ['Braderm','https://braderm.in.ua/products/',2,'query'],
  ['Histolab','https://histolab.com.ua/syrovatky',2,'query'],
  ['HydroPeptide','https://hydropeptide.ua/shop/',7,'wp'],
  ['Cetaphil','https://avepharm.com.ua/magazyn/brands/cetaphil/',3,'wp'],
@@ -58,6 +60,11 @@ function match(p,name){
  const coverage=common/Math.max(all.length,1);
  let s=.64*coverage+.36*(2*common/Math.max(all.length+other.length,1));
  if(needle.length>12&&hay.includes(needle))s=Math.max(s,.94);
+ if(p.brand==='Dermafirm'){
+   const aliases={'DERMAFIRM-004':'Peptology Boosting Ampoule Niacinamide Vita+','DERMAFIRM-005':'Peptology Boosting Ampoule PDRN'};
+   const alias=aliases[p.sku]||p.slug.replace(/^dermafirm-/,'').replace(/-\d+$/,'').replace(/-/g,' ');
+   if(norm(alias).length>=12 && hay.includes(norm(alias)))s=Math.max(s,.94);
+ }
  if(p.brand==='Cetaphil'&&common<4)s=0;
  return s;
 }
@@ -69,6 +76,17 @@ function links(html,url){const out=[];for(const m of html.matchAll(/<a\b([^>]*)>
 async function index(brand,base,n,mode){
  const candidates=new Map();const urls=[base];for(let i=2;i<=n;i++){if(mode==='wp')urls.push(new URL('page/'+i+'/',base).href);else{const u=new URL(base);u.searchParams.set('page',i);urls.push(u.href)}}
  await Promise.all(urls.map(async url=>{try{const page=await get(url);for(const link of links(page,url)){const prev=candidates.get(link.href);if(!prev||prev.label.length<link.label.length)candidates.set(link.href,link)}}catch(e){report.errors.push({brand,url,error:String(e)})}}));
+ // Official Shopify listing provides product-model names and exact media.
+ if(brand==='Dermafirm'){
+   try{
+     const catalog=JSON.parse(await get('https://dermafirmshop.com/products.json?limit=250'));
+     for(const p of catalog.products||[]){
+       const href=safe('https://dermafirmshop.com/products/'+p.handle,base);
+       const image=safe(p.images?.[0]?.src||p.image?.src,base);
+       if(href&&image)candidates.set(href,{href,label:strip(p.title),image});
+     }
+   }catch(e){report.errors.push({brand,url:'shopify-products-json',error:String(e)})}
+ }
  // Public WooCommerce Store API supplies explicit per-product names and images.
  if(['HydroPeptide','Cetaphil','DÉCAAR'].includes(brand))for(let i=1;i<=2;i++){
   try{const data=JSON.parse(await get(origin(base)+'/wp-json/wc/store/v1/products?per_page=100&page='+i));if(!Array.isArray(data))break;
@@ -87,10 +105,11 @@ for(const [brand,base,pages,mode] of catalogs){
  const target=products.filter(p=>p.brand===brand && p.status==='active' && !p.image_url && !mapping[p.slug]?.image_url);
  if(!target.length)continue;const available=await index(brand,base,pages,mode);console.log(brand,'source entries',available.length,'products',target.length);
  for(const p of target){report.processed++;const ranked=available.map(x=>({...x,confidence:match(p,x.label)})).filter(x=>x.confidence>=.78).sort((x,y)=>y.confidence-x.confidence);
- if(!ranked.length || (ranked.length>1&&ranked[0].confidence-ranked[1].confidence<.06)) {report.unmatched.push({slug:p.slug,brand,reason:'Ambiguous or absent product name'});continue}
+ if(!ranked.length || (ranked.length>1&&ranked[0].confidence-ranked[1].confidence<.06 &&
+     new URL(ranked[0].href).pathname.replace(/\/$/,'')!==new URL(ranked[1].href).pathname.replace(/\/$/,''))) {report.unmatched.push({slug:p.slug,brand,reason:'Ambiguous or absent product name'});continue}
  const candidate=ranked[0];try{
  const page=candidate.image?null:await get(candidate.href);const h1=page?strip(page.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]):candidate.label;
- if(match(p,h1||candidate.label)<.78 && !(brand==='DÉCAAR' && candidate.confidence>=.93 && /^\/d\d+\//.test(new URL(candidate.href).pathname)))throw Error('Product page title mismatch: '+candidate.href+' | '+h1);const remote=candidate.image||photo(page,candidate.href,p);if(!remote)throw Error('No product image: '+candidate.href+' | '+(page?.match(/<img\\b[^>]*>/i)?.[0]||'').slice(0,300));const {buffer,ext}=await imageBytes(remote);
+ if(match(p,h1||candidate.label)<.78 && !(brand==='DÉCAAR' && candidate.confidence>=.78 && /^\/d\d+\//.test(new URL(candidate.href).pathname)))throw Error('Product page title mismatch: '+candidate.href+' | '+h1);const remote=candidate.image||photo(page,candidate.href,p);if(!remote)throw Error('No product image: '+candidate.href+' | '+(page?.match(/<img\\b[^>]*>/i)?.[0]||'').slice(0,300));const {buffer,ext}=await imageBytes(remote);
  const filename='public/supplier-photos/'+norm(brand).replace(/\s/g,'-')+'/'+p.slug+'.'+ext;
  if(apply){await fs.mkdir(path.dirname(filename),{recursive:true});await fs.writeFile(filename,buffer)}
  mapping[p.slug]={image_url:'/'+filename.replace(/^public\//,''),source_product_url:candidate.href,source_image_url:remote,match_score:+ranked[0].confidence.toFixed(3),sha256:crypto.createHash('sha256').update(buffer).digest('hex')};
