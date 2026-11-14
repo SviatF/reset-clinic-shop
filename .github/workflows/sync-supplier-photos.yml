@@ -1,7 +1,7 @@
 name: Retrieve verified supplier product photos
 on:
   push:
-    branches: [fix/supplier-photo-sync-remove-demo-20261114]
+    branches: [main]
     paths:
       - 'scripts/sync-supplier-photos.mjs'
       - 'scripts/sync-supplier-workbook-photos.py'
@@ -22,16 +22,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check whether supplier Excel can be downloaded publicly
-        run: |
-          node --input-type=module <<'NODE'
-          const url='https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/export?format=xlsx';
-          try {
-            const response=await fetch(url,{redirect:'follow',signal:AbortSignal.timeout(20000)});
-            console.log('Supplier workbook export:',response.status,'content-type:',response.headers.get('content-type'),'content-length:',response.headers.get('content-length'));
-            await response.body?.cancel();
-          } catch(error) {console.log('Supplier workbook export unavailable:',String(error))}
-          NODE
       - name: Fetch supplier photos and save audited matches
         run: node scripts/sync-supplier-photos.mjs --apply
       - uses: actions/setup-python@v5
@@ -48,7 +38,7 @@ jobs:
           name: supplier-photo-match-report
           path: supplier-photo-sync-report.json
           if-no-files-found: ignore
-      - name: Commit matched photos and map to fix branch
+      - name: Commit verified photos to source branch
         run: |
           git add data/supplier-photo-map.json public/supplier-photos
           if git diff --cached --quiet; then
@@ -58,4 +48,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "assets(shop): store verified supplier photos locally"
-          git push origin HEAD:fix/supplier-photo-sync-remove-demo-20261114
+          git push origin HEAD:"${GITHUB_REF_NAME}"
