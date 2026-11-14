@@ -25,7 +25,7 @@ rows = json.loads(PRODUCTS.read_text())
 active = [row for row in rows if row.get("status") == "active"]
 mapped = json.loads(MAP.read_text())
 report = {"active": len(active), "normalized": 0, "backgrounds_removed": 0,
-          "original_alpha": 0, "opaque_preserved": 0, "missing": [], "errors": []}
+          "original_alpha": 0, "opaque_preserved": 0, "missing": [], "errors": [], "pending_review": []}
 
 
 def source_path(url: str) -> Path:
@@ -138,6 +138,9 @@ def studio_image(image: Image.Image) -> Image.Image:
 for product in active:
     slug = product["slug"]
     entry = mapped.get(slug)
+    if entry and entry.get("verification_status") == "needs_review":
+        report["pending_review"].append(slug)
+        continue
     if not entry:
         report["missing"].append({"slug": slug, "reason": "No verified source map"})
         continue
@@ -174,5 +177,5 @@ print(json.dumps({k: v for k, v in report.items() if k not in ("missing", "error
 if report["errors"] or report["missing"]:
     print(json.dumps({"missing": report["missing"], "errors": report["errors"]}, ensure_ascii=False)[:3000])
     sys.exit(1)
-if report["normalized"] != len(active):
-    raise RuntimeError("Not every active product photo was normalized")
+if report["normalized"] + len(report["pending_review"]) != len(active):
+    raise RuntimeError("Every active photo must be normalized or explicitly pending verification")
