@@ -1,0 +1,44 @@
+name: Prepare transparent OLIE'RE product cutouts
+on:
+  push:
+    branches: [fix/oliere-transparent-packshots-20261114]
+    paths:
+      - 'scripts/isolate-oliere-packshots.py'
+      - '.github/workflows/isolate-oliere-packshots.yml'
+permissions:
+  contents: write
+jobs:
+  isolate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install foreground segmentation model and runtime
+        run: python -m pip install "rembg[cpu]==2.0.67" "Pillow==11.1.0"
+      - name: Isolate 52 verified products (preserve original supplier images)
+        run: python scripts/isolate-oliere-packshots.py --apply
+      - name: Verify 52 transparent cutouts
+        run: python scripts/isolate-oliere-packshots.py --check
+      - name: Upload cutout audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oliere-transparent-cutouts-audit
+          path: oliere-isolation-report.json
+          if-no-files-found: ignore
+      - name: Commit isolated assets to current source branch
+        run: |
+          git add data/supplier-photo-map.json public/supplier-photos/isolated
+          if git diff --cached --quiet; then
+            echo "No new image outputs"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets(shop): prepare transparent packshots for 52 verified OLIE'RE SKUs"
+          git push origin HEAD:"${GITHUB_REF_NAME}"
