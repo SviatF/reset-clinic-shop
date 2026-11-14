@@ -19,7 +19,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageStat
 from rembg import new_session, remove
 from scipy import ndimage as ndi
 
@@ -54,6 +54,28 @@ def verified_source(entry):
         raise FileNotFoundError(source)
     return source
 
+def representative_frame(source):
+    """Supplier GIFs sometimes start with blank frames: choose the most
+    complete visible product frame without inventing or compositing SKUs."""
+    if not getattr(source,"is_animated",False) or getattr(source,"n_frames",1)<=1:
+        return source.copy()
+    frames=source.n_frames
+    picks=sorted(set([0,1,2,4,8,frames//5,frames//3,frames//2,2*frames//3,frames-1]))
+    best=None
+    score=-1
+    for i in picks:
+        if i>=frames: continue
+        source.seek(i)
+        sample=source.convert("RGBA")
+        coverage=sum(sample.getchannel("A").histogram()[9:])
+        contrast=sum(ImageStat.Stat(sample.convert("RGB")).stddev)
+        merit=coverage+contrast*90
+        if coverage and merit>score:
+            best=sample.copy()
+            score=merit
+    if best is None: raise ValueError("Supplier animation has no visible frame")
+    return best
+
 def get_model_mask(src, model):
     src=ImageOps.exif_transpose(src).convert("RGB")
     if max(src.size)>1600:
@@ -72,7 +94,7 @@ def clean_mask(conf):
     kernel=cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
     hard=cv2.morphologyEx(hard,cv2.MORPH_OPEN,kernel)
     hard=cv2.morphologyEx(hard,cv2.MORPH_CLOSE,kernel)
-    count,labels,components,_=cv2.connectedComponentsWithStats(hard,8)
+    count,labels,components,_=cv2.connectedComponentsWithStats(hard,connectivity=8)
     if count<=1: raise ValueError("No foreground components found")
     largest=max(int(components[i,cv2.CC_STAT_AREA]) for i in range(1,count))
     if largest<500: raise ValueError("Detected product is too small")
@@ -152,13 +174,13 @@ def report_contact_sheet(pairs):
     QA_DIR.mkdir(exist_ok=True)
     examples=pairs[:12]
     tw,th=330,380
-    sheet=Image.new("RGB",(tw*4,th*len(examples)),"#f9f8f5")
+    sheet=Image.new("RGB",(tw*3,th*len(examples)),"#f9f8f5")
     draw=ImageDraw.Draw(sheet)
     font=ImageFont.load_default()
     for row,(sku,source,old,new) in enumerate(examples):
         for col,photo in enumerate((source,old,new)):
             card=Image.new("RGBA",(tw,th-40),"#f7f6f3")
-            item=photo.copy()
+            item=photo.convert("RGBA")
             item.thumbnail((tw-16,th-58),Image.Resampling.LANCZOS)
             card.alpha_composite(item,((tw-item.width)//2,(th-40-item.height)//2))
             sheet.paste(card.convert("RGB"),(col*tw,row*th))
@@ -201,7 +223,7 @@ else:
             continue
         try:
             src=verified_source(entry)
-            with Image.open(src) as im: photo=im.convert("RGB")
+            with Image.open(src) as im: photo=representative_frame(im).convert("RGB")
             new,qa=build(photo,model)
             buffer=io.BytesIO()
             new.save(buffer,"WEBP",lossless=True,exact=True,method=5)
