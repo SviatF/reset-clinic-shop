@@ -702,5 +702,40 @@
     "source_image_url": "https://avepharm.com.ua/storage/8691/conversions/3499320018647_Cetaphil-PRO-Itch-Control-%D0%97%D0%B2%D0%BE%D0%BB%D0%BE%D0%B6%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%B9-%D0%BB%D0%BE%D1%81%D1%8C%D0%B9%D0%BE%D0%BD-%D0%BF%D1%80%D0%BE%D1%82%D0%B8-%D1%81%D0%B2%D0%B5%D1%80%D0%B1%D1%96%D0%BD%D0%BD%D1%8F-%D0%B4%D0%BB%D1%8F-%D0%B0%D1%82%D0%BE%D0%BF%D1%96%D1%87%D0%BD%D0%BE%D1%97,-%D1%81%D1%83%D1%85%D0%BE%D1%97-%D1%82%D0%B0-%D1%87%D1%83%D1%82%D0%BB%D0%B8%D0%B2%D0%BE%D1%97-%D1%88%D0%BA%D1%96%D1%80%D0%B8,-236-%D0%BC%D0%BB-preview.jpg?v=1794687458",
     "match_score": 0.94,
     "sha256": "72bc4e15ca8a2cd4a4a577936b5376a0c49505947edea9e7ac03af606919063b"
+  },
+  "cetaphil-catalog-007": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-007.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-nichniy-zvolozhuvalniy-krem-dlya-normalnoji-chutlivoji-ta-duzhe-suhoji-shkiri-oblichchya-48-g/",
+    "source_image_url": "https://avepharm.com.ua/storage/8719/conversions/1-preview.jpg?v=1794687590",
+    "match_score": 0.86,
+    "sha256": "7690431e917a2a084932d07763bc128f7da64b66df0bd5c323df3a4830d341a9"
+  },
+  "cetaphil-catalog-008": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-008.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-nizhniy-gel-eksfoliant-dlya-ochishchennya-suhoji-masnoji-ta-kombinovanoji-shkiri-oblichchya-178-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8721/conversions/2-preview.jpg?v=1794687591",
+    "match_score": 0.86,
+    "sha256": "67b0df38f7862adaffd31e1224d086c3faab6cbd2e504c1b36d6a83ddae5d170"
+  },
+  "cetaphil-catalog-009": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-009.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-zvolozhuvalniy-balzam-dlya-suhoji-normalnoji-ta-chutlivoji-shkiri-oblichchya-i-tila-500-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8724/conversions/3-preview.jpg?v=1794687592",
+    "match_score": 0.86,
+    "sha256": "e045ef682c9944b159d4594a66adcf31c55be5885636e66053ee11d33353b9e9"
+  },
+  "cetaphil-catalog-010": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-010.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-zvolozhuvalniy-balzam-dlya-suhoji-normalnoji-ta-chutlivoji-shkiri-oblichchya-i-tila-236-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8726/conversions/4-preview.jpg?v=1794687592",
+    "match_score": 0.86,
+    "sha256": "a8124e87810bc4feb17b3e896b0b3423df618ac7cd680512c9b4807b00a332b4"
+  },
+  "cetaphil-catalog-011": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-011.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-micelyarna-emulsiya-dlya-ochishchennya-normalnoji-suhoji-ta-chutlivoji-shkiri-236-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8728/conversions/5-preview.jpg?v=1794687593",
+    "match_score": 0.86,
+    "sha256": "3e7ec1600116c13e03f59afddeea6ea3b150d1b4f40facbbd76ae231af2531ee"
   }
 }
