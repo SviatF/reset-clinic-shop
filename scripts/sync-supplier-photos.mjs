@@ -102,6 +102,20 @@ async function imageBytes(url){const ctrl=new AbortController(),timer=setTimeout
  return {buffer,ext};
  }finally{clearTimeout(timer)}}
 
+/** Conservative fallback for exact manually verified supplier product pages.
+ * Match distinctive initial model tokens and the package size where available. */
+function exactModelMatch(item, heading) {
+  if (!['Cetaphil','Sensilis'].includes(item.brand)) return 0;
+  const title=item.name.replace(new RegExp('^'+item.brand+'\\s*','i'),'').split(/\\s[—–]\\s/)[0];
+  const required=tokens(title).slice(0,3);
+  const present=new Set(tokens(heading));
+  if(required.length<2 || !required.every(word=>present.has(word))) return 0;
+  const expected=String(item.size||'').match(/\\d{2,4}/)?.[0];
+  const seen=String(heading||'').match(/\\b(\\d{2,4})\\s*(?:мл|ml|г|g)\\b/i)?.[1];
+  if(expected && expected!==seen) return 0;
+  return .86;
+}
+
 /** Exact official product detail URLs confirmed by catalog verification.
  * The page heading and image are still verified; this is not blind photo assignment. */
 const verifiedProductPages={
@@ -125,7 +139,7 @@ for(const [brand,base,pages,mode] of catalogs){
    try {
      const verifiedHtml=await get(exactUrl);
      const verifiedTitle=strip(verifiedHtml.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]);
-     const confidence=match(p,verifiedTitle);
+     const confidence=Math.max(match(p,verifiedTitle),exactModelMatch(p,verifiedTitle));
      if(confidence>=.74) exact={href:exactUrl,label:verifiedTitle,confidence,image:photo(verifiedHtml,exactUrl,p)};
      else report.errors.push({brand,url:exactUrl,error:'Verified URL title did not match SKU: '+p.sku});
    } catch(error) {report.errors.push({brand,url:exactUrl,error:String(error)})}
@@ -135,7 +149,7 @@ for(const [brand,base,pages,mode] of catalogs){
      new URL(ranked[0].href).pathname.replace(/\/$/,'')!==new URL(ranked[1].href).pathname.replace(/\/$/,'')))) {report.unmatched.push({slug:p.slug,brand,reason:'Ambiguous or absent product name'});continue}
  const candidate=exact||ranked[0];try{
  const page=candidate.image?null:await get(candidate.href);const h1=page?strip(page.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]):candidate.label;
- if(match(p,h1||candidate.label)<.78 && !(brand==='DÉCAAR' && candidate.confidence>=.78 && /^\/d\d+\//.test(new URL(candidate.href).pathname)))throw Error('Product page title mismatch: '+candidate.href+' | '+h1);const remote=candidate.image||photo(page,candidate.href,p);if(!remote)throw Error('No product image: '+candidate.href+' | '+(page?.match(/<img\\b[^>]*>/i)?.[0]||'').slice(0,300));const {buffer,ext}=await imageBytes(remote);
+ if(Math.max(match(p,h1||candidate.label),exact?exactModelMatch(p,h1||candidate.label):0)<.78 && !(brand==='DÉCAAR' && candidate.confidence>=.78 && /^\/d\d+\//.test(new URL(candidate.href).pathname)))throw Error('Product page title mismatch: '+candidate.href+' | '+h1);const remote=candidate.image||photo(page,candidate.href,p);if(!remote)throw Error('No product image: '+candidate.href+' | '+(page?.match(/<img\\b[^>]*>/i)?.[0]||'').slice(0,300));const {buffer,ext}=await imageBytes(remote);
  const filename='public/supplier-photos/'+norm(brand).replace(/\s/g,'-')+'/'+p.slug+'.'+ext;
  if(apply){await fs.mkdir(path.dirname(filename),{recursive:true});await fs.writeFile(filename,buffer)}
  mapping[p.slug]={image_url:'/'+filename.replace(/^public\//,''),source_product_url:candidate.href,source_image_url:remote,match_score:+candidate.confidence.toFixed(3),sha256:crypto.createHash('sha256').update(buffer).digest('hex')};
