@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import AdminExcelImport from "@/components/AdminExcelImport";
+import SmartProductImage from "@/components/SmartProductImage";
 
 type Product = any;
 
@@ -228,7 +229,7 @@ export default function AdminProductsClient() {
         <aside className="admin-product-list">
           <div className="admin-list-head"><strong>{products.length} позицій</strong><span>ACTIVE / DRAFT / ARCHIVED</span></div>
           {products.length ? products.map((product) => <button key={product.id} className={selectedId === product.id ? "is-selected" : ""} onClick={() => selectProduct(product)}>
-            <div className="admin-product-thumb">{product.image_url ? <img src={product.image_url} alt="" /> : <span>{product.name?.slice(0,1)}</span>}</div>
+            <div className="admin-product-thumb"><SmartProductImage src={product.image_url} alt={product.name} fallback={<span>{product.name?.slice(0,1)}</span>} /></div>
             <div><strong>{product.name}</strong><span>{product.brand} · {Number(product.price).toFixed(2)} грн</span><small>{product.stock_quantity} шт. · {product.category}</small></div>
             <i className={`status-dot status-${product.status}`} />
           </button>) : <p className="admin-empty">Товарів ще немає.</p>}
@@ -255,7 +256,7 @@ export default function AdminProductsClient() {
           </div></section>
 
           <section className="admin-form-section"><h3>Фото</h3><div className="admin-image-admin">
-            <div className="admin-image-preview">{form.image_url ? <img src={form.image_url} alt="Preview" /> : <span>NO IMAGE</span>}</div>
+            <div className="admin-image-preview"><SmartProductImage src={form.image_url} alt="Preview" fallback={<span>NO IMAGE</span>} /></div>
             <div><label className="admin-upload"><input type="file" disabled={!writable} accept="image/jpeg,image/png,image/webp,image/avif" onChange={upload} /><span>{uploading ? "Завантаження…" : "Завантажити фото"}</span></label><label><span>Або URL</span><input value={form.image_url} onChange={(e) => update("image_url", e.target.value)} /></label></div>
           </div></section>
 
