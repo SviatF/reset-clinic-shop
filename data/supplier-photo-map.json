@@ -187,5 +187,187 @@
     "source_image_url": "https://avepharm.com.ua/storage/8717/conversions/10-preview.jpg?v=1794686516",
     "match_score": 0.897,
     "sha256": "09d896722e8be235f1ac962f12068daba971a64aaf85b17f9b5d28891898b59f"
+  },
+  "sensilis-catalog-001": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-001.png",
+    "source_product_url": "https://sensilis.com.ua/body-retinol-lotion/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/%D0%A0%D0%95%D0%AC%D0%A2%D0%9D%D0%9E%D0%9B-750x1000.PNG",
+    "match_score": 0.94,
+    "sha256": "ca3a6a8bef8493fdcc8d1a616dddae09b986cb520bbc4fe588259bcf5b3ac478"
+  },
+  "sensilis-catalog-003": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-003.png",
+    "source_product_url": "https://sensilis.com.ua/biphasic-eyes-lips-remover/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Bi-Phasic-Make-Up-Remover/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "9029a57c54949ba5effbb6f8522e4cc7dd6fa6a5f82ad5935b712b264901a818"
+  },
+  "sensilis-catalog-004": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-004.png",
+    "source_product_url": "https://sensilis.com.ua/body-spray-spf-50/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/PHOTOPROTECTION%20/Body-Spray-SPF-50+/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "3ffe4c9654a00ccd6cc70c9c034de7ac1c5be813f4f99b78d0f123b86ca594c7"
+  },
+  "sensilis-catalog-005": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-005.png",
+    "source_product_url": "https://sensilis.com.ua/calm-in-a-balm/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Calm-in-a-Balm/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "78cc1ec326533065ec858499b25b9f2ab067d36fa683a59eadbf37c959c77f94"
+  },
+  "sensilis-catalog-006": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-006.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-a-g-e-serum-al/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Serum-AI/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "1c9aa88ddf381242ffe7e6fa8cf6c0bede88bde62a2ccfd45de80b13f6227d5c"
+  },
+  "sensilis-catalog-007": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-007.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-day-cream/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Day-cream/ETERNALIST_DAY_CREAM-555x740.png",
+    "match_score": 0.94,
+    "sha256": "6fd3ee93b31a8362554b6e07966699e186c0997a9789093227094dd268e29109"
+  },
+  "sensilis-catalog-008": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-008.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-eyes-contour/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGEEyes/ETERNALIST_EYES-555x740.png",
+    "match_score": 0.94,
+    "sha256": "1f829deb43f7335f2f4777390a9d86fb3f44c140b50f3cd371bdcf348a022eb9"
+  },
+  "sensilis-catalog-009": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-009.png",
+    "source_product_url": "https://sensilis.com.ua/eternalist-retinol-cream/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Eternalist%20A.G.E./Eternalist-AGE-Retinol/ETERNALIST__RETINOl-555x740.png",
+    "match_score": 0.94,
+    "sha256": "ce3e0a76ac2cae35841a7308576d48e6ee435e162c7c8eaacc1c5e2d72f8ef02"
+  },
+  "sensilis-catalog-010": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-010.png",
+    "source_product_url": "https://sensilis.com.ua/gel-cream-spf-50/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/GEL%20CREMA%20SPF%2050%20+%20PNG-555x740.png",
+    "match_score": 0.94,
+    "sha256": "6d19ed5143dd4ebefebf483e934c4f763fa2ea3381e68c3e31ea560e519d8057"
+  },
+  "sensilis-catalog-011": {
+    "image_url": "/supplier-photos/sensilis/sensilis-catalog-011.png",
+    "source_product_url": "https://sensilis.com.ua/gentle-cleansing-mousse/",
+    "source_image_url": "https://sensilis.com.ua/image/cache/catalog/products/Products/Facial%20Hygiene/Gentle-Cleansing-Mousse/01-555x740.png",
+    "match_score": 0.94,
+    "sha256": "50beb89e351eda0eac621b284b55de5e69778428d9635bdbb410a4a675d295f6"
+  },
+  "decaar-catalog-001": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-001.png",
+    "source_product_url": "https://decaar.com.ua/d712/",
+    "source_image_url": "https://decaar.com.ua/image/catalog/pics/cleansing/d712.png",
+    "match_score": 1,
+    "sha256": "59a52da1b7a8eebcb8d92fe5e1085eabd919e0df432a12975cb4cb7ede192c92"
+  },
+  "decaar-catalog-002": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-002.png",
+    "source_product_url": "https://decaar.com.ua/d724/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/cleansing/PurifyingCleansingGel150ml.png",
+    "match_score": 1,
+    "sha256": "382405711984f109b3ec271fb6b9f1973383eab6864b8ac9ad09f8305429c079"
+  },
+  "decaar-catalog-003": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-003.png",
+    "source_product_url": "https://decaar.com.ua/d860/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/lumi/complexbooster.png",
+    "match_score": 0.967,
+    "sha256": "3fc4f5afd7b4562f154f5961fcbd7893e92b82ce8ad4da8fc643651bb6b17385"
+  },
+  "decaar-catalog-004": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-004.png",
+    "source_product_url": "https://decaar.com.ua/d837/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/lifteye.png",
+    "match_score": 0.94,
+    "sha256": "f084455f833ce3ff2061838407f896797efef328d27911f6731cfc7834541e79"
+  },
+  "decaar-catalog-005": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-005.png",
+    "source_product_url": "https://decaar.com.ua/d768/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/antiacnecream.png",
+    "match_score": 0.94,
+    "sha256": "e637b922e92108474f9400ca3931624df8ba8351cc9cf2786f5d0e2d41c2c861"
+  },
+  "decaar-catalog-006": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-006.png",
+    "source_product_url": "https://decaar.com.ua/d800/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/cleansing/handcream.png",
+    "match_score": 0.94,
+    "sha256": "bd2d48eb8b09ad70401193666a825b58eac4cd49a6547e4008b18bb5f4adf2c4"
+  },
+  "decaar-catalog-007": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-007.png",
+    "source_product_url": "https://decaar.com.ua/d846/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agespf.png",
+    "match_score": 0.94,
+    "sha256": "52cc45d959122b2adee0686f52ecd1d4c794b2f71c96b94344474918f8c32dfb"
+  },
+  "decaar-catalog-008": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-008.png",
+    "source_product_url": "https://decaar.com.ua/d758/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygeneye.png",
+    "match_score": 0.94,
+    "sha256": "d33c31a12e1640a352387524c9c974b2bc30b4f3a5f1973678fe09dabbdb41c4"
+  },
+  "decaar-catalog-009": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-009.png",
+    "source_product_url": "https://decaar.com.ua/d841/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agesuperior.png",
+    "match_score": 0.976,
+    "sha256": "9163bc6f95908e4d06f86ea870e9ba7dc6fa8ed92e329ba111150ac790d209ac"
+  },
+  "decaar-catalog-010": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-010.png",
+    "source_product_url": "https://decaar.com.ua/d777/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/antiacnemask.png",
+    "match_score": 0.949,
+    "sha256": "a7d34d2e8838c3afafeca55d858aa338bc6676197d7db5a9fe18973703fd7ac7"
+  },
+  "decaar-catalog-011": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-011.png",
+    "source_product_url": "https://decaar.com.ua/d790/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/delicate/foam.png",
+    "match_score": 0.967,
+    "sha256": "022aafbb91deb28f8c80176f45bcb7e67c0963d87277fe805139008d820ea8fb"
+  },
+  "decaar-catalog-012": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-012.png",
+    "source_product_url": "https://decaar.com.ua/d776/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oily/acneserum.png",
+    "match_score": 0.94,
+    "sha256": "27c8b24d50f79222a26a269736e64530547b61a61df1574a8e053d36684a2ef4"
+  },
+  "decaar-catalog-013": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-013.png",
+    "source_product_url": "https://decaar.com.ua/d864/",
+    "source_image_url": "https://decaar.com.ua/image/catalog/BLEMISH-DEFENCE%C2%A0SERUM-30ml-1080X1080.png",
+    "match_score": 0.94,
+    "sha256": "51faa5311d4ee6eb138bb3d23835b1b6298075a7e98497391d62a37c80e0f7cc"
+  },
+  "decaar-catalog-015": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-015.png",
+    "source_product_url": "https://decaar.com.ua/d859/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/lumi/ccbooster.png",
+    "match_score": 0.967,
+    "sha256": "de3f1729166f9aae703b319bfd15cc11c160a393e8c50b26b4a2f4cc44010509"
+  },
+  "decaar-catalog-016": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-016.png",
+    "source_product_url": "https://decaar.com.ua/d836/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/agereverse/agefiller.png",
+    "match_score": 0.94,
+    "sha256": "180b4b9d442ffa148e4e4ef228f3702f089353db6b71c2adbe2b6ede935545f2"
+  },
+  "decaar-catalog-017": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-017.png",
+    "source_product_url": "https://decaar.com.ua/d740/",
+    "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygenscrub50ml.png",
+    "match_score": 1,
+    "sha256": "afddd1967a45fa715c0d2f1bcf54e814413a691d5760eac06f0b825c135a2d8a"
   }
 }
