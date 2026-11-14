@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import AdminExcelImport from "@/components/AdminExcelImport";
+import SmartProductImage from "@/components/SmartProductImage";
 
 type Product = any;
 
@@ -223,12 +224,17 @@ export default function AdminProductsClient() {
       {writable === false && configured !== null && <div className="admin-connect-card" role="status"><span>ТІЛЬКИ ПЕРЕГЛЯД</span><h2>Запис товарів ще не підключений</h2><p>Для збереження цін, фото, категорій і нових товарів підключіть тестову базу Cloudflare D1 або GitHub Token з доступом до цього приватного репозиторію. Наразі відображається резервний каталог.</p></div>}
       {message && <div className="admin-toast">{message}</div>}
 
+      {products.some(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream") && <div className="admin-connect-card" role="status">
+        <span>ФОТОКАТАЛОГ · ПОТРЕБУЄ УВАГИ</span>
+        <h2>У {products.filter(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream").length} активних товарів немає фотографії</h2>
+        <p>Для Dermafirm та Braderm можна відновити оригінальні фото із таблиці постачальника нижче — без дублювання товарів і без зміни цін або залишків. Для інших брендів додайте перевірені зображення через редактор товару. Фото зберігаються в R2 лише коли D1/R2 активовані.</p>
+      </div>}
       <AdminExcelImport onFinished={load} disabled={!writable} />
       <div className="admin-product-workspace">
         <aside className="admin-product-list">
           <div className="admin-list-head"><strong>{products.length} позицій</strong><span>ACTIVE / DRAFT / ARCHIVED</span></div>
           {products.length ? products.map((product) => <button key={product.id} className={selectedId === product.id ? "is-selected" : ""} onClick={() => selectProduct(product)}>
-            <div className="admin-product-thumb">{product.image_url ? <img src={product.image_url} alt="" /> : <span>{product.name?.slice(0,1)}</span>}</div>
+            <div className="admin-product-thumb"><SmartProductImage src={product.image_url} alt={product.name} fallback={<span>{product.name?.slice(0,1)}</span>} /></div>
             <div><strong>{product.name}</strong><span>{product.brand} · {Number(product.price).toFixed(2)} грн</span><small>{product.stock_quantity} шт. · {product.category}</small></div>
             <i className={`status-dot status-${product.status}`} />
           </button>) : <p className="admin-empty">Товарів ще немає.</p>}
@@ -255,7 +261,7 @@ export default function AdminProductsClient() {
           </div></section>
 
           <section className="admin-form-section"><h3>Фото</h3><div className="admin-image-admin">
-            <div className="admin-image-preview">{form.image_url ? <img src={form.image_url} alt="Preview" /> : <span>NO IMAGE</span>}</div>
+            <div className="admin-image-preview"><SmartProductImage src={form.image_url} alt="Preview" fallback={<span>NO IMAGE</span>} /></div>
             <div><label className="admin-upload"><input type="file" disabled={!writable} accept="image/jpeg,image/png,image/webp,image/avif" onChange={upload} /><span>{uploading ? "Завантаження…" : "Завантажити фото"}</span></label><label><span>Або URL</span><input value={form.image_url} onChange={(e) => update("image_url", e.target.value)} /></label></div>
           </div></section>
 

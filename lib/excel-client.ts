@@ -1,7 +1,7 @@
 "use client";
 import {strFromU8,unzipSync} from "fflate";
 export type ExcelDraft = {
- slug:string;name:string;brand:string;product_line:string;category:"face"|"body"|"hair";
+ slug:string;name:string;brand:string;sku:string;product_line:string;category:"face"|"body"|"hair";
  subcategory_slugs:string[];status:"draft";price:number;currency:"UAH";size:string;
  stock_quantity:0;track_stock:true;short_description:string;description:string;
  how_to_use:string;inci:string;image_url?:string;
@@ -109,7 +109,7 @@ export async function parseSupplierWorkbook(file:File):Promise<Parsed>{
    if(descriptionText.length>5000)warnings.push(`${brand} рядок ${rowIndex}: опис перевищує 5000 символів`);
    if(brand==="Dermafirm"&&rowIndex===4)warnings.push("Dermafirm рядок 4: міжнародна назва PDRN суперечить опису Niacinamide Vita C+");
    results.push({
-    slug,name:title.replace(/\s+/g," ").trim(),brand,product_line:line(brand,english),category:classification.category,
+    slug,name:title.replace(/\s+/g," ").trim(),brand,sku:`${brand.toUpperCase()}-${String(rowIndex).padStart(3,"0")}`,product_line:line(brand,english),category:classification.category,
     subcategory_slugs:classification.sub,status:"draft",price:priceNumber,currency:"UAH",size:data.E||"",
     stock_quantity:0,track_stock:true,short_description:descriptionText.split(/\n\s*\n/)[0].slice(0,500),
     description:descriptionText.slice(0,5000),how_to_use:usageText.slice(0,3000),inci:inciText.slice(0,8000)
