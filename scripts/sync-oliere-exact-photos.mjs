@@ -146,7 +146,7 @@ async function photoFetch(item) {
  try {
   const url = new URL(item.info.source_image_url);
   // Request a sensible, clear primary image from the exact Shopify product.
-  url.searchParams.set("width","1200");
+  // Request the unmodified official CDN URL: transformation parameters can return HTTP 403.
   const response=await fetch(url.toString(),{
     headers:{"User-Agent":"Mozilla/5.0","Accept":"image/webp,image/png,image/jpeg,image/gif"},
     signal:controller.signal
