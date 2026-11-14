@@ -369,5 +369,33 @@
     "source_image_url": "https://decaar.com.ua/image/catalog//pics/oxygen/oxygenscrub50ml.png",
     "match_score": 1,
     "sha256": "afddd1967a45fa715c0d2f1bcf54e814413a691d5760eac06f0b825c135a2d8a"
+  },
+  "dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.jpg",
+    "source_product_url": "https://dermafirmshop.com/products/uv-derm-hydro-layer-sun-cream",
+    "source_image_url": "https://cdn.shopify.com/s/files/1/0664/6385/8915/files/USHC-R4_50ml_95538191-1177-478c-b322-7e4de706eeda.jpg?v=1721367410",
+    "match_score": 0.94,
+    "sha256": "80d153b79b187412dd6d63801613c5bf889ac98aa28bab46af2dd024e628b3c2"
+  },
+  "dermafirm-soothing-repair-toning-serum-r4-23": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-serum-r4-23.jpg",
+    "source_product_url": "https://dermafirmshop.com/products/soothing-repair-toning-serum-r4",
+    "source_image_url": "https://cdn.shopify.com/s/files/1/0664/6385/8915/files/1_1.jpg?v=1750037254",
+    "match_score": 0.94,
+    "sha256": "ddfd2db2d1c93dfc9d6d669c9a9c68f6d9ce4b8c91863cdb73c8ce95d1bf3b2b"
+  },
+  "dermafirm-soothing-repair-toning-cream-r4-24": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-cream-r4-24.jpg",
+    "source_product_url": "https://dermafirmshop.com/products/soothing-repair-toning-cream-r4",
+    "source_image_url": "https://cdn.shopify.com/s/files/1/0664/6385/8915/files/USTC-R4_50g_127ee2de-4ed4-466c-83c3-9063d7a91b02.jpg?v=1748225237",
+    "match_score": 0.94,
+    "sha256": "b5f2b32d40148beed7baa98debe11331cb80532832465a1ecbde7b22adc830af"
+  },
+  "decaar-catalog-014": {
+    "image_url": "/supplier-photos/decaar/decaar-catalog-014.png",
+    "source_product_url": "https://decaar.com.ua/d757/",
+    "source_image_url": "https://decaar.com.ua/image/catalog/Oxygen%20Serum%2030ml%201080x1080.png",
+    "match_score": 0.928,
+    "sha256": "01ec41736cb5ef58cc0d1d1bfddb0ddbc9d2b50cc5353a1987ecc74068501d48"
   }
 }
