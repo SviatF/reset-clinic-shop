@@ -16,8 +16,8 @@
 .rs-brand-nav a{position:relative;gap:6px}
 .rs-brand-nav a .rs-filter-chip-text{display:inline-block;white-space:nowrap}
 .rs-brand-nav a.rs-filter-active{padding-right:38px}
-.rs-brand-nav a.rs-filter-active .rs-filter-chip-clear{right:6px;width:27px;height:26px;font-size:24px;color:#fff}
+.rs-brand-nav a.rs-filter-active .rs-filter-chip-clear{right:9px;top:50%;transform:translateY(-50%);width:18px;height:18px;font-size:0;line-height:0;color:#fff}
 .rs-brand-nav a.rs-filter-active:hover .rs-filter-chip-clear{background:rgba(255,255,255,.17)}
 .rs-brand-nav a[aria-current="page"]{font-weight:700}
 .rs-brand-nav a:focus-visible{outline:2px solid #7e7465;outline-offset:3px}
-@media(max-width:720px){.rs-brand-nav a.rs-filter-active{padding-right:31px}.rs-brand-nav a.rs-filter-active .rs-filter-chip-clear{right:3px;width:24px;height:22px;font-size:22px}}
+@media(max-width:720px){.rs-brand-nav a.rs-filter-active{padding-right:31px}.rs-brand-nav a.rs-filter-active .rs-filter-chip-clear{right:6px;width:18px;height:18px;font-size:0}}
