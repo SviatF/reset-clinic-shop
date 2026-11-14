@@ -141,12 +141,14 @@ for product in active:
     if entry and entry.get("verification_status") == "needs_review":
         report["pending_review"].append(slug)
         continue
-    if entry and entry.get("isolation_revision") == "u2net-v1":
-        # Verified, object-only images have a genuine alpha channel. Never
-        # overwrite them from the original opaque backdrop during source sync.
+    if entry and entry.get("isolation_revision") in ("u2net-v1", "isnet-clean-v2"):
+        # Product-only transparent images must NEVER be replaced by old opaque
+        # supplier photos during any bulk refresh.
+        revision = entry["isolation_revision"]
         isolated_url = entry.get("image_url", "")
-        if not isolated_url.startswith("/supplier-photos/isolated/"):
-            report["errors"].append({"slug": slug, "reason": "Isolation metadata points at non-isolated image"})
+        allowed_prefix = "/supplier-photos/clean/" if revision == "isnet-clean-v2" else "/supplier-photos/isolated/"
+        if not isolated_url.startswith(allowed_prefix):
+            report["errors"].append({"slug": slug, "reason": "Mask revision mismatches local image URL"})
             continue
         isolated_file = source_path(isolated_url)
         if not isolated_file.is_file():
