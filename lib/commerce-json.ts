@@ -8,16 +8,7 @@ import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonSto
 const productSeed = productsData as unknown as ProductRecord[];
 export const bundledProductCount = productSeed.length;
 
-/**
- * The source repository (SviatF/reset-clinic-shop/main) contains one product
- * record and 53 OLIE'RE hair source records, all already bundled in this
- * destination's data/products.json. The source repository is never written.
- *
- * Return only products missing by BOTH slug and record id. Preserve edits,
- * inventory, prices, images, custom products and ordering in the current D1.
- * This is used by the authenticated one-time migration action, not a
- * background sync that could resurrect intentionally deleted products.
- */
+/** Add only missing bundled products; never overwrite merchant-edited records. */
 export function missingBundledProducts(current: ProductRecord[]): ProductRecord[] {
   const slugs = new Set(current.map(row => row.slug));
   const ids = new Set(current.map(row => row.id));
@@ -50,7 +41,7 @@ function recoverLegacyStagingProducts(current: ProductRecord[]): ProductRecord[]
 
 export async function readProducts() {
   const rows = (await readJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed)).data;
-  return recoverLegacyStagingProducts(rows);
+  return recoverLegacyStagingProducts(rows).filter(row => row.slug !== "parsley-seed-anti-oxidant-eye-cream");
 }
 
 export async function mutateProducts(
@@ -58,7 +49,7 @@ export async function mutateProducts(
   mutate: (products: ProductRecord[]) => ProductRecord[] | Promise<ProductRecord[]>
 ) {
   return mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH, productSeed, message,
-    (rows) => mutate(recoverLegacyStagingProducts(rows)));
+    (rows) => mutate(recoverLegacyStagingProducts(rows).filter(row => row.slug !== "parsley-seed-anti-oxidant-eye-cream")));
 }
 
 export async function readOrders() {
