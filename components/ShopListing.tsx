@@ -23,10 +23,8 @@ export default async function ShopListing({category,subcategory,query={},inCatal
 }){
  const sort=sortOptions.includes(query.sort||"")?query.sort as CatalogQuery["sort"]:"default";
  const page=Math.max(1,Math.floor(Number(query.page)||1));
- const [taxonomy,records,result]=await Promise.all([
-  readCategories(),getAllProductRecords(),
-  getStoreProductsPage({category,subcategory,page,limit:24,sort,brand:query.brand,search:query.q})
- ]);
+ const [taxonomy,records]=await Promise.all([readCategories(),getAllProductRecords()]);
+ const result=await getStoreProductsPage({category,subcategory,page,limit:24,sort,brand:query.brand,search:query.q},records);
  const active=records.filter(row=>row.status==="active");
  const scoped=active.filter(row=>!category||row.category===category);
  const brands=[...new Set(scoped.map(row=>row.brand))].sort((a,b)=>a.localeCompare(b,"uk"));
