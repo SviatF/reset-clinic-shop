@@ -16,7 +16,7 @@ type Props = {
   brands: string[];
 };
 
-const xLabel = <span className="rs-filter-chip-clear" aria-hidden="true">×</span>;
+const xLabel = <span className="rs-filter-chip-clear" aria-hidden="true" />;
 
 /**
  * Read the live App Router search parameters rather than stale server-rendered
