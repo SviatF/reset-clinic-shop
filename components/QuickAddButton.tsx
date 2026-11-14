@@ -2,15 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/CartProvider";
-import { product } from "@/lib/product";
 
 type QuickProduct = { slug: string; name: string; price: number; inStock?: boolean };
 
-export default function QuickAddButton({ item }: { item?: QuickProduct }) {
+export default function QuickAddButton({ item }: { item: QuickProduct }) {
   const { add } = useCart();
   const [added, setAdded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const current: QuickProduct = item || { slug: product.slug, name: product.name, price: product.price, inStock: true };
+  const current: QuickProduct = item;
 
   useEffect(() => () => {
     if (timerRef.current) clearTimeout(timerRef.current);
