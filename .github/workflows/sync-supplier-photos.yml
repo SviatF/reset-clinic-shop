@@ -21,6 +21,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Check whether supplier Excel can be downloaded publicly
+        run: |
+          node --input-type=module <<'NODE'
+          const url='https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/export?format=xlsx';
+          try {
+            const response=await fetch(url,{redirect:'follow',signal:AbortSignal.timeout(20000)});
+            console.log('Supplier workbook export:',response.status,'content-type:',response.headers.get('content-type'),'content-length:',response.headers.get('content-length'));
+            await response.body?.cancel();
+          } catch(error) {console.log('Supplier workbook export unavailable:',String(error))}
+          NODE
       - name: Fetch supplier photos and save audited matches
         run: node scripts/sync-supplier-photos.mjs --apply
       - name: Attach full match and error report
