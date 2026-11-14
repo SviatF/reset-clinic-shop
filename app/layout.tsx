@@ -31,14 +31,12 @@ import "./product-media-placeholder.css";
 import "./shop-categories.css";
 import "./catalog-content-fixes.css";
 import "./recommended-grid.css";
-import "./black-friday-sticker.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
 import favicon from "@/assets/img/favicon.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ConsultationDock from "@/components/ConsultationDock";
-import BlackFridaySticker from "@/components/BlackFridaySticker";
 import PremiumMotion from "@/components/PremiumMotion";
 import JsonLd from "@/components/JsonLd";
 import { CartProvider } from "@/components/CartProvider";
@@ -111,7 +109,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <ConsultationDock />
           <CartDrawer />
           <PremiumMotion />
-          <BlackFridaySticker />
         </CartProvider>
       </body>
     </html>
