@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import productFallback from "@/assets/img/tovar1.webp";
 import JsonLd from "@/components/JsonLd";
 import ProductActions from "@/components/ProductActions";
+import SmartProductImage from "@/components/SmartProductImage";
 import { absoluteUrl, breadcrumbSchema, siteConfig } from "@/lib/seo";
 import { getStoreProductBySlug } from "@/lib/store-products";
 import { productIntro } from "@/lib/product-display";
@@ -88,7 +89,7 @@ export default async function DynamicProductPage({ params }: Props) {
                 <span className="product-gallery-tag">RESET SELECT</span>
                 <span className="product-object-index">01 / PRODUCT</span>
                 <span className="product-object-halo" aria-hidden="true" />
-                {item.imageUrl || item.slug === "parsley-seed-anti-oxidant-eye-cream" ? <img src={imageSrc} alt={item.name} className="dynamic-product-image" /> : <div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>}
+                <SmartProductImage src={item.imageUrl || (item.slug === "parsley-seed-anti-oxidant-eye-cream" ? productFallback.src : null)} alt={item.name} className="dynamic-product-image" loading="eager" fallback={<div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
                 <div className="product-object-footer"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()}</Link><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
               </div>
             </div>
