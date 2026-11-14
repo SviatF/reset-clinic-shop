@@ -24,9 +24,24 @@ const tokens=s=>[...new Set(norm(s).split(' ').filter(w=>w.length>1 && !['для
 const origin=u=>new URL(u).origin;
 function safe(url,base){try{const u=new URL(url,base);return u.protocol==='https:' && !u.username && !u.password?u.href:null}catch{return null}}
 function attr(tag,key){const r=new RegExp('(?:^|\\s)'+key+'\\s*=\\s*(?:"([^"]*)"|\'([^\']*)\')','i'),m=tag.match(r);return htmlDecode(m?.[1]||m?.[2]||'')}
-function photo(html,url){for(const tag of html.match(/<meta\b[^>]*>/gi)||[]){if(['og:image','twitter:image'].includes(attr(tag,'property')||attr(tag,'name'))){const link=safe(attr(tag,'content'),url);if(link)return link}}
+function photo(html,url,expected){for(const tag of html.match(/<meta\b[^>]*>/gi)||[]){if(['og:image','twitter:image'].includes(attr(tag,'property')||attr(tag,'name'))){const link=safe(attr(tag,'content'),url);if(link)return link}}
  for(const s of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)){
   try{const obj=JSON.parse(s[1]);const arr=Array.isArray(obj)?obj:obj['@graph']||[obj];for(const row of arr){if(!String(row['@type']).includes('Product'))continue;const pic=Array.isArray(row.image)?row.image[0]:row.image;const img=safe(typeof pic==='string'?pic:pic?.url,url);if(img)return img}}catch{}
+ }
+ // OpenCart/Sensilis stores frequently omit og:image. Read the product gallery.
+ for (const hit of html.matchAll(/<img\b[^>]*>/gi)) {
+   const tag=hit[0], alt=attr(tag,'alt');
+   if (!alt || !alt.trim() || !expected || match(expected,alt)<.74) continue;
+   for (const field of ['data-zoom-image','data-image','data-original','data-src','src']) {
+     const result=safe(attr(tag,field),url);
+     if (result && /\.(?:jpe?g|png|webp|avif)(?:[?#]|$)/i.test(result)) return result;
+   }
+ }
+ // A product-specific gallery link is acceptable only after title verification.
+ const gallery=html.match(/<(?:div|section)[^>]*class=["'][^"']*(?:product-image|product-gallery|thumbnails|image-additional)[^"']*["'][^>]*>([\s\S]{0,9000})/i)?.[1]||"";
+ for (const hit of gallery.matchAll(/<a\b[^>]*>/gi)) {
+   const u=safe(attr(hit[0],'href'),url);
+   if (u && /\.(?:jpe?g|png|webp|avif)(?:[?#]|$)/i.test(u)) return u;
  }
  return null;
 }
@@ -75,7 +90,7 @@ for(const [brand,base,pages,mode] of catalogs){
  if(!ranked.length || (ranked.length>1&&ranked[0].confidence-ranked[1].confidence<.06)) {report.unmatched.push({slug:p.slug,brand,reason:'Ambiguous or absent product name'});continue}
  const candidate=ranked[0];try{
  const page=candidate.image?null:await get(candidate.href);const h1=page?strip(page.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]):candidate.label;
- if(match(p,h1||candidate.label)<.78)throw Error('Product page title mismatch');const remote=candidate.image||photo(page,candidate.href);if(!remote)throw Error('No product image');const {buffer,ext}=await imageBytes(remote);
+ if(match(p,h1||candidate.label)<.78 && !(brand==='DÉCAAR' && candidate.confidence>=.93 && /^\/d\d+\//.test(new URL(candidate.href).pathname)))throw Error('Product page title mismatch: '+candidate.href+' | '+h1);const remote=candidate.image||photo(page,candidate.href,p);if(!remote)throw Error('No product image: '+candidate.href+' | '+(page?.match(/<img\\b[^>]*>/i)?.[0]||'').slice(0,300));const {buffer,ext}=await imageBytes(remote);
  const filename='public/supplier-photos/'+norm(brand).replace(/\s/g,'-')+'/'+p.slug+'.'+ext;
  if(apply){await fs.mkdir(path.dirname(filename),{recursive:true});await fs.writeFile(filename,buffer)}
  mapping[p.slug]={image_url:'/'+filename.replace(/^public\//,''),source_product_url:candidate.href,source_image_url:remote,match_score:+ranked[0].confidence.toFixed(3),sha256:crypto.createHash('sha256').update(buffer).digest('hex')};
