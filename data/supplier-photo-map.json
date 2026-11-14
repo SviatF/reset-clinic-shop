@@ -688,5 +688,19 @@
     "source_sheet_row": 12,
     "match_score": 1.0,
     "sha256": "c0591d134e9fd456ae7e23cc7d07ab0c1f0e986b6c997126972dc93d08b5d8d8"
+  },
+  "cetaphil-catalog-003": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-003.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-redness-control-ochishchuvalna-pinka-dlya-chutlivoji-shkiri-oblichchya-shilnoji-do-pochervonin-236-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8713/conversions/8-preview.jpg?v=1794687456",
+    "match_score": 0.94,
+    "sha256": "20105e35f5056d03ba88ee8d068f3518fc7441c84d6b77ef90a67040701f144f"
+  },
+  "cetaphil-catalog-004": {
+    "image_url": "/supplier-photos/cetaphil/cetaphil-catalog-004.jpg",
+    "source_product_url": "https://avepharm.com.ua/product/cetaphil-pro-itch-control-zvolozhuvalniy-losyon-proti-sverbinnya-dlya-atopichnoji-suhoji-ta-chutlivoji-shkiri-236-ml/",
+    "source_image_url": "https://avepharm.com.ua/storage/8691/conversions/3499320018647_Cetaphil-PRO-Itch-Control-%D0%97%D0%B2%D0%BE%D0%BB%D0%BE%D0%B6%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%B9-%D0%BB%D0%BE%D1%81%D1%8C%D0%B9%D0%BE%D0%BD-%D0%BF%D1%80%D0%BE%D1%82%D0%B8-%D1%81%D0%B2%D0%B5%D1%80%D0%B1%D1%96%D0%BD%D0%BD%D1%8F-%D0%B4%D0%BB%D1%8F-%D0%B0%D1%82%D0%BE%D0%BF%D1%96%D1%87%D0%BD%D0%BE%D1%97,-%D1%81%D1%83%D1%85%D0%BE%D1%97-%D1%82%D0%B0-%D1%87%D1%83%D1%82%D0%BB%D0%B8%D0%B2%D0%BE%D1%97-%D1%88%D0%BA%D1%96%D1%80%D0%B8,-236-%D0%BC%D0%BB-preview.jpg?v=1794687458",
+    "match_score": 0.94,
+    "sha256": "72bc4e15ca8a2cd4a4a577936b5376a0c49505947edea9e7ac03af606919063b"
   }
 }
