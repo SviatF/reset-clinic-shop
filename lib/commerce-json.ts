@@ -9,14 +9,36 @@ import { ACTIVITY_PATH, ORDERS_PATH, PRODUCTS_PATH, mutateJsonStore, readJsonSto
 const productSeed = productsData as unknown as ProductRecord[];
 export const bundledProductCount = productSeed.length;
 
-/** Prefer verified locally hosted photos, never overwrite merchant-edited D1 image URLs.
- * Existing unchanged Shopify CDN URLs can be replaced by an exact mirrored copy.
- * This is read-only enrichment: no updates to stored inventory or orders. */
+/** Use only verified supplier images while preserving genuinely custom D1 uploads.
+ * For hair SKUs, the previous guessed Shopify URL and generated studio image are
+ * explicitly recognized as legacy assets; no other merchant media is replaced.
+ * Products absent from the official feed lose only their unverified photo. */
 function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
-  const bySlug = supplierPhotoMap as Record<string, { image_url: string; source_image_url?: string }>;
+  const bySlug = supplierPhotoMap as Record<string, {
+    image_url: string | null;
+    source_image_url?: string;
+    legacy_image_url?: string;
+    legacy_studio_image_url?: string;
+    verification_status?: string;
+  }>;
   return rows.map(row => {
     const source = bySlug[row.slug];
-    if (!source?.image_url || !source.image_url.startsWith("/supplier-photos/")) return row;
+    if (!source) return row;
+    const isHair = row.brand === "OLIE'RE PARIS";
+    if (isHair && (source.legacy_image_url || source.legacy_studio_image_url)) {
+      const legacy = [
+        source.legacy_image_url,
+        source.legacy_studio_image_url,
+        source.source_image_url,
+        source.image_url,
+      ];
+      // An administrator's custom image must remain untouched.
+      if (row.image_url && !legacy.includes(row.image_url)) return row;
+      if (source.verification_status === "needs_review") return { ...row, image_url: null };
+      if (source.image_url?.startsWith("/supplier-photos/")) return { ...row, image_url: source.image_url };
+      return row;
+    }
+    if (!source.image_url?.startsWith("/supplier-photos/")) return row;
     if (row.image_url && row.image_url !== source.source_image_url) return row;
     return { ...row, image_url: source.image_url };
   });
