@@ -224,6 +224,11 @@ export default function AdminProductsClient() {
       {writable === false && configured !== null && <div className="admin-connect-card" role="status"><span>ТІЛЬКИ ПЕРЕГЛЯД</span><h2>Запис товарів ще не підключений</h2><p>Для збереження цін, фото, категорій і нових товарів підключіть тестову базу Cloudflare D1 або GitHub Token з доступом до цього приватного репозиторію. Наразі відображається резервний каталог.</p></div>}
       {message && <div className="admin-toast">{message}</div>}
 
+      {products.some(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream") && <div className="admin-connect-card" role="status">
+        <span>ФОТОКАТАЛОГ · ПОТРЕБУЄ УВАГИ</span>
+        <h2>У {products.filter(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream").length} активних товарів немає фотографії</h2>
+        <p>Для Dermafirm та Braderm можна відновити оригінальні фото із таблиці постачальника нижче — без дублювання товарів і без зміни цін або залишків. Для інших брендів додайте перевірені зображення через редактор товару. Фото зберігаються в R2 лише коли D1/R2 активовані.</p>
+      </div>}
       <AdminExcelImport onFinished={load} disabled={!writable} />
       <div className="admin-product-workspace">
         <aside className="admin-product-list">
