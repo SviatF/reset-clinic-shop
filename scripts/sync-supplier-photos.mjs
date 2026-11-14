@@ -106,12 +106,12 @@ async function imageBytes(url){const ctrl=new AbortController(),timer=setTimeout
  * Match distinctive initial model tokens and the package size where available. */
 function exactModelMatch(item, heading) {
   if (!['Cetaphil','Sensilis'].includes(item.brand)) return 0;
-  const title=item.name.replace(new RegExp('^'+item.brand+'\\s*','i'),'').split(/\\s[—–]\\s/)[0];
+  const title=item.name.replace(new RegExp('^'+item.brand+'\\s*','i'),'').split(/\s[—–]\s/)[0];
   const required=tokens(title).slice(0,3);
   const present=new Set(tokens(heading));
   if(required.length<2 || !required.every(word=>present.has(word))) return 0;
-  const expected=String(item.size||'').match(/\\d{2,4}/)?.[0];
-  const seen=String(heading||'').match(/\\b(\\d{2,4})\\s*(?:мл|ml|г|g)\\b/i)?.[1];
+  const expected=String(item.size||'').match(/\d{2,4}/)?.[0];
+  const seen=String(heading||'').match(/\b(\d{2,4})\s*(?:мл|ml|г|g)\b/i)?.[1];
   if(expected && expected!==seen) return 0;
   return .86;
 }
