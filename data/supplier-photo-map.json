@@ -371,25 +371,28 @@
     "sha256": "afddd1967a45fa715c0d2f1bcf54e814413a691d5760eac06f0b825c135a2d8a"
   },
   "dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.jpg",
-    "source_product_url": "https://dermafirmshop.com/products/uv-derm-hydro-layer-sun-cream",
-    "source_image_url": "https://cdn.shopify.com/s/files/1/0664/6385/8915/files/USHC-R4_50ml_95538191-1177-478c-b322-7e4de706eeda.jpg?v=1721367410",
-    "match_score": 0.94,
-    "sha256": "80d153b79b187412dd6d63801613c5bf889ac98aa28bab46af2dd024e628b3c2"
+    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-hydro-layer-sun-cream-spf50-6.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 6,
+    "match_score": 1.0,
+    "sha256": "a38cd4c15f56558b4e4804f05e6a5c769b14a7f16c6a803db9b3fe21f743ce1c"
   },
   "dermafirm-soothing-repair-toning-serum-r4-23": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-serum-r4-23.jpg",
-    "source_product_url": "https://dermafirmshop.com/products/soothing-repair-toning-serum-r4",
-    "source_image_url": "https://cdn.shopify.com/s/files/1/0664/6385/8915/files/1_1.jpg?v=1750037254",
-    "match_score": 0.94,
-    "sha256": "ddfd2db2d1c93dfc9d6d669c9a9c68f6d9ce4b8c91863cdb73c8ce95d1bf3b2b"
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-serum-r4-23.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 23,
+    "match_score": 1.0,
+    "sha256": "da941e306fdd386bd17759f727e2acc0030337ebd319ff66c457ee78e6b214e3"
   },
   "dermafirm-soothing-repair-toning-cream-r4-24": {
-    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-cream-r4-24.jpg",
-    "source_product_url": "https://dermafirmshop.com/products/soothing-repair-toning-cream-r4",
-    "source_image_url": "https://cdn.shopify.com/s/files/1/0664/6385/8915/files/USTC-R4_50g_127ee2de-4ed4-466c-83c3-9063d7a91b02.jpg?v=1748225237",
-    "match_score": 0.94,
-    "sha256": "b5f2b32d40148beed7baa98debe11331cb80532832465a1ecbde7b22adc830af"
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toning-cream-r4-24.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 24,
+    "match_score": 1.0,
+    "sha256": "839926fa1b0571edae265a9e1f779e84991e3bb2b970146bb7f63e32b8910994"
   },
   "decaar-catalog-014": {
     "image_url": "/supplier-photos/decaar/decaar-catalog-014.png",
@@ -397,5 +400,293 @@
     "source_image_url": "https://decaar.com.ua/image/catalog/Oxygen%20Serum%2030ml%201080x1080.png",
     "match_score": 0.928,
     "sha256": "01ec41736cb5ef58cc0d1d1bfddb0ddbc9d2b50cc5353a1987ecc74068501d48"
+  },
+  "dermafirm-peptology-boosting-ampoule-retinoid-3": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-retinoid-3.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 3,
+    "match_score": 1.0,
+    "sha256": "c5a98d4076432beca92fc6d151f8f8b6e5c9b149cf1b367eb5f9e76b50e523af"
+  },
+  "dermafirm-peptology-boosting-ampoule-pdrn-4": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 4,
+    "match_score": 1.0,
+    "sha256": "98b7f85385628af5f1e6879e20fd0438cf3c9d41efda43f7bdb017da532f6e19"
+  },
+  "dermafirm-peptology-boosting-ampoule-pdrn-4d-5": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-peptology-boosting-ampoule-pdrn-4d-5.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 5,
+    "match_score": 1.0,
+    "sha256": "1f2a77a191e26fb4b190c93c00dfe552fea44af2f04c6b2dc8909501f371a01f"
+  },
+  "dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-uv-derm-skin-barrier-sunscreen-spf-50-7.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 7,
+    "match_score": 1.0,
+    "sha256": "7b2d85a61f1715e1a705ed284e8e16d5cb7749067562f95caad55f1f4d03d9ce"
+  },
+  "dermafirm-age-reviving-essential-toner-a4-8": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-essential-toner-a4-8.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 8,
+    "match_score": 1.0,
+    "sha256": "35e6810b6b389723e4a0acda1fdbc8978d4994b305214baa1016828d5ba8c575"
+  },
+  "dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-bio-correcting-ampoule-astasome-a4-9.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 9,
+    "match_score": 1.0,
+    "sha256": "4ac1a43ab2ce4a7b56277a39ba6e4489d4154cc5d59e20b15088d2d03e3e8a37"
+  },
+  "dermafirm-age-reviving-firming-cream-a4-10": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-firming-cream-a4-10.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 10,
+    "match_score": 1.0,
+    "sha256": "21d181e6bed8b43fddd26d142612b3a6428702e83a745aca308fcecd7e7ad525"
+  },
+  "dermafirm-age-reviving-lifting-eye-cream-a4-11": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-lifting-eye-cream-a4-11.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 11,
+    "match_score": 1.0,
+    "sha256": "271a90ebffdb0bd44debf58c5c974f7b86c00e984e63f1a7bbd907d98d031b9c"
+  },
+  "dermafirm-age-reviving-advanced-neck-cream-a4-12": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-age-reviving-advanced-neck-cream-a4-12.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 12,
+    "match_score": 1.0,
+    "sha256": "725f9fae3fe702f2fecbff9340bd5ce2e7ef9672777f777d89a5be9f8cac5839"
+  },
+  "dermafirm-the-peptide-wrinkle-serum-p4-14": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-wrinkle-serum-p4-14.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 14,
+    "match_score": 1.0,
+    "sha256": "0c912650cdab7d162c40b3b5526f792fe33455f72e0b7da1ff33441617555a0b"
+  },
+  "dermafirm-the-peptide-firming-cream-p4-15": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-the-peptide-firming-cream-p4-15.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 15,
+    "match_score": 1.0,
+    "sha256": "b6187bd7e83d1680ff7588359965f9dc0ee447db00a658df91b4a85cd9f22275"
+  },
+  "dermafirm-moist-barrier-balancing-toner-m4-17": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-balancing-toner-m4-17.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 17,
+    "match_score": 1.0,
+    "sha256": "e5e8ee3ecede1f6ae1ab369554711cdeca772abe93253ce6c45e3e753b786371"
+  },
+  "dermafirm-bio-correction-ampoule-cera-drop-m4-18": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-bio-correction-ampoule-cera-drop-m4-18.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 18,
+    "match_score": 1.0,
+    "sha256": "e74508e0a7ace40cd6518451716b9dc011d347578a71fd7b628d08a3a545d916"
+  },
+  "dermafirm-moist-barrier-intensive-cream-m4-19": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-moist-barrier-intensive-cream-m4-19.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 19,
+    "match_score": 1.0,
+    "sha256": "779b4c093c46b5008dad376df162b3f4d509d4a2da844774117ffdd1e793b706"
+  },
+  "dermafirm-soothing-repair-toner-r4-21": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-toner-r4-21.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 21,
+    "match_score": 1.0,
+    "sha256": "184d99ebb7315d4852a82a70a4a9e65f828856b5f3f2e6d12d496a0b8c926c9d"
+  },
+  "dermafirm-soothing-repair-serum-mist-r4-22": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-mist-r4-22.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 22,
+    "match_score": 1.0,
+    "sha256": "cd2a219873c09313afe550de9d8f85e58e4db26ed38b5d350244f1fdf8670c15"
+  },
+  "dermafirm-soothing-repair-serum-r4-25": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-serum-r4-25.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 25,
+    "match_score": 1.0,
+    "sha256": "f9d912500fc39af392bfee66fbef143a1a4988f343e3f898b42f5a84fb7f3acc"
+  },
+  "dermafirm-soothing-repair-mask-r4-26": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-mask-r4-26.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 26,
+    "match_score": 1.0,
+    "sha256": "af11327690b1542ab360b49d8e1bb0515e5449d918b44086b4c3f2f876c56c5b"
+  },
+  "dermafirm-soothing-repair-emulsion-r4-27": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-emulsion-r4-27.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 27,
+    "match_score": 1.0,
+    "sha256": "340e4008439fecaab4fb6acd14bb726e2f869d83adbe9884fc66a2cf5d5c392c"
+  },
+  "dermafirm-hydra-foaming-cleanser-r4-28": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-hydra-foaming-cleanser-r4-28.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 28,
+    "match_score": 1.0,
+    "sha256": "cbc1aad74e8c5fdb76550c91c60ee1ab540469432d4144d04f9c68d35fd7b7cc"
+  },
+  "dermafirm-soothing-repair-cream-r4-29": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-soothing-repair-cream-r4-29.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 29,
+    "match_score": 1.0,
+    "sha256": "98a4ec385fe6319cf4598d99abbd259b00b843abd32acca5e29477a92a680df9"
+  },
+  "dermafirm-cicaa-c-cleansing-foam-31": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-cleansing-foam-31.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 31,
+    "match_score": 1.0,
+    "sha256": "959a5254957dacc2a106a9957063dd713175576f69d432ef2f760e40b32ebd1a"
+  },
+  "dermafirm-cicaa-c-essence-toner-32": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-essence-toner-32.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 32,
+    "match_score": 1.0,
+    "sha256": "e10356eaa0e7bf4aee00ba5c58a30e0fa7eaa990e05fd9d0b15299a152790389"
+  },
+  "dermafirm-cicaa-c-serum-33": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-cicaa-c-serum-33.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 33,
+    "match_score": 1.0,
+    "sha256": "3e3f28315f0ba6144f9c7c690d2accff423e198acc9fe2b63608e02805d95c86"
+  },
+  "dermafirm-pepteyed-dark-circle-cream-35": {
+    "image_url": "/supplier-photos/dermafirm/dermafirm-pepteyed-dark-circle-cream-35.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Dermafirm",
+    "source_sheet_row": 35,
+    "match_score": 1.0,
+    "sha256": "303b3172fa8e506d6521b59b46c7cda70e09f5f71a9ddc8433b83eced44831b0"
+  },
+  "braderm-kurac-mousse-2": {
+    "image_url": "/supplier-photos/braderm/braderm-kurac-mousse-2.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 2,
+    "match_score": 1.0,
+    "sha256": "0d81d33c69750f17ee5cb0d97e6f0ab3ed5bbb03162d9bc57b946f9fc3100e2f"
+  },
+  "braderm-azn-cream-3": {
+    "image_url": "/supplier-photos/braderm/braderm-azn-cream-3.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 3,
+    "match_score": 1.0,
+    "sha256": "5046b7bd20ed2c1dbf053b015b522d64811134d25fe90235b849b7264075495f"
+  },
+  "braderm-kurac-cream-4": {
+    "image_url": "/supplier-photos/braderm/braderm-kurac-cream-4.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 4,
+    "match_score": 1.0,
+    "sha256": "2ed26b34f9f975f65b85c286b27b99278e2c67352e6ceb0f089b0da57edda727"
+  },
+  "braderm-dorsak-spray-5": {
+    "image_url": "/supplier-photos/braderm/braderm-dorsak-spray-5.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 5,
+    "match_score": 1.0,
+    "sha256": "eb260343ec92c44cb6b2ade9675470eeaa5a9b9995ae4c8d07569e485477dcaf"
+  },
+  "braderm-tramexal-cream-6": {
+    "image_url": "/supplier-photos/braderm/braderm-tramexal-cream-6.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 6,
+    "match_score": 1.0,
+    "sha256": "25c8e31012bcecfdfc0c1499ae61d947c1636ad7ddee5bc009557a68306a390c"
+  },
+  "braderm-rosac-cream-7": {
+    "image_url": "/supplier-photos/braderm/braderm-rosac-cream-7.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 7,
+    "match_score": 1.0,
+    "sha256": "1600bbce5a001937349105314d1eadd815d6a45cb0493eff65454f659cffd96c"
+  },
+  "braderm-oxage-cream-8": {
+    "image_url": "/supplier-photos/braderm/braderm-oxage-cream-8.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 8,
+    "match_score": 1.0,
+    "sha256": "1b8edd507225aa2e719f02617f5955a6056305edd73e840f580c87af44420f4f"
+  },
+  "braderm-kurage-cream-9": {
+    "image_url": "/supplier-photos/braderm/braderm-kurage-cream-9.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 9,
+    "match_score": 1.0,
+    "sha256": "df12abbf2c02038957fdd23a9c0dc28f3a79d1bd604ddb71ecdb176e1a48d70d"
+  },
+  "braderm-kerato-psor-10": {
+    "image_url": "/supplier-photos/braderm/braderm-kerato-psor-10.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 10,
+    "match_score": 1.0,
+    "sha256": "0adb25c1fa8b7815a60cff177675d4a395a0526ffb97a05b40c533c066a0b9b8"
+  },
+  "braderm-axatopic-cleanser-11": {
+    "image_url": "/supplier-photos/braderm/braderm-axatopic-cleanser-11.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 11,
+    "match_score": 1.0,
+    "sha256": "8cc5a98d0575e1273690b3744b10ba4e1ec247af14ddf53f3adf9f27c55b0f3e"
+  },
+  "braderm-axatopic-cream-12": {
+    "image_url": "/supplier-photos/braderm/braderm-axatopic-cream-12.webp",
+    "source_sheet_url": "https://docs.google.com/spreadsheets/d/1xx3Tmx_7y2yMrSUrizUJOw9WSIhImHk86s2Mv8NfVmc/edit",
+    "source_sheet": "Braderm",
+    "source_sheet_row": 12,
+    "match_score": 1.0,
+    "sha256": "c0591d134e9fd456ae7e23cc7d07ab0c1f0e986b6c997126972dc93d08b5d8d8"
   }
 }
