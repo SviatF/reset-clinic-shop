@@ -11,7 +11,7 @@ import hashlib
 import json
 import sys
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageOps
+from PIL import Image, ImageDraw, ImageOps, ImageStat
 
 APPLY = "--apply" in sys.argv
 PUBLIC = Path("public")
@@ -88,8 +88,35 @@ def strip_neutral_flat_background(image: Image.Image) -> tuple[Image.Image, bool
     return processed, True
 
 
+def representative_frame(image: Image.Image) -> Image.Image:
+    """Animated supplier assets may begin with a fully transparent hold frame."""
+    if not getattr(image, "is_animated", False) or getattr(image, "n_frames", 1) <= 1:
+        return image.copy()
+    frames = image.n_frames
+    picks = sorted(set([0, 1, 2, 4, 8, frames // 5, frames // 3,
+                        frames // 2, (2 * frames) // 3, (4 * frames) // 5, frames - 1]))
+    best, highest = None, -1
+    for index in picks:
+        if index < 0 or index >= frames:
+            continue
+        image.seek(index)
+        frame = image.convert("RGBA")
+        alpha = frame.getchannel("A")
+        occupied = sum(alpha.histogram()[9:])
+        if occupied == 0:
+            continue
+        # Prefer a real filled product frame, not a blank transparent intro.
+        contrast = sum(ImageStat.Stat(frame.convert("RGB")).stddev)
+        score = occupied + contrast * 90
+        if score > highest:
+            best, highest = frame.copy(), score
+    if best is None:
+        raise ValueError("No visible frame in supplier animation")
+    return best
+
+
 def studio_image(image: Image.Image) -> Image.Image:
-    image = ImageOps.exif_transpose(image)
+    image = ImageOps.exif_transpose(representative_frame(image))
     rgba, removed = strip_neutral_flat_background(image)
     if not removed and rgba.getchannel("A").getextrema()[0] >= 250:
         report["opaque_preserved"] += 1
