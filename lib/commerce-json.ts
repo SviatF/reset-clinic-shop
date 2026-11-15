@@ -33,6 +33,7 @@ function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
         source.legacy_studio_image_url,
         source.pre_refinement_image_url,
         source.pre_bundle_image_url,
+        `/supplier-photos/isolated/${row.slug}.webp`,
         source.source_image_url,
         source.image_url,
       ];
