@@ -280,46 +280,74 @@ export default function AdminProductsClient() {
   }
 
   const promoPreview = getProductPricing({ price: Number(form.price), sale_price: form.promo_enabled ? form.sale_price : null });
-  return (
-    <div className="admin-products-page">
-      <div className="admin-page-head"><div><span>CATALOG CONTROL</span><h1>Товари</h1><p>Ціни, індивідуальні акції, залишки, фото, контент і SEO товарів.</p></div><button className="admin-primary" onClick={createNew} disabled={!writable}>+ ДОДАТИ ТОВАР</button></div>
-      {supplierImport?.available && supplierImport.missing !== null && supplierImport.missing > 0 && <div className="admin-connect-card">
-        <span>ІМПОРТ ПОСТАЧАЛЬНИКІВ · D1</span>
-        <h2>Додати нові товари до бази як чернетки</h2>
-        <p>У вихідному імпорті 114 позицій. Із них у D1 ще відсутні {supplierImport.missing}. Перед записом система завантажить повну резервну копію сховища. Існуючі товари, ціни, залишки й замовлення не змінюються.</p>
-        <button className="admin-primary" type="button" disabled={saving || !writable} onClick={importSupplierDrafts}>Зробити резервну копію та перенести {supplierImport.missing} чернеток у D1</button>
-      </div>}
-      {recovery?.needsRecovery && <div className="admin-connect-card">
-        <span>ІМПОРТ У D1</span>
-        <h2>У базі відсутні товари з вихідного каталогу</h2>
-        <p>У D1 зараз {recovery.persisted} товарів. Із {recovery.sourceTotal ?? 165} позицій поточного каталогу ще відсутні {recovery.missing ?? recovery.visible - recovery.persisted}. Можна додати їх без перезапису вже збережених записів.</p>
-        <button className="admin-primary" type="button" disabled={saving} onClick={persistRecoveredCatalog}>Перенести відсутні товари до D1</button>
-      </div>}
-      {writable === false && configured !== null && <div className="admin-connect-card" role="status"><span>ТІЛЬКИ ПЕРЕГЛЯД</span><h2>Запис товарів ще не підключений</h2><p>Для збереження цін, фото, категорій і нових товарів підключіть тестову базу Cloudflare D1 або GitHub Token з доступом до цього приватного репозиторію. Наразі відображається резервний каталог.</p></div>}
-      {message && <div className="admin-toast">{message}</div>}
+  const noPhotoCount = products.filter(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream").length;
 
-      {products.some(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream") && <div className="admin-connect-card" role="status">
-        <span>ФОТОКАТАЛОГ · ПОТРЕБУЄ УВАГИ</span>
-        <h2>У {products.filter(product => product.status === "active" && !product.image_url && product.slug !== "parsley-seed-anti-oxidant-eye-cream").length} активних товарів немає фотографії</h2>
-        <p>Для Dermafirm та Braderm можна відновити оригінальні фото із таблиці постачальника нижче — без дублювання товарів і без зміни цін або залишків. Для інших брендів додайте перевірені зображення через редактор товару. Фото зберігаються в R2 лише коли D1/R2 активовані.</p>
+  return (
+    <div className="admin-products-page admin-products-v2">
+      <header className="admin-catalog-header">
+        <div className="admin-catalog-intro">
+          <span className="admin-catalog-kicker">RESET COMMERCE / КЕРУВАННЯ КАТАЛОГОМ</span>
+          <h1>Товари <span className="admin-catalog-total">{products.length}</span></h1>
+          <p>Оберіть товар, щоб редагувати його, або створіть нову позицію чи імпортуйте дані.</p>
+        </div>
+        <div className="admin-catalog-actions">
+          <button type="button" className={view === "import" ? "admin-catalog-secondary is-active" : "admin-catalog-secondary"} onClick={() => setView(view === "import" ? "catalog" : "import")}>⇩ Імпорт товарів</button>
+          <button type="button" className="admin-catalog-create" onClick={createNew}><span aria-hidden="true">+</span> Додати товар</button>
+        </div>
+      </header>
+      <div className="admin-catalog-stats" aria-label="Статистика каталогу">
+        <div><span>УСІ ТОВАРИ</span><strong>{products.length}</strong><small>Позицій у каталозі</small></div>
+        <div><span>ОПУБЛІКОВАНІ</span><strong>{activeCount}</strong><small>Активні товари</small></div>
+        <div><span>ЧЕРНЕТКИ</span><strong>{draftCount}</strong><small>Очікують публікації</small></div>
+        <div><span>ЗІ ЗНИЖКОЮ</span><strong>{discountedCount}</strong><small>Акційних пропозицій</small></div>
+      </div>
+
+      {configured !== null && !writable && <div className="admin-storage-alert" role="status">
+        <span className="admin-storage-alert-symbol" aria-hidden="true">!</span>
+        <div><strong>Збереження зараз недоступне</strong><p>{writeReason || "Сховище товарів працює лише на читання."} Ви можете заповнювати поля, але для фактичного збереження потрібен доступ до сховища.</p></div>
+        <button type="button" onClick={() => { void load().catch(err => setMessage(err.message)); }}>Перевірити ще раз</button>
       </div>}
-      <AdminExcelImport onFinished={load} disabled={!writable} />
-      <div className="admin-product-workspace">
-        <aside className="admin-product-list">
-          <div className="admin-list-head"><strong>{products.length} позицій</strong><span>ACTIVE / DRAFT / ARCHIVED</span></div>
-          {products.length ? products.map((product) => {
-            const pricing = getProductPricing(product);
-            return <button key={product.id} className={selectedId === product.id ? "is-selected" : ""} onClick={() => selectProduct(product)}>
-              <div className="admin-product-thumb"><SmartProductImage src={product.image_url} alt={product.name} fallback={<span>{product.name?.slice(0,1)}</span>} /></div>
-              <div><strong>{product.name}</strong><span>{product.brand}</span><div className="admin-list-price">
-                {pricing.onSale ? <><del>{pricing.originalPrice.toFixed(2)} грн</del><b>{pricing.price.toFixed(2)} грн</b><em>−{pricing.discountPercent}%</em></> : <span>{pricing.price.toFixed(2)} грн</span>}
-              </div><small>{product.stock_quantity} шт. · {product.category}</small></div>
-              <i className={`status-dot status-${product.status}`} />
-            </button>;
-          }) : <p className="admin-empty">Товарів ще немає.</p>}
+      {message && <div className="admin-toast admin-catalog-toast" role="status">{message}<button type="button" onClick={() => setMessage("")} aria-label="Закрити повідомлення">×</button></div>}
+
+      {view === "import" ? <div className="admin-catalog-import-workspace">
+        <div className="admin-catalog-import-heading"><div><span>DATA OPERATIONS</span><h2>Імпорт та синхронізація</h2><p>Додавайте нові товари й фотографії без перезапису створених позицій.</p></div><button type="button" className="admin-catalog-secondary" onClick={() => setView("catalog")}>← Назад до каталогу</button></div>
+        <div className="admin-catalog-import-card"><AdminExcelImport onFinished={load} disabled={!writable} /></div>
+        {supplierImport?.available && supplierImport.missing !== null && supplierImport.missing > 0 && <details className="admin-catalog-utility">
+          <summary><span>Додатковий імпорт</span><strong>Додати {supplierImport.missing} чернеток постачальників</strong><small>Без заміни існуючих товарів</small></summary>
+          <div className="admin-catalog-utility-body"><p>У вихідному імпорті 114 позицій. Перенесення відсутніх чернеток у тестову D1 з обов’язковою резервною копією.</p><button className="admin-primary" type="button" disabled={saving || !writable} onClick={importSupplierDrafts}>Зробити резервну копію та перенести чернетки</button></div>
+        </details>}
+        {recovery?.needsRecovery && <details className="admin-catalog-utility">
+          <summary><span>Відновлення каталогу</span><strong>{recovery.missing ?? recovery.visible - recovery.persisted} відсутніх позицій</strong><small>Поточні дані не перезаписуються</small></summary>
+          <div className="admin-catalog-utility-body"><p>У D1 зараз {recovery.persisted} товарів. Зі {recovery.sourceTotal ?? 165} вихідних позицій відсутні {recovery.missing ?? recovery.visible - recovery.persisted}.</p><button className="admin-primary" type="button" disabled={saving || !writable} onClick={persistRecoveredCatalog}>Відновити відсутні товари в D1</button></div>
+        </details>}
+        {noPhotoCount > 0 && <details className="admin-catalog-utility"><summary><span>Медіа-аудит</span><strong>{noPhotoCount} товарів без фотографій</strong><small>Відкрити рекомендації</small></summary><div className="admin-catalog-utility-body"><p>Для Dermafirm і Braderm використайте Excel-імпорт. Для інших брендів додайте підтверджені фото у редакторі конкретного товару.</p></div></details>}
+      </div> : <div className={"admin-product-workspace admin-catalog-workspace " + (editorOpen ? "is-editing" : "is-overview")}>
+        <aside className="admin-catalog-list-panel" aria-label="Перелік товарів">
+          <div className="admin-catalog-list-heading"><div><span>PRODUCT LIBRARY</span><h2>Каталог товарів</h2></div><strong>{visibleProducts.length} / {products.length}</strong></div>
+          <div className="admin-catalog-filters">
+            <label className="admin-catalog-search"><span className="sr-only">Пошук товарів</span><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Пошук за назвою, SKU або брендом…" type="search" /></label>
+            <div className="admin-catalog-selects">
+              <label><span>Статус</span><select value={statusFilter} onChange={event => setStatusFilter(event.target.value)}><option value="all">Усі статуси</option><option value="active">Активні</option><option value="draft">Чернетки</option><option value="archived">Архівні</option></select></label>
+              <label><span>Бренд</span><select value={brandFilter} onChange={event => setBrandFilter(event.target.value)}><option value="all">Усі бренди</option>{brandOptions.map(brand => <option key={brand} value={brand}>{brand}</option>)}</select></label>
+            </div>
+          </div>
+          <div className="admin-product-list admin-catalog-list">
+            <div className="admin-catalog-list-columns" aria-hidden="true"><span>ТОВАР</span><span>ЦІНА / АКЦІЯ</span><span>СТАТУС</span></div>
+            {visibleProducts.length ? visibleProducts.map(product => {
+              const pricing = getProductPricing(product);
+              return <button type="button" key={product.id} className={selectedId === product.id && editorOpen ? "is-selected" : ""} onClick={() => selectProduct(product)}>
+                <span className="admin-product-thumb"><SmartProductImage src={product.image_url} alt={product.name} fallback={<span>{String(product.name || "?").slice(0, 1)}</span>} /></span>
+                <span className="admin-catalog-product-identity"><strong>{product.name}</strong><span>{product.brand} · {product.sku || "Без SKU"}</span><small>{product.category} · {product.stock_quantity} шт.</small></span>
+                <span className="admin-catalog-product-price">{pricing.onSale && <del>{pricing.originalPrice.toFixed(2)} грн</del>}<b>{pricing.price.toFixed(2)} грн</b>{pricing.onSale && <em>−{pricing.discountPercent}%</em>}</span>
+                <span className={"admin-catalog-status status-" + product.status}>{product.status === "active" ? "Активний" : product.status === "draft" ? "Чернетка" : "Архів"}</span>
+                <span className="admin-catalog-row-arrow" aria-hidden="true">↗</span>
+              </button>;
+            }) : <div className="admin-catalog-noresults"><strong>Товарів не знайдено</strong><p>Спробуйте змінити фільтри або створіть нову позицію.</p><button type="button" onClick={() => { setQuery(""); setBrandFilter("all"); setStatusFilter("all"); }}>Скинути фільтри</button></div>}
+          </div>
         </aside>
 
-        <form className="admin-product-form" onSubmit={save}>
+        {editorOpen ? <form className="admin-product-form admin-catalog-editor" onSubmit={save} id="admin-product-editor">
+
           <div className="admin-form-title"><div><span>{selectedId ? "EDIT PRODUCT" : "NEW PRODUCT"}</span><h2>{selectedId ? form.name || "Товар" : "Новий товар"}</h2></div>{selectedId && <button type="button" className="admin-danger" onClick={remove} disabled={!writable}>Видалити</button>}</div>
 
           <section className="admin-form-section"><h3>Основне</h3><div className="admin-form-grid">
@@ -375,8 +403,12 @@ export default function AdminProductsClient() {
           </div></section>
 
           <div className="admin-form-actions"><button className="admin-primary" type="submit" disabled={saving || !writable}>{saving ? "ЗБЕРІГАЄМО…" : selectedId ? "ЗБЕРЕГТИ ЗМІНИ" : "СТВОРИТИ ТОВАР"}</button><span>Зміни активного товару відображаються у storefront після збереження.</span></div>
-        </form>
-      </div>
+        </form> : <div className="admin-catalog-welcome">
+          <span className="admin-catalog-welcome-icon" aria-hidden="true">✦</span><small>PRODUCT WORKSPACE</small><h2>Усі товари під контролем.</h2>
+          <p>Оберіть товар зі списку, щоб змінити його назву, категорію, ціну й знижку, фото, контент або SEO. Кожне поле поточного редактора збережене.</p>
+          <div><button type="button" className="admin-catalog-create" onClick={createNew}>+ Створити товар</button><button type="button" className="admin-catalog-secondary" onClick={() => setView("import")}>Імпортувати</button></div>
+        </div>}
+      </div>}
     </div>
   );
 }
