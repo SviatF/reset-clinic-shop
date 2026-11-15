@@ -1,0 +1,33 @@
+/* Product-level offers; independent of supplier photo treatment. */
+.shop-sale-badge{position:absolute;z-index:8;display:inline-flex;align-items:center;justify-content:center;min-width:63px;min-height:37px;padding:6px 11px;background:#ffdc4c;color:#14110b;border:1px solid #ebc735;border-radius:0;box-shadow:0 3px 12px rgba(42,33,8,.07);font-size:15px;font-weight:850;line-height:1;letter-spacing:-.03em;white-space:nowrap}
+.rs-card-media,.premium-product-media,.product-object-stage{position:relative}
+.rs-card-sale-badge{top:11px;right:11px;pointer-events:none}
+.premium-card-sale-badge{top:49px;right:18px;pointer-events:none}
+.product-detail-sale-badge{top:58px;right:23px;min-width:89px;min-height:50px;font-size:22px;pointer-events:none}
+.shop-price-stack{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-width:0}
+.shop-price-before{display:block;color:#938d87;font-size:12px;font-weight:500;line-height:1.15;text-decoration:line-through;text-decoration-thickness:1px;white-space:nowrap}
+.rs-card-price.shop-price-current{display:block;color:#211d1a;font-size:18px}
+.premium-product-meta .shop-price-stack strong.shop-price-current{display:block;font-size:17px;line-height:1.2;color:#1c1917;font-weight:780}
+.premium-product-meta .shop-price-before{font-size:12px}
+.product-page-audit-v2 .shop-detail-price-before{display:block;color:#857c76;font-size:17px;font-weight:550;line-height:1.2;text-decoration:line-through}
+.admin-promo-section{background:linear-gradient(135deg,#fffefa,#faf7ed)}
+.admin-promo-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.admin-promo-head>div>span{font-size:9px;letter-spacing:.16em;font-weight:800;color:#988b6b}
+.admin-promo-head h3{font-size:15px;margin:4px 0 5px;color:#242019}
+.admin-promo-head p{font-size:11px;line-height:1.5;color:#82796a;margin:0}
+.admin-promo-switch{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:11px;font-weight:750;color:#30291b;white-space:nowrap}
+.admin-promo-switch input{accent-color:#242019;width:16px;height:16px}
+.admin-promo-preview{margin-top:15px;border:1px solid #e3d5a1;padding:15px;display:flex;align-items:center;gap:15px;background:#fffef7;flex-wrap:wrap}
+.admin-promo-preview .admin-promo-badge{position:static;box-shadow:none;min-height:37px}
+.admin-promo-preview>div{display:flex;flex-direction:column;gap:3px}
+.admin-promo-preview small{font-size:8px;font-weight:800;letter-spacing:.12em;color:#8a816f}
+.admin-promo-preview del{font-size:11px;color:#938b7b}
+.admin-promo-preview strong{font-size:21px;color:#17150f}
+.admin-promo-preview>p{font-size:10px;color:#807568;margin:0}
+.admin-promo-hint{margin:0;color:#847a6b;font-size:11px;line-height:1.5}
+.admin-product-list .admin-list-price{display:flex;flex-wrap:wrap;align-items:center;gap:4px 7px;margin-top:5px}
+.admin-product-list .admin-list-price span{margin:0}
+.admin-list-price del{font-size:9px;color:#a09a8d}
+.admin-list-price b{font-size:11px;color:#1d1b17}
+.admin-list-price em{font-style:normal;font-weight:800;font-size:9px;background:#ffdc4c;color:#14110b;padding:2px 5px}
+@media(max-width:720px){.rs-card-sale-badge{top:7px;right:7px;min-width:51px;min-height:29px;padding:4px 7px;font-size:12px}.premium-card-sale-badge{top:43px;right:10px;min-width:53px;min-height:30px;font-size:12px}.product-detail-sale-badge{top:49px;right:12px;min-width:68px;min-height:38px;font-size:17px}.shop-price-before{font-size:10px}.rs-card-price.shop-price-current{font-size:16px}.admin-promo-head{align-items:flex-start;flex-direction:column;gap:12px}}

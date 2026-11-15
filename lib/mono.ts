@@ -3,6 +3,7 @@ import "server-only";
 import { createPublicKey, verify } from "node:crypto";
 import { readProducts } from "@/lib/commerce-json";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
+import { getProductPricing } from "@/lib/product-pricing";
 
 const MONO_API = "https://api.monobank.ua";
 export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.vercel.app";
@@ -76,7 +77,8 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
     }
     const item = bySlug.get(slug)!;
     if (item.track_stock && Number(item.stock_quantity) < qty) throw new Error(`Недостатньо товару «${item.name}» у наявності`);
-    const unitAmount = Math.round(Number(item.price) * 100);
+    // Authoritative server-side sale price: never trust stale browser cart totals.
+    const unitAmount = Math.round(getProductPricing(item).price * 100);
     if (!Number.isFinite(unitAmount) || unitAmount <= 0) throw new Error(`Некоректна ціна товару «${item.name}»`);
     normalized.push({ productId: item.id, slug: item.slug, name: item.name, sku: item.sku, qty, unitAmount, totalAmount: unitAmount * qty });
   }

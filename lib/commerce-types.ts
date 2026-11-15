@@ -11,6 +11,8 @@ export type ProductRecord = {
   short_description: string;
   description: string;
   price: number | string;
+  /** Final promotional price, when enabled; regular price stays in price. */
+  sale_price?: number | null;
   currency: string;
   stock_quantity: number;
   track_stock: boolean;

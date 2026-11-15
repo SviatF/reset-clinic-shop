@@ -4,12 +4,13 @@ import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { slugifyUkr } from "@/lib/slugify";
+import { validateSalePrice } from "@/lib/product-pricing";
 import { readCategories } from "@/lib/catalog-categories";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const allowed = new Set(["slug","name","brand","sku","category","subcategory_slugs","product_line","status","short_description","description","price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
+const allowed = new Set(["slug","name","brand","sku","category","subcategory_slugs","product_line","status","short_description","description","price","sale_price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
 
 function sanitize(body: Record<string, unknown>) {
   const next: Record<string, unknown> = {};
@@ -44,14 +45,15 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       const subs=Array.isArray(changes.subcategory_slugs)?changes.subcategory_slugs:current.subcategory_slugs||[];
       if(subs.some((slug:string)=>!categories.some(c=>c.parent_slug===category&&c.slug===slug&&c.status==="active")))throw new Error("Підкатегорія не належить до вибраного розділу");
       if(status==="active" && Number(changes.price ?? current.price)<=0)throw new Error("Не можна публікувати товар із нульовою ціною");
-      const updated = { ...current, ...changes, status, published_at: status === "active" ? current.published_at || now : current.published_at, updated_at: now } as ProductRecord;
+      const salePrice = validateSalePrice(changes.price ?? current.price, "sale_price" in changes ? changes.sale_price : current.sale_price);
+      const updated = { ...current, ...changes, sale_price: salePrice, status, published_at: status === "active" ? current.published_at || now : current.published_at, updated_at: now } as ProductRecord;
       const copy = [...products];
       copy[index] = updated;
       return copy;
     });
     const updated = nextProducts.find((item) => item.id === id);
     if (!updated) return NextResponse.json({ error: "Товар не знайдено" }, { status: 404 });
-    await appendActivity({ event_type: "product_updated", entity_type: "product", entity_id: id, title: `Оновлено товар: ${updated.name}`, metadata: { fields: Object.keys(changes), status: updated.status, price: updated.price, stock: updated.stock_quantity } });
+    await appendActivity({ event_type: "product_updated", entity_type: "product", entity_id: id, title: `Оновлено товар: ${updated.name}`, metadata: { fields: Object.keys(changes), status: updated.status, price: updated.price, sale_price: updated.sale_price, stock: updated.stock_quantity } });
     return NextResponse.json({ product: updated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Не вдалося оновити товар";
