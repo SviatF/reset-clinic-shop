@@ -48,11 +48,11 @@ export default async function HomePage() {
         <div className="precision-hero-copy">
           <div className="precision-copy-inner">
             <span className="precision-eyebrow">RESET CLINIC SHOP</span>
-            <h1>Професійний догляд.<br />Підібраний правильно.</h1>
-            <p>Косметика для обличчя, тіла та волосся, яку ми відбираємо за професійними критеріями. Якщо не знаєте, що обрати — допоможе косметолог RESET.</p>
+            <h1>Професійна косметика.<br />Догляд, якому довіряють.</h1>
+            <p>Оригінальна косметика для обличчя, тіла та волосся від перевірених брендів. Обирайте самостійно або отримайте допомогу косметолога RESET Clinic.</p>
             <div className="precision-hero-actions">
-              <Link className="precision-primary" href="/face">Обрати догляд <Arrow /></Link>
-              <Link className="precision-secondary" href="/consultation">Підбір косметолога</Link>
+              <Link className="precision-primary" href="/catalog">Перейти до каталогу <Arrow /></Link>
+              <Link className="precision-secondary" href="/consultation">Допомога косметолога</Link>
             </div>
             <div className="precision-proof">
               <div><strong>100%</strong><span>оригінальна продукція</span></div>
