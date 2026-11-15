@@ -1,0 +1,48 @@
+name: Rebuild accurate OLIE'RE bundle packshots
+on:
+  push:
+    branches: [fix/oliere-manual-bundle-composites-20261114]
+    paths:
+      - 'scripts/render-oliere-bundles.py'
+      - 'data/oliere-bundle-compositions.json'
+      - '.github/workflows/render-oliere-bundles.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image compositor
+        run: python -m pip install Pillow==11.1.0
+      - name: Build 14 transparent kit compositions from independently verified SKUs
+        run: python scripts/render-oliere-bundles.py --apply
+      - name: Verify all files, SKUs and alpha channels
+        run: python scripts/render-oliere-bundles.py --check
+      - name: Publish side-by-side visual QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oliere-bundle-visual-qa
+          path: |
+            photo-qa/bundle-comparison-*.jpg
+            oliere-bundle-composite-report.json
+          if-no-files-found: ignore
+      - name: Commit verified composites to source branch
+        run: |
+          git add data/supplier-photo-map.json public/supplier-photos/bundles photo-qa/bundle-comparison-1.jpg photo-qa/bundle-comparison-2.jpg
+          if git diff --cached --quiet; then
+            echo "Already up-to-date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets(shop): replace cut-out bundle scenes with 14 consistent product compositions"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin HEAD:"${GITHUB_REF_NAME}"
