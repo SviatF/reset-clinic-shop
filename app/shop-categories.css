@@ -87,3 +87,7 @@
  .rs-filters-reset-all{min-height:38px;font-size:10px;padding:0 8px}
  .rs-mainnav .rs-filter-chip-text{flex-direction:column;gap:1px;line-height:1.05}
 }
+
+/* Isolated OLIE'RE packaging is already shadow-free; avoid introducing a
+   second fuzzy outline with the global product-photo drop-shadow. */
+.rs-card--hair-cutout .rs-card-media img{filter:none!important}
