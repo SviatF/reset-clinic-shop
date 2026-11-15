@@ -17,7 +17,10 @@
     "SHOP_STAGING": "true",
     "GITHUB_REPO_OWNER": "SviatF",
     "GITHUB_REPO_NAME": "reset-clinic-shop",
-    "GITHUB_REPO_BRANCH": "main"
+    "GITHUB_REPO_BRANCH": "main",
+    "SHOP_STORAGE_BACKEND": "cloudflare",
+    "SHOP_PRODUCTS_BACKEND": "d1",
+    "SHOP_MEDIA_BACKEND": "r2"
   },
   "workers_dev": true,
   "d1_databases": [
