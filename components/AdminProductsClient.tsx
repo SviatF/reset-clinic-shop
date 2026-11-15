@@ -49,6 +49,12 @@ export default function AdminProductsClient() {
   const [brands,setBrands] = useState<any[]>([]);
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [writable, setWritable] = useState(false);
+  const [writeReason, setWriteReason] = useState<string | null>(null);
+  const [view, setView] = useState<"catalog" | "import">("catalog");
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [brandFilter, setBrandFilter] = useState("all");
   const [recovery, setRecovery] = useState<{ available: boolean; persisted: number; visible: number; missing?: number; sourceTotal?: number; needsRecovery: boolean } | null>(null);
   const [supplierImport, setSupplierImport] = useState<{ available: boolean; sourceCount: number; missing: number | null; alreadyPresent?: number; persisted?: number; reason?: string } | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -57,6 +63,18 @@ export default function AdminProductsClient() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const selected = useMemo(() => products.find((item) => item.id === selectedId), [products, selectedId]);
+  const brandOptions = useMemo(() => [...new Set(products.map(item => String(item.brand || "")).filter(Boolean))].sort((a, b) => a.localeCompare(b, "uk")), [products]);
+  const visibleProducts = useMemo(() => {
+    const text = query.toLocaleLowerCase("uk").trim();
+    return products.filter(item =>
+      (statusFilter === "all" || item.status === statusFilter)
+      && (brandFilter === "all" || item.brand === brandFilter)
+      && (!text || [item.name, item.sku, item.brand, item.slug].some(value => String(value || "").toLocaleLowerCase("uk").includes(text)))
+    );
+  }, [products, query, statusFilter, brandFilter]);
+  const activeCount = products.filter(item => item.status === "active").length;
+  const draftCount = products.filter(item => item.status === "draft").length;
+  const discountedCount = products.filter(item => getProductPricing(item).onSale).length;
 
   async function load() {
     const response = await fetch("/api/admin/products", { cache: "no-store" });
@@ -64,6 +82,7 @@ export default function AdminProductsClient() {
     if (!response.ok) throw new Error(data?.error || "Не вдалося завантажити товари");
     setConfigured(data.configured);
     setWritable(Boolean(data.writable));
+    setWriteReason(data.storage?.reason || (data.writable ? null : "Сховище товарів недоступне для запису."));
     setProducts(data.products || []);
     const response2=await fetch("/api/admin/categories",{cache:"no-store"});
     if(response2.ok)setCategories((await response2.json()).categories||[]);
@@ -177,6 +196,8 @@ export default function AdminProductsClient() {
   }
 
   function selectProduct(product: Product) {
+    setView("catalog");
+    setEditorOpen(true);
     setSelectedId(product.id);
     setForm(fromProduct(product));
     setMessage("");
@@ -184,6 +205,8 @@ export default function AdminProductsClient() {
   }
 
   function createNew() {
+    setView("catalog");
+    setEditorOpen(true);
     setSelectedId(null);
     setForm(empty);
     setMessage("");
@@ -191,6 +214,10 @@ export default function AdminProductsClient() {
 
   async function save(event: FormEvent) {
     event.preventDefault();
+    if (!writable) {
+      setMessage(writeReason || "Не вдалося зберегти: сховище товарів не налаштоване для запису.");
+      return;
+    }
     setSaving(true);
     setMessage("");
     try {
@@ -216,7 +243,7 @@ export default function AdminProductsClient() {
       if (!response.ok) throw new Error(data?.error || "Не вдалося зберегти товар");
       await load();
       if (data.product?.id) { setSelectedId(data.product.id); setForm(fromProduct(data.product)); }
-      setMessage("Збережено ✓");
+      setMessage("Товар збережено ✓");
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Помилка");
     } finally { setSaving(false); }
@@ -229,7 +256,9 @@ export default function AdminProductsClient() {
     const data = await response.json();
     if (!response.ok) return setMessage(data?.error || "Не вдалося видалити");
     await load();
-    createNew();
+    setEditorOpen(false);
+    setSelectedId(null);
+    setForm(empty);
     setMessage("Товар видалено");
   }
 
