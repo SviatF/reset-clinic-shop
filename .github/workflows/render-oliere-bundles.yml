@@ -1,11 +1,5 @@
 name: Rebuild accurate OLIE'RE bundle packshots
 on:
-  push:
-    branches: [fix/oliere-manual-bundle-composites-20261114]
-    paths:
-      - 'scripts/render-oliere-bundles.py'
-      - 'data/oliere-bundle-compositions.json'
-      - '.github/workflows/render-oliere-bundles.yml'
   workflow_dispatch:
 permissions:
   contents: write
