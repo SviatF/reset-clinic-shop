@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-/** CI guardrail: each official hair SKU has its own source identity; bundles
- * use transparent composites of audited single SKUs, never group-scene masks. */
+/** CI guardrail: 14 OLIE\u0027RE kits retain untouched original supplier photos;
+ * 38 standalone items retain independently cleaned, transparent packshots. */
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -12,7 +12,7 @@ const bundles=new Map(manifest.sets.map(spec=>[spec.sku,spec]));
 const bySku=new Map(rows.map(row=>[row.sku,row]));
 const hair=rows.filter(p=>p.status==="active"&&p.brand==="OLIE'RE PARIS");
 const officialIds=new Set(),errors=[];
-let verified=0,pending=0,composites=0,singlePhotos=0;
+let verified=0,pending=0,originalKits=0,singlePhotos=0;
 
 function mediaIsGood(sku,uri,checksum,description){
  if(!uri?.startsWith("/supplier-photos/")){errors.push(sku+": invalid "+description+" URL");return}
@@ -46,25 +46,18 @@ for(const row of hair){
 
  const kit=bundles.get(row.sku);
  if(kit){
-  composites++;
-  if(ref.bundle_composite_revision!=="composite-v1" ||
-     ref.image_url!=="/supplier-photos/bundles/"+row.slug+".webp")
-    errors.push(row.sku+": missing current transparent bundle composition");
-  if(!ref.pre_bundle_image_url?.startsWith("/supplier-photos/"))
-    errors.push(row.sku+": old group-cutout reference missing for safe D1 migration");
-  const expected=kit.layers.map(layer=>layer.sku);
-  if(JSON.stringify(ref.bundle_component_skus)!==JSON.stringify(expected))
-    errors.push(row.sku+": bundle contents do not match curated source manifest");
-  if(expected.length<2||expected.length>6||new Set(expected).size!==expected.length)
-    errors.push(row.sku+": incorrect number of unique products in bundle");
-  for(const sku of expected){
-    const constituent=bySku.get(sku);
-    if(!constituent || constituent.brand!=="OLIE'RE PARIS" ||
-       constituent.status!=="active" || bundles.has(sku) ||
-       refs[constituent.slug]?.verified_by!=="exact_official_shopify_product_title_and_size")
-      errors.push(row.sku+": constituent SKU missing official product verification: "+sku);
-  }
-  mediaIsGood(row.sku,ref.image_url,ref.bundle_composite_sha256,"bundle composite");
+  originalKits++;
+  if(ref.bundle_photo_mode!=="original" ||
+     ref.image_url!==ref.source_asset_url ||
+     ref.bundle_original_photo_url!==ref.source_asset_url)
+    errors.push(row.sku+": expected unchanged official original kit photograph");
+  if(ref.bundle_composite_revision)
+    errors.push(row.sku+": old composite generation must not control active kit photography");
+  if(!ref.archived_bundle_composite_url?.startsWith("/supplier-photos/bundles/"))
+    errors.push(row.sku+": historical composite URL missing for safe D1 migration");
+  if(!Array.isArray(kit.layers)||kit.layers.length<2||kit.layers.length>6)
+    errors.push(row.sku+": original set is missing curated kit identification");
+  mediaIsGood(row.sku,ref.image_url,ref.sha256,"untouched original supplier photograph");
  }else{
   singlePhotos++;
   if(ref.isolation_revision!=="isnet-clean-v2" ||
@@ -74,8 +67,8 @@ for(const row of hair){
  }
  verified++;
 }
-if(hair.length!==53||verified!==52||pending!==1||composites!==14||singlePhotos!==38||bundles.size!==14)
- errors.push("Unexpected counts: "+JSON.stringify({hair:hair.length,verified,pending,composites,singlePhotos,manifest:bundles.size}));
-console.log(JSON.stringify({hair:hair.length,verified,uniqueOfficialProducts:officialIds.size,composites,singlePhotos,pending,errors:errors.length},null,2));
+if(hair.length!==53||verified!==52||pending!==1||originalKits!==14||singlePhotos!==38||bundles.size!==14)
+ errors.push("Unexpected counts: "+JSON.stringify({hair:hair.length,verified,pending,originalKits,singlePhotos,manifest:bundles.size}));
+console.log(JSON.stringify({hair:hair.length,verified,uniqueOfficialProducts:officialIds.size,originalKits,singlePhotos,pending,errors:errors.length},null,2));
 for(const issue of errors)console.error("OLIERE_IMAGE_AUDIT",issue);
 if(errors.length)process.exit(1);
