@@ -1,0 +1,49 @@
+name: QA clean OLIE'RE contours
+on:
+  push:
+    branches: [fix/oliere-clean-contours-no-halos-20261114]
+    paths:
+      - 'scripts/refine-oliere-cutouts.py'
+      - '.github/workflows/refine-oliere-cutouts.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ISNet and alpha-edge refinement
+        run: python -m pip install "rembg[cpu]==2.0.67" "Pillow==11.1.0" "numpy==1.26.4" "scipy==1.14.1" "opencv-python-headless==4.10.0.84"
+      - name: Re-segment 52 exact supplier images and remove color fringes
+        run: python scripts/refine-oliere-cutouts.py --apply
+      - name: Check all 52 alpha masks and file checksums
+        run: python scripts/refine-oliere-cutouts.py --check
+      - name: Upload report and side-by-side light-background preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oliere-clean-edge-quality-audit
+          path: |
+            oliere-clean-matte-report.json
+            photo-qa/comparison.jpg
+          if-no-files-found: ignore
+      - name: Commit only verified image assets and preview for visual review
+        run: |
+          git add data/supplier-photo-map.json public/supplier-photos/clean photo-qa/comparison.jpg
+          if git diff --cached --quiet; then
+            echo "No image changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets(shop): clean OLIE'RE contours, drop shadows and source-color halos"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin HEAD:"${GITHUB_REF_NAME}"

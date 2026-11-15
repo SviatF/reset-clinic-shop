@@ -27,9 +27,9 @@ for(const row of hair){
   issues.push(row.sku+": missing or duplicate official Shopify product ID");
  }
  ids.add(ref.source_product_id);
- if(ref.isolation_revision!=="u2net-v1" ||
-    ref.image_url!=="/supplier-photos/isolated/"+row.slug+".webp"){
-  issues.push(row.sku+": missing exact verified transparent cutout");
+ if(ref.isolation_revision!=="isnet-clean-v2" ||
+    ref.image_url!=="/supplier-photos/clean/"+row.slug+".webp"){
+  issues.push(row.sku+": missing refined transparent cutout");
  }else{
   const disk=path.join("public",ref.image_url);
   if(!fs.existsSync(disk)||fs.statSync(disk).size<800){

@@ -6,7 +6,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,13 +18,17 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install image normalization engine
-        run: python -m pip install "rembg[cpu]==2.0.67" "Pillow==11.1.0"
+        run: python -m pip install "rembg[cpu]==2.0.67" "Pillow==11.1.0" "numpy==1.26.4" "scipy==1.14.1" "opencv-python-headless==4.10.0.84"
       - name: Prepare consistent catalog studio images
         run: python scripts/normalize-shop-photos.py --apply
       - name: Remove photographic backdrops from each verified OLIE'RE product image
         run: python scripts/isolate-oliere-packshots.py --apply
       - name: Verify preserved alpha channels
         run: python scripts/isolate-oliere-packshots.py --check
+      - name: Upgrade package cutouts with clean masks and logo protection
+        run: python scripts/refine-oliere-cutouts.py --apply
+      - name: Verify clean transparent product images
+        run: python scripts/refine-oliere-cutouts.py --check
       - name: Save verification reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -34,10 +38,12 @@ jobs:
             oliere-exact-photo-report.json
             supplier-studio-report.json
             oliere-isolation-report.json
+            oliere-clean-matte-report.json
+            photo-qa/comparison.jpg
           if-no-files-found: ignore
       - name: Commit only verified photos and media mapping
         run: |
-          git add data/supplier-photo-map.json public/supplier-photos/oliere-exact public/supplier-photos/studio public/supplier-photos/isolated
+          git add data/supplier-photo-map.json public/supplier-photos/oliere-exact public/supplier-photos/studio public/supplier-photos/isolated public/supplier-photos/clean
           if git diff --cached --quiet; then
             echo "No changes in supplier photos"
             exit 0

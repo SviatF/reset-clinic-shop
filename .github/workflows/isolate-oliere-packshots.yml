@@ -6,7 +6,7 @@ permissions:
 jobs:
   isolate:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -15,21 +15,28 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install foreground segmentation model and runtime
-        run: python -m pip install "rembg[cpu]==2.0.67" "Pillow==11.1.0"
+        run: python -m pip install "rembg[cpu]==2.0.67" "Pillow==11.1.0" "numpy==1.26.4" "scipy==1.14.1" "opencv-python-headless==4.10.0.84"
       - name: Isolate 52 verified products (preserve original supplier images)
         run: python scripts/isolate-oliere-packshots.py --apply
       - name: Verify 52 transparent cutouts
         run: python scripts/isolate-oliere-packshots.py --check
+      - name: Refine every cutout with ISNet + U2Net interior protection
+        run: python scripts/refine-oliere-cutouts.py --apply
+      - name: Check halo-free output and checksums
+        run: python scripts/refine-oliere-cutouts.py --check
       - name: Upload cutout audit report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: oliere-transparent-cutouts-audit
-          path: oliere-isolation-report.json
+          path: |
+            oliere-isolation-report.json
+            oliere-clean-matte-report.json
+            photo-qa/comparison.jpg
           if-no-files-found: ignore
       - name: Commit isolated assets to current source branch
         run: |
-          git add data/supplier-photo-map.json public/supplier-photos/isolated
+          git add data/supplier-photo-map.json public/supplier-photos/isolated public/supplier-photos/clean
           if git diff --cached --quiet; then
             echo "No new image outputs"
             exit 0

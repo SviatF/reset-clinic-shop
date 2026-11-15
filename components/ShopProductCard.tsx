@@ -11,7 +11,7 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
  const {add}=useCart();
  const [added,setAdded]=useState(false);
  const canBuy=!item.trackStock||item.stockQuantity>0;
- return <article className="rs-card">
+ return <article className={item.brand === "OLIE\u0027RE PARIS" ? "rs-card rs-card--hair-cutout" : "rs-card"}>
   <Link className="rs-card-media" href={"/product/"+item.slug} aria-label={"Переглянути "+item.name}>
    <SmartProductImage src={item.imageUrl} alt={item.name} fallback={<div className="rs-card-placeholder"><strong>{item.brand}</strong><small>Фото додається</small></div>} />
   </Link>
