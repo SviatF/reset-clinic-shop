@@ -112,7 +112,7 @@ def clean_mask(conf, backup_conf):
     # the pixel belongs to the product. Never union U2Net at the OUTER edge
     # where its original masks included contact shadows.
     closed_holes=ndi.binary_fill_holes(accepted>0)&(accepted==0)
-    hole_count,hole_labels=ndi.label(closed_holes)
+    hole_labels,hole_count=ndi.label(closed_holes)
     repaired=0
     for hid in range(1,hole_count+1):
         region=hole_labels==hid
