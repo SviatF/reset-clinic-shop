@@ -32,14 +32,63 @@
 .admin-list-price em{font-style:normal;font-weight:800;font-size:9px;background:#ffdc4c;color:#14110b;padding:2px 5px}
 @media(max-width:720px){.rs-card-sale-badge{top:7px;right:7px;min-width:51px;min-height:29px;padding:4px 7px;font-size:12px}.premium-card-sale-badge{top:43px;right:10px;min-width:53px;min-height:30px;font-size:12px}.product-detail-sale-badge{top:49px;right:12px;min-width:68px;min-height:38px;font-size:17px}.shop-price-before{font-size:10px}.rs-card-price.shop-price-current{font-size:16px}.admin-promo-head{align-items:flex-start;flex-direction:column;gap:12px}}
 
-/* Promotional price uses the same sunny-yellow family as the -20% square.
-   Only active sale prices receive the accent; normal prices remain unchanged.
-   A fine darker edge preserves definition against the white product cards. */
-.rs-card-price.shop-price-current.shop-price-current--sale,
-.premium-product-meta .shop-price-stack strong.shop-price-current--sale,
-.product-page-audit-v2 .product-price-main .product-price-number.shop-price-current--sale,
-.product-page-audit-v2 .product-price-main .product-price-number.shop-price-current--sale em {
-  color: #ffdc4c;
-  -webkit-text-stroke: .55px rgba(109, 78, 0, .72);
-  text-shadow: 0 1px 1px rgba(63, 48, 0, .28);
+/* Sale design: keep prices in their original premium black.
+   Use the badge, a restrained yellow rule and real savings to draw attention.
+   No yellow text outlines or text shadows. */
+.rs-card .shop-price-stack--sale,
+.premium-product-meta .shop-price-stack--sale {
+  border-left: 3px solid #ffdc4c;
+  padding-left: 10px;
+}
+.rs-card--on-sale {
+  border-color: #e5d6ae;
+}
+.rs-card .shop-price-current,
+.rs-card .shop-price-current small {
+  color: #211d1a;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.premium-product-meta .shop-price-stack strong.shop-price-current {
+  color: #1c1917;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.product-page-audit-v2 .product-price-main .product-price-number,
+.product-page-audit-v2 .product-price-main .product-price-number em {
+  color: #24211d;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.shop-saving-label {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  width: max-content;
+  max-width: 100%;
+  background: #fff1b5;
+  color: #4c3d17;
+  border: 1px solid #f0d778;
+  border-radius: 0;
+  padding: 3px 6px;
+  font-size: 10px;
+  font-weight: 730;
+  line-height: 1.3;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+.rs-card-footer .shop-saving-label { margin-top: 5px; }
+.premium-product-meta .shop-saving-label {
+  margin-top: 4px;
+  font-size: 9px;
+}
+.product-page-audit-v2 .shop-detail-saving-label {
+  margin-top: 8px;
+  font-size: 11px;
+  padding: 5px 8px;
+}
+@media(max-width: 720px) {
+  .rs-card .shop-price-stack--sale,
+  .premium-product-meta .shop-price-stack--sale { padding-left: 7px; }
+  .rs-card .shop-saving-label { font-size: 9px; }
 }
