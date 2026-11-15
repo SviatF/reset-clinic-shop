@@ -29,6 +29,8 @@ const categoryLabels: Record<string, string> = { face: "FACE CARE", body: "BODY 
 export default function PremiumProductCard({ index = 1, productData }: { index?: number; productData: CardProduct }) {
   const cardNumber = String(index).padStart(2, "0");
   const current = productData;
+  const onSale = Number(current.discountPercent) > 0 && Number(current.originalPrice) > Number(current.price);
+  const savings = onSale ? Math.round((Number(current.originalPrice) - Number(current.price)) * 100) / 100 : 0;
   const href = `/product/${current.slug}`;
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
@@ -59,7 +61,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
           <div className="premium-product-media">
             <div className="premium-card-spotlight" aria-hidden="true" />
             <div className="premium-card-topline"><span>RESET EDIT / {cardNumber}</span><span className="premium-card-status"><i /> PROFESSIONAL</span></div>
-            {Number(current.discountPercent) > 0 && <span className="shop-sale-badge premium-card-sale-badge">−{current.discountPercent}%</span>}
+            {onSale && <span className="shop-sale-badge premium-card-sale-badge">−{current.discountPercent}%</span>}
             <div className="premium-product-stage">
               <span className="premium-stage-shine" aria-hidden="true" />
               <span className="premium-orbit premium-orbit-one" aria-hidden="true" />
@@ -73,7 +75,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
           <div className="premium-product-copy">
             <div className="premium-product-heading"><span>{current.category === "hair" ? "ДОГЛЯД ЗА ВОЛОССЯМ" : current.category === "body" ? "ДОГЛЯД ЗА ТІЛОМ" : "ПРОФЕСІЙНИЙ ДОГЛЯД"}</span><h3>{current.name}</h3></div>
             <p>{current.shortDescription || "Професійний засіб, відібраний RESET Clinic."}</p>
-            <div className="premium-product-meta"><div className="shop-price-stack">{Number(current.discountPercent) > 0 && <del className="shop-price-before">{Number(current.originalPrice).toFixed(2)} грн</del>}<strong className={Number(current.discountPercent) > 0 ? "shop-price-current shop-price-current--sale" : "shop-price-current"}>{Number(current.price).toFixed(2)} грн</strong></div><span>Детальніше <b><ArrowUpRight /></b></span></div>
+            <div className="premium-product-meta"><div className={`shop-price-stack${onSale ? " shop-price-stack--sale" : ""}`}>{onSale && <del className="shop-price-before">{Number(current.originalPrice).toFixed(2)} грн</del>}<strong className="shop-price-current">{Number(current.price).toFixed(2)} грн</strong>{onSale && <small className="shop-saving-label">Економія {savings.toLocaleString("uk-UA", { maximumFractionDigits: 2 })} грн</small>}</div><span>Детальніше <b><ArrowUpRight /></b></span></div>
           </div>
         </Link>
         <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: current.trackStock !== true || Number(current.stockQuantity ?? 0) > 0 }} />

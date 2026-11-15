@@ -47,6 +47,8 @@ export default async function DynamicProductPage({ params }: Props) {
   const categoryName = item.category === "body" ? "Тіло" : item.category === "hair" ? "Волосся" : item.category === "face" ? "Обличчя" : "Каталог";
   const categoryPath = item.category === "body" ? "/body" : item.category === "hair" ? "/hair" : item.category === "face" ? "/face" : "/catalog";
   const inStock = !item.trackStock || item.stockQuantity > 0;
+  const onSale = item.discountPercent > 0 && item.originalPrice > item.price;
+  const savings = onSale ? Math.round((item.originalPrice - item.price) * 100) / 100 : 0;
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -86,7 +88,7 @@ export default async function DynamicProductPage({ params }: Props) {
               <div className="product-gallery-main product-object-stage">
                 <span className="product-gallery-tag">RESET SELECT</span>
                 <span className="product-object-index">01 / PRODUCT</span>
-                {item.discountPercent > 0 && <span className="shop-sale-badge product-detail-sale-badge">−{item.discountPercent}%</span>}
+                {onSale && <span className="shop-sale-badge product-detail-sale-badge">−{item.discountPercent}%</span>}
                 <span className="product-object-halo" aria-hidden="true" />
                 <SmartProductImage src={item.imageUrl} alt={item.name} className="dynamic-product-image" loading="eager" fallback={<div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
                 <div className="product-object-footer"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()}</Link><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
@@ -100,7 +102,7 @@ export default async function DynamicProductPage({ params }: Props) {
 
               <div className="product-purchase-deck product-purchase-deck-light">
                 <div className="product-price-row product-price-card product-price-card-light">
-                  <div className="product-price-main"><span className="product-price-label">{item.discountPercent > 0 ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{item.discountPercent > 0 && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className={item.discountPercent > 0 ? "product-price-number shop-price-current--sale" : "product-price-number"}>{Number(item.price).toFixed(2)} <em>грн</em></strong></div>
+                  <div className="product-price-main"><span className="product-price-label">{onSale ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{onSale && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className="product-price-number">{Number(item.price).toFixed(2)} <em>грн</em></strong>{onSale && <span className="shop-saving-label shop-detail-saving-label">Економія {savings.toLocaleString("uk-UA", { maximumFractionDigits: 2 })} грн</span>}</div>
                   <div className="product-price-side"><span>RESET CLINIC</span><small>{inStock ? "Доступно до замовлення" : "Немає в наявності"}</small></div>
                 </div>
                 {inStock ? <ProductActions item={{ slug: item.slug, name: item.name, price: Number(item.price), maxQty: item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
