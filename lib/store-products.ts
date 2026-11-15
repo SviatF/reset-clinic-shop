@@ -3,10 +3,11 @@ import type { ProductRecord } from "@/lib/commerce-types";
 import { readProducts } from "@/lib/commerce-json";
 import { productSubcategories } from "@/lib/catalog-taxonomy";
 import { productDisplayName, productModelBySlug } from "@/lib/product-display";
+import { getProductPricing } from "@/lib/product-pricing";
 export type StoreProduct = {
   id: string | null; slug: string; name: string; brand: string; sku: string | null;
   category: "face" | "body" | "hair" | "other"; subcategories: string[]; productLine: string;
-  price: number; currency: string; stockQuantity: number; trackStock: boolean;
+  price: number; originalPrice: number; discountPercent: number; currency: string; stockQuantity: number; trackStock: boolean;
   size: string; imageUrl: string | null; secondaryImageUrl: string | null;
   shortDescription: string; description: string; hoverLabel: string;
   hoverTitle: string; hoverText: string; howToUse: string; keyIngredients: string[];
@@ -14,6 +15,7 @@ export type StoreProduct = {
 };
 function mapRecord(row: ProductRecord): StoreProduct {
   const displayName = productDisplayName(row);
+  const pricing = getProductPricing(row);
   return {
     id: row.id,
     slug: row.slug,
@@ -23,7 +25,9 @@ function mapRecord(row: ProductRecord): StoreProduct {
     category: row.category,
     subcategories: productSubcategories(row),
     productLine: row.product_line || productModelBySlug(row.slug),
-    price: Number(row.price || 0),
+    price: pricing.price,
+    originalPrice: pricing.originalPrice,
+    discountPercent: pricing.discountPercent,
     currency: row.currency || "UAH",
     stockQuantity: Number(row.stock_quantity || 0),
     trackStock: row.track_stock,
@@ -58,8 +62,8 @@ export async function getStoreProductsPage(options:CatalogQuery={},prefetched?:P
     .filter(row=>!options.line||row.product_line===options.line)
     .filter(row=>options.featured===undefined||row.featured===options.featured)
     .filter(row=>!query||[row.name,productDisplayName(row),row.brand,row.description,row.sku||""].some(v=>v.toLocaleLowerCase("uk").includes(query)));
-  if(options.sort==="price-asc")filtered.sort((a,b)=>Number(a.price)-Number(b.price));
-  else if(options.sort==="price-desc")filtered.sort((a,b)=>Number(b.price)-Number(a.price));
+  if(options.sort==="price-asc")filtered.sort((a,b)=>getProductPricing(a).price-getProductPricing(b).price);
+  else if(options.sort==="price-desc")filtered.sort((a,b)=>getProductPricing(b).price-getProductPricing(a).price);
   else if(options.sort==="name")filtered.sort((a,b)=>productDisplayName(a).localeCompare(productDisplayName(b),"uk"));
   else filtered.sort((a,b)=>a.sort_order-b.sort_order||new Date(b.created_at).getTime()-new Date(a.created_at).getTime());
   const limit=Math.max(1,Math.min(500,options.limit||50));

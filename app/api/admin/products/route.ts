@@ -5,6 +5,7 @@ import { appendActivity, mutateProducts, newId, readProducts } from "@/lib/comme
 import { jsonStoreWriteConfigured, jsonStoreWriteAvailable } from "@/lib/json-store";
 import { productSubcategories } from "@/lib/catalog-taxonomy";
 import { slugifyUkr } from "@/lib/slugify";
+import { validateSalePrice } from "@/lib/product-pricing";
 import { readCategories } from "@/lib/catalog-categories";
 
 export const runtime = "nodejs";
@@ -36,6 +37,7 @@ function normalizeProduct(body: any, id: string, createdAt: string): ProductReco
     short_description: clean(body?.short_description, 500),
     description: clean(body?.description, 5000),
     price: Math.max(0, Number(body?.price) || 0),
+    sale_price: validateSalePrice(body?.price, body?.sale_price),
     currency: "UAH",
     stock_quantity: Math.max(0, Math.trunc(Number(body?.stock_quantity) || 0)),
     track_stock: body?.track_stock !== false,
