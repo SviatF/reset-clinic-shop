@@ -348,9 +348,15 @@ export default function AdminProductsClient() {
 
         {editorOpen ? <form className="admin-product-form admin-catalog-editor" onSubmit={save} id="admin-product-editor">
 
-          <div className="admin-form-title"><div><span>{selectedId ? "EDIT PRODUCT" : "NEW PRODUCT"}</span><h2>{selectedId ? form.name || "Товар" : "Новий товар"}</h2></div>{selectedId && <button type="button" className="admin-danger" onClick={remove} disabled={!writable}>Видалити</button>}</div>
+          <div className="admin-form-title">
+            <div><span>{selectedId ? "EDIT PRODUCT" : "NEW PRODUCT"}</span><h2>{selectedId ? form.name || "Товар" : "Новий товар"}</h2><p>{selectedId ? "Редагування інформації та ціни конкретного товару" : "Заповніть дані й збережіть товар у каталозі"}</p></div>
+            <button type="button" className="admin-catalog-close" onClick={() => { setEditorOpen(false); setSelectedId(null); }} aria-label="Закрити редактор">×</button>
+          </div>
+          <nav className="admin-editor-sections" aria-label="Розділи редагування">
+            <a href="#editor-main">Основне</a><a href="#sale-settings">Знижки</a><a href="#editor-media">Фото</a><a href="#editor-content">Контент</a><a href="#editor-seo">SEO</a>
+          </nav>
 
-          <section className="admin-form-section"><h3>Основне</h3><div className="admin-form-grid">
+          <section className="admin-form-section" id="editor-main"><h3>01 / Основне</h3><div className="admin-form-grid">
             <label className="wide"><span>Назва товару *</span><input value={form.name} onChange={(e) => update("name", e.target.value)} required /></label>
             <label><span>Бренд</span><input list="reset-brands" value={form.brand} onChange={(e) => update("brand", e.target.value)} /><datalist id="reset-brands">{brands.filter(b=>b.status==="active").map(b=><option key={b.id} value={b.name}/>)}</datalist></label>
             <label><span>SKU</span><input value={form.sku} onChange={(e) => update("sku", e.target.value)} /></label>
@@ -381,12 +387,12 @@ export default function AdminProductsClient() {
             </> : <p className="admin-promo-hint">Товар продається за звичайною ціною. Увімкніть перемикач, щоб створити персональну акцію.</p>}
           </section>
 
-          <section className="admin-form-section"><h3>Фото</h3><div className="admin-image-admin">
+          <section className="admin-form-section" id="editor-media"><h3>03 / Фото</h3><div className="admin-image-admin">
             <div className="admin-image-preview"><SmartProductImage src={form.image_url} alt="Preview" fallback={<span>NO IMAGE</span>} /></div>
             <div><label className="admin-upload"><input type="file" disabled={!writable} accept="image/jpeg,image/png,image/webp,image/avif" onChange={upload} /><span>{uploading ? "Завантаження…" : "Завантажити фото"}</span></label><label><span>Або URL</span><input value={form.image_url} onChange={(e) => update("image_url", e.target.value)} /></label></div>
           </div></section>
 
-          <section className="admin-form-section"><h3>Контент</h3><div className="admin-form-grid">
+          <section className="admin-form-section" id="editor-content"><h3>04 / Контент</h3><div className="admin-form-grid">
             <label className="wide"><span>Короткий опис</span><textarea value={form.short_description} onChange={(e) => update("short_description", e.target.value)} rows={2} /></label>
             <label className="wide"><span>Повний опис</span><textarea value={form.description} onChange={(e) => update("description", e.target.value)} rows={4} /></label>
             <label><span>Hover — заголовок</span><input value={form.hover_title} onChange={(e) => update("hover_title", e.target.value)} /></label>
@@ -396,13 +402,13 @@ export default function AdminProductsClient() {
             <label className="wide"><span>INCI</span><textarea value={form.inci} onChange={(e) => update("inci", e.target.value)} rows={4} /></label>
           </div></section>
 
-          <section className="admin-form-section admin-seo-section"><h3>SEO</h3><div className="admin-form-grid">
+          <section className="admin-form-section admin-seo-section" id="editor-seo"><h3>05 / SEO</h3><div className="admin-form-grid">
             <label className="wide"><span>SEO Title</span><input value={form.seo_title} onChange={(e) => update("seo_title", e.target.value)} maxLength={180} /><small>{String(form.seo_title).length}/60 рекомендовано</small></label>
             <label className="wide"><span>Meta Description</span><textarea value={form.seo_description} onChange={(e) => update("seo_description", e.target.value)} rows={3} maxLength={320} /><small>{String(form.seo_description).length}/155 рекомендовано</small></label>
-            <div className="admin-serp-preview wide"><span>GOOGLE PREVIEW</span><strong>{form.seo_title || form.name || "Назва товару"}</strong><small>reset-clinic-shop.vercel.app/product/{form.slug || "product-slug"}</small><p>{form.seo_description || form.short_description || "Опис сторінки товару для пошукової видачі."}</p></div>
+            <div className="admin-serp-preview wide"><span>GOOGLE PREVIEW</span><strong>{form.seo_title || form.name || "Назва товару"}</strong><small>shop.resetclinic.org/product/{form.slug || "product-slug"}</small><p>{form.seo_description || form.short_description || "Опис сторінки товару для пошукової видачі."}</p></div>
           </div></section>
 
-          <div className="admin-form-actions"><button className="admin-primary" type="submit" disabled={saving || !writable}>{saving ? "ЗБЕРІГАЄМО…" : selectedId ? "ЗБЕРЕГТИ ЗМІНИ" : "СТВОРИТИ ТОВАР"}</button><span>Зміни активного товару відображаються у storefront після збереження.</span></div>
+          <div className="admin-form-actions admin-catalog-savebar"><div><strong>{selectedId ? "Редагування товару" : "Створення товару"}</strong><span>{writable ? "Зміни активного товару відображаються в магазині після збереження." : "Доступ до запису зараз відсутній — перевірте повідомлення вище."}</span></div><button className="admin-primary" type="submit" disabled={saving}>{saving ? "ЗБЕРІГАЄМО…" : selectedId ? "ЗБЕРЕГТИ ЗМІНИ →" : "СТВОРИТИ ТОВАР →"}</button>{selectedId && <button type="button" className="admin-danger" onClick={remove} disabled={saving || !writable}>Видалити</button>}</div>
         </form> : <div className="admin-catalog-welcome">
           <span className="admin-catalog-welcome-icon" aria-hidden="true">✦</span><small>PRODUCT WORKSPACE</small><h2>Усі товари під контролем.</h2>
           <p>Оберіть товар зі списку, щоб змінити його назву, категорію, ціну й знижку, фото, контент або SEO. Кожне поле поточного редактора збережене.</p>
