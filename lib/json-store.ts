@@ -209,23 +209,44 @@ export function jsonStoreWriteConfigured() {
   return usingLocalJsonStore() || Boolean(process.env.GITHUB_TOKEN);
 }
 
-/** Admin-only readiness check: a configured but inaccessible GitHub token is not writable. */
-export async function jsonStoreWriteAvailable() {
+/** Diagnostic used by the admin UI; read-only storage must not be mistaken
+ * for a working editor. A GitHub repo without a permissions object can still
+ * accept writes, so absence of that optional field is not a read-only verdict. */
+export type ShopWriteStatus = {
+  writable: boolean;
+  backend: "cloudflare-d1" | "local" | "github";
+  reason: string | null;
+};
+export async function jsonStoreWriteStatus(): Promise<ShopWriteStatus> {
   if (usingCloudflareStore()) {
-    if (process.env.SHOP_PRODUCTS_BACKEND !== "d1") return false;
-    try { await cloudflareReadJson(PRODUCTS_PATH, []); return true; } catch { return false; }
+    if (process.env.SHOP_PRODUCTS_BACKEND !== "d1")
+      return { writable: false, backend: "cloudflare-d1", reason: "Cloudflare: SHOP_PRODUCTS_BACKEND має бути d1." };
+    try {
+      await cloudflareReadJson(PRODUCTS_PATH, []);
+      return { writable: true, backend: "cloudflare-d1", reason: null };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "невідома помилка";
+      return { writable: false, backend: "cloudflare-d1", reason: "Немає доступу до каталогу Cloudflare D1. Перевірте SHOP_DB і таблицю shop_documents. " + message };
+    }
   }
-  if (usingLocalJsonStore()) return true;
-  if (!process.env.GITHUB_TOKEN) return false;
+  if (usingLocalJsonStore()) return { writable: true, backend: "local", reason: null };
+  if (!process.env.GITHUB_TOKEN)
+    return { writable: false, backend: "github", reason: "Сховище товарів тільки для перегляду: не налаштовано Cloudflare D1 або серверний GITHUB_TOKEN. Потрібно підключити сховище на хостингу магазину." };
   try {
-    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}`, {
-      headers: headers(),
-      cache: "no-store",
-    });
-    if (!response.ok) return false;
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}`, { headers: headers(), cache: "no-store" });
+    if (!response.ok) return { writable: false, backend: "github", reason: `GitHub API недоступний (${response.status}). Перевірте права GITHUB_TOKEN.` };
     const repository = (await response.json()) as { permissions?: { push?: boolean } };
-    return repository.permissions?.push === true;
-  } catch {
-    return false;
+    if (repository.permissions?.push === false)
+      return { writable: false, backend: "github", reason: "GitHub-токен має доступ на читання, але не дозволяє змінювати товари." };
+    await readJsonStore(PRODUCTS_PATH, []);
+    // Read access + configured token are sufficient to permit an attempt. The
+    // actual write is still validated atomically by GitHub/D1 before success.
+    return { writable: true, backend: "github", reason: null };
+  } catch (error) {
+    return { writable: false, backend: "github", reason: "Не вдалося перевірити сховище товарів: " + (error instanceof Error ? error.message : String(error)) };
   }
+}
+
+export async function jsonStoreWriteAvailable() {
+  return (await jsonStoreWriteStatus()).writable;
 }

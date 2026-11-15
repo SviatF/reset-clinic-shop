@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import type { ProductRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateProducts, newId, readProducts } from "@/lib/commerce-json";
-import { jsonStoreWriteConfigured, jsonStoreWriteAvailable } from "@/lib/json-store";
+import { jsonStoreWriteConfigured, jsonStoreWriteStatus } from "@/lib/json-store";
 import { productSubcategories } from "@/lib/catalog-taxonomy";
 import { slugifyUkr } from "@/lib/slugify";
 import { validateSalePrice } from "@/lib/product-pricing";
@@ -68,7 +68,8 @@ export async function GET() {
       ...product,
       subcategory_slugs: productSubcategories(product),
     })).sort((a, b) => a.sort_order - b.sort_order || new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-    return NextResponse.json({ configured: true, writable: await jsonStoreWriteAvailable(), products });
+    const storage = await jsonStoreWriteStatus();
+    return NextResponse.json({ configured: true, writable: storage.writable, storage, products }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "JSON read error" }, { status: 500 });
   }
@@ -76,7 +77,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "GITHUB_TOKEN не налаштований" }, { status: 503 });
+  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "Сховище товарів недоступне для запису: налаштуйте Cloudflare D1 або GITHUB_TOKEN у середовищі магазину." }, { status: 503 });
   try {
     const body = await request.json();
     const id = newId("product");
@@ -90,7 +91,9 @@ export async function POST(request: Request) {
       if(product.sku && products.some(item=>item.sku?.toLowerCase()===product.sku?.toLowerCase()))throw new Error("Товар з таким SKU вже існує");
       return [...products, product];
     });
-    await appendActivity({ event_type: "product_created", entity_type: "product", entity_id: product.id, title: `Створено товар: ${product.name}`, metadata: { slug: product.slug, status: product.status, price: product.price } });
+    try {
+      await appendActivity({ event_type: "product_created", entity_type: "product", entity_id: product.id, title: `Створено товар: ${product.name}`, metadata: { slug: product.slug, status: product.status, price: product.price } });
+    } catch (auditError) { console.error("Product saved; activity audit unavailable", auditError); }
     return NextResponse.json({ product }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Не вдалося створити товар" }, { status: 400 });

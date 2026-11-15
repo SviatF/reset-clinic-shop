@@ -27,7 +27,7 @@ function sanitize(body: Record<string, unknown>) {
 
 export async function PATCH(request: Request, context: { params: Promise<{ id: string }> }) {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "GITHUB_TOKEN не налаштований" }, { status: 503 });
+  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "Сховище товарів недоступне для запису: налаштуйте Cloudflare D1 або GITHUB_TOKEN у середовищі магазину." }, { status: 503 });
   const { id } = await context.params;
   try {
     const changes = sanitize(await request.json());
@@ -53,7 +53,9 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     });
     const updated = nextProducts.find((item) => item.id === id);
     if (!updated) return NextResponse.json({ error: "Товар не знайдено" }, { status: 404 });
-    await appendActivity({ event_type: "product_updated", entity_type: "product", entity_id: id, title: `Оновлено товар: ${updated.name}`, metadata: { fields: Object.keys(changes), status: updated.status, price: updated.price, sale_price: updated.sale_price, stock: updated.stock_quantity } });
+    try {
+      await appendActivity({ event_type: "product_updated", entity_type: "product", entity_id: id, title: `Оновлено товар: ${updated.name}`, metadata: { fields: Object.keys(changes), status: updated.status, price: updated.price, sale_price: updated.sale_price, stock: updated.stock_quantity } });
+    } catch (auditError) { console.error("Product updated; activity audit unavailable", auditError); }
     return NextResponse.json({ product: updated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Не вдалося оновити товар";
@@ -63,7 +65,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
 
 export async function DELETE(_: Request, context: { params: Promise<{ id: string }> }) {
   if (!(await isAdminAuthenticated())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "GITHUB_TOKEN не налаштований" }, { status: 503 });
+  if (!jsonStoreWriteConfigured()) return NextResponse.json({ error: "Сховище товарів недоступне для запису: налаштуйте Cloudflare D1 або GITHUB_TOKEN у середовищі магазину." }, { status: 503 });
   const { id } = await context.params;
   try {
     const before = await readProducts();
