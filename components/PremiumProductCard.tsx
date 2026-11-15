@@ -73,7 +73,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
           <div className="premium-product-copy">
             <div className="premium-product-heading"><span>{current.category === "hair" ? "ДОГЛЯД ЗА ВОЛОССЯМ" : current.category === "body" ? "ДОГЛЯД ЗА ТІЛОМ" : "ПРОФЕСІЙНИЙ ДОГЛЯД"}</span><h3>{current.name}</h3></div>
             <p>{current.shortDescription || "Професійний засіб, відібраний RESET Clinic."}</p>
-            <div className="premium-product-meta"><div className="shop-price-stack">{Number(current.discountPercent) > 0 && <del className="shop-price-before">{Number(current.originalPrice).toFixed(2)} грн</del>}<strong className="shop-price-current">{Number(current.price).toFixed(2)} грн</strong></div><span>Детальніше <b><ArrowUpRight /></b></span></div>
+            <div className="premium-product-meta"><div className="shop-price-stack">{Number(current.discountPercent) > 0 && <del className="shop-price-before">{Number(current.originalPrice).toFixed(2)} грн</del>}<strong className={Number(current.discountPercent) > 0 ? "shop-price-current shop-price-current--sale" : "shop-price-current"}>{Number(current.price).toFixed(2)} грн</strong></div><span>Детальніше <b><ArrowUpRight /></b></span></div>
           </div>
         </Link>
         <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: current.trackStock !== true || Number(current.stockQuantity ?? 0) > 0 }} />

@@ -21,7 +21,7 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
    <Link className="rs-card-name" href={"/product/"+item.slug}>{item.name}</Link>
    {item.size&&<span className="rs-card-size">{item.size}</span>}
    <div className="rs-card-footer">
-    <div className="shop-price-stack">{item.discountPercent > 0 && <del className="shop-price-before">{money(item.originalPrice)} грн</del>}<strong className="rs-card-price shop-price-current">{money(item.price)} <small>грн</small></strong></div>
+    <div className="shop-price-stack">{item.discountPercent > 0 && <del className="shop-price-before">{money(item.originalPrice)} грн</del>}<strong className={`rs-card-price shop-price-current${item.discountPercent > 0 ? " shop-price-current--sale" : ""}`}>{money(item.price)} <small>грн</small></strong></div>
     <button type="button" className="rs-card-add" disabled={!canBuy}
      aria-label={"Додати до кошика: "+item.name}
      onClick={()=>{if(!canBuy)return;add({slug:item.slug,name:item.name,price:item.price},1);setAdded(true)}}>

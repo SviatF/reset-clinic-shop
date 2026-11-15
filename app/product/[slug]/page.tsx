@@ -100,7 +100,7 @@ export default async function DynamicProductPage({ params }: Props) {
 
               <div className="product-purchase-deck product-purchase-deck-light">
                 <div className="product-price-row product-price-card product-price-card-light">
-                  <div className="product-price-main"><span className="product-price-label">{item.discountPercent > 0 ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{item.discountPercent > 0 && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className="product-price-number">{Number(item.price).toFixed(2)} <em>грн</em></strong></div>
+                  <div className="product-price-main"><span className="product-price-label">{item.discountPercent > 0 ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{item.discountPercent > 0 && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className={item.discountPercent > 0 ? "product-price-number shop-price-current--sale" : "product-price-number"}>{Number(item.price).toFixed(2)} <em>грн</em></strong></div>
                   <div className="product-price-side"><span>RESET CLINIC</span><small>{inStock ? "Доступно до замовлення" : "Немає в наявності"}</small></div>
                 </div>
                 {inStock ? <ProductActions item={{ slug: item.slug, name: item.name, price: Number(item.price), maxQty: item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
