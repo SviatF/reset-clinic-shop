@@ -24,7 +24,7 @@ REVISION = "studio-v1"
 rows = json.loads(PRODUCTS.read_text())
 active = [row for row in rows if row.get("status") == "active"]
 mapped = json.loads(MAP.read_text())
-report = {"active": len(active), "normalized": 0, "preserved_isolated": 0, "backgrounds_removed": 0,
+report = {"active": len(active), "normalized": 0, "preserved_isolated": 0, "preserved_bundle_composites": 0, "backgrounds_removed": 0,
           "original_alpha": 0, "opaque_preserved": 0, "missing": [], "errors": [], "pending_review": []}
 
 
@@ -141,6 +141,21 @@ for product in active:
     if entry and entry.get("verification_status") == "needs_review":
         report["pending_review"].append(slug)
         continue
+    if entry and entry.get("bundle_composite_revision") == "composite-v1":
+        url=entry.get("image_url","")
+        if url != "/supplier-photos/bundles/"+slug+".webp":
+            report["errors"].append({"slug":slug,"reason":"Bundle composite mapping does not point to verified file"})
+            continue
+        composite_file=source_path(url)
+        if not composite_file.is_file():
+            report["errors"].append({"slug":slug,"reason":"Bundle composite file missing"})
+            continue
+        with Image.open(composite_file) as image:
+            if image.convert("RGBA").getchannel("A").getextrema()!=(0,255):
+                report["errors"].append({"slug":slug,"reason":"Bundle composite lost transparency"})
+                continue
+        report["preserved_bundle_composites"]+=1
+        continue
     if entry and entry.get("isolation_revision") in ("u2net-v1", "isnet-clean-v2"):
         # Product-only transparent images must NEVER be replaced by old opaque
         # supplier photos during any bulk refresh.
@@ -196,5 +211,5 @@ print(json.dumps({k: v for k, v in report.items() if k not in ("missing", "error
 if report["errors"] or report["missing"]:
     print(json.dumps({"missing": report["missing"], "errors": report["errors"]}, ensure_ascii=False)[:3000])
     sys.exit(1)
-if report["normalized"] + report["preserved_isolated"] + len(report["pending_review"]) != len(active):
+if report["normalized"] + report["preserved_isolated"] + report["preserved_bundle_composites"] + len(report["pending_review"]) != len(active):
     raise RuntimeError("Every active photo must be normalized or explicitly pending verification")

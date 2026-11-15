@@ -209,7 +209,14 @@ for(const item of pending){
  delete newMap[row.slug].isolation_sha256;
  delete newMap[row.slug].isolation_foreground_share;
  delete newMap[row.slug].pre_isolation_image_url;
+ // Updated supplier media invalidates the prior bundle composite. The manual
+ // source-refresh workflow recomposes from exact constituent SKU photos.
+ delete newMap[row.slug].bundle_composite_revision;
+ delete newMap[row.slug].bundle_composite_sha256;
+ delete newMap[row.slug].bundle_component_skus;
+ delete newMap[row.slug].bundle_method;
 }
+
 for(const unresolved of report.missing){
  // The former catalog photo is unverified. Mark it for review instead of
  // leaving the wrong image silently visible in the storefront.

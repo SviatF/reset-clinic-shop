@@ -1,0 +1,507 @@
+{
+  "revision": "composite-v1",
+  "canvas": [
+    1000,
+    1000
+  ],
+  "sets": [
+    {
+      "sku": "OLIERE-022",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-002",
+          "x": 170,
+          "bottom": 832,
+          "height": 590,
+          "max_width": 218,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-041",
+          "x": 588,
+          "bottom": 832,
+          "height": 625,
+          "max_width": 222,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-013",
+          "x": 826,
+          "bottom": 841,
+          "height": 512,
+          "max_width": 192,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-037",
+          "x": 352,
+          "bottom": 849,
+          "height": 320,
+          "max_width": 265,
+          "z": 2
+        },
+        {
+          "sku": "OLIERE-018",
+          "x": 507,
+          "bottom": 866,
+          "height": 353,
+          "max_width": 165,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-023",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-016",
+          "x": 120,
+          "bottom": 858,
+          "height": 367,
+          "max_width": 150,
+          "z": 2
+        },
+        {
+          "sku": "OLIERE-048",
+          "x": 322,
+          "bottom": 840,
+          "height": 594,
+          "max_width": 208,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-008",
+          "x": 526,
+          "bottom": 839,
+          "height": 619,
+          "max_width": 210,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-030",
+          "x": 861,
+          "bottom": 836,
+          "height": 617,
+          "max_width": 184,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-031",
+          "x": 710,
+          "bottom": 858,
+          "height": 320,
+          "max_width": 252,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-024",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-006",
+          "x": 640,
+          "bottom": 842,
+          "height": 665,
+          "max_width": 260,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-034",
+          "x": 325,
+          "bottom": 852,
+          "height": 354,
+          "max_width": 303,
+          "z": 2
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-025",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-038",
+          "x": 330,
+          "bottom": 845,
+          "height": 648,
+          "max_width": 230,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-051",
+          "x": 659,
+          "bottom": 857,
+          "height": 335,
+          "max_width": 288,
+          "z": 2
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-026",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-038",
+          "x": 658,
+          "bottom": 841,
+          "height": 652,
+          "max_width": 245,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-053",
+          "x": 327,
+          "bottom": 856,
+          "height": 341,
+          "max_width": 290,
+          "z": 2
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-027",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-048",
+          "x": 242,
+          "bottom": 840,
+          "height": 628,
+          "max_width": 242,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-030",
+          "x": 790,
+          "bottom": 840,
+          "height": 635,
+          "max_width": 218,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-011",
+          "x": 516,
+          "bottom": 849,
+          "height": 548,
+          "max_width": 224,
+          "z": 2
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-028",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-039",
+          "x": 342,
+          "bottom": 840,
+          "height": 659,
+          "max_width": 260,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-030",
+          "x": 669,
+          "bottom": 840,
+          "height": 658,
+          "max_width": 233,
+          "z": 0
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-029",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-009",
+          "x": 157,
+          "bottom": 844,
+          "height": 563,
+          "max_width": 210,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-040",
+          "x": 564,
+          "bottom": 843,
+          "height": 615,
+          "max_width": 210,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-012",
+          "x": 828,
+          "bottom": 847,
+          "height": 516,
+          "max_width": 200,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-036",
+          "x": 351,
+          "bottom": 858,
+          "height": 329,
+          "max_width": 260,
+          "z": 2
+        },
+        {
+          "sku": "OLIERE-017",
+          "x": 515,
+          "bottom": 864,
+          "height": 353,
+          "max_width": 166,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-042",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-008",
+          "x": 133,
+          "bottom": 841,
+          "height": 550,
+          "max_width": 185,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-039",
+          "x": 329,
+          "bottom": 841,
+          "height": 554,
+          "max_width": 185,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-048",
+          "x": 561,
+          "bottom": 839,
+          "height": 558,
+          "max_width": 190,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-011",
+          "x": 840,
+          "bottom": 843,
+          "height": 497,
+          "max_width": 176,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-031",
+          "x": 425,
+          "bottom": 856,
+          "height": 276,
+          "max_width": 230,
+          "z": 3
+        },
+        {
+          "sku": "OLIERE-016",
+          "x": 682,
+          "bottom": 856,
+          "height": 320,
+          "max_width": 146,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-043",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-016",
+          "x": 139,
+          "bottom": 849,
+          "height": 343,
+          "max_width": 155,
+          "z": 3
+        },
+        {
+          "sku": "OLIERE-008",
+          "x": 358,
+          "bottom": 838,
+          "height": 585,
+          "max_width": 216,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-011",
+          "x": 664,
+          "bottom": 839,
+          "height": 552,
+          "max_width": 213,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-031",
+          "x": 838,
+          "bottom": 855,
+          "height": 314,
+          "max_width": 226,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-044",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-018",
+          "x": 142,
+          "bottom": 854,
+          "height": 344,
+          "max_width": 159,
+          "z": 3
+        },
+        {
+          "sku": "OLIERE-002",
+          "x": 364,
+          "bottom": 840,
+          "height": 588,
+          "max_width": 210,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-013",
+          "x": 661,
+          "bottom": 840,
+          "height": 549,
+          "max_width": 208,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-037",
+          "x": 831,
+          "bottom": 857,
+          "height": 305,
+          "max_width": 224,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-045",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-004",
+          "x": 178,
+          "bottom": 838,
+          "height": 594,
+          "max_width": 213,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-014",
+          "x": 664,
+          "bottom": 843,
+          "height": 552,
+          "max_width": 214,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-032",
+          "x": 386,
+          "bottom": 855,
+          "height": 320,
+          "max_width": 248,
+          "z": 2
+        },
+        {
+          "sku": "OLIERE-019",
+          "x": 849,
+          "bottom": 855,
+          "height": 346,
+          "max_width": 154,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-046",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-017",
+          "x": 138,
+          "bottom": 859,
+          "height": 354,
+          "max_width": 155,
+          "z": 3
+        },
+        {
+          "sku": "OLIERE-009",
+          "x": 368,
+          "bottom": 840,
+          "height": 598,
+          "max_width": 217,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-012",
+          "x": 670,
+          "bottom": 838,
+          "height": 539,
+          "max_width": 210,
+          "z": 1
+        },
+        {
+          "sku": "OLIERE-036",
+          "x": 823,
+          "bottom": 852,
+          "height": 308,
+          "max_width": 240,
+          "z": 3
+        }
+      ]
+    },
+    {
+      "sku": "OLIERE-047",
+      "source": "individual-official-product-photos",
+      "note": "Contents verified visually against official supplier set photograph; individual SKUs used to avoid group-photo shadows and cutouts",
+      "layers": [
+        {
+          "sku": "OLIERE-041",
+          "x": 348,
+          "bottom": 847,
+          "height": 653,
+          "max_width": 250,
+          "z": 0
+        },
+        {
+          "sku": "OLIERE-002",
+          "x": 652,
+          "bottom": 847,
+          "height": 657,
+          "max_width": 249,
+          "z": 1
+        }
+      ]
+    }
+  ]
+}

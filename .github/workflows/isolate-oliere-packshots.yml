@@ -6,7 +6,7 @@ permissions:
 jobs:
   isolate:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,6 +24,10 @@ jobs:
         run: python scripts/refine-oliere-cutouts.py --apply
       - name: Check halo-free output and checksums
         run: python scripts/refine-oliere-cutouts.py --check
+      - name: Compose verified OLIE'RE kits without photographic scene shadows
+        run: python scripts/render-oliere-bundles.py --apply
+      - name: Verify 14 exact bundle composites and SKU constituents
+        run: python scripts/render-oliere-bundles.py --check
       - name: Upload cutout audit report
         if: always()
         uses: actions/upload-artifact@v4
@@ -33,10 +37,12 @@ jobs:
             oliere-isolation-report.json
             oliere-clean-matte-report.json
             photo-qa/comparison.jpg
+            photo-qa/bundle-comparison-*.jpg
+            oliere-bundle-composite-report.json
           if-no-files-found: ignore
       - name: Commit isolated assets to current source branch
         run: |
-          git add data/supplier-photo-map.json public/supplier-photos/isolated public/supplier-photos/clean
+          git add data/supplier-photo-map.json public/supplier-photos/isolated public/supplier-photos/clean public/supplier-photos/bundles
           if git diff --cached --quiet; then
             echo "No new image outputs"
             exit 0
