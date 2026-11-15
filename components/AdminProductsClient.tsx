@@ -3,22 +3,27 @@
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import AdminExcelImport from "@/components/AdminExcelImport";
 import SmartProductImage from "@/components/SmartProductImage";
+import { getProductPricing, validateSalePrice } from "@/lib/product-pricing";
 
 type Product = any;
 
 const empty = {
   name: "", slug: "", brand: "", sku: "", category: "face", subcategory_slugs: [], product_line: "", status: "draft",
-  price: "", stock_quantity: "0", size: "", short_description: "", description: "",
+  price: "", sale_price: "", discount_percent: "", promo_enabled: false, stock_quantity: "0", size: "", short_description: "", description: "",
   image_url: "", secondary_image_url: "", hover_label: "ПРИЗНАЧЕННЯ", hover_title: "", hover_text: "",
   how_to_use: "", key_ingredients_text: "", inci: "", seo_title: "", seo_description: "",
   featured: false, sort_order: "0", track_stock: true,
 };
 
 function fromProduct(product: Product) {
+  const pricing = getProductPricing(product);
   return {
     ...empty,
     ...product,
     price: String(product.price ?? ""),
+    sale_price: pricing.onSale ? String(pricing.price) : "",
+    discount_percent: pricing.onSale ? String(pricing.discountPercent) : "",
+    promo_enabled: pricing.onSale,
     stock_quantity: String(product.stock_quantity ?? 0),
     sort_order: String(product.sort_order ?? 0),
     key_ingredients_text: Array.isArray(product.key_ingredients) ? product.key_ingredients.join(", ") : "",
@@ -137,6 +142,40 @@ export default function AdminProductsClient() {
     setForm((current: any) => ({ ...current, [key]: value }));
   }
 
+  function updateRegularPrice(value: string) {
+    setForm((current: any) => {
+      const updated = { ...current, price: value };
+      const percent = Number(current.discount_percent);
+      if (current.promo_enabled && Number(value) > 0 && percent > 0 && percent < 100)
+        updated.sale_price = (Math.round(Number(value) * (1 - percent / 100) * 100) / 100).toFixed(2);
+      return updated;
+    });
+  }
+
+  function updateDiscountPercent(value: string) {
+    setForm((current: any) => {
+      const percent = Number(value);
+      const regular = Number(current.price);
+      const sale = regular > 0 && percent > 0 && percent < 100
+        ? Math.round(regular * (1 - percent / 100) * 100) / 100 : null;
+      return { ...current, discount_percent: value, sale_price: sale !== null && sale > 0 && sale < regular ? sale.toFixed(2) : "" };
+    });
+  }
+
+  function updateSalePrice(value: string) {
+    setForm((current: any) => {
+      const regular = Number(current.price);
+      const sale = Number(value);
+      const percent = value !== "" && regular > 0 && sale > 0 && sale < regular
+        ? String(Number(((1 - sale / regular) * 100).toFixed(1))) : "";
+      return { ...current, sale_price: value, discount_percent: percent };
+    });
+  }
+
+  function togglePromotion(enabled: boolean) {
+    setForm((current: any) => ({ ...current, promo_enabled: enabled, sale_price: enabled ? current.sale_price : "", discount_percent: enabled ? current.discount_percent : "" }));
+  }
+
   function selectProduct(product: Product) {
     setSelectedId(product.id);
     setForm(fromProduct(product));
@@ -155,14 +194,19 @@ export default function AdminProductsClient() {
     setSaving(true);
     setMessage("");
     try {
+      const salePrice = form.promo_enabled ? validateSalePrice(form.price, form.sale_price) : null;
+      if (form.promo_enabled && salePrice === null) throw new Error("Вкажіть знижку або кінцеву акційну ціну");
       const payload = {
         ...form,
         price: Number(form.price || 0),
+        sale_price: salePrice,
         stock_quantity: Number(form.stock_quantity || 0),
         sort_order: Number(form.sort_order || 0),
         key_ingredients: String(form.key_ingredients_text || "").split(",").map((value) => value.trim()).filter(Boolean),
       };
       delete payload.key_ingredients_text;
+      delete payload.discount_percent;
+      delete payload.promo_enabled;
       const response = await fetch(selectedId ? `/api/admin/products/${selectedId}` : "/api/admin/products", {
         method: selectedId ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
@@ -206,9 +250,10 @@ export default function AdminProductsClient() {
     finally { setUploading(false); }
   }
 
+  const promoPreview = getProductPricing({ price: Number(form.price), sale_price: form.promo_enabled ? form.sale_price : null });
   return (
     <div className="admin-products-page">
-      <div className="admin-page-head"><div><span>CATALOG CONTROL</span><h1>Товари</h1><p>Ціна, stock, статус, фото, контент і SEO кожної позиції.</p></div><button className="admin-primary" onClick={createNew} disabled={!writable}>+ ДОДАТИ ТОВАР</button></div>
+      <div className="admin-page-head"><div><span>CATALOG CONTROL</span><h1>Товари</h1><p>Ціни, індивідуальні акції, залишки, фото, контент і SEO товарів.</p></div><button className="admin-primary" onClick={createNew} disabled={!writable}>+ ДОДАТИ ТОВАР</button></div>
       {supplierImport?.available && supplierImport.missing !== null && supplierImport.missing > 0 && <div className="admin-connect-card">
         <span>ІМПОРТ ПОСТАЧАЛЬНИКІВ · D1</span>
         <h2>Додати нові товари до бази як чернетки</h2>
@@ -233,11 +278,16 @@ export default function AdminProductsClient() {
       <div className="admin-product-workspace">
         <aside className="admin-product-list">
           <div className="admin-list-head"><strong>{products.length} позицій</strong><span>ACTIVE / DRAFT / ARCHIVED</span></div>
-          {products.length ? products.map((product) => <button key={product.id} className={selectedId === product.id ? "is-selected" : ""} onClick={() => selectProduct(product)}>
-            <div className="admin-product-thumb"><SmartProductImage src={product.image_url} alt={product.name} fallback={<span>{product.name?.slice(0,1)}</span>} /></div>
-            <div><strong>{product.name}</strong><span>{product.brand} · {Number(product.price).toFixed(2)} грн</span><small>{product.stock_quantity} шт. · {product.category}</small></div>
-            <i className={`status-dot status-${product.status}`} />
-          </button>) : <p className="admin-empty">Товарів ще немає.</p>}
+          {products.length ? products.map((product) => {
+            const pricing = getProductPricing(product);
+            return <button key={product.id} className={selectedId === product.id ? "is-selected" : ""} onClick={() => selectProduct(product)}>
+              <div className="admin-product-thumb"><SmartProductImage src={product.image_url} alt={product.name} fallback={<span>{product.name?.slice(0,1)}</span>} /></div>
+              <div><strong>{product.name}</strong><span>{product.brand}</span><div className="admin-list-price">
+                {pricing.onSale ? <><del>{pricing.originalPrice.toFixed(2)} грн</del><b>{pricing.price.toFixed(2)} грн</b><em>−{pricing.discountPercent}%</em></> : <span>{pricing.price.toFixed(2)} грн</span>}
+              </div><small>{product.stock_quantity} шт. · {product.category}</small></div>
+              <i className={`status-dot status-${product.status}`} />
+            </button>;
+          }) : <p className="admin-empty">Товарів ще немає.</p>}
         </aside>
 
         <form className="admin-product-form" onSubmit={save}>
@@ -252,13 +302,27 @@ export default function AdminProductsClient() {
             <fieldset className="wide" style={{border:"1px solid #ddd",padding:12}}><legend>Підкатегорії (можна кілька)</legend><div style={{display:"flex",flexWrap:"wrap",gap:12}}>{categories.filter(c=>c.parent_slug===form.category).map(c=><label key={c.id} style={{display:"flex",alignItems:"center",gap:5}}><input type="checkbox" checked={(form.subcategory_slugs||[]).includes(c.slug)} onChange={e=>setForm((f:any)=>({...f,subcategory_slugs:e.target.checked?[...(f.subcategory_slugs||[]),c.slug]:(f.subcategory_slugs||[]).filter((x:string)=>x!==c.slug)}))}/>{c.name}</label>)}</div></fieldset>
             <label><span>Продуктова лінійка</span><input list="reset-lines" value={form.product_line||""} onChange={(e)=>update("product_line",e.target.value)} placeholder="Peptology / Soothing Repair R4"/><datalist id="reset-lines">{brands.find(b=>b.name===form.brand)?.lines.map((line:string)=><option key={line} value={line}/>)}</datalist></label>
             <label><span>Статус</span><select value={form.status} onChange={(e) => update("status", e.target.value)}><option value="draft">Draft</option><option value="active">Active</option><option value="archived">Archived</option></select></label>
-            <label><span>Ціна, грн</span><input type="number" step="0.01" min="0" value={form.price} onChange={(e) => update("price", e.target.value)} /></label>
+            <label><span>Звичайна ціна, грн</span><input type="number" step="0.01" min="0" value={form.price} onChange={(e) => updateRegularPrice(e.target.value)} /></label>
             <label><span>Залишок, шт.</span><input type="number" min="0" value={form.stock_quantity} onChange={(e) => update("stock_quantity", e.target.value)} /></label>
             <label><span>Об’єм / розмір</span><input value={form.size} onChange={(e) => update("size", e.target.value)} placeholder="10 mL" /></label>
             <label><span>Сортування</span><input type="number" value={form.sort_order} onChange={(e) => update("sort_order", e.target.value)} /></label>
             <label className="admin-check"><input type="checkbox" checked={form.featured} onChange={(e) => update("featured", e.target.checked)} /><span>Показувати в рекомендованих</span></label>
             <label className="admin-check"><input type="checkbox" checked={form.track_stock} onChange={(e) => update("track_stock", e.target.checked)} /><span>Відслідковувати stock</span></label>
           </div></section>
+
+          <section className="admin-form-section admin-promo-section" id="sale-settings">
+            <div className="admin-promo-head">
+              <div><span>PRODUCT PROMOTION</span><h3>Акції та знижки</h3><p>Знижка діє тільки для цього товару, доки ви її не вимкнете.</p></div>
+              <label className="admin-promo-switch"><input type="checkbox" checked={Boolean(form.promo_enabled)} onChange={(e) => togglePromotion(e.target.checked)} /><span>{form.promo_enabled ? "Знижка увімкнена" : "Увімкнути знижку"}</span></label>
+            </div>
+            {form.promo_enabled ? <>
+              <div className="admin-form-grid">
+                <label><span>Розмір знижки, %</span><input type="number" step="0.1" min="0.1" max="99.9" value={form.discount_percent} onChange={(e) => updateDiscountPercent(e.target.value)} placeholder="20" /></label>
+                <label><span>Кінцева ціна для покупця, грн</span><input type="number" step="0.01" min="0.01" max={Math.max(0, Number(form.price) - 0.01)} value={form.sale_price} onChange={(e) => updateSalePrice(e.target.value)} placeholder="800.00" required /></label>
+              </div>
+              {promoPreview.onSale ? <div className="admin-promo-preview"><span className="shop-sale-badge admin-promo-badge">−{promoPreview.discountPercent}%</span><div><small>ПОКУПЕЦЬ ПОБАЧИТЬ</small><del>{promoPreview.originalPrice.toFixed(2)} грн</del><strong>{promoPreview.price.toFixed(2)} грн</strong></div><p>Різниця: {(promoPreview.originalPrice - promoPreview.price).toFixed(2)} грн. Ця сума також застосовується під час оплати.</p></div> : <p className="admin-promo-hint">Введіть відсоток або кінцеву ціну менш ніж звичайна. Друге поле розрахується автоматично.</p>}
+            </> : <p className="admin-promo-hint">Товар продається за звичайною ціною. Увімкніть перемикач, щоб створити персональну акцію.</p>}
+          </section>
 
           <section className="admin-form-section"><h3>Фото</h3><div className="admin-image-admin">
             <div className="admin-image-preview"><SmartProductImage src={form.image_url} alt="Preview" fallback={<span>NO IMAGE</span>} /></div>
