@@ -59,7 +59,7 @@ async function loadExisting(): Promise<ExistingProduct[]> {
   const response = await fetch("/api/admin/products", { cache: "no-store" });
   const body = await response.json();
   if (!response.ok || !Array.isArray(body.products)) throw new Error(body.error || "Не вдалося перевірити поточний каталог");
-  if (!body.writable) throw new Error("Сховище товарів працює лише на читання. Підключіть D1 для відновлення фото.");
+  if (!body.writable) throw new Error(body.storage?.reason || "Сховище товарів працює лише на читання. Перевірте доступ до D1 або GitHub.");
   return body.products;
 }
 async function optimized(file: File): Promise<File> {
