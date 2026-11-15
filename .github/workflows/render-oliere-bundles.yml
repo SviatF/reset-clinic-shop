@@ -1,42 +1,33 @@
-name: Rebuild accurate OLIE'RE bundle packshots
+name: Restore original OLIE'RE kit photographs
 on:
   workflow_dispatch:
 permissions:
   contents: write
 jobs:
-  render:
+  restore:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Install image compositor
-        run: python -m pip install Pillow==11.1.0
-      - name: Build 14 transparent kit compositions from independently verified SKUs
-        run: python scripts/render-oliere-bundles.py --apply
-      - name: Verify all files, SKUs and alpha channels
-        run: python scripts/render-oliere-bundles.py --check
-      - name: Publish side-by-side visual QA report
-        if: always()
-        uses: actions/upload-artifact@v4
+          persist-credentials: true
+      - uses: actions/setup-node@v4
         with:
-          name: oliere-bundle-visual-qa
-          path: |
-            photo-qa/bundle-comparison-*.jpg
-            oliere-bundle-composite-report.json
-          if-no-files-found: ignore
-      - name: Commit verified composites to source branch
+          node-version: '22'
+      - name: Use full official kit photos with their own uncut studio backgrounds
+        run: node scripts/restore-oliere-bundle-originals.mjs --apply
+      - name: Verify 14 source images, checksums and mappings
+        run: node scripts/restore-oliere-bundle-originals.mjs --check
+      - name: Publish the mapping if a manual restore changed it
         run: |
-          git add data/supplier-photo-map.json public/supplier-photos/bundles photo-qa/bundle-comparison-1.jpg photo-qa/bundle-comparison-2.jpg
+          git add data/supplier-photo-map.json
           if git diff --cached --quiet; then
-            echo "Already up-to-date"
+            echo "All kit photos already original"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "assets(shop): replace cut-out bundle scenes with 14 consistent product compositions"
+          git commit -m "assets(shop): restore untouched supplier photos for OLIE'RE sets"
           git fetch origin "${GITHUB_REF_NAME}"
           git rebase "origin/${GITHUB_REF_NAME}"
           git push origin HEAD:"${GITHUB_REF_NAME}"

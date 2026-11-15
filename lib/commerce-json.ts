@@ -21,6 +21,7 @@ function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
     legacy_studio_image_url?: string;
     pre_refinement_image_url?: string;
     pre_bundle_image_url?: string;
+    archived_bundle_composite_url?: string;
     verification_status?: string;
   }>;
   return rows.map(row => {
@@ -33,6 +34,8 @@ function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
         source.legacy_studio_image_url,
         source.pre_refinement_image_url,
         source.pre_bundle_image_url,
+        source.archived_bundle_composite_url,
+        `/supplier-photos/bundles/${row.slug}.webp`,
         `/supplier-photos/isolated/${row.slug}.webp`,
         source.source_image_url,
         source.image_url,

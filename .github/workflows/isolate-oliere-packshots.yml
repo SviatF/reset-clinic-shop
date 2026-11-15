@@ -24,10 +24,10 @@ jobs:
         run: python scripts/refine-oliere-cutouts.py --apply
       - name: Check halo-free output and checksums
         run: python scripts/refine-oliere-cutouts.py --check
-      - name: Compose verified OLIE'RE kits without photographic scene shadows
-        run: python scripts/render-oliere-bundles.py --apply
-      - name: Verify 14 exact bundle composites and SKU constituents
-        run: python scripts/render-oliere-bundles.py --check
+      - name: Restore untouched official photography for all 14 OLIE'RE kits
+        run: node scripts/restore-oliere-bundle-originals.mjs --apply
+      - name: Verify complete supplier photo sets were preserved
+        run: node scripts/restore-oliere-bundle-originals.mjs --check
       - name: Upload cutout audit report
         if: always()
         uses: actions/upload-artifact@v4

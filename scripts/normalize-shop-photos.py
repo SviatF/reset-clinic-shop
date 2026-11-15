@@ -24,7 +24,7 @@ REVISION = "studio-v1"
 rows = json.loads(PRODUCTS.read_text())
 active = [row for row in rows if row.get("status") == "active"]
 mapped = json.loads(MAP.read_text())
-report = {"active": len(active), "normalized": 0, "preserved_isolated": 0, "preserved_bundle_composites": 0, "backgrounds_removed": 0,
+report = {"active": len(active), "normalized": 0, "preserved_isolated": 0, "preserved_bundle_composites": 0, "preserved_bundle_originals": 0, "backgrounds_removed": 0,
           "original_alpha": 0, "opaque_preserved": 0, "missing": [], "errors": [], "pending_review": []}
 
 
@@ -141,6 +141,21 @@ for product in active:
     if entry and entry.get("verification_status") == "needs_review":
         report["pending_review"].append(slug)
         continue
+    if entry and entry.get("bundle_photo_mode") == "original":
+        # The merchant prefers full product-set photography, including the
+        # supplier's studio background. Never remove background or recrop it.
+        original_url = entry.get("source_asset_url", "")
+        if not original_url.startswith("/supplier-photos/oliere-exact/") or entry.get("image_url") != original_url:
+            report["errors"].append({"slug": slug, "reason": "Bundle source photograph mapping is inconsistent"})
+            continue
+        original_path = source_path(original_url)
+        if not original_path.is_file():
+            report["errors"].append({"slug": slug, "reason": "Original supplier bundle photograph is missing"})
+            continue
+        with Image.open(original_path) as original:
+            original.verify()
+        report["preserved_bundle_originals"] += 1
+        continue
     if entry and entry.get("bundle_composite_revision") == "composite-v1":
         url=entry.get("image_url","")
         if url != "/supplier-photos/bundles/"+slug+".webp":
@@ -211,5 +226,5 @@ print(json.dumps({k: v for k, v in report.items() if k not in ("missing", "error
 if report["errors"] or report["missing"]:
     print(json.dumps({"missing": report["missing"], "errors": report["errors"]}, ensure_ascii=False)[:3000])
     sys.exit(1)
-if report["normalized"] + report["preserved_isolated"] + report["preserved_bundle_composites"] + len(report["pending_review"]) != len(active):
+if report["normalized"] + report["preserved_isolated"] + report["preserved_bundle_composites"] + report["preserved_bundle_originals"] + len(report["pending_review"]) != len(active):
     raise RuntimeError("Every active photo must be normalized or explicitly pending verification")
