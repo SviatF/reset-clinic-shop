@@ -86,6 +86,7 @@ export default async function DynamicProductPage({ params }: Props) {
               <div className="product-gallery-main product-object-stage">
                 <span className="product-gallery-tag">RESET SELECT</span>
                 <span className="product-object-index">01 / PRODUCT</span>
+                {item.discountPercent > 0 && <span className="shop-sale-badge product-detail-sale-badge">−{item.discountPercent}%</span>}
                 <span className="product-object-halo" aria-hidden="true" />
                 <SmartProductImage src={item.imageUrl} alt={item.name} className="dynamic-product-image" loading="eager" fallback={<div className="reset-product-image-placeholder reset-detail-placeholder" aria-label="Фото товару ще не додано"><span>{item.brand}</span><small>ФОТО ГОТУЄТЬСЯ</small></div>} />
                 <div className="product-object-footer"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()}</Link><span>{item.size || "PRO CARE"}</span><span>RESET CLINIC</span></div>
@@ -99,7 +100,7 @@ export default async function DynamicProductPage({ params }: Props) {
 
               <div className="product-purchase-deck product-purchase-deck-light">
                 <div className="product-price-row product-price-card product-price-card-light">
-                  <div className="product-price-main"><span className="product-price-label">ЦІНА</span><strong className="product-price-number">{Number(item.price).toFixed(2)} <em>грн</em></strong></div>
+                  <div className="product-price-main"><span className="product-price-label">{item.discountPercent > 0 ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{item.discountPercent > 0 && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className="product-price-number">{Number(item.price).toFixed(2)} <em>грн</em></strong></div>
                   <div className="product-price-side"><span>RESET CLINIC</span><small>{inStock ? "Доступно до замовлення" : "Немає в наявності"}</small></div>
                 </div>
                 {inStock ? <ProductActions item={{ slug: item.slug, name: item.name, price: Number(item.price), maxQty: item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
