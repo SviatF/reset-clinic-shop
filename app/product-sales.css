@@ -31,3 +31,15 @@
 .admin-list-price b{font-size:11px;color:#1d1b17}
 .admin-list-price em{font-style:normal;font-weight:800;font-size:9px;background:#ffdc4c;color:#14110b;padding:2px 5px}
 @media(max-width:720px){.rs-card-sale-badge{top:7px;right:7px;min-width:51px;min-height:29px;padding:4px 7px;font-size:12px}.premium-card-sale-badge{top:43px;right:10px;min-width:53px;min-height:30px;font-size:12px}.product-detail-sale-badge{top:49px;right:12px;min-width:68px;min-height:38px;font-size:17px}.shop-price-before{font-size:10px}.rs-card-price.shop-price-current{font-size:16px}.admin-promo-head{align-items:flex-start;flex-direction:column;gap:12px}}
+
+/* Promotional price uses the same sunny-yellow family as the -20% square.
+   Only active sale prices receive the accent; normal prices remain unchanged.
+   A fine darker edge preserves definition against the white product cards. */
+.rs-card-price.shop-price-current.shop-price-current--sale,
+.premium-product-meta .shop-price-stack strong.shop-price-current--sale,
+.product-page-audit-v2 .product-price-main .product-price-number.shop-price-current--sale,
+.product-page-audit-v2 .product-price-main .product-price-number.shop-price-current--sale em {
+  color: #ffdc4c;
+  -webkit-text-stroke: .55px rgba(109, 78, 0, .72);
+  text-shadow: 0 1px 1px rgba(63, 48, 0, .28);
+}
