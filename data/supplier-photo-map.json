@@ -1256,7 +1256,7 @@
     "clean_matte_coverage": 0.171
   },
   "nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par": {
-    "image_url": "/supplier-photos/clean/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
+    "image_url": "/supplier-photos/bundles/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/153.png?v=1750850579",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1276,7 +1276,15 @@
     "isolation_sha256": "8c7d25bee0f737a2dcd00dbbd4408f8d15157d73b9a74116f617f9f87b4c8197",
     "isolation_foreground_share": 0.2981,
     "pre_refinement_image_url": "/supplier-photos/clean/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
-    "clean_matte_coverage": 0.2944
+    "clean_matte_coverage": 0.2944,
+    "pre_bundle_image_url": "/supplier-photos/clean/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "4a90a0697e3d86955e45c46f0c74ccffdf915f9be73c38609f8c46dd5843ecab",
+    "bundle_component_skus": [
+      "OLIERE-006",
+      "OLIERE-034"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml": {
     "image_url": "/supplier-photos/clean/maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
@@ -1348,7 +1356,7 @@
     "clean_matte_coverage": 0.2151
   },
   "profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/11_3_c7284539-efff-4d9c-abf4-40e47056da78.png?v=1750850664",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1368,10 +1376,21 @@
     "isolation_sha256": "e5da0bfa82b82049d9e42b365dcc5af5764517c6af2a2106e7f70b9cd32e30e6",
     "isolation_foreground_share": 0.2612,
     "pre_refinement_image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
-    "clean_matte_coverage": 0.2531
+    "clean_matte_coverage": 0.2531,
+    "pre_bundle_image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "a71adb00cb66afcdb003dc3b218ae021893e97b7b237f91ed6d8afdaf2ed6b44",
+    "bundle_component_skus": [
+      "OLIERE-016",
+      "OLIERE-048",
+      "OLIERE-008",
+      "OLIERE-030",
+      "OLIERE-031"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/1901e74fd47afa8206ea464b28b9f2c5.png?v=1750850620",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1391,10 +1410,19 @@
     "isolation_sha256": "4a8d9cf570aa8eac156c9eb1f248723e0d588c952843585566935c2b2af5e4e2",
     "isolation_foreground_share": 0.3456,
     "pre_refinement_image_url": "/supplier-photos/clean/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
-    "clean_matte_coverage": 0.3419
+    "clean_matte_coverage": 0.3419,
+    "pre_bundle_image_url": "/supplier-photos/clean/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "429464044124dd5b8efcf0a184d56ff243cd6d698c41d73d704e43bcb4fb56b1",
+    "bundle_component_skus": [
+      "OLIERE-048",
+      "OLIERE-030",
+      "OLIERE-011"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/11_15.png?v=1750850624",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1414,7 +1442,15 @@
     "isolation_sha256": "eca58dd351898256e119404c1d78b76ddaffb0be8c31b636b33567a60ea7afc7",
     "isolation_foreground_share": 0.2512,
     "pre_refinement_image_url": "/supplier-photos/clean/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
-    "clean_matte_coverage": 0.2478
+    "clean_matte_coverage": 0.2478,
+    "pre_bundle_image_url": "/supplier-photos/clean/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "661ef8ce1a02ef648b7a26a13979c7149ab542e00a20738a39be7dab8c2218db",
+    "bundle_component_skus": [
+      "OLIERE-039",
+      "OLIERE-030"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
     "image_url": "/supplier-photos/clean/maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
@@ -1555,7 +1591,7 @@
     "clean_matte_coverage": 0.2013
   },
   "kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_8880_3.jpg?v=1778221409",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1575,7 +1611,19 @@
     "isolation_sha256": "144abfd4a155d820926a378437bce51d8e48c52ef6cbdc0015e72e245e3de37b",
     "isolation_foreground_share": 0.2774,
     "pre_refinement_image_url": "/supplier-photos/clean/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
-    "clean_matte_coverage": 0.2087
+    "clean_matte_coverage": 0.2087,
+    "pre_bundle_image_url": "/supplier-photos/clean/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "fb885b96e5d8903dffe39b29649ce4df2e23eb62b960828b9c1732b6c413cd43",
+    "bundle_component_skus": [
+      "OLIERE-008",
+      "OLIERE-039",
+      "OLIERE-048",
+      "OLIERE-011",
+      "OLIERE-031",
+      "OLIERE-016"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml": {
     "image_url": "/supplier-photos/clean/sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml.webp",
@@ -1822,7 +1870,7 @@
     "clean_matte_coverage": 0.1523
   },
   "profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/AI_Valour.jpg?v=1776153601",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1842,10 +1890,21 @@
     "isolation_sha256": "84a62a4781dacda177083602bbaae03eb47d098251993c916fd4d05c8938e79f",
     "isolation_foreground_share": 0.2951,
     "pre_refinement_image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
-    "clean_matte_coverage": 0.2589
+    "clean_matte_coverage": 0.2589,
+    "pre_bundle_image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "1ae6df3db5cb5c2940db8016976e82234f6a99daa7985ec62dda0a861b43633f",
+    "bundle_component_skus": [
+      "OLIERE-002",
+      "OLIERE-041",
+      "OLIERE-013",
+      "OLIERE-037",
+      "OLIERE-018"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris": {
-    "image_url": "/supplier-photos/clean/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
+    "image_url": "/supplier-photos/bundles/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/Capture0027-2-Edit_copy_d73731e3-87f5-4884-b0a4-d0c07b6ee816.jpg?v=1760889470",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1865,10 +1924,18 @@
     "isolation_sha256": "f2f4f8c7ec829e07e7cf26fda03ec13240a3517bcf74d17dc718b4e4deb1d269",
     "isolation_foreground_share": 0.2153,
     "pre_refinement_image_url": "/supplier-photos/clean/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
-    "clean_matte_coverage": 0.2136
+    "clean_matte_coverage": 0.2136,
+    "pre_bundle_image_url": "/supplier-photos/clean/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "fe843d3c039220c551acc1f265e99a9e4eef1a390b27033d3228aa7d83df27b5",
+    "bundle_component_skus": [
+      "OLIERE-038",
+      "OLIERE-051"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris": {
-    "image_url": "/supplier-photos/clean/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
+    "image_url": "/supplier-photos/bundles/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/158ae249f7753904f5fffb0dd8b8c58e_d15c29c9-b256-47ae-b2e8-1000cb4f3908.png?v=1750850654",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1888,7 +1955,15 @@
     "isolation_sha256": "d360c0f8dbfd8c3b785c913d19a52e313bb2f4ea68ec7d0048c09b00686d35a5",
     "isolation_foreground_share": 0.2042,
     "pre_refinement_image_url": "/supplier-photos/clean/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
-    "clean_matte_coverage": 0.2019
+    "clean_matte_coverage": 0.2019,
+    "pre_bundle_image_url": "/supplier-photos/clean/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "ebc2d16deba3a3b0287e6ae3aeb4a350110d19be0e7373b58566da65d034853f",
+    "bundle_component_skus": [
+      "OLIERE-038",
+      "OLIERE-053"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml": {
     "image_url": "/supplier-photos/clean/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml.webp",
@@ -1914,7 +1989,7 @@
     "clean_matte_coverage": 0.3531
   },
   "nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_9039.jpg?v=1778221418",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -1934,7 +2009,18 @@
     "isolation_sha256": "95cc3fe415e02449657b075d90521356ffc47d3b4e2c9db32c7da0adff0783a7",
     "isolation_foreground_share": 0.2863,
     "pre_refinement_image_url": "/supplier-photos/clean/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
-    "clean_matte_coverage": 0.2547
+    "clean_matte_coverage": 0.2547,
+    "pre_bundle_image_url": "/supplier-photos/clean/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "c173d1087eae9a75dbb86dca2f913ee8ee5bf75285bb3baa2940886e1871e4cd",
+    "bundle_component_skus": [
+      "OLIERE-009",
+      "OLIERE-040",
+      "OLIERE-012",
+      "OLIERE-036",
+      "OLIERE-017"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
     "image_url": "/supplier-photos/clean/krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
@@ -2098,7 +2184,7 @@
     "clean_matte_coverage": 0.2329
   },
   "kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/dbea7d2be5179af43233941df38706c4_34fa3edd-ef47-4725-b7cf-b636d2589b96.png?v=1750850631",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -2118,10 +2204,18 @@
     "isolation_sha256": "b5d295010829bdc159bf04676ceff0c0064739ec162c94ab5d9f97d29dcd651a",
     "isolation_foreground_share": 0.317,
     "pre_refinement_image_url": "/supplier-photos/clean/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
-    "clean_matte_coverage": 0.3136
+    "clean_matte_coverage": 0.3136,
+    "pre_bundle_image_url": "/supplier-photos/clean/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "c6833c0700fa62364a2ab938cb36a616b7472c613decca486aa90755b3128689",
+    "bundle_component_skus": [
+      "OLIERE-041",
+      "OLIERE-002"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/AI_-_..jpg?v=1776152747",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -2141,10 +2235,20 @@
     "isolation_sha256": "e5c8ef2fd1f603a5440a864775420dd6b04ef39b373276cd62472f5d79b7aed7",
     "isolation_foreground_share": 0.1837,
     "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
-    "clean_matte_coverage": 0.123
+    "clean_matte_coverage": 0.123,
+    "pre_bundle_image_url": "/supplier-photos/clean/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "78901e541c26852bcaec2da4a3d116f615060d11764dfd2b1d91fecc12884b55",
+    "bundle_component_skus": [
+      "OLIERE-016",
+      "OLIERE-008",
+      "OLIERE-011",
+      "OLIERE-031"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/AI_-_Valour_1_4002dd1e-9e08-48f2-8800-2062881c503f.jpg?v=1776153463",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -2164,10 +2268,20 @@
     "isolation_sha256": "d504ea0822189db9726810065cb198733ea06e534de4216d5a7b973c5444fdf7",
     "isolation_foreground_share": 0.1761,
     "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
-    "clean_matte_coverage": 0.1421
+    "clean_matte_coverage": 0.1421,
+    "pre_bundle_image_url": "/supplier-photos/clean/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "8f524e4c9af771ef8b4b2e6429950eed1b6bcad14bbcfcebee6a62c4e2364270",
+    "bundle_component_skus": [
+      "OLIERE-018",
+      "OLIERE-002",
+      "OLIERE-013",
+      "OLIERE-037"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/IMG_1280.jpg?v=1793368417",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -2187,10 +2301,20 @@
     "isolation_sha256": "e4cf16798907ce8c2d30607241ed93de9e7d3944854f5868c50d6ff274fb0b93",
     "isolation_foreground_share": 0.2891,
     "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
-    "clean_matte_coverage": 0.3087
+    "clean_matte_coverage": 0.3087,
+    "pre_bundle_image_url": "/supplier-photos/clean/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "a7c0993bacccd1e74da84559f5b598e02fa7fd37d20cd59d50dd1021d78c67b3",
+    "bundle_component_skus": [
+      "OLIERE-004",
+      "OLIERE-014",
+      "OLIERE-032",
+      "OLIERE-019"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris": {
-    "image_url": "/supplier-photos/clean/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
+    "image_url": "/supplier-photos/bundles/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/AI_-_Color_E_Clat.jpg?v=1776152789",
     "supplier": "OLIE'RE PARIS",
     "match_score": 1,
@@ -2210,7 +2334,17 @@
     "isolation_sha256": "842b3f3c636412f03ba0fa8d299116b5260091e58e5bec652d2c840a2d6c2df7",
     "isolation_foreground_share": 0.2085,
     "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
-    "clean_matte_coverage": 0.1265
+    "clean_matte_coverage": 0.1265,
+    "pre_bundle_image_url": "/supplier-photos/clean/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
+    "bundle_composite_revision": "composite-v1",
+    "bundle_composite_sha256": "4f78d6a240d43aafbadb68a694ee21b7392b911de09e448202a137122f3d81a3",
+    "bundle_component_skus": [
+      "OLIERE-017",
+      "OLIERE-009",
+      "OLIERE-012",
+      "OLIERE-036"
+    ],
+    "bundle_method": "audited_official_single_sku_composition"
   },
   "visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml": {
     "image_url": "/supplier-photos/clean/visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
