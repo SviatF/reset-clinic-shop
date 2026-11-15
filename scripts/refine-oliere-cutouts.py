@@ -264,7 +264,10 @@ else:
         for item,entry,data,qa in files:
             dest=OUT_DIR/(item["slug"]+".webp")
             dest.write_bytes(data)
-            entry["pre_refinement_image_url"]=entry.get("image_url")
+            # Preserve the v1 path across reruns: existing D1 image URLs may
+            # still reference it, and the storefront must continue to migrate
+            # those legacy values without overwriting custom merchant uploads.
+            entry.setdefault("pre_refinement_image_url",entry.get("image_url"))
             entry["image_url"]="/supplier-photos/clean/"+item["slug"]+".webp"
             entry["isolation_revision"]=REVISION
             entry["isolation_sha256"]=hashlib.sha256(data).hexdigest()
