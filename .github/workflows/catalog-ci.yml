@@ -21,6 +21,8 @@ jobs:
         run: node scripts/validate-catalog.mjs
       - name: Validate exact OLIE'RE photo matching
         run: node scripts/validate-oliere-images.mjs
+      - name: Verify untouched original photographs for 14 OLIE'RE sets
+        run: node scripts/restore-oliere-bundle-originals.mjs --check
       - name: Validate supplier import staging
         run: node scripts/validate-supplier-import.mjs
       - name: Verify safe D1 import generator
