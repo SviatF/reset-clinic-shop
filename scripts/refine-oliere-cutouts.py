@@ -87,7 +87,7 @@ def get_model_mask(src, model):
         raise ValueError("Segmentation changed source dimensions")
     return src,arr
 
-def clean_mask(conf):
+def clean_mask(conf, backup_conf):
     # Aggressive confidence threshold rejects floor shadows, pale halo and
     # soft scenery; package interiors should have high model confidence.
     hard=(conf>=THRESHOLD).astype(np.uint8)
@@ -106,6 +106,23 @@ def clean_mask(conf):
         if area>=minimum: accepted[labels==i]=1
     retained=accepted.sum()
     if retained<500:raise ValueError("Foreground disappeared during cleanup")
+    # ISNet occasionally misreads a *printed logo inside a bottle* as a
+    # transparent hole (e.g. OLIE'RE Q on a pink spray). Restore enclosed
+    # interior regions only where the independent U2Net model agrees that
+    # the pixel belongs to the product. Never union U2Net at the OUTER edge
+    # where its original masks included contact shadows.
+    closed_holes=ndi.binary_fill_holes(accepted>0)&(accepted==0)
+    hole_count,hole_labels=ndi.label(closed_holes)
+    repaired=0
+    for hid in range(1,hole_count+1):
+        region=hole_labels==hid
+        area=int(region.sum())
+        if area==0 or area>max(13000,round(hard.size*.015)):
+            continue
+        supported=(backup_conf[region]>=.62)
+        if supported.mean()>=.68:
+            accepted[region]=1
+            repaired+=area
     # Shrink 1px to cut original background-colored contour, but preserve
     # narrow details by not eroding them as connected components.
     interior=cv2.erode(accepted,kernel,iterations=1)
@@ -119,7 +136,8 @@ def clean_mask(conf):
     return interior, (alpha*255).round().astype(np.uint8), {
         "mask_coverage":round(retained/accepted.size,4),
         "component_count":int(sum(components[i,cv2.CC_STAT_AREA]>=minimum for i in range(1,count))),
-        "discarded_area":int(hard.sum()-retained)
+        "discarded_area":int(hard.sum()-retained),
+        "restored_logo_pixels":repaired
     }
 
 def decontaminate_rgb(source, alpha, interior):
@@ -140,9 +158,10 @@ def decontaminate_rgb(source, alpha, interior):
     rgba[alpha==0,:3]=0
     return Image.fromarray(rgba,"RGBA")
 
-def build(src,model):
+def build(src,model,backup_model):
     image,conf=get_model_mask(src,model)
-    core,alpha,qa=clean_mask(conf)
+    _,backup_conf=get_model_mask(image,backup_model)
+    core,alpha,qa=clean_mask(conf,backup_conf)
     result=decontaminate_rgb(image,alpha,core)
     bbox=result.getchannel("A").point(lambda a:255 if a>=10 else 0).getbbox()
     if not bbox:raise ValueError("Missing product after matte refinement")
@@ -214,6 +233,7 @@ if args.check:
         except Exception as error: stats["errors"].append({"sku":item["sku"],"error":str(error)})
 else:
     model=new_session("isnet-general-use")
+    backup_model=new_session("u2net")
     files=[]
     previews=[]
     for item in items:
@@ -224,7 +244,7 @@ else:
         try:
             src=verified_source(entry)
             with Image.open(src) as im: photo=representative_frame(im).convert("RGB")
-            new,qa=build(photo,model)
+            new,qa=build(photo,model,backup_model)
             buffer=io.BytesIO()
             new.save(buffer,"WEBP",lossless=True,exact=True,method=5)
             data=buffer.getvalue()
