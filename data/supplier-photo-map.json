@@ -1068,7 +1068,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "bc2c2dacb4a89fdb20d5238467154e487600318f341ea8257384d08fa098efab",
     "isolation_foreground_share": 0.2138,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-proty-lupy-color-e-clat-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-proty-lupy-color-e-clat-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2121
   },
   "shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml": {
@@ -1091,7 +1091,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "bf157b3385a0b41f7faeaba2c2f3e6a067956cbc21eb5adad81e3607a3ef5677",
     "isolation_foreground_share": 0.2368,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.235
   },
   "shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-1000-ml": {
@@ -1114,7 +1114,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "49797f676ea85155e49d685abd64dcb549364e623de340683be67fb367ba9e6a",
     "isolation_foreground_share": 0.1831,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-1000-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-rekonstruktsii-volossia-valour-olie-re-paris-1000-ml.webp",
     "clean_matte_coverage": 0.1813
   },
   "shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml": {
@@ -1137,7 +1137,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "09ea39f951d99fa650ecb0f04f543620f6e675c4eddfe9a1602e402d12e0b884",
     "isolation_foreground_share": 0.215,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2125
   },
   "shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml": {
@@ -1160,7 +1160,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "a05992806d7900ae0e5ef48425b852889c8beae189a84de9316cc1c4e412da30",
     "isolation_foreground_share": 0.2783,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml.webp",
     "clean_matte_coverage": 0.2741
   },
   "maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml": {
@@ -1183,7 +1183,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "e864fefaa2cc629363b4bf819916f381cbb35c5032acb0218277f298b668248f",
     "isolation_foreground_share": 0.4049,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-nourishing-olie-re-paris-100-ml.webp",
     "clean_matte_coverage": 0.4036
   },
   "hel-iohurtovyi-dlia-ukladannia-volossia-studio-olie-re-paris-100-ml": {
@@ -1206,7 +1206,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "e46ed414f86e1bb03d8a3705dd23a37466ddfe0a0381b01d9faa2c2396ea6c23",
     "isolation_foreground_share": 0.2734,
-    "pre_refinement_image_url": "/supplier-photos/isolated/hel-iohurtovyi-dlia-ukladannia-volossia-studio-olie-re-paris-100-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/hel-iohurtovyi-dlia-ukladannia-volossia-studio-olie-re-paris-100-ml.webp",
     "clean_matte_coverage": 0.2722
   },
   "visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-50-ml": {
@@ -1229,7 +1229,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "9880d64c18b15f3deaaae3d515a46f91766ab7ece146b90ed52727101aa7f0f2",
     "isolation_foreground_share": 0.3391,
-    "pre_refinement_image_url": "/supplier-photos/isolated/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-50-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-50-ml.webp",
     "clean_matte_coverage": 0.3386
   },
   "shampun-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml": {
@@ -1252,7 +1252,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "f6c36f3d8367f7ab7b1a6d62f65689da05208b4645af3eb2de15918ba0358745",
     "isolation_foreground_share": 0.1731,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.171
   },
   "nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par": {
@@ -1275,7 +1275,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "8c7d25bee0f737a2dcd00dbbd4408f8d15157d73b9a74116f617f9f87b4c8197",
     "isolation_foreground_share": 0.2981,
-    "pre_refinement_image_url": "/supplier-photos/isolated/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/nabir-shampuniu-ta-masky-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-par.webp",
     "clean_matte_coverage": 0.2944
   },
   "maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml": {
@@ -1298,7 +1298,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "f4ec22b4821b680a0325689e8eed49a3a79656a62d07414700fe3bd526faebec",
     "isolation_foreground_share": 0.2819,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-dlia-neitralizatsii-zhovtykh-ta-pomaranchevykh-vidtinkiv-volossia-color-e-clat-acai-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2792
   },
   "shampun-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-500-ml": {
@@ -1321,7 +1321,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "bbd1676bc376659ae35f13e897fdb83648730d613efe1f3508625fdd3e46f7c5",
     "isolation_foreground_share": 0.2267,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2245
   },
   "shampun-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
@@ -1344,7 +1344,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "8a5a1af855c63b576301718aa02ff88bcf68c74e5667246b884ded2dcb1d1224",
     "isolation_foreground_share": 0.2179,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2151
   },
   "profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris": {
@@ -1365,9 +1365,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "2c7c25964a297bcfc6f969efbf5bc82f2017b5e40b65dd4e155b19b25bb57bba",
+    "isolation_sha256": "e5da0bfa82b82049d9e42b365dcc5af5764517c6af2a2106e7f70b9cd32e30e6",
     "isolation_foreground_share": 0.2612,
-    "pre_refinement_image_url": "/supplier-photos/isolated/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-kucheriavoho-ta-khvyliastoho-volossia-hydra-wave-olie-re-paris.webp",
     "clean_matte_coverage": 0.2531
   },
   "nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris": {
@@ -1388,9 +1388,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "77311fc37ecf1a70392642ee33265c5799f193c9c3a7ffe5b80e3a069837c64f",
+    "isolation_sha256": "4a8d9cf570aa8eac156c9eb1f248723e0d588c952843585566935c2b2af5e4e2",
     "isolation_foreground_share": 0.3456,
-    "pre_refinement_image_url": "/supplier-photos/isolated/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/nabir-dlia-stvorennia-dodatkovykh-lokoniv-hydra-wave-olie-re-paris.webp",
     "clean_matte_coverage": 0.3419
   },
   "nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris": {
@@ -1413,7 +1413,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "eca58dd351898256e119404c1d78b76ddaffb0be8c31b636b33567a60ea7afc7",
     "isolation_foreground_share": 0.2512,
-    "pre_refinement_image_url": "/supplier-photos/isolated/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/nabir-dlia-profesiinoho-formuvannia-lokoniv-olie-re-paris.webp",
     "clean_matte_coverage": 0.2478
   },
   "maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
@@ -1436,7 +1436,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "a75c290e612ae46bcf4fe3c326a8df3b29a3e2550c164ec5ede741e67f9fec46",
     "isolation_foreground_share": 0.2913,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-zvolozhuiucha-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2889
   },
   "krem-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
@@ -1459,7 +1459,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "5d4ef4111ccb99ce413785ce6b40d2d27c847ad0c9cdda0fc905f8d226f3d6ad",
     "isolation_foreground_share": 0.2084,
-    "pre_refinement_image_url": "/supplier-photos/isolated/krem-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/krem-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2053
   },
   "hel-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml": {
@@ -1482,7 +1482,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "3319390cb7103624c91efedeb5f68bc9cc563690128cfc8f9db16288109b6198",
     "isolation_foreground_share": 0.2142,
-    "pre_refinement_image_url": "/supplier-photos/isolated/hel-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/hel-hlazur-dlia-kucheriavoho-volossia-hydra-wave-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2108
   },
   "shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
@@ -1505,7 +1505,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "3432b36a13de03acf74ea7409c8554ae4c39b1ab9b75b5fc74228be3bdc9114c",
     "isolation_foreground_share": 0.1823,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.1814
   },
   "shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-1000-ml": {
@@ -1528,7 +1528,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "9b21a341684861b8df743195949c95b979f224c0dafe31680cdfc1f790fa8c0e",
     "isolation_foreground_share": 0.1803,
-    "pre_refinement_image_url": "/supplier-photos/isolated/shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-1000-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/shampun-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-1000-ml.webp",
     "clean_matte_coverage": 0.1791
   },
   "sprei-maska-nezmyvna-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-300-ml": {
@@ -1551,7 +1551,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "5b69bf6a24649c6ab22ef4417ccbdfbf81a42680afe217da705b36e5539dba46",
     "isolation_foreground_share": 0.2028,
-    "pre_refinement_image_url": "/supplier-photos/isolated/sprei-maska-nezmyvna-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-300-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/sprei-maska-nezmyvna-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-300-ml.webp",
     "clean_matte_coverage": 0.2013
   },
   "kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris": {
@@ -1572,9 +1572,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "9939035c442089ff844245ab2977ea8e33f6c0c0ac7b45100239669a05c316cd",
+    "isolation_sha256": "144abfd4a155d820926a378437bce51d8e48c52ef6cbdc0015e72e245e3de37b",
     "isolation_foreground_share": 0.2774,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kompleksnyi-nabir-dlia-dohliadu-za-khvyliastym-ta-kucheriavym-volossiam-hydra-wave-olie-re-paris.webp",
     "clean_matte_coverage": 0.2087
   },
   "sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml": {
@@ -1597,7 +1597,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "44405bcaa7c3fc5011b16c62978a2e63f38b449143220144e458e9278e2785f9",
     "isolation_foreground_share": 0.2078,
-    "pre_refinement_image_url": "/supplier-photos/isolated/sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/sprei-maska-nezmyvna-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-300-ml.webp",
     "clean_matte_coverage": 0.2065
   },
   "sprei-maska-nezmyvna-dlia-rekonstruktsii-volossia-valour-olie-re-paris-300-ml": {
@@ -1620,7 +1620,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "25f5b8866b87eb8c2b222793efc8869957e54fb351b8b72855adc1bc801631a3",
     "isolation_foreground_share": 0.2126,
-    "pre_refinement_image_url": "/supplier-photos/isolated/sprei-maska-nezmyvna-dlia-rekonstruktsii-volossia-valour-olie-re-paris-300-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/sprei-maska-nezmyvna-dlia-rekonstruktsii-volossia-valour-olie-re-paris-300-ml.webp",
     "clean_matte_coverage": 0.211
   },
   "sprei-maska-nezmyvna-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-300-ml": {
@@ -1643,7 +1643,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "04eb07289f40c723320195d09ced92a96ddfd1954e2a4cf761078fd0917d24e2",
     "isolation_foreground_share": 0.1987,
-    "pre_refinement_image_url": "/supplier-photos/isolated/sprei-maska-nezmyvna-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-300-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/sprei-maska-nezmyvna-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-300-ml.webp",
     "clean_matte_coverage": 0.1972
   },
   "sprei-termozakhyst-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-150-ml": {
@@ -1666,7 +1666,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "0694c7723d1b2999c6ff90d4259d242338f5dc10bc166da4cefed0aedbc45c46",
     "isolation_foreground_share": 0.2124,
-    "pre_refinement_image_url": "/supplier-photos/isolated/sprei-termozakhyst-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-150-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/sprei-termozakhyst-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-150-ml.webp",
     "clean_matte_coverage": 0.2105
   },
   "syrovatka-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-150-ml": {
@@ -1689,7 +1689,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "11194bc4c1730f1fe6a9911b837a2e2314e63c1514d5f02d4936018360423075",
     "isolation_foreground_share": 0.198,
-    "pre_refinement_image_url": "/supplier-photos/isolated/syrovatka-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-150-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/syrovatka-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris-150-ml.webp",
     "clean_matte_coverage": 0.1961
   },
   "syrovatka-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-150-ml": {
@@ -1712,7 +1712,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "055675e8bd6ba9be720a8cb293621282928c8a71422cc3f5f37de9ac48bbddd1",
     "isolation_foreground_share": 0.1989,
-    "pre_refinement_image_url": "/supplier-photos/isolated/syrovatka-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-150-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/syrovatka-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-150-ml.webp",
     "clean_matte_coverage": 0.197
   },
   "syrovatka-dlia-rekonstruktsii-volossia-valour-olie-re-paris-150-ml": {
@@ -1735,7 +1735,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "c9e899ca151260e5cb962db562f2a0bed46a9d85fcd05ac93dff5741f7146b6d",
     "isolation_foreground_share": 0.2098,
-    "pre_refinement_image_url": "/supplier-photos/isolated/syrovatka-dlia-rekonstruktsii-volossia-valour-olie-re-paris-150-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/syrovatka-dlia-rekonstruktsii-volossia-valour-olie-re-paris-150-ml.webp",
     "clean_matte_coverage": 0.208
   },
   "syrovatka-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-150-ml": {
@@ -1758,7 +1758,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "1045eb0078ad896d46f1bde34537e7e5d70a4d5e773fe4bee3129b5cca9e65f3",
     "isolation_foreground_share": 0.207,
-    "pre_refinement_image_url": "/supplier-photos/isolated/syrovatka-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-150-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/syrovatka-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-150-ml.webp",
     "clean_matte_coverage": 0.205
   },
   "syrovatka-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-100-ml": {
@@ -1781,7 +1781,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "cd5ceef66c1b64e8d12d9c73a1d33b9a4ef57e5a2f6969746738997fc8b33e07",
     "isolation_foreground_share": 0.2403,
-    "pre_refinement_image_url": "/supplier-photos/isolated/syrovatka-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-100-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/syrovatka-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-100-ml.webp",
     "clean_matte_coverage": 0.2382
   },
   "profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris": {
@@ -1818,7 +1818,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "3384f4e5640c7a116ea833a499ba1f78be0619d1ac0105e6b69ef360da914b01",
     "isolation_foreground_share": 0.1532,
-    "pre_refinement_image_url": "/supplier-photos/isolated/mus-profesiinyi-dlia-volossia-studio-olie-re-paris-400-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/mus-profesiinyi-dlia-volossia-studio-olie-re-paris-400-ml.webp",
     "clean_matte_coverage": 0.1523
   },
   "profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
@@ -1839,9 +1839,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "601ac017ebfafa32528dfa631269757f4d6ccb37e830c2b8c3f4957bd495b320",
+    "isolation_sha256": "84a62a4781dacda177083602bbaae03eb47d098251993c916fd4d05c8938e79f",
     "isolation_foreground_share": 0.2951,
-    "pre_refinement_image_url": "/supplier-photos/isolated/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/profesiinyi-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "clean_matte_coverage": 0.2589
   },
   "nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris": {
@@ -1864,7 +1864,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "f2f4f8c7ec829e07e7cf26fda03ec13240a3517bcf74d17dc718b4e4deb1d269",
     "isolation_foreground_share": 0.2153,
-    "pre_refinement_image_url": "/supplier-photos/isolated/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/nabir-sprei-ta-zvolozhuiuchyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "clean_matte_coverage": 0.2136
   },
   "nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris": {
@@ -1885,9 +1885,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "8352234bc463fc54ef8821494d171fc949ad3e11ff299876f713e4659889c9af",
+    "isolation_sha256": "d360c0f8dbfd8c3b785c913d19a52e313bb2f4ea68ec7d0048c09b00686d35a5",
     "isolation_foreground_share": 0.2042,
-    "pre_refinement_image_url": "/supplier-photos/isolated/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/nabir-sprei-ta-hlynianyi-visk-dlia-stailinhu-volossia-studio-oliere-paris.webp",
     "clean_matte_coverage": 0.2019
   },
   "visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml": {
@@ -1908,9 +1908,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "2f1cfd814e54ecfe8748e3cce74f0d27435bbc39a0c6647aad32383d7993b22f",
+    "isolation_sha256": "527f494fa35675661e206ac208bf503746e539ef5b18fe55e3e574856721fb3d",
     "isolation_foreground_share": 0.3623,
-    "pre_refinement_image_url": "/supplier-photos/isolated/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/visk-hlynianyi-dlia-ukladannia-volossia-studio-kreimer-olie-re-paris-250-ml.webp",
     "clean_matte_coverage": 0.3531
   },
   "nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris": {
@@ -1931,9 +1931,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "f9e9f5f8122104d466da1518d3b9a11b1e36fb7491ea4a8f876143a49626dfd3",
+    "isolation_sha256": "95cc3fe415e02449657b075d90521356ffc47d3b4e2c9db32c7da0adff0783a7",
     "isolation_foreground_share": 0.2863,
-    "pre_refinement_image_url": "/supplier-photos/isolated/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "clean_matte_coverage": 0.2547
   },
   "krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
@@ -1956,7 +1956,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "6f64178cd138fa12cf013922464045a1879cec21dec4c716e00bb52600fc3737",
     "isolation_foreground_share": 0.1867,
-    "pre_refinement_image_url": "/supplier-photos/isolated/krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/krem-zvolozhuiuchyi-dlia-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.1855
   },
   "maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml": {
@@ -1979,7 +1979,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "21a61a168f52a137d1419a2635258821ed51f8fc95a166cf941479f255e2b130",
     "isolation_foreground_share": 0.2833,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-dlia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.281
   },
   "maska-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-400-ml": {
@@ -2002,7 +2002,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "1df713f6771de8ee956962b579e1f0332ff0db6aef05b6712e725199bcd30b2c",
     "isolation_foreground_share": 0.2319,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-400-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-dlia-naroshchenoho-volossia-contraste-extensions-olie-re-paris-400-ml.webp",
     "clean_matte_coverage": 0.2304
   },
   "maska-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml": {
@@ -2025,7 +2025,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "68144f2e40e7c954bff2531fa01b7489677e8f7f78962725d084090be0e17ccd",
     "isolation_foreground_share": 0.2918,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2886
   },
   "maska-dlia-hlybokoi-rekonstruktsii-i-zmitsnennia-volossia-valour-olie-re-paris-500-ml": {
@@ -2048,7 +2048,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "01575faa2d1aefd33661f137f85000ff493e8873d09523e2f28ea3210848dfce",
     "isolation_foreground_share": 0.2975,
-    "pre_refinement_image_url": "/supplier-photos/isolated/maska-dlia-hlybokoi-rekonstruktsii-i-zmitsnennia-volossia-valour-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/maska-dlia-hlybokoi-rekonstruktsii-i-zmitsnennia-volossia-valour-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2947
   },
   "lak-dlia-volossia-sylnoi-fiksatsii-studio-olie-re-paris-400-ml": {
@@ -2071,7 +2071,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "7c594ca2a47607833ac5f3ead75f26bf3cf0c3e47688bb8ab7f4e670f32fdcb9",
     "isolation_foreground_share": 0.16,
-    "pre_refinement_image_url": "/supplier-photos/isolated/lak-dlia-volossia-sylnoi-fiksatsii-studio-olie-re-paris-400-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/lak-dlia-volossia-sylnoi-fiksatsii-studio-olie-re-paris-400-ml.webp",
     "clean_matte_coverage": 0.1595
   },
   "kondytsioner-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml": {
@@ -2094,7 +2094,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "012266fb019bff74853e0e72b69b4e7be908db6756898205e4be20c537cee4d1",
     "isolation_foreground_share": 0.2354,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kondytsioner-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kondytsioner-dlia-rekonstruktsii-volossia-valour-olie-re-paris-500-ml.webp",
     "clean_matte_coverage": 0.2329
   },
   "kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
@@ -2117,7 +2117,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "b5d295010829bdc159bf04676ceff0c0064739ec162c94ab5d9f97d29dcd651a",
     "isolation_foreground_share": 0.317,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kombinovanyi-nabir-shampuniu-ta-kondytsionera-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "clean_matte_coverage": 0.3136
   },
   "kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris": {
@@ -2138,9 +2138,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "5736c5c7b81d1d374950257b0d9dbdc5af61606fdf310e4084c1593f0c275138",
+    "isolation_sha256": "e5c8ef2fd1f603a5440a864775420dd6b04ef39b373276cd62472f5d79b7aed7",
     "isolation_foreground_share": 0.1837,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-khvyliastoho-ta-kucheriavoho-volossia-hydra-wave-olie-re-paris.webp",
     "clean_matte_coverage": 0.123
   },
   "kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris": {
@@ -2163,7 +2163,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "d504ea0822189db9726810065cb198733ea06e534de4216d5a7b973c5444fdf7",
     "isolation_foreground_share": 0.1761,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-rekonstruktsii-volossia-valour-olie-re-paris.webp",
     "clean_matte_coverage": 0.1421
   },
   "kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris": {
@@ -2184,9 +2184,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "9dfaf71136706c557153e79e4b447abf09724d83d3c32d4071fdb037d18899cb",
+    "isolation_sha256": "e4cf16798907ce8c2d30607241ed93de9e7d3944854f5868c50d6ff274fb0b93",
     "isolation_foreground_share": 0.2891,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-zvolozhennia-normalnoho-ta-sukhoho-volossia-ordinaire-olie-re-paris.webp",
     "clean_matte_coverage": 0.3087
   },
   "kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris": {
@@ -2207,9 +2207,9 @@
     "verified_by": "exact_official_shopify_product_title_and_size",
     "pre_isolation_image_url": "/supplier-photos/studio/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "isolation_revision": "isnet-clean-v2",
-    "isolation_sha256": "ad9fb47841e61d6abf1cd83861bcf0e6717848ee68f40dda7d89d3653fb70025",
+    "isolation_sha256": "842b3f3c636412f03ba0fa8d299116b5260091e58e5bec652d2c840a2d6c2df7",
     "isolation_foreground_share": 0.2085,
-    "pre_refinement_image_url": "/supplier-photos/isolated/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/kombo-nabir-dlia-zberezhennia-koloru-farbovanoho-volossia-color-e-clat-olie-re-paris.webp",
     "clean_matte_coverage": 0.1265
   },
   "visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml": {
@@ -2232,7 +2232,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "bb3f2f278649dad35b7e4e1194c4dc1423989c27951dce5a296f20cb98d38005",
     "isolation_foreground_share": 0.3574,
-    "pre_refinement_image_url": "/supplier-photos/isolated/visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/visk-mineralnyi-ekstrasylnoi-fiksatsii-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
     "clean_matte_coverage": 0.3522
   },
   "visk-zvolozhuiuchyi-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml": {
@@ -2255,7 +2255,7 @@
     "isolation_revision": "isnet-clean-v2",
     "isolation_sha256": "95f580b0f40e8a0a1663d2ac57a59e7f5993ea69ad2c92cfc0287ac2e9e1ab2d",
     "isolation_foreground_share": 0.3421,
-    "pre_refinement_image_url": "/supplier-photos/isolated/visk-zvolozhuiuchyi-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
+    "pre_refinement_image_url": "/supplier-photos/clean/visk-zvolozhuiuchyi-dlia-ukladannia-volossia-studio-olie-re-paris-250-ml.webp",
     "clean_matte_coverage": 0.3384
   }
 }
