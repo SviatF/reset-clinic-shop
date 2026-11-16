@@ -33,6 +33,7 @@ import "./catalog-content-fixes.css";
 import "./recommended-grid.css";
 import "./product-sales.css";
 import "./admin-products-v2.css";
+import "./admin-bulk-promotions.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
 import favicon from "@/assets/img/favicon.webp";
 import Header from "@/components/Header";
