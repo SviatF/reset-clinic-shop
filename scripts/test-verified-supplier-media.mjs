@@ -8,7 +8,7 @@ const manifest=JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.js
 const catalog=JSON.parse(fs.readFileSync("data/products.json","utf8"));
 const bySlug=new Map(catalog.map(p=>[p.slug,p]));
 const domains=new Set(["hydropeptide.ua","hydropeptide.com","sensilis.com.ua","decaar.com.ua"]);
-assert.equal(Object.keys(manifest).length,36);
+assert.equal(Object.keys(manifest).length,54);
 for(const [slug,source] of Object.entries(manifest)){
  const product=bySlug.get(slug);
  assert.ok(product,"No corresponding merchant item "+slug);
