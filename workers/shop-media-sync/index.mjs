@@ -16,7 +16,7 @@ function attributes(text){
  return {percent:[...t.matchAll(/(\d+(?:\.\d+)?)\s*%/g)].map(m=>Number(m[1])).sort().join(","),
    spf:t.match(/spf\s*(\d{1,3})/i)?.[1]||null,
    volume:[...t.matchAll(/(\d+(?:\.\d+)?)\s*(мл|ml|г|gr|g|oz)\b/giu)].map(m=>m[2]+":"+Number(m[1])).sort().join(","),
-   shade:t.match(/(?:shade|тон|відтінок|№)\s*(\d{1,3})/i)?.[1]||null,
+   shade:t.match(/(?:shade|тон|відтінок|№|make\s+up|cushion)\s*(\d{1,3})/i)?.[1]||null,
    type:["bb","cc","retinol","retinal","bakuchiol","tinted","non tinted","kids"].filter(w=>t.includes(w)).join(",")};
 }
 export function validIdentity(first,second){
