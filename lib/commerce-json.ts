@@ -13,7 +13,7 @@ export const bundledProductCount = productSeed.length;
  * For hair SKUs, the previous guessed Shopify URL and generated studio image are
  * explicitly recognized as legacy assets; no other merchant media is replaced.
  * Products absent from the official feed lose only their unverified photo. */
-function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
+export function withVerifiedSourcePhotos(rows: ProductRecord[]): ProductRecord[] {
   const bySlug = supplierPhotoMap as Record<string, {
     image_url: string | null;
     source_image_url?: string;
