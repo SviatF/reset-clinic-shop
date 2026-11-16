@@ -5,7 +5,7 @@ import { unzipSync, strFromU8 } from "fflate";
 
 type SourceProduct = {
   sku: string; slug: string; name: string; brand: string;
-  image_path: string; price: number; image_width: number; image_height: number;
+  image_path: string; price: number; size: string; image_width: number; image_height: number;
   [key: string]: unknown;
 };
 type CuskinPackage = {
@@ -21,6 +21,10 @@ type PlanRow = {
   candidates?: ExistingCandidate[];
 };
 type Resolution = { sku: string; kind: "link" | "create"; existingId?: string; confirmDistinct?: boolean };
+function strengths(name: string) {
+  return [...String(name || "").matchAll(/(\d+(?:[.,]\d+)?)\s*%/g)]
+    .map(match => match[1].replace(",", ".") + "%").join(", ");
+}
 type Preview = {
   revision: string; create: number; enrich: number; skip: number;
   conflict: number; plan: PlanRow[];
@@ -232,7 +236,8 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
             return <div className="admin-cuskin-review-item" key={row.sku}>
               <div className="admin-cuskin-review-source">
                 <div><b>{row.sku}</b><strong>{row.name}</strong></div>
-                <small>Джерело: {source?.price} грн{source?.image_width ? " · фото " + source.image_width + " × " + source.image_height + " px" : ""}</small>
+                <small>Джерело: {source?.price} грн · Об'єм: {source?.size || "не зазначено"}{source?.image_width ? " · фото " + source.image_width + " × " + source.image_height + " px" : ""}</small>
+                {strengths(row.name) && <small className="admin-cuskin-strength">Концентрація за назвою: {strengths(row.name)}</small>}
                 <em>{row.reason}</em>
               </div>
               <label className="admin-cuskin-review-choice"><span>Рішення для товару</span>
@@ -251,6 +256,7 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
                 <span>ОБРАНИЙ ТОВАР У МАГАЗИНІ</span>
                 <strong>{chosen.name}</strong>
                 <small>Артикул: {chosen.sku || "не встановлено"} · Об'єм: {chosen.size || "не встановлено"} · Ціна: {chosen.price} грн · Фото: {chosen.hasPhoto ? "є" : "немає"}</small>
+                {strengths(chosen.name) && <small className="admin-cuskin-strength">Концентрація за назвою: {strengths(chosen.name)}</small>}
                 <p>Порожні поля буде доповнено; існуючі ціни, акції, залишки та фото залишаться без змін.</p>
               </div>}
               {value === "create" && <label className="admin-cuskin-distinct-confirm">
