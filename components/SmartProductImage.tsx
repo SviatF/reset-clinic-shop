@@ -3,9 +3,20 @@
 import { useState, type ReactNode } from "react";
 
 /**
- * Show a stable fallback for missing URLs and HTTP/image decode errors.
- * Never silently display another product's image when a remote image is broken.
+ * R2 objects may be stored in D1 using the historical /shop-media URL.
+ * Route them through the Worker-first /api/media endpoint, then retry the
+ * historical URL before displaying the missing-photo placeholder.
+ * Do not substitute another product's photo on failure.
  */
+export function imageCandidates(source: string | null | undefined): string[] {
+  if (!source || !((source.startsWith("/") && !source.startsWith("//")) || source.startsWith("https://")))
+    return [];
+  if (source.startsWith("/shop-media/")) {
+    return ["/api/media/" + source.slice("/shop-media/".length), source];
+  }
+  return [source];
+}
+
 export default function SmartProductImage({
   src, alt, fallback, className, loading = "lazy",
 }: {
@@ -15,9 +26,17 @@ export default function SmartProductImage({
   className?: string;
   loading?: "lazy" | "eager";
 }) {
-  const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const valid = Boolean(src && ((src.startsWith("/") && !src.startsWith("//")) || src.startsWith("https://")));
-  if (!valid || failedSrc === src) return <>{fallback}</>;
-  return <img src={src!} alt={alt} className={className} loading={loading}
-    decoding="async" onError={() => setFailedSrc(src!)} />;
+  const [failed, setFailed] = useState<{ src: string | null | undefined; step: number }>({src: undefined, step: 0});
+  const candidates = imageCandidates(src);
+  const step = failed.src === src ? failed.step : 0;
+  if (step >= candidates.length) return <>{fallback}</>;
+  return <img
+    key={candidates[step]}
+    src={candidates[step]}
+    alt={alt}
+    className={className}
+    loading={loading}
+    decoding="async"
+    onError={() => setFailed({ src, step: step + 1 })}
+  />;
 }
