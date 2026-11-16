@@ -9,7 +9,8 @@ const HOSTS = {
 const IGNORE=new Set(["hydropeptide","sensilis","decaar","the","and","for","skin","cream","serum","spf","with","gel","body","day"]);
 const normalize=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
  .replace(/(\d+),(\d+)/g,"$1.$2").replace(/[^a-z0-9а-яіїєґ.%+]+/giu," ").replace(/\s+/g," ").trim();
-const distinctive=s=>normalize(s).split(" ").filter(t=>t.length>2&&!IGNORE.has(t));
+const distinctive=s=>normalize(String(s||"").split(/[—–]/)[0]).split(" ")
+ .filter(t=>t.length>2&&!IGNORE.has(t));
 function attributes(text){
  const t=normalize(text);
  return {percent:[...t.matchAll(/(\d+(?:\.\d+)?)\s*%/g)].map(m=>Number(m[1])).sort().join(","),
