@@ -9,7 +9,7 @@
     "sync:hair-products": "node ./scripts/sync-hair-products.mjs",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy && npm run cf:media:deploy",
     "shop:d1:test": "node scripts/test-shop-d1-migration.mjs",
     "shop:d1:verify": "node scripts/verify-shop-d1.mjs",
     "cf:media:deploy": "wrangler deploy --config workers/shop-media-sync/wrangler.jsonc",
