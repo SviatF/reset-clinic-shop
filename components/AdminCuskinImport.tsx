@@ -11,10 +11,16 @@ type SourceProduct = {
 type CuskinPackage = {
   format: string; products: SourceProduct[];
 };
+type ExistingCandidate = {
+  id: string; name: string; sku: string | null;
+  size: string | null; price: number; hasPhoto: boolean;
+};
 type PlanRow = {
   sku: string; name: string; kind: "create" | "enrich" | "skip" | "conflict";
   reason: string; needsPhoto: boolean; existingId: string | null;
+  candidates?: ExistingCandidate[];
 };
+type Resolution = { sku: string; kind: "link" | "create"; existingId?: string; confirmDistinct?: boolean };
 type Preview = {
   revision: string; create: number; enrich: number; skip: number;
   conflict: number; plan: PlanRow[];
@@ -57,11 +63,14 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
   const [error, setError] = useState("");
   const [result, setResult] = useState("");
   const [acknowledge, setAcknowledge] = useState(false);
+  const [conflictChoices, setConflictChoices] = useState<Record<string, string>>({});
+  const [distinctConfirmed, setDistinctConfirmed] = useState<Record<string, boolean>>({});
 
   async function choose(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
     setBusy(true);setLoaded(null);setPreview(null);setAcknowledge(false);
+    setConflictChoices({});setDistinctConfirmed({});
     setProgress("Читаємо товари й вбудовані фото…");setError("");setResult("");
     try {
       if (!file.name.endsWith(".zip") || file.size > 35 * 1024 * 1024)
@@ -90,17 +99,39 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
     finally { setBusy(false);event.target.value = ""; }
   }
 
+  function getResolutions() {
+    return (preview?.plan || []).filter(p => p.kind === "conflict").flatMap(row => {
+      const choice = conflictChoices[row.sku] || "skip";
+      if (choice === "create")
+        return [{ sku: row.sku, kind: "create" as const, confirmDistinct: distinctConfirmed[row.sku] === true }];
+      if (choice.startsWith("link:"))
+        return [{ sku: row.sku, kind: "link" as const, existingId: choice.slice(5) }];
+      return [];
+    });
+  }
+  const resolutions: Resolution[] = getResolutions();
+  const resolvedCreate = resolutions.filter(r => r.kind === "create").length;
+  const resolvedEnrich = resolutions.filter(r => r.kind === "link").length;
+  const unresolved = (preview?.conflict || 0) - resolutions.length;
+  const notConfirmed = resolutions.filter(r => r.kind === "create" && !r.confirmDistinct).length;
+  const previewNew = (preview?.create || 0) + resolvedCreate;
+  const previewEnrich = (preview?.enrich || 0) + resolvedEnrich;
+
   async function commit() {
     if (!loaded || !preview || disabled || busy) return;
-    if (preview.conflict > 0 && !acknowledge) {
-      setError("Підтвердьте пропуск сумнівних дублікатів перед імпортом");
+    if (unresolved > 0 && !acknowledge) {
+      setError("Підтвердьте пропуск " + unresolved + " невирішених товарів перед імпортом");
       return;
     }
-    const toImport = preview.create + preview.enrich;
+    if (notConfirmed > 0) {
+      setError("Для створення окремих товарів підтвердьте, що це дійсно не дублікати");
+      return;
+    }
+    const toImport = previewNew + previewEnrich;
     if (!toImport) {setError("Немає нових товарів або полів для оновлення");return;}
     if (!window.confirm(
-      "Імпортувати CU SKIN: " + preview.create + " нових чернеток, " +
-      preview.enrich + " доповнень існуючих позицій? " +
+      "Імпортувати CU SKIN: " + previewNew + " нових чернеток, " +
+      previewEnrich + " доповнень існуючих позицій? " +
       "Ціни існуючих товарів, залишки, знижки та замовлення не перезаписуються. Продовжити?"
     )) return;
     setBusy(true);setError("");setResult("");
@@ -111,8 +142,18 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
         throw new Error("Для імпорту потрібні підключені Cloudflare D1 і R2");
       const rows = loaded.manifest.products.map(row => ({ ...row }));
       const bySku = new Map(rows.map(row=>[row.sku,row]));
-      const required = preview.plan.filter(row =>
-        (row.kind === "create" || row.kind === "enrich") && row.needsPhoto);
+      const required = preview.plan.flatMap(row => {
+        if (row.kind !== "conflict")
+          return (row.kind === "create" || row.kind === "enrich") && row.needsPhoto ? [row] : [];
+        const choice = conflictChoices[row.sku] || "skip";
+        if (choice === "create") return [{ ...row, kind: "create" as const, needsPhoto: true }];
+        if (choice.startsWith("link:")) {
+          const candidate = row.candidates?.find(p => p.id === choice.slice(5));
+          if (!candidate) throw new Error("Не знайдено вибраний відповідник: " + row.sku);
+          return candidate.hasPhoto ? [] : [{ ...row, kind: "enrich" as const, needsPhoto: true }];
+        }
+        return [];
+      });
       let completed = 0;
       // Upload photos in small groups to avoid saturating the Worker.
       for (let i = 0; i < required.length; i += 4) {
@@ -129,11 +170,12 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
       const result = await requestImport({
         mode: "commit", packageFormat: loaded.manifest.format,
         products: rows, revision: preview.revision,
-        confirmConflicts: acknowledge,
+        confirmConflicts: unresolved === 0 || acknowledge,
+        resolutions,
       });
       setResult("Готово: " + result.created + " нових товарів-чернеток, " +
         result.enriched + " наявних товарів доповнено. " +
-        result.conflicts.length + " сумнівних збігів залишено без змін.");
+        result.conflicts.length + " невирішених збігів залишено без змін.");
       setPreview(null);setLoaded(null);
       setProgress("");
       try {await onFinished();} catch {
@@ -177,17 +219,62 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
           </div>)}</div>
       </details>
       {preview.conflict > 0 && <div className="admin-cuskin-conflicts">
-        <strong>Сумнівні збіги: {preview.conflict}</strong>
-        {preview.plan.filter(row=>row.kind==="conflict").map(row=>
-          <p key={row.sku}><b>{row.sku}</b> — {row.name}: {row.reason}</p>)}
-        <label><input type="checkbox" checked={acknowledge}
-          onChange={e => setAcknowledge(e.target.checked)} />
-          <span>Підтверджую: пропустити конфліктні товари без створення дублікатів</span>
-        </label>
+        <div className="admin-cuskin-conflict-heading">
+          <div><strong>Перевірка збігів: {preview.conflict}</strong><p>Система знайшла схожі товари, але не об'єднує їх автоматично. Порівняйте назву, артикул, об'єм і ціну. За замовчуванням усі сумнівні позиції пропускаються.</p></div>
+          <small>Перевірено вручну: {resolutions.length} / {preview.conflict}</small>
+        </div>
+        <div className="admin-cuskin-review-list">
+          {preview.plan.filter(row => row.kind === "conflict").map(row => {
+            const value = conflictChoices[row.sku] || "skip";
+            const chosen = value.startsWith("link:") ?
+              row.candidates?.find(p => p.id === value.slice(5)) : null;
+            const source = loaded.manifest.products.find(item => item.sku === row.sku);
+            return <div className="admin-cuskin-review-item" key={row.sku}>
+              <div className="admin-cuskin-review-source">
+                <div><b>{row.sku}</b><strong>{row.name}</strong></div>
+                <small>Джерело: {source?.price} грн{source?.image_width ? " · фото " + source.image_width + " × " + source.image_height + " px" : ""}</small>
+                <em>{row.reason}</em>
+              </div>
+              <label className="admin-cuskin-review-choice"><span>Рішення для товару</span>
+                <select value={value} disabled={busy} onChange={e => {
+                  setConflictChoices(current => ({...current, [row.sku]: e.target.value}));
+                  setError("");
+                }}>
+                  <option value="skip">Пропустити на цьому етапі</option>
+                  {(row.candidates || []).map(c => <option key={c.id} value={"link:" + c.id}>
+                    {"Доповнити: " + c.name + (c.size ? " · " + c.size : "") + (c.sku ? " · " + c.sku : "")}
+                  </option>)}
+                  <option value="create">Це інший товар — створити чернетку</option>
+                </select>
+              </label>
+              {chosen && <div className="admin-cuskin-candidate">
+                <span>ОБРАНИЙ ТОВАР У МАГАЗИНІ</span>
+                <strong>{chosen.name}</strong>
+                <small>Артикул: {chosen.sku || "не встановлено"} · Об'єм: {chosen.size || "не встановлено"} · Ціна: {chosen.price} грн · Фото: {chosen.hasPhoto ? "є" : "немає"}</small>
+                <p>Порожні поля буде доповнено; існуючі ціни, акції, залишки та фото залишаться без змін.</p>
+              </div>}
+              {value === "create" && <label className="admin-cuskin-distinct-confirm">
+                <input type="checkbox" checked={distinctConfirmed[row.sku] === true} disabled={busy}
+                  onChange={e => setDistinctConfirmed(current => ({ ...current, [row.sku]: e.target.checked }))} />
+                <span>Я перевірив(-ла) назву, артикул й об'єм: це окремий товар, а не дубль наявного.</span>
+              </label>}
+            </div>;
+          })}
+        </div>
+        <div className="admin-cuskin-import-summary">
+          <span>Буде створено: <b>{previewNew}</b></span>
+          <span>Буде доповнено: <b>{previewEnrich}</b></span>
+          <span>Поки пропущено: <b>{unresolved}</b></span>
+        </div>
+        {unresolved > 0 && <label className="admin-cuskin-unresolved">
+          <input type="checkbox" checked={acknowledge}
+            onChange={e => setAcknowledge(e.target.checked)} />
+          <span>Підтверджую: залишити {unresolved} невирішених товарів без змін. Їх можна повторно перевірити з цього ж ZIP.</span>
+        </label>}
       </div>}
       <button className="admin-primary" type="button"
         disabled={busy || disabled || !(preview.create + preview.enrich) ||
-          (preview.conflict > 0 && !acknowledge)}
+          (unresolved > 0 && !acknowledge) || notConfirmed > 0}
         onClick={() => {void commit();}}>Завантажити фото в R2 та імпортувати в D1 →</button>
     </div>}
   </section>;
