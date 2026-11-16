@@ -37,6 +37,8 @@ jobs:
         run: node --experimental-strip-types scripts/test-cuskin-variants.mjs
       - name: Test bulk publication and photo safeguards
         run: node --experimental-strip-types scripts/test-catalog-publishing.mjs
+      - name: Verify official Histolab photo recovery mapping
+        run: node --experimental-strip-types scripts/test-histolab-photo-repair.mjs
       - name: TypeScript check
         run: npx tsc --noEmit
       - name: Next.js production build
