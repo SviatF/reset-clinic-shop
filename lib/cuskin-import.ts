@@ -106,7 +106,8 @@ function conflictingVariants(existing: ProductRecord, row: CuskinImportRow): str
 function sameProductName(a: string, b: string) {
   // Cosmetic collection prefixes, spacing and marketing callouts are not
   // discriminating. Retain all concentrations, model codes and shade numbers.
-  return sameSet(relevantTokens(a), relevantTokens(b));
+  const x = relevantTokens(a), y = relevantTokens(b);
+  return x.size >= 2 && sameSet(x,y);
 }
 function similar(a: string, b: string) {
   const x = relevantTokens(a), y = relevantTokens(b);
