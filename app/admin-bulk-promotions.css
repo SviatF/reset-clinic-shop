@@ -1,0 +1,86 @@
+/* RESET Commerce bulk promotion studio — isolated admin layout. */
+.admin-bulk{background:#faf8f4;border:1px solid #e2dacd;min-width:0;color:#24211e}
+.admin-bulk *{box-sizing:border-box}
+.admin-bulk-heading{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:28px 32px 23px;border-bottom:1px solid #e3dbd0;background:linear-gradient(115deg,#fffefa,#faf6ec)}
+.admin-bulk-overline,.admin-bulk-section-head>span,.admin-bulk-results-head>div>span{display:block;font-size:9px;font-weight:800;letter-spacing:.15em;color:#8b8174}
+.admin-bulk-heading h2{font-size:clamp(26px,2.65vw,36px);line-height:1.12;font-weight:650;letter-spacing:-.035em;margin:11px 0 10px}
+.admin-bulk-heading h2 span{font-weight:450;color:#9a8b71}
+.admin-bulk-heading p{font-size:12px;line-height:1.6;color:#817769;max-width:600px;margin:0}
+.admin-bulk-back{border:1px solid #d7cebf;background:transparent;color:#3a342c;font-weight:750;font-size:11px;padding:12px 15px;white-space:nowrap;cursor:pointer}
+.admin-bulk-back:hover{background:#f0e8d8}
+.admin-bulk-steps{display:flex;align-items:center;justify-content:center;gap:clamp(20px,5vw,75px);padding:14px 20px;border-bottom:1px solid #e3dbd0;background:#fffdf8}
+.admin-bulk-steps span{font-size:10px;font-weight:690;color:#766c60;white-space:nowrap}
+.admin-bulk-steps b{margin-right:8px;color:#b18b3b}
+.admin-bulk-layout{display:grid;grid-template-columns:minmax(330px,0.77fr) minmax(0,1.23fr);gap:0;min-width:0}
+.admin-bulk-settings{padding:29px 28px;border-right:1px solid #e2dacd;background:#fffefa;min-width:0}
+.admin-bulk-section-head h3,.admin-bulk-results-head h3{font-size:18px;letter-spacing:-.025em;font-weight:680;margin:8px 0 17px;line-height:1.2}
+.admin-bulk-filter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.admin-bulk-filter-grid label>span,.admin-bulk-percent>span{display:block;font-size:10px;letter-spacing:.015em;color:#796f61;font-weight:740;margin-bottom:7px}
+.admin-bulk-filter-grid select,.admin-bulk-filter-grid input,.admin-bulk-percent input{display:block;width:100%;min-width:0;height:44px;border:1px solid #d8d0c3;border-radius:0;padding:0 12px;background:#fff;color:#2c2722;outline:none;font:inherit;font-size:12px}
+.admin-bulk-filter-grid select:focus,.admin-bulk-filter-grid input:focus,.admin-bulk-percent input:focus{border-color:#575044;box-shadow:0 0 0 1px #575044}
+.admin-bulk-filter-grid select:disabled{background:#f4f1eb;color:#a39b90;cursor:not-allowed}
+.admin-bulk-all-catalog{margin:15px 0 0;display:flex;gap:10px;align-items:start;background:#fff6df;border:1px solid #eedca8;padding:12px;font-size:11px;line-height:1.5;color:#66532d;cursor:pointer}
+.admin-bulk input[type=checkbox]{accent-color:#312c22;flex-shrink:0;width:16px;height:16px;cursor:pointer}
+.admin-bulk-action-head{margin-top:26px;padding-top:25px;border-top:1px solid #e6dfd5}
+.admin-bulk-action-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.admin-bulk-action-choices button{border:1px solid #dcd4c8;padding:12px 9px;background:#fbf9f4;color:#64594b;font-size:11px;min-height:44px;font-weight:750;cursor:pointer}
+.admin-bulk-action-choices button.is-active{border:1px solid #24201c;background:#24201c;color:#fff}
+.admin-bulk-action-choices button:disabled{opacity:.65}
+.admin-bulk-percent{display:block;margin-top:20px}
+.admin-bulk-percent>div{position:relative;max-width:165px}
+.admin-bulk-percent input{font-size:25px;font-weight:750;height:60px;padding:6px 35px 6px 12px;font-variant-numeric:tabular-nums}
+.admin-bulk-percent b{position:absolute;top:50%;right:14px;transform:translateY(-50%);font-size:22px;color:#7b725e}
+.admin-bulk-policy{display:flex;gap:10px;align-items:start;margin-top:18px;padding:15px;background:#f7f3ec;border:1px solid #e6ded3;cursor:pointer}
+.admin-bulk-policy strong{display:block;font-size:11px;color:#383027;font-weight:750;margin-bottom:4px}
+.admin-bulk-policy small{display:block;font-size:10px;line-height:1.5;color:#827669}
+.admin-bulk-removal-note{font-size:11px;line-height:1.6;color:#7d6747;background:#fff4dc;border:1px solid #eedcb8;padding:14px;margin-top:16px}
+.admin-bulk-preview-button{margin-top:24px;width:100%;min-height:50px;display:flex;align-items:center;justify-content:center;padding:13px 15px;background:#24201b;color:white;border:1px solid #24201b;font-weight:760;font-size:12px;cursor:pointer}
+.admin-bulk-preview-button:hover{background:#484034}
+.admin-bulk-preview-button:disabled{opacity:.6;cursor:wait}
+.admin-bulk-footnote{text-align:center;color:#93897a;font-size:10px;margin:9px 0 0}
+.admin-bulk-results{background:#fcfaf6;min-width:0;display:flex;flex-direction:column;align-self:stretch}
+.admin-bulk-results-head{padding:29px 26px 7px;display:flex;align-items:start;justify-content:space-between;gap:15px}
+.admin-bulk-live-pill{border:1px solid #e1d1a8;background:#fff9e9;color:#86703c;font-size:9px;font-weight:800;letter-spacing:.04em;white-space:nowrap;padding:6px 9px}
+.admin-bulk-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;flex:1;min-height:330px;padding:35px}
+.admin-bulk-empty-symbol{width:70px;height:70px;display:grid;place-items:center;background:#fff1b5;color:#6f5822;border:1px solid #ecd27e;font-size:30px;font-weight:750;margin-bottom:20px}
+.admin-bulk-empty strong{font-size:19px;letter-spacing:-.02em}
+.admin-bulk-empty p{font-size:12px;color:#8f8273;line-height:1.7;max-width:350px}
+.admin-bulk-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 26px 15px}
+.admin-bulk-kpis>div{background:#fff;border:1px solid #e7dfd3;padding:11px 15px}
+.admin-bulk-kpis span{display:block;font-size:9px;color:#8c8071;font-weight:780;letter-spacing:.04em}
+.admin-bulk-kpis strong{display:block;margin-top:7px;font-size:24px;color:#26211d;line-height:1;font-weight:700}
+.admin-bulk-selection{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 26px 12px}
+.admin-bulk-selection>div:first-child{display:flex;flex-direction:column;gap:4px}
+.admin-bulk-selection strong{font-size:11px;color:#3f362e}
+.admin-bulk-selection small{color:#9a8f82;font-size:9px;line-height:1.4}
+.admin-bulk-selection>div:last-child{display:flex;gap:6px}
+.admin-bulk-selection button{padding:6px 9px;background:#fff;border:1px solid #ded5c9;color:#5f5348;font-size:10px;font-weight:750;cursor:pointer}
+.admin-bulk-rows{overflow:auto;max-height:520px;margin:0 26px 18px;border:1px solid #e1d8cc;background:#fff}
+.admin-bulk-row-heading{display:grid;grid-template-columns:minmax(0,1fr) 115px 115px;gap:8px;padding:11px 13px;background:#f2ede4;border-bottom:1px solid #e1d8cc;color:#807365;font-size:9px;font-weight:790;letter-spacing:.09em}
+.admin-bulk-row-heading span:not(:first-child){text-align:right}
+.admin-bulk-row{display:grid;grid-template-columns:minmax(0,1fr) 115px 115px;align-items:center;gap:8px;padding:13px;border-bottom:1px solid #eee8df;cursor:pointer}
+.admin-bulk-row:last-child{border-bottom:none}
+.admin-bulk-row:hover{background:#fffdf6}
+.admin-bulk-row.is-skipped,.admin-bulk-row.is-excluded{background:#faf9f6;opacity:.71}
+.admin-bulk-product-name{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.admin-bulk-product-name>span{min-width:0;display:flex;flex-direction:column;gap:4px}
+.admin-bulk-product-name strong{font-size:11px;font-weight:720;color:#292521;line-height:1.38;overflow-wrap:anywhere}
+.admin-bulk-product-name small{font-size:10px;color:#8b8071;line-height:1.3}
+.admin-bulk-product-name em{font-style:normal;font-size:9px;color:#997448;font-weight:750}
+.admin-bulk-oldprice,.admin-bulk-newprice{font-size:11px;font-weight:590;color:#887e70;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.admin-bulk-newprice strong{font-size:12px;color:#1e1b18;font-weight:800}
+.admin-bulk-zero{padding:30px;text-align:center;font-size:11px;color:#928676}
+.admin-bulk-commitbar{margin-top:auto;background:#f6f0e4;border-top:1px solid #ddcfb6;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.admin-bulk-commitbar>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.admin-bulk-commitbar>div>span{font-size:10px;color:#8c7a60}
+.admin-bulk-commitbar>div>strong{font-size:14px;color:#2a251d}
+.admin-bulk-commitbar>div>small{color:#8f8068;font-size:9px}
+.admin-bulk-apply{padding:13px 16px;border:1px solid #28241d;background:#28241d;color:#fff;font-size:11px;font-weight:800;min-height:46px;cursor:pointer;max-width:100%}
+.admin-bulk-apply:disabled{opacity:.45;cursor:not-allowed}
+.admin-bulk-message,.admin-bulk-error{padding:14px 20px;margin:15px 20px 20px;font-size:12px;line-height:1.55}
+.admin-bulk-message{background:#eff6e8;color:#446138;border:1px solid #d2e2c9}
+.admin-bulk-error{background:#fff0e9;color:#844735;border:1px solid #ecd2c5}
+.admin-catalog-promo-link{border-color:#e2ca7a!important;background:#fff8e0!important;color:#4e3c15!important}
+.admin-catalog-promo-link:hover,.admin-catalog-promo-link.is-active{background:#ffe8a2!important;border-color:#d9b955!important}
+@media(max-width:1190px){.admin-bulk-layout{grid-template-columns:1fr}.admin-bulk-settings{border-right:0;border-bottom:1px solid #e2dacd}.admin-bulk-empty{min-height:230px}}
+@media(max-width:680px){.admin-bulk-heading{padding:22px 16px;align-items:stretch;flex-direction:column}.admin-bulk-back{align-self:flex-start}.admin-bulk-steps{gap:12px;padding:12px 8px;justify-content:space-between;overflow-x:auto}.admin-bulk-steps span{font-size:8px}.admin-bulk-steps b{margin-right:2px}.admin-bulk-settings{padding:22px 15px}.admin-bulk-filter-grid{grid-template-columns:1fr}.admin-bulk-results-head{padding:22px 15px 8px}.admin-bulk-kpis{margin:4px 15px 13px}.admin-bulk-selection{margin:0 15px 12px;align-items:start;flex-direction:column}.admin-bulk-rows{margin:0 15px 14px;max-height:520px}.admin-bulk-row-heading,.admin-bulk-row{grid-template-columns:minmax(105px,1fr) 76px 80px;gap:5px;padding:11px 7px}.admin-bulk-oldprice,.admin-bulk-newprice{font-size:9px}.admin-bulk-newprice strong{font-size:10px}.admin-bulk-product-name{gap:5px}.admin-bulk-product-name strong{font-size:10px}.admin-bulk-product-name small{font-size:8px}.admin-bulk-commitbar{padding:14px;align-items:stretch;flex-direction:column}.admin-bulk-apply{width:100%}.admin-bulk-action-choices{grid-template-columns:1fr}}
