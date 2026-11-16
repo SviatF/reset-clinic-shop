@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import AdminExcelImport from "@/components/AdminExcelImport";
+import AdminCuskinImport from "@/components/AdminCuskinImport";
 import AdminBulkPromotionsClient from "@/components/AdminBulkPromotionsClient";
 import SmartProductImage from "@/components/SmartProductImage";
 import { getProductPricing, validateSalePrice } from "@/lib/product-pricing";
@@ -316,6 +317,7 @@ export default function AdminProductsClient() {
         initialBrand={brandFilter} onClose={() => setView("catalog")} onFinished={load}
       /> : view === "import" ? <div className="admin-catalog-import-workspace">
         <div className="admin-catalog-import-heading"><div><span>DATA OPERATIONS</span><h2>Імпорт та синхронізація</h2><p>Додавайте нові товари й фотографії без перезапису створених позицій.</p></div><button type="button" className="admin-catalog-secondary" onClick={() => setView("catalog")}>← Назад до каталогу</button></div>
+        <div className="admin-catalog-import-card"><AdminCuskinImport onFinished={load} disabled={!writable} /></div>
         <div className="admin-catalog-import-card"><AdminExcelImport onFinished={load} disabled={!writable} /></div>
         {supplierImport?.available && supplierImport.missing !== null && supplierImport.missing > 0 && <details className="admin-catalog-utility">
           <summary><span>Додатковий імпорт</span><strong>Додати {supplierImport.missing} чернеток постачальників</strong><small>Без заміни існуючих товарів</small></summary>
