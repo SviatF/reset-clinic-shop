@@ -29,6 +29,8 @@ jobs:
         run: npm run shop:d1:test
       - name: Test per-product discounts and payable prices
         run: node --experimental-strip-types scripts/test-product-pricing.mjs
+      - name: Test scoped bulk promotions and safe writes
+        run: node --experimental-strip-types scripts/test-bulk-promotions.mjs
       - name: TypeScript check
         run: npx tsc --noEmit
       - name: Next.js production build
