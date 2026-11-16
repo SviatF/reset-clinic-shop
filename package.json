@@ -11,7 +11,9 @@
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "shop:d1:test": "node scripts/test-shop-d1-migration.mjs",
-    "shop:d1:verify": "node scripts/verify-shop-d1.mjs"
+    "shop:d1:verify": "node scripts/verify-shop-d1.mjs",
+    "cf:media:deploy": "wrangler deploy --config workers/shop-media-sync/wrangler.jsonc",
+    "cf:media:test": "node --test scripts/test-shop-media-sync.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

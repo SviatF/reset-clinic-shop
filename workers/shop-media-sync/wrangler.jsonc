@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "reset-clinic-shop-media-sync",
+  "main": "./index.mjs",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": false,
+  "observability": { "enabled": true },
+  "triggers": { "crons": ["*/10 * * * *"] },
+  "d1_databases": [{
+    "binding": "SHOP_DB",
+    "database_name": "reset-clinic-shop-db",
+    "database_id": "38a072d9-bb85-4417-bf92-4f0652cc4056"
+  }],
+  "r2_buckets": [{
+    "binding": "SHOP_MEDIA",
+    "bucket_name": "reset-clinic-shop-media"
+  }]
+}
