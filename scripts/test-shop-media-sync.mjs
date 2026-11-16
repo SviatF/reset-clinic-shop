@@ -17,6 +17,10 @@ function fakeDb(products){
     prepare(sql){
       const query=sql.toLowerCase();
       return {
+        async first(){
+          if(query.startsWith("select content"))return {content:JSON.stringify(data),version};
+          throw Error("Unrecognized direct first "+sql);
+        },
         bind(...values){
           return {
             async first(){
