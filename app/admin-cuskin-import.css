@@ -1,0 +1,36 @@
+/* CU SKIN verified two-sheet supplier import workspace */
+.admin-cuskin-import{padding:26px 28px 28px;background:linear-gradient(135deg,#fffefb,#f8f3e9);color:#28231c;min-width:0}
+.admin-cuskin-import-heading>span{font-size:9px;letter-spacing:.15em;font-weight:800;color:#978365}
+.admin-cuskin-import-heading h3{font-size:21px;font-weight:680;margin:9px 0;letter-spacing:-.02em}
+.admin-cuskin-import-heading p{font-size:12px;line-height:1.65;color:#786e61;max-width:790px}
+.admin-cuskin-upload{margin:20px 0 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:26px;min-height:140px;border:1px dashed #bda879;background:#fffdfa;text-align:center;cursor:pointer}
+.admin-cuskin-upload input{max-width:100%;font-size:11px;color:#6d6050}
+.admin-cuskin-upload span{font-size:13px;font-weight:740;color:#29241f}
+.admin-cuskin-upload small{font-size:10px;color:#988a77}
+.admin-cuskin-progress{font-size:12px;font-weight:660;color:#615135}
+.admin-cuskin-error,.admin-cuskin-success{font-size:12px;padding:13px 15px;line-height:1.55}
+.admin-cuskin-error{color:#8c433a;background:#fff0e9;border:1px solid #e2beb6}
+.admin-cuskin-success{color:#3d5c37;background:#eef7e9;border:1px solid #cae1c2}
+.admin-cuskin-preview{border-top:1px solid #e6dac6;padding-top:18px}
+.admin-cuskin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.admin-cuskin-stats>div{padding:14px 15px;background:#fff;border:1px solid #e5ded1;display:flex;flex-direction:column;gap:7px}
+.admin-cuskin-stats span{font-size:9px;font-weight:790;letter-spacing:.05em;color:#8d7e6a}
+.admin-cuskin-stats strong{font-size:25px;letter-spacing:-.03em;font-weight:720}
+.admin-cuskin-note{font-size:11px;line-height:1.65;color:#847565;margin:15px 0 14px}
+.admin-cuskin-preview details{border:1px solid #e3dbcd;background:#fff;margin-bottom:15px}
+.admin-cuskin-preview summary{padding:13px 15px;cursor:pointer;font-size:12px;font-weight:700}
+.admin-cuskin-rows{max-height:350px;overflow:auto;border-top:1px solid #e3dbcd}
+.admin-cuskin-rows>div{display:grid;grid-template-columns:70px minmax(0,1fr) 100px;gap:12px;padding:9px 13px;border-bottom:1px solid #eee8df;align-items:center}
+.admin-cuskin-rows b{font-size:10px;color:#7a6850;font-variant-numeric:tabular-nums}
+.admin-cuskin-rows span{font-size:11px;line-height:1.45}
+.admin-cuskin-rows em{font-style:normal;font-size:10px;font-weight:740;color:#71705f}
+.admin-cuskin-rows .kind-create{color:#517049}
+.admin-cuskin-rows .kind-conflict{color:#a46a36}
+.admin-cuskin-conflicts{padding:16px;background:#fff8e8;border:1px solid #e9c987;margin-bottom:14px}
+.admin-cuskin-conflicts>strong{font-size:12px}
+.admin-cuskin-conflicts p{font-size:10px;color:#876d43;line-height:1.4}
+.admin-cuskin-conflicts label{display:flex;gap:10px;align-items:start;font-size:11px;font-weight:700;line-height:1.5;cursor:pointer}
+.admin-cuskin-conflicts input{accent-color:#30271c;margin:3px 0 0;flex-shrink:0}
+.admin-cuskin-import .admin-primary{min-height:46px;padding:12px 20px;font-size:11px}
+.admin-cuskin-import .admin-primary:disabled{opacity:.48}
+@media(max-width:680px){.admin-cuskin-import{padding:17px 13px}.admin-cuskin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-cuskin-rows>div{grid-template-columns:52px minmax(0,1fr);gap:5px}.admin-cuskin-rows em{grid-column:2}}
