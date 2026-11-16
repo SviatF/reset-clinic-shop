@@ -100,7 +100,7 @@ export default function AdminCuskinImport({ onFinished, disabled = false }: {
   }
 
   function getResolutions() {
-    return (preview?.plan || []).filter(p => p.kind === "conflict").flatMap(row => {
+    return (preview?.plan || []).filter(p => p.kind === "conflict").flatMap<Resolution>(row => {
       const choice = conflictChoices[row.sku] || "skip";
       if (choice === "create")
         return [{ sku: row.sku, kind: "create" as const, confirmDistinct: distinctConfirmed[row.sku] === true }];
