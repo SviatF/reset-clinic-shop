@@ -85,7 +85,7 @@ export function cuskinImportPlan(products: ProductRecord[], input: CuskinImportR
       const p = exact[0];
       if (p.brand !== "CU SKIN" || !sameSize(p, row) || !similar(p.name, row.name))
         return { sku: row.sku, name: row.name, existingId: p.id, kind: "conflict", reason: "Артикул зайнятий іншим товаром", needsPhoto: false };
-      return { sku: row.sku, name: row.name, existingId: p.id, kind: Object.keys(patch(p,row)).length ? "enrich" : "skip", reason: "Знайдено за артикулом", needsPhoto: !p.image_url };
+      return { sku: row.sku, name: row.name, existingId: p.id, kind: (!p.image_url || Object.keys(patch(p,row)).length) ? "enrich" : "skip", reason: "Знайдено за артикулом", needsPhoto: !p.image_url };
     }
     const sameName = products.filter(p => p.brand === "CU SKIN" && sameSize(p,row) && normalize(p.name) === normalize(row.name));
     if (sameName.length > 1) return { sku: row.sku, name: row.name, existingId: null, kind: "conflict", reason: "Кілька товарів з однаковою назвою", needsPhoto: false };
@@ -93,7 +93,7 @@ export function cuskinImportPlan(products: ProductRecord[], input: CuskinImportR
       const p = sameName[0];
       if (p.sku && !/^CU-SKIN-\d{3}$/i.test(p.sku) && p.sku !== row.sku)
         return { sku: row.sku, name: row.name, existingId: p.id, kind: "conflict", reason: "Назва збігається, але інший справжній артикул", needsPhoto: false };
-      return { sku: row.sku, name: row.name, existingId: p.id, kind: Object.keys(patch(p,row)).length ? "enrich" : "skip", reason: "Знайдено за назвою", needsPhoto: !p.image_url };
+      return { sku: row.sku, name: row.name, existingId: p.id, kind: (!p.image_url || Object.keys(patch(p,row)).length) ? "enrich" : "skip", reason: "Знайдено за назвою", needsPhoto: !p.image_url };
     }
     const possible = products.filter(p => p.brand === "CU SKIN" && sameSize(p,row) && similar(p.name,row.name));
     if (possible.length > 0)
