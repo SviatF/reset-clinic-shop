@@ -53,22 +53,55 @@ async function getOfficialImage(source:Source) {
   if(!extension) throw new Error("Некоректний тип або пошкоджене фото");
   return { bytes, extension, sourceUrl:image };
 }
+function officialHistolabKey(product:ProductRecord):string|null {
+  const url=String(product.image_url||"");
+  const prefix=url.startsWith("/shop-media/")?"/shop-media/":
+    url.startsWith("/api/media/")?"/api/media/":null;
+  if(!prefix)return null;
+  const key=url.slice(prefix.length);
+  return new RegExp("^products/histolab-official/"+
+    product.slug.replace(/[.*+?^${}()|[\]\\]/g,"\\function isMissing(product:ProductRecord) {
+  return product.brand==="Histolab" &&
+    !String(product.image_url||"").trim() &&
+    Object.hasOwn(catalog,product.slug);
+}")+
+    "(?:-[0-9]+)?\\.(?:webp|jpe?g|png)$","i").test(key)?key:null;
+}
 function isMissing(product:ProductRecord) {
   return product.brand==="Histolab" &&
     !String(product.image_url||"").trim() &&
     Object.hasOwn(catalog,product.slug);
 }
+async function hasMissingManagedPhoto(product:ProductRecord) {
+  if(isMissing(product))return true;
+  if(product.brand!=="Histolab"||!Object.hasOwn(catalog,product.slug))return false;
+  const key=officialHistolabKey(product);
+  if(!key)return false; // Respect images uploaded directly by the administrator.
+  const bucket=shopMediaBucket();
+  if(!bucket)throw new Error("Cloudflare R2 недоступне для перевірки");
+  return !(await bucket.get(key));
+}
 export async function GET() {
   if(!(await isAdminAuthenticated())) return reply({error:"Unauthorized"},401);
   try {
     const products=(await readJsonStore<ProductRecord[]>(PRODUCTS_PATH,[])).data;
-    const rows=products.filter(p=>p.brand==="Histolab" && Object.hasOwn(catalog,p.slug))
-      .map(p=>({
-        id:p.id,slug:p.slug,name:p.name,status:p.status,
-        missing:!p.image_url, sourcePage:catalog[p.slug].sourcePage,
-        hasVerifiedImageUrl:Boolean(catalog[p.slug].verifiedImageUrl),
+    const rows=await Promise.all(products.filter(p=>p.brand==="Histolab" && Object.hasOwn(catalog,p.slug))
+      .map(async p=>{
+        const missing=await hasMissingManagedPhoto(p);
+        return {
+          id:p.id,slug:p.slug,name:p.name,status:p.status,
+          imageUrl:p.image_url||null,
+          urlAttached:Boolean(p.image_url),
+          r2Verified:Boolean(officialHistolabKey(p))&&!missing,
+          missing,
+          sourcePage:catalog[p.slug].sourcePage,
+          hasVerifiedImageUrl:Boolean(catalog[p.slug].verifiedImageUrl),
+        };
       }));
-    return reply({ok:true,total:rows.length,missing:rows.filter(p=>p.missing).length,rows,
+    return reply({ok:true,total:rows.length,
+      urlAttached:rows.filter(p=>p.urlAttached).length,
+      r2Verified:rows.filter(p=>p.r2Verified).length,
+      missing:rows.filter(p=>p.missing).length,rows,
       r2:Boolean(shopMediaBucket())});
   } catch(error) {
     return reply({error:error instanceof Error?error.message:"Не вдалося отримати каталог"},500);
@@ -94,18 +127,22 @@ export async function POST(request:Request) {
           .find(p=>p.slug===slug);
         if(!original||original.brand!=="Histolab")
           {saved.push({slug,status:"skipped",reason:"Не знайдено товар у D1"});continue;}
-        if(!isMissing(original))
-          {saved.push({slug,status:"skipped",reason:"Фотографія вже встановлена"});continue;}
+        if(!(await hasMissingManagedPhoto(original)))
+          {saved.push({slug,status:"skipped",reason:"Фотографія вже існує в R2 або встановлена вручну"});continue;}
         const source=catalog[slug];
         const photo=await getOfficialImage(source);
-        const path="products/histolab-official/"+slug+"."+photo.extension;
+        // Version the key to bypass previous failed/stale browser caches.
+        const path="products/histolab-official/"+slug+"-"+Date.now()+"."+photo.extension;
         const url=await writeBinaryAsset(path,photo.bytes.buffer as ArrayBuffer,
           "Verified official Histolab product photo "+slug);
         let attached=false;
         await mutateJsonStore<ProductRecord[]>(PRODUCTS_PATH,[],
           "Admin: attach official Histolab photo "+slug,rows=>{
             return rows.map(row=>{
-              if(row.slug!==slug || !isMissing(row)) return row;
+              if(row.slug!==slug || row.brand!=="Histolab" ||
+                 row.image_url!==original.image_url) return row;
+              // A concurrent manual image edit is never overwritten. The
+              // original missing or broken managed image was verified above.
               attached=true;
               return { ...row, image_url:url, updated_at:new Date().toISOString() };
             });
