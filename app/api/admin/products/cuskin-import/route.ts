@@ -4,7 +4,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { appendActivity } from "@/lib/commerce-json";
 import type { ProductRecord } from "@/lib/commerce-types";
 import { PRODUCTS_PATH, readJsonStore, mutateJsonStore, jsonStoreWriteConfigured } from "@/lib/json-store";
-import { applyCuskinImport, cuskinImportPlan, validateCuskinRows } from "@/lib/cuskin-import";
+import { applyCuskinImport, cuskinImportPlan, resolveCuskinConflicts, validateCuskinRows } from "@/lib/cuskin-import";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -43,11 +43,12 @@ export async function POST(request: Request) {
     if (typeof revision !== "string" || !/^[a-f0-9]{64}$/.test(revision))
       throw new Error("Спочатку перевірте імпорт");
     const baselinePlan = cuskinImportPlan(current, rows);
+    const reviewedPlan = resolveCuskinConflicts(current, rows, baselinePlan, body.resolutions ?? []);
     if (fingerprint(current) !== revision)
       return response({ error: "Каталог змінився. Оновіть попередній перегляд." }, 409);
-    if (baselinePlan.filter(p => p.kind === "conflict").length > 0 && body.confirmConflicts !== true)
-      throw new Error("Є сумнівні збіги товарів: підтвердьте їх пропуск перед імпортом");
-    const missingPhotos = baselinePlan.filter(p =>
+    if (reviewedPlan.filter(p => p.kind === "conflict").length > 0 && body.confirmConflicts !== true)
+      throw new Error("Є невирішені збіги: підтвердьте пропуск цих товарів перед імпортом");
+    const missingPhotos = reviewedPlan.filter(p =>
       (p.kind === "create" || p.kind === "enrich") && p.needsPhoto &&
       !rows.find(row => row.sku === p.sku)?.image_url?.startsWith("/shop-media/products/"));
     if (missingPhotos.length) throw new Error("Не всі фотографії завантажено у R2: " + missingPhotos.map(p => p.sku).join(", "));
@@ -58,9 +59,10 @@ export async function POST(request: Request) {
         if (fingerprint(items) !== revision)
           throw new Error("PREVIEW_EXPIRED: Каталог змінено під час імпорту. Оновіть перевірку.");
         const freshPlan = cuskinImportPlan(items, rows);
-        if (freshPlan.filter(p=>p.kind === "conflict").length !== baselinePlan.filter(p=>p.kind === "conflict").length)
-          throw new Error("PREVIEW_EXPIRED: Змінився список конфліктів");
-        const result = applyCuskinImport(items, rows, freshPlan, new Date().toISOString());
+        const resolvedPlan = resolveCuskinConflicts(items, rows, freshPlan, body.resolutions ?? []);
+        if (resolvedPlan.filter(p=>p.kind === "conflict").length !== reviewedPlan.filter(p=>p.kind === "conflict").length)
+          throw new Error("PREVIEW_EXPIRED: Змінився список невирішених збігів");
+        const result = applyCuskinImport(items, rows, resolvedPlan, new Date().toISOString());
         counts = { created: result.created, enriched: result.enriched };
         if (!counts.created && !counts.enriched) throw new Error("Немає нових товарів або порожніх полів для доповнення");
         return result.products;
@@ -71,12 +73,14 @@ export async function POST(request: Request) {
         title: "Імпортовано асортимент CU SKIN",
         metadata: { created: counts.created, enriched: counts.enriched, sourceRows: rows.length,
           skipped: baselinePlan.filter(p=>p.kind === "skip").length,
-          conflicts: baselinePlan.filter(p=>p.kind === "conflict").length },
+          conflicts: reviewedPlan.filter(p=>p.kind === "conflict").length,
+          reviewedLinks: reviewedPlan.filter((p,i)=>p.kind==="enrich" && baselinePlan[i]?.kind==="conflict").length,
+          reviewedCreates: reviewedPlan.filter((p,i)=>p.kind==="create" && baselinePlan[i]?.kind==="conflict").length },
       });
     } catch (error) { console.error("CU SKIN import saved; audit unavailable", error); }
     return response({
-      ok: true, ...counts, skipped: baselinePlan.filter(p=>p.kind==="skip").length,
-      conflicts: baselinePlan.filter(p=>p.kind==="conflict").map(p=>({sku:p.sku,reason:p.reason})),
+      ok: true, ...counts, skipped: reviewedPlan.filter(p=>p.kind==="skip").length,
+      conflicts: reviewedPlan.filter(p=>p.kind==="conflict").map(p=>({sku:p.sku,reason:p.reason})),
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Не вдалося виконати імпорт";

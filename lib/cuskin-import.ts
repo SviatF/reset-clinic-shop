@@ -12,7 +12,16 @@ export type CuskinAction = {
   sku: string; name: string; existingId: string | null;
   kind: "create" | "enrich" | "skip" | "conflict";
   reason: string; needsPhoto: boolean;
+  candidates?: CuskinCandidate[];
 };
+export type CuskinCandidate = {
+  id: string; name: string; sku: string | null; size: string | null;
+  price: number; hasPhoto: boolean;
+};
+export type CuskinResolution = {
+  sku: string; kind: "link" | "create"; existingId?: string; confirmDistinct?: boolean;
+};
+
 const normalize = (name: string) => String(name || "")
   .toLocaleLowerCase("uk").replace(/cu\s*:?\s*skin|cuskin/g, " ")
   .replace(/[^a-zа-яіїєґ0-9]+/giu, " ").replace(/\s+/g, " ").trim();
@@ -77,30 +86,117 @@ function patch(existing: ProductRecord, row: CuskinImportRow) {
   return updates;
 }
 
+function candidate(product: ProductRecord): CuskinCandidate {
+  return { id: product.id, name: product.name, sku: product.sku,
+    size: product.size, price: Number(product.price), hasPhoto: Boolean(product.image_url) };
+}
+
 export function cuskinImportPlan(products: ProductRecord[], input: CuskinImportRow[]): CuskinAction[] {
   return input.map(row => {
     const exact = products.filter(p => p.sku === row.sku);
-    if (exact.length > 1) return { sku: row.sku, name: row.name, existingId: null, kind: "conflict", reason: "Повторений артикул у D1", needsPhoto: false };
+    if (exact.length > 1) return { sku: row.sku, name: row.name, existingId: null,
+      kind: "conflict", reason: "Повторений артикул у D1", needsPhoto: false,
+      candidates: exact.map(candidate).slice(0, 8) };
     if (exact.length === 1) {
       const p = exact[0];
       if (p.brand !== "CU SKIN" || !sameSize(p, row) || !similar(p.name, row.name))
-        return { sku: row.sku, name: row.name, existingId: p.id, kind: "conflict", reason: "Артикул зайнятий іншим товаром", needsPhoto: false };
-      return { sku: row.sku, name: row.name, existingId: p.id, kind: (!p.image_url || Object.keys(patch(p,row)).length) ? "enrich" : "skip", reason: "Знайдено за артикулом", needsPhoto: !p.image_url };
+        return { sku: row.sku, name: row.name, existingId: p.id, kind: "conflict",
+          reason: "Артикул зайнятий іншим товаром", needsPhoto: false, candidates: [candidate(p)] };
+      return { sku: row.sku, name: row.name, existingId: p.id,
+        kind: (!p.image_url || Object.keys(patch(p,row)).length) ? "enrich" : "skip",
+        reason: "Знайдено за артикулом", needsPhoto: !p.image_url };
     }
-    const sameName = products.filter(p => p.brand === "CU SKIN" && sameSize(p,row) && normalize(p.name) === normalize(row.name));
-    if (sameName.length > 1) return { sku: row.sku, name: row.name, existingId: null, kind: "conflict", reason: "Кілька товарів з однаковою назвою", needsPhoto: false };
+    const sameName = products.filter(p => p.brand === "CU SKIN" && sameSize(p,row) &&
+      normalize(p.name) === normalize(row.name));
+    if (sameName.length > 1) return { sku: row.sku, name: row.name, existingId: null,
+      kind: "conflict", reason: "Кілька товарів з однаковою назвою", needsPhoto: false,
+      candidates: sameName.map(candidate).slice(0, 8) };
     if (sameName.length === 1) {
       const p = sameName[0];
       if (p.sku && !/^CU-SKIN-\d{3}$/i.test(p.sku) && p.sku !== row.sku)
-        return { sku: row.sku, name: row.name, existingId: p.id, kind: "conflict", reason: "Назва збігається, але інший справжній артикул", needsPhoto: false };
-      return { sku: row.sku, name: row.name, existingId: p.id, kind: (!p.image_url || Object.keys(patch(p,row)).length) ? "enrich" : "skip", reason: "Знайдено за назвою", needsPhoto: !p.image_url };
+        return { sku: row.sku, name: row.name, existingId: p.id, kind: "conflict",
+          reason: "Назва збігається, але інший справжній артикул", needsPhoto: false,
+          candidates: [candidate(p)] };
+      return { sku: row.sku, name: row.name, existingId: p.id,
+        kind: (!p.image_url || Object.keys(patch(p,row)).length) ? "enrich" : "skip",
+        reason: "Знайдено за назвою", needsPhoto: !p.image_url };
     }
     const possible = products.filter(p => p.brand === "CU SKIN" && sameSize(p,row) && similar(p.name,row.name));
     if (possible.length > 0)
-      return { sku: row.sku, name: row.name, existingId: null, kind: "conflict", reason: "Можливий дубль — перевірити вручну", needsPhoto: false };
-    if (products.some(p => p.slug === row.slug))
-      return { sku: row.sku, name: row.name, existingId: null, kind: "conflict", reason: "Slug вже зайнятий", needsPhoto: false };
-    return { sku: row.sku, name: row.name, existingId: null, kind: "create", reason: "Новий товар (чернетка)", needsPhoto: true };
+      return { sku: row.sku, name: row.name, existingId: null, kind: "conflict",
+        reason: "Схожа назва — потрібне підтвердження", needsPhoto: false,
+        candidates: possible.map(candidate).slice(0, 8) };
+    const occupied = products.filter(p => p.slug === row.slug);
+    if (occupied.length)
+      return { sku: row.sku, name: row.name, existingId: null, kind: "conflict",
+        reason: "Slug вже зайнятий", needsPhoto: false, candidates: occupied.map(candidate) };
+    return { sku: row.sku, name: row.name, existingId: null,
+      kind: "create", reason: "Новий товар (чернетка)", needsPhoto: true };
+  });
+}
+
+/** Explicit per-SKU review of ambiguous matches. Never infer a new SKU from a
+ * similar product without human approval, and never overwrite real existing SKUs. */
+export function resolveCuskinConflicts(
+  products: ProductRecord[],
+  input: CuskinImportRow[],
+  originalPlan: CuskinAction[],
+  rawResolutions: unknown,
+): CuskinAction[] {
+  if (!Array.isArray(rawResolutions) || rawResolutions.length > 120)
+    throw new Error("Некоректний список підтверджень");
+  const decisions = new Map<string, CuskinResolution>();
+  for (const raw of rawResolutions) {
+    if (!raw || typeof raw !== "object" || Array.isArray(raw))
+      throw new Error("Некоректне підтвердження товару");
+    const r = raw as CuskinResolution;
+    if (typeof r.sku !== "string" || !/^300\d{3}$/.test(r.sku) ||
+      (r.kind !== "link" && r.kind !== "create") || decisions.has(r.sku))
+      throw new Error("Повторний або некоректний вибір товару");
+    decisions.set(r.sku, r);
+  }
+  const rowBySku = new Map(input.map(row => [row.sku, row]));
+  const conflictingSku = new Set(originalPlan.filter(p => p.kind === "conflict").map(p => p.sku));
+  for (const sku of decisions.keys()) {
+    if (!rowBySku.has(sku)) throw new Error("Не знайдено товар " + sku);
+    if (!conflictingSku.has(sku)) throw new Error("Додаткове підтвердження для цього SKU не потрібне");
+  }
+  const alreadyLinked = new Set<string>(
+    originalPlan.filter(a => (a.kind === "enrich" || a.kind === "skip") && a.existingId)
+      .map(a => a.existingId as string),
+  );
+  return originalPlan.map(action => {
+    const decision = decisions.get(action.sku);
+    if (!decision) return action;
+    if (action.kind !== "conflict") throw new Error("Додаткове підтвердження для цього SKU не потрібне");
+    const row = rowBySku.get(action.sku);
+    if (!row) throw new Error("Не знайдено товар " + action.sku);
+    if (decision.kind === "link") {
+      if (typeof decision.existingId !== "string" ||
+        !action.candidates?.some(p => p.id === decision.existingId))
+        throw new Error("Оберіть запропонований товар для " + action.sku);
+      const existing = products.find(p => p.id === decision.existingId);
+      if (!existing || existing.brand !== "CU SKIN" || !sameSize(existing, row) ||
+        !similar(existing.name, row.name))
+        throw new Error("Неможливо безпечно зв’язати " + action.sku + ": назва, бренд або об’єм не збігаються");
+      if (existing.sku && !/^CU-SKIN-\d{3}$/i.test(existing.sku) && existing.sku !== row.sku)
+        throw new Error("Неможливо замінити інший справжній артикул у " + action.sku);
+      if (alreadyLinked.has(existing.id)) throw new Error("Один товар не можна прив'язати до кількох артикулів: " + action.sku);
+      alreadyLinked.add(existing.id);
+      return { ...action, kind: "enrich", existingId: existing.id,
+        reason: "Підтверджено вручну: доповнити існуючий товар",
+        needsPhoto: !existing.image_url };
+    }
+    // Explicit distinct-product confirmation is mandatory, even for familiar names.
+    if (decision.confirmDistinct !== true)
+      throw new Error("Підтвердьте, що " + action.sku + " — це окремий товар");
+    if (products.some(p => p.sku === row.sku || p.slug === row.slug))
+      throw new Error("Артикул або slug уже зайнятий: " + row.sku);
+    if (products.some(p => p.brand === "CU SKIN" && sameSize(p,row) &&
+      normalize(p.name) === normalize(row.name)))
+      throw new Error("Повний збіг назви й об’єму: " + row.sku + ". Такий товар не можна створити вдруге");
+    return { ...action, kind: "create", existingId: null,
+      reason: "Підтверджено вручну: це інший товар", needsPhoto: true };
   });
 }
 export function applyCuskinImport(products: ProductRecord[], rows: CuskinImportRow[], plan: CuskinAction[], now: string) {
