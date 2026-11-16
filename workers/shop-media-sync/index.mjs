@@ -5,8 +5,11 @@ const HOSTS = {
   "HydroPeptide":["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com"],
   "Sensilis":["sensilis.com.ua","www.sensilis.com.ua"],
   "DÉCAAR":["decaar.com.ua","www.decaar.com.ua"],
+  "CU SKIN":["cu.ua","www.cu.ua","cuskin.com","www.cuskin.com"],
+  "OLIE'RE PARIS":["oliere.paris","www.oliere.paris"],
+  "Cetaphil":["cetaphil.ua","www.cetaphil.ua","cetaphil.com","www.cetaphil.com"],
 };
-const IGNORE=new Set(["hydropeptide","sensilis","decaar","the","and","for","skin","cream","serum","spf","with","gel","body","day"]);
+const IGNORE=new Set(["hydropeptide","sensilis","decaar","cuskin","oliere","paris","cetaphil","the","and","for","skin","cream","serum","spf","with","gel","body","day"]);
 const normalize=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
  .replace(/(\d+),(\d+)/g,"$1.$2").replace(/[^a-z0-9а-яіїєґ.%+]+/giu," ").replace(/\s+/g," ").trim();
 const distinctive=s=>normalize(String(s||"").split(/[—–]/)[0]).split(" ")
@@ -78,6 +81,9 @@ function siteSearch(product) {
      "https://hydropeptide.com/search?q="+q];
    case "Sensilis": return ["https://sensilis.com.ua/?s="+q];
    case "DÉCAAR": return ["https://decaar.com.ua/index.php?route=product/search&search="+q];
+   case "CU SKIN": return ["https://cu.ua/?s="+q,"https://cuskin.com/?s="+q];
+   case "OLIE'RE PARIS": return ["https://oliere.paris/search?q="+q];
+   case "Cetaphil": return ["https://www.cetaphil.com/search?q="+q];
    default: return [];
  }
 }
@@ -94,7 +100,10 @@ function links(html,url,brand){
  return list;
 }
 async function findPhoto(product){
- const known=verified[product.slug];
+ const known=verified[product.slug] ||
+   (product.slug==="profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris" ?
+   {brand:"OLIE'RE PARIS",page:"https://oliere.paris/products/profesiynyy-nabor-dlya-ukladannya-volossya-studio-oliere-paris",
+    title:"Професійний набір для укладання волосся Studio OLIE'RE PARIS"} : null);
  let candidates=[];
  if(known?.brand===product.brand&&allowed(known.page,product.brand))
    candidates=[{url:known.page,title:known.title}];
