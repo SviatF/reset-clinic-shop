@@ -59,13 +59,10 @@ function officialHistolabKey(product:ProductRecord):string|null {
     url.startsWith("/api/media/")?"/api/media/":null;
   if(!prefix)return null;
   const key=url.slice(prefix.length);
-  return new RegExp("^products/histolab-official/"+
-    product.slug.replace(/[.*+?^${}()|[\]\\]/g,"\\function isMissing(product:ProductRecord) {
-  return product.brand==="Histolab" &&
-    !String(product.image_url||"").trim() &&
-    Object.hasOwn(catalog,product.slug);
-}")+
-    "(?:-[0-9]+)?\\.(?:webp|jpe?g|png)$","i").test(key)?key:null;
+  const expected="products/histolab-official/"+product.slug;
+  if(!key.startsWith(expected))return null;
+  const suffix=key.slice(expected.length);
+  return /^(?:-[0-9]+)?\.(?:webp|jpe?g|png)$/i.test(suffix)?key:null;
 }
 function isMissing(product:ProductRecord) {
   return product.brand==="Histolab" &&
