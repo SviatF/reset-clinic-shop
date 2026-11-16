@@ -156,6 +156,11 @@ export function resolveCuskinConflicts(
     decisions.set(r.sku, r);
   }
   const rowBySku = new Map(input.map(row => [row.sku, row]));
+  const conflictingSku = new Set(originalPlan.filter(p => p.kind === "conflict").map(p => p.sku));
+  for (const sku of decisions.keys()) {
+    if (!rowBySku.has(sku)) throw new Error("Не знайдено товар " + sku);
+    if (!conflictingSku.has(sku)) throw new Error("Додаткове підтвердження для цього SKU не потрібне");
+  }
   const alreadyLinked = new Set<string>(
     originalPlan.filter(a => (a.kind === "enrich" || a.kind === "skip") && a.existingId)
       .map(a => a.existingId as string),
