@@ -58,7 +58,7 @@ function shade(value: unknown): string | null {
   return match ? String(Number(match[1])) : null;
 }
 function pa(value: unknown): number | null {
-  const match = normalized(value).match(/pa\s*(\+{1,4})/u);
+  // Keep + signs: the generic name normalizer intentionally strips punctuation.\n  const match = String(value || "").toLocaleLowerCase("uk").match(/pa\s*(\+{1,4})/u);
   return match ? match[1].length : null;
 }
 const unitMap: Record<string,string> = {
