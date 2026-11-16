@@ -8,6 +8,8 @@ test("identity: protect variants and accept verified supplier title",()=>{
   assert.equal(validIdentity("HydroPeptide Sun Slick SPF 50", "HydroPeptide Sun Slick SPF 30"),false);
   assert.equal(validIdentity("CU SKIN Retinol 0.3%", "CU SKIN Retinol 1%"),false);
   assert.equal(validIdentity("Sensilis Make-Up 01", "Sensilis Make-Up 03"),false);
+  assert.equal(validIdentity("Sensilis Cushion №21", "Sensilis Cushion №23"),false);
+  assert.equal(validIdentity("CU SKIN Vitamin U Cream 7мл", "CU SKIN Vitamin U Cream 50мл"),false);
   assert.equal(validIdentity("HydroPeptide A", "HydroPeptide B"),false);
 });
 function fakeDb(products){
