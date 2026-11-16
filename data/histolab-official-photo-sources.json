@@ -26,7 +26,8 @@
   "supplier-histolab-product-5": {
     "sourcePage": "https://histolab.com.ua/age-science/krem-dlya-shkiry-navkolo-ochej-z-peptydnym-kompleksom",
     "source": "histolab.com.ua official Ukrainian product catalog",
-    "verifiedBy": "exact_product_title_page"
+    "verifiedBy": "exact_product_title_page",
+    "verifiedImageUrl": "https://histolab.com.ua/image/cache/webp/catalog/products/age/2020_Dec21_Histolab-1-7%20%281%29-400x400.webp"
   },
   "supplier-histolab-product-6": {
     "sourcePage": "https://histolab.com.ua/vidbilennya/osvitlyuyuchyj-korektor-dlya-oblychchya",
@@ -37,12 +38,14 @@
   "supplier-histolab-egf": {
     "sourcePage": "https://histolab.com.ua/dermatologiya-i-likuvannya/krem-pislyaprocedurnyj-z-egf",
     "source": "histolab.com.ua official Ukrainian product catalog",
-    "verifiedBy": "exact_product_title_page"
+    "verifiedBy": "exact_product_title_page",
+    "verifiedImageUrl": "https://histolab.com.ua/image/cache/webp/catalog/products/derma/2020_Dec21_Histolab-1-12-400x400.webp"
   },
   "supplier-histolab-spf-50": {
     "sourcePage": "https://histolab.com.ua/zahyst-vid-soncya/soncezahysna-esenciya-dlya-chutlyvoyi-shkiry-spf-50",
     "source": "histolab.com.ua official Ukrainian product catalog",
-    "verifiedBy": "exact_product_title_page"
+    "verifiedBy": "exact_product_title_page",
+    "verifiedImageUrl": "https://histolab.com.ua/image/cache/webp/catalog/esense-400x400.webp"
   },
   "supplier-histolab-bb-spf-35": {
     "sourcePage": "https://histolab.com.ua/zahyst-vid-soncya/vv-krem-%C2%ABsyajvo-shkiry%C2%BB-z-spf-35",
@@ -105,7 +108,8 @@
   "supplier-histolab-product-11": {
     "sourcePage": "https://histolab.com.ua/zvolozhennya/krem-intensyvnogo-zvolozhennya",
     "source": "histolab.com.ua official Ukrainian product catalog",
-    "verifiedBy": "exact_product_title_page"
+    "verifiedBy": "exact_product_title_page",
+    "verifiedImageUrl": "https://histolab.com.ua/image/cache/webp/catalog/products/aqua/2020_Dec21_Histolab-1-3%20%282%29-400x400.webp"
   },
   "supplier-histolab-product-12": {
     "sourcePage": "https://histolab.com.ua/zvolozhennya/krem-zvolozhuyuchyj-z-ceramidamy",
@@ -116,7 +120,8 @@
   "supplier-histolab-product-13": {
     "sourcePage": "https://histolab.com.ua/vidbilennya/osvitlyuyuchyj-krem-dlya-shkiry",
     "source": "histolab.com.ua official Ukrainian product catalog",
-    "verifiedBy": "exact_product_title_page"
+    "verifiedBy": "exact_product_title_page",
+    "verifiedImageUrl": "https://histolab.com.ua/image/cache/webp/catalog/products/white/T_a_0_0_512_0_01-400x400.webp"
   },
   "supplier-histolab-product-14": {
     "sourcePage": "https://histolab.com.ua/zvolozhennya/dvofaznyj-zasib-dlya-znyattya-makiyazhu",
@@ -131,6 +136,7 @@
   "supplier-histolab-product-16": {
     "sourcePage": "https://histolab.com.ua/vidbilennya/maska-na-netkannij-osnovi-%C2%ABmultyvitaminna-z-osvitlyuyuchym-kompleksom%C2%BB",
     "source": "histolab.com.ua official Ukrainian product catalog",
-    "verifiedBy": "exact_product_title_page"
+    "verifiedBy": "exact_product_title_page",
+    "verifiedImageUrl": "https://histolab.com.ua/image/cache/catalog/products/basic/2020_Dec22_Histolab_-5-770x770.jpg"
   }
 }
