@@ -1,7 +1,8 @@
 "use client";
 import {useEffect,useState} from "react";
 
-type Item={slug:string;id:string;name:string;missing:boolean;sourcePage:string;hasVerifiedImageUrl:boolean};
+type Item={slug:string;id:string;name:string;missing:boolean;sourcePage:string;hasVerifiedImageUrl:boolean;
+  imageUrl:string|null;urlAttached:boolean;r2Verified:boolean};
 type PhotoResult={slug:string;status:"added"|"failed"|"skipped";reason?:string};
 export default function AdminHistolabPhotoRepair({disabled,onFinished}:{
   disabled:boolean;onFinished:()=>Promise<void>;
@@ -12,12 +13,31 @@ export default function AdminHistolabPhotoRepair({disabled,onFinished}:{
   const [progress,setProgress]=useState("");
   const [results,setResults]=useState<PhotoResult[]>([]);
   const [error,setError]=useState("");
+  const [browserCheck,setBrowserCheck]=useState<{tested:number;loaded:number;failed:number}|null>(null);
   const remaining=items.filter(p=>p.missing);
   async function refresh() {
     const response=await fetch("/api/admin/products/repair-histolab-photos",{cache:"no-store"});
     const data=await response.json();
     if(!response.ok)throw new Error(data.error||"Помилка перевірки Histolab");
-    setItems(data.rows||[]);
+    const rows:Item[]=data.rows||[];
+    setItems(rows);
+    // Confirm the actual browser can decode the photo, not merely that a D1
+    // image URL or R2 object exists.
+    setBrowserCheck(null);
+    const withPhotos=rows.filter(row=>Boolean(row.imageUrl));
+    const loaded=await Promise.all(withPhotos.map(async row=>{
+      const path=row.imageUrl!;
+      const url=path.startsWith("/shop-media/")?
+        "/api/media/"+path.slice("/shop-media/".length):path;
+      return await new Promise<boolean>(resolve=>{
+        const img=new Image();
+        img.onload=()=>resolve(img.naturalWidth>0);
+        img.onerror=()=>resolve(false);
+        img.src=url;
+      });
+    }));
+    setBrowserCheck({tested:loaded.length,loaded:loaded.filter(Boolean).length,
+      failed:loaded.filter(ok=>!ok).length});
   }
   useEffect(()=>{
     refresh().catch(e=>setError(e instanceof Error?e.message:String(e)))
@@ -49,8 +69,8 @@ export default function AdminHistolabPhotoRepair({disabled,onFinished}:{
       try{await onFinished();}
       catch{setError("Фото записані в D1, але список не оновився. Оновіть сторінку.");}
       const success=completed.filter(x=>x.status==="added").length;
-      setProgress("Готово: прикріплено "+success+" із "+slugs.length+" фото. "+
-        "Решта товарів, якщо є, залишилися без змін.");
+      setProgress("Записано у D1 та R2: "+success+" із "+slugs.length+
+        " фото. Фактичне відображення перевіряється окремо вище.");
     } catch(cause) {
       setError(cause instanceof Error?cause.message:"Помилка завантаження");
     } finally {setBusy(false);}
@@ -60,7 +80,7 @@ export default function AdminHistolabPhotoRepair({disabled,onFinished}:{
       <div>
         <span>OFFICIAL SUPPLIER MEDIA / HISTOLAB</span>
         <strong>Фото Histolab із каталогу виробника</strong>
-        <p>Знайдено {items.length} точних карток постачальника. Без фото в D1: <b>{loading?"…":remaining.length}</b>.
+        <p>Знайдено {items.length} точних карток постачальника. Відсутні URL або файли R2: <b>{loading?"…":remaining.length}</b>.
           Завантаження з офіційних джерел відразу зберігає фотографії у R2 та підключає до відповідних товарів.</p>
       </div>
       <button type="button" disabled={disabled||loading||busy||!remaining.length}
@@ -68,6 +88,10 @@ export default function AdminHistolabPhotoRepair({disabled,onFinished}:{
         {busy?"Підключаємо фото…":remaining.length?"Знайти й прикріпити "+remaining.length+" фото →":"Фото вже прикріплені"}
       </button>
     </div>
+    {browserCheck&&<p className={browserCheck.failed?"admin-official-photos-error":"admin-official-photos-progress"} role="status">
+      Перевірка фактичного відображення в браузері: відкриваються <b>{browserCheck.loaded} із {browserCheck.tested}</b> фото.
+      {browserCheck.failed>0&&" Не відкриваються: "+browserCheck.failed+". Поки не вважайте ці фотографії готовими."}
+    </p>}
     {progress&&<p className="admin-official-photos-progress" role="status">{progress}</p>}
     {error&&<p className="admin-official-photos-error" role="alert">{error}</p>}
     {results.some(r=>r.status==="failed")&&
