@@ -12,24 +12,16 @@ export function officialHistoImageUrl(input: string | null | undefined, base: st
   } catch { return null; }
 }
 export function extractOfficialHistolabImage(html: string, page: string) {
-  const matches: string[] = [];
-  // Product-specific OpenCart gallery: prefer original/full-size href over tiny thumbnails.
-  for (const tag of html.match(/<(?:a|meta|img)\b[^>]+>/gi)||[]) {
-    if (/^<meta/i.test(tag) && !/(?:property|name)\s*=\s*["'](?:og:image|twitter:image)["']/i.test(tag)) continue;
-    const href = /\b(?:href|content|data-original|data-zoom-image|data-src|src)\s*=\s*(?:"([^"]+)"|'([^']+)')/gi;
-    for(const x of tag.matchAll(href)) {
-      const value = officialHistoImageUrl(x[1]||x[2],page);
-      if(value) matches.push(value);
-    }
+  // Only structured product metadata. Never pick the largest image from the
+  // entire page: that can be an unrelated recommended item.
+  for (const tag of html.match(/<meta\b[^>]*>/gi)||[]) {
+    const property = tag.match(/\b(?:property|name)\s*=\s*["']([^"']+)["']/i)?.[1];
+    if (property !== "og:image" && property !== "twitter:image") continue;
+    const content = tag.match(/\bcontent\s*=\s*["']([^"']+)["']/i)?.[1];
+    const url = officialHistoImageUrl(content,page);
+    if(url) return url;
   }
-  // Avoid generic icons. Higher-resolution gallery images take precedence.
-  const score = (value:string) => {
-    const size = [...value.matchAll(/(\d{3,4})x(\d{3,4})/g)]
-      .map(m=>Math.min(Number(m[1]),Number(m[2]))).at(-1)||0;
-    return size + (value.includes("/catalog/products/")?200:0)
-      - (value.includes("icon")||value.includes("logo")?10000:0);
-  };
-  return [...new Set(matches)].sort((a,b)=>score(b)-score(a))[0]||null;
+  return null;
 }
 export function photoMimeFromBytes(bytes:Uint8Array, mime:string) {
   const sig=(...nums:number[])=>nums.every((n,i)=>bytes[i]===n);
