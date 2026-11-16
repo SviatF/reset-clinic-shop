@@ -59,3 +59,21 @@
 .admin-publish-note{background:#fff8e8;color:#756344;border:1px solid #ead9b0}
 @media(max-width:1100px){.admin-publish-row{grid-template-columns:18px 52px minmax(0,1fr) 112px}.admin-publish-row:has(> .admin-publish-photo:first-child){grid-template-columns:52px minmax(0,1fr) 112px}.admin-publish-row-buttons{grid-column:3/-1;justify-content:flex-start}.admin-publish-photo{height:58px;width:52px}}
 @media(max-width:680px){.admin-publish-header{flex-direction:column;padding:21px 15px}.admin-publish-metrics>div{padding:12px}.admin-publish-metrics strong{font-size:22px}.admin-publish-tabs button{padding:13px 12px;font-size:11px}.admin-publish-filters{grid-template-columns:1fr;padding:15px}.admin-publish-toolbar,.admin-publish-footer{flex-direction:column;align-items:stretch;padding:14px}.admin-publish-row{grid-template-columns:16px 44px minmax(0,1fr);gap:9px;padding:12px}.admin-publish-row:has(> .admin-publish-photo:first-child){grid-template-columns:44px minmax(0,1fr)}.admin-publish-photo{width:44px;height:55px}.admin-publish-price{grid-column:3;align-items:flex-start;text-align:left}.admin-publish-row:has(> .admin-publish-photo:first-child) .admin-publish-price{grid-column:2}.admin-publish-row-buttons{grid-column:3}.admin-publish-row:has(> .admin-publish-photo:first-child) .admin-publish-row-buttons{grid-column:2}.admin-publish-actions{justify-content:flex-start}.admin-publish-footer .admin-publish-submit{width:100%}}
+
+/* First-party Histolab photo reconciliation, isolated from the rest of admin. */
+.admin-official-photos{margin:16px 22px 20px;border:1px solid #e5d8bf;background:#fffcf4;color:#2b261e}
+.admin-official-photos-header{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:18px}
+.admin-official-photos-header>div{min-width:0;max-width:670px}
+.admin-official-photos-header>div>span{font-size:9px;color:#9c8a64;font-weight:800;letter-spacing:.11em;display:block;margin-bottom:6px}
+.admin-official-photos-header>div>strong{display:block;font-size:15px;font-weight:750;color:#30291e}
+.admin-official-photos-header p{font-size:11px;line-height:1.6;color:#796e60;margin:7px 0 0}
+.admin-official-photos-header p b{color:#4d3f2c;font-weight:800}
+.admin-official-photos-header button{background:#29251e;border:1px solid #29251e;color:#fff;font-size:11px;font-weight:770;line-height:1.25;padding:13px 17px;min-height:45px;cursor:pointer;white-space:nowrap}
+.admin-official-photos-header button:disabled{opacity:.5;cursor:not-allowed}
+.admin-official-photos-progress{margin:0 18px 12px;background:#ecf5e8;border:1px solid #d9e7d1;padding:11px;font-size:11px;color:#426536;line-height:1.45}
+.admin-official-photos-error{margin:0 18px 12px;background:#fff1ed;border:1px solid #efd4c8;padding:11px;font-size:11px;color:#934a3b;line-height:1.45}
+.admin-official-photos-errors{margin:0 18px 12px;border:1px solid #ebdcbd;background:#fff;padding:12px;font-size:11px}
+.admin-official-photos-errors>summary{font-weight:750;color:#8a4a36;cursor:pointer}
+.admin-official-photos-errors p{font-size:10px;line-height:1.5;color:#776653}
+.admin-official-photos-note{margin:0!important;padding:11px 18px!important;border-top:1px solid #ebe2cf;font-size:10px;color:#98886d;line-height:1.5}
+@media(max-width:760px){.admin-official-photos{margin:12px}.admin-official-photos-header{flex-direction:column;align-items:stretch;padding:14px}.admin-official-photos-header button{white-space:normal}}
