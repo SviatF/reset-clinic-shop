@@ -160,16 +160,6 @@ export function validateCuskinRows(raw: unknown): CuskinImportRow[] {
     };
   });
 }
-function sameSize(existing: ProductRecord, row: CuskinImportRow) {
-  const a = String(existing.size || "").match(/\d+(?:[.,]\d+)?/)?.[0]?.replace(",", ".");
-  const b = String(row.size || "").match(/\d+(?:[.,]\d+)?/)?.[0]?.replace(",", ".");
-  return !a || !b || a === b;
-}
-function similar(a: string, b: string) {
-  const x = tokens(a),y = tokens(b);
-  const overlap = [...x].filter(t => y.has(t)).length;
-  return !!Math.min(x.size, y.size) && overlap / Math.min(x.size, y.size) >= 0.78;
-}
 function patch(existing: ProductRecord, row: CuskinImportRow) {
   const updates: Partial<ProductRecord> = {};
   if (!existing.sku || /^CU-SKIN-\d{3}$/i.test(existing.sku)) updates.sku = row.sku;
