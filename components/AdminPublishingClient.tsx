@@ -3,6 +3,7 @@
 import { useMemo, useState, type ChangeEvent } from "react";
 import SmartProductImage from "@/components/SmartProductImage";
 import AdminHistolabPhotoRepair from "@/components/AdminHistolabPhotoRepair";
+import AdminVerifiedSupplierRepair from "@/components/AdminVerifiedSupplierRepair";
 
 type Product = {
   id: string; slug: string; sku?: string | null; name: string; brand: string;
@@ -140,7 +141,10 @@ export default function AdminPublishingClient({
       <button type="button" className={tab==="drafts"?"is-active":""} onClick={()=>changeTab("drafts")}>Публікація чернеток</button>
       <button type="button" className={tab==="photos"?"is-active":""} onClick={()=>changeTab("photos")}>Товари без фотографій ({missingPhoto.length})</button>
     </div>
-    {tab==="photos" && <AdminHistolabPhotoRepair disabled={!writable||busy} onFinished={onFinished} />}
+    {tab==="photos" && <>
+     <AdminHistolabPhotoRepair disabled={!writable||busy} onFinished={onFinished} />
+     <AdminVerifiedSupplierRepair disabled={!writable||busy} onFinished={onFinished} />
+    </>}
     <div className="admin-publish-filters">
       <label><span>Бренд</span><select value={brand} onChange={e=>{setBrand(e.target.value);resetPreview();setSelectedIds([]);}}>
         <option value="all">Усі бренди</option>{brands.map(value=><option key={value} value={value}>{value}</option>)}
