@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import AdminExcelImport from "@/components/AdminExcelImport";
+import AdminBulkPromotionsClient from "@/components/AdminBulkPromotionsClient";
 import SmartProductImage from "@/components/SmartProductImage";
 import { getProductPricing, validateSalePrice } from "@/lib/product-pricing";
 
@@ -50,7 +51,7 @@ export default function AdminProductsClient() {
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [writable, setWritable] = useState(false);
   const [writeReason, setWriteReason] = useState<string | null>(null);
-  const [view, setView] = useState<"catalog" | "import">("catalog");
+  const [view, setView] = useState<"catalog" | "import" | "promotions">("catalog");
   const [editorOpen, setEditorOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -291,6 +292,7 @@ export default function AdminProductsClient() {
           <p>Оберіть товар, щоб редагувати його, або створіть нову позицію чи імпортуйте дані.</p>
         </div>
         <div className="admin-catalog-actions">
+          <button type="button" className={view === "promotions" ? "admin-catalog-secondary admin-catalog-promo-link is-active" : "admin-catalog-secondary admin-catalog-promo-link"} onClick={() => { setView(view === "promotions" ? "catalog" : "promotions"); setEditorOpen(false); }}>✦ Масові знижки</button>
           <button type="button" className={view === "import" ? "admin-catalog-secondary is-active" : "admin-catalog-secondary"} onClick={() => setView(view === "import" ? "catalog" : "import")}>⇩ Імпорт товарів</button>
           <button type="button" className="admin-catalog-create" onClick={createNew}><span aria-hidden="true">+</span> Додати товар</button>
         </div>
@@ -309,7 +311,10 @@ export default function AdminProductsClient() {
       </div>}
       {message && <div className="admin-toast admin-catalog-toast" role="status">{message}<button type="button" onClick={() => setMessage("")} aria-label="Закрити повідомлення">×</button></div>}
 
-      {view === "import" ? <div className="admin-catalog-import-workspace">
+      {view === "promotions" ? <AdminBulkPromotionsClient
+        products={products} categories={categories} writable={writable}
+        initialBrand={brandFilter} onClose={() => setView("catalog")} onFinished={load}
+      /> : view === "import" ? <div className="admin-catalog-import-workspace">
         <div className="admin-catalog-import-heading"><div><span>DATA OPERATIONS</span><h2>Імпорт та синхронізація</h2><p>Додавайте нові товари й фотографії без перезапису створених позицій.</p></div><button type="button" className="admin-catalog-secondary" onClick={() => setView("catalog")}>← Назад до каталогу</button></div>
         <div className="admin-catalog-import-card"><AdminExcelImport onFinished={load} disabled={!writable} /></div>
         {supplierImport?.available && supplierImport.missing !== null && supplierImport.missing > 0 && <details className="admin-catalog-utility">
