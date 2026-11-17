@@ -4,7 +4,7 @@ import { imageDimensions, betterPhoto } from "./image-dimensions.mjs";
 // Cloudflare Cron job: no public write endpoint, no admin clicking.
 // Bump this identifier whenever source detection or matching improves, so
 // previously unresolved entries are retried immediately after deployment.
-const MATCHER_REVISION="supplier-gallery-2026-11-17-r2";
+const MATCHER_REVISION="supplier-gallery-2026-11-17-r3";
 const HOSTS = {
   "HydroPeptide":["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com"],
   "Sensilis":["sensilis.com.ua","www.sensilis.com.ua"],
@@ -92,14 +92,28 @@ export function officialMainGalleryImage(html,page,brand) {
 }
 
 async function get(url,brand,accept="text/html"){
- if(!allowed(url,brand,accept.startsWith("image/")))throw Error("Unapproved supplier host");
- const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),10000);
- try {
-   const response=await fetch(url,{method:"GET",redirect:"manual",cache:"no-store",signal:ctrl.signal,
-     headers:{"Accept":accept,"User-Agent":"RESET-Shop-Verified-Media-Sync"}});
+ const image=accept.startsWith("image/");
+ let current=url;
+ for(let hop=0;hop<3;hop++){
+   if(!allowed(current,brand,image))throw Error("Blocked source host or redirect");
+   const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),10000);
+   let response;
+   try {
+     response=await fetch(current,{method:"GET",redirect:"manual",cache:"no-store",signal:ctrl.signal,
+       headers:{"Accept":accept,"User-Agent":"Mozilla/5.0 (compatible; RESETShopMediaSync/1.0)"}});
+   }finally{clearTimeout(timeout);}
+   if([301,302,303,307,308].includes(response.status)){
+     const redirect=response.headers.get("location");
+     if(!redirect)throw Error("Redirect has no location");
+     const next=new URL(redirect,current).href;
+     if(!allowed(next,brand,image))throw Error("Blocked redirect host");
+     current=next;
+     continue;
+   }
    if(!response.ok)throw Error("Source HTTP "+response.status);
    return response;
- }finally{clearTimeout(timeout);}
+ }
+ throw Error("Too many source redirects");
 }
 async function page(url,brand){
  const res=await get(url,brand);
@@ -141,7 +155,7 @@ async function findPhoto(product){
    (product.slug==="profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris" ?
    {brand:"OLIE'RE PARIS",page:"https://oliere.paris/products/profesiynyy-nabor-dlya-ukladannya-volossya-studio-oliere-paris",
     title:"Професійний набір для укладання волосся Studio OLIE'RE PARIS"} : null);
- let candidates=[];
+ let candidates=[],diagnostic="No candidate product page";
  if(known?.brand===product.brand&&allowed(known.page,product.brand))
    candidates=[{url:known.page,title:known.title}];
  else for(const search of siteSearch(product)){
@@ -149,24 +163,38 @@ async function findPhoto(product){
      const html=await page(search,product.brand);
      candidates=links(html,search,product.brand).slice(0,6).map(url=>({url,title:null}));
      if(candidates.length)break;
-   }catch{}
+     diagnostic="Search returned no product links";
+   }catch(error){
+     diagnostic="Search unavailable: "+(error instanceof Error?error.message:String(error));
+   }
  }
  for(const candidate of candidates.slice(0,7)){
    try{
-     if(candidate.title&&!validIdentity(product.name,candidate.title))continue;
+     if(candidate.title&&!validIdentity(product.name,candidate.title)){
+       diagnostic="Supplier mapping title differs from product";
+       continue;
+     }
      const html=await page(candidate.url,product.brand);
      const actual=[tag(html,"h1"),meta(html,"og:title"),tag(html,"title")].filter(Boolean);
      const identity=candidate.title||product.name;
-     if(!actual.some(title=>validIdentity(identity,title)&&validIdentity(product.name,title)))continue;
+     if(!actual.some(title=>validIdentity(identity,title)&&validIdentity(product.name,title))){
+       diagnostic=actual.length?"Product page title differs":"No product title on source page";
+       continue;
+     }
      const image=meta(html,"og:image")||meta(html,"og:image:secure_url")||meta(html,"twitter:image");
      const gallery=officialMainGalleryImage(html,candidate.url,product.brand);
      const dest=image?new URL(image,candidate.url):null;
-     const verified=dest&&allowed(dest.href,product.brand,true)?dest.href:gallery;
-     if(!verified)continue;
-     return {url:verified,page:candidate.url};
-   }catch{}
+     const sourceImage=dest&&allowed(dest.href,product.brand,true)?dest.href:gallery;
+     if(!sourceImage){
+       diagnostic="No allowed main product image";
+       continue;
+     }
+     return {url:sourceImage,page:candidate.url};
+   }catch(error){
+     diagnostic="Product page unavailable: "+(error instanceof Error?error.message:String(error));
+   }
  }
- return null;
+ return {reason:diagnostic};
 }
 function imageExt(bytes,mime){
  const text=String.fromCharCode(...bytes.slice(0,12));
@@ -265,7 +293,7 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
    summary.attempted++;
    try{
      const source=await findPhoto(product);
-     if(!source){summary.skipped++;await status(env,product.slug,"unresolved","No exact supplier image");continue;}
+     if(!source.url){summary.skipped++;await status(env,product.slug,"unresolved",source.reason||"No exact supplier image");continue;}
      const image=await binaryPhoto(source,product.brand);
      if(originalDimensions && !betterPhoto(originalDimensions,image.dimensions)){
        summary.skipped++;
