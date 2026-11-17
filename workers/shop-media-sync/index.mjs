@@ -273,20 +273,23 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
  const missing=rows.filter(p=>p&&p.slug&&p.brand&&p.name&&!p.image_url&&
    HOSTS[p.brand]&&!recent.has(p.slug));
  missing.sort((a,b)=>Number(Boolean(verified[b.slug]))-Number(Boolean(verified[a.slug])));
- const pending=missing.map(product=>({product,originalDimensions:null}));
- // After missing-photo processing, also replace tiny CU SKIN workbook thumbnails.
- // Never overwrite custom photos of unknown quality or newer uploads.
- const remaining=Math.max(0,6-pending.length);
- if(remaining>0){
-   const candidates=rows.filter(p=>p?.brand==="CU SKIN" && p.image_url &&
-      !recent.has(p.slug)).slice(0,24);
-   for(const product of candidates){
-     if(pending.length>=6)break;
-     try{
-       const originalDimensions=await lowResolutionR2Photo(env,product);
-       if(originalDimensions)pending.push({product,originalDimensions});
-     }catch(e){console.warn("CU SKIN image inspection failed",product.slug,String(e));}
-   }
+ // Ensure blurry CU SKIN thumbnails are not starved by a large backlog of
+ // completely missing images. Each run reserves two of six photo slots for
+ // upgrades, but falls back to missing images if no upgrades are eligible.
+ const pending=missing.slice(0,4).map(product=>({product,originalDimensions:null}));
+ const cuCandidates=rows.filter(p=>p?.brand==="CU SKIN" && p.image_url &&
+    !recent.has(p.slug)).slice(0,24);
+ let upgrades=0;
+ for(const product of cuCandidates){
+   if(upgrades>=2)break;
+   try{
+     const originalDimensions=await lowResolutionR2Photo(env,product);
+     if(originalDimensions){pending.push({product,originalDimensions});upgrades++;}
+   }catch(e){console.warn("CU SKIN image inspection failed",product.slug,String(e));}
+ }
+ if(pending.length<6){
+   pending.push(...missing.slice(4,4+(6-pending.length))
+      .map(product=>({product,originalDimensions:null})));
  }
  const summary={pending:missing.length,attempted:0,attached:0,upgraded:0,skipped:0,failed:0};
  for(const {product,originalDimensions} of pending.slice(0,6)){

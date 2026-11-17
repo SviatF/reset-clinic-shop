@@ -291,3 +291,50 @@ test("official supplier redirects are followed only inside the same allowlisted 
    assert.equal(objects.size,1);
  }finally{globalThis.fetch=originalFetch;}
 });
+
+
+test("large missing-photo backlog still leaves room for blurry CU SKIN upgrades",async()=>{
+ const missing=Array.from({length:8},(_,i)=>({
+   id:"hp-missing-"+i,slug:"hp-unknown-"+i,brand:"HydroPeptide",
+   name:"HydroPeptide Unknown Product "+i,image_url:null,status:"draft",price:1000,
+ }));
+ const cu={id:"cu-tiny",slug:"supplier-cuskin-bifida-barrier-cream",brand:"CU SKIN",
+   name:"CU SKIN Dr. Solution Bifida Barrier Cream",image_url:"/shop-media/products/tiny.png",
+   status:"active",price:1932,sale_price:1800,stock_quantity:10};
+ const db=fakeDb([...missing,cu]),objects=new Map();
+ const small=fakePng(90,74),large=fakePng(1000,1000);
+ const env={SHOP_DB:db.client,SHOP_MEDIA:{
+   async get(key){return key==="products/tiny.png"?{arrayBuffer:async()=>small.buffer}:null;},
+   async put(key,data,metadata){objects.set(key,{data,metadata});},
+   async head(key){return objects.get(key)||null;}
+ }};
+ const originalFetch=globalThis.fetch;
+ globalThis.fetch=async url=>{
+   if(String(url).includes("hydropeptide.ua/?post_type=product"))
+     return new Response("<html><h1>Search</h1></html>",{headers:{"content-type":"text/html"}});
+   if(String(url).includes("hydropeptide.com/search"))
+     return new Response("<html><h1>Search</h1></html>",{headers:{"content-type":"text/html"}});
+   if(String(url).startsWith("https://cu.ua/?s="))
+     return new Response('<a href="/product/bifida-barrier-cream/">Product</a>',
+       {headers:{"content-type":"text/html"}});
+   if(url==="https://cu.ua/product/bifida-barrier-cream/")
+     return new Response('<h1>CU SKIN Dr. Solution Bifida Barrier Cream</h1>'+
+       '<meta property="og:image" content="https://cu.ua/image/bifida-barrier-cream.png">',
+       {headers:{"content-type":"text/html"}});
+   if(url==="https://cu.ua/image/bifida-barrier-cream.png")
+     return new Response(large,{headers:{"content-type":"image/png"}});
+   throw Error("Unexpected network URL "+url);
+ };
+ try{
+   const result=await reconcile(env,Math.floor(Date.now()/1000));
+   assert.equal(result.attempted,6);
+   assert.equal(result.upgraded,1,"Large missing backlog must not starve CU SKIN quality fixes");
+   assert.equal(result.attached,0);
+   assert.equal(objects.size,1);
+   const product=db.read().find(p=>p.id==="cu-tiny");
+   assert.ok(product.image_url.includes("/official-auto/"));
+   assert.equal(product.price,1932);
+   assert.equal(product.sale_price,1800);
+   assert.equal(product.stock_quantity,10);
+ }finally{globalThis.fetch=originalFetch;}
+});

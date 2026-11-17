@@ -5,7 +5,7 @@
   "compatibility_date": "2026-11-16",
   "workers_dev": false,
   "observability": { "enabled": true },
-  "triggers": { "crons": ["*/10 * * * *"] },
+  "triggers": { "crons": ["*/2 * * * *"] },
   "d1_databases": [{
     "binding": "SHOP_DB",
     "database_name": "reset-clinic-shop-db",
