@@ -6,7 +6,7 @@ on:
       - '.github/workflows/cuskin-catalog-audit.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   inspect:
     runs-on: ubuntu-latest
@@ -95,6 +95,15 @@ jobs:
             photos:cu.filter(p=>p.image_url).length,draft:cu.filter(p=>p.status==='draft').length,
             sample:cu.slice(-5).map(p=>({id:p.id,sku:p.sku,name:p.name,image_url:p.image_url?.slice(0,150),created_at:p.created_at}))}));
           JS
+      - name: Validate and save official public product manifest
+        run: |
+          node scripts/cuskin-official-snapshot.mjs --write
+          git add data/cu-skin-official-snapshot.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data(cuskin): snapshot validated official CU SKIN catalog"
+          git push origin HEAD:fix/cuskin-official-catalog-20261117
       - name: Upload HTML for audit
         if: always()
         uses: actions/upload-artifact@v4
