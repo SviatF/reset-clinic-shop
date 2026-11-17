@@ -30,7 +30,7 @@ export async function GET() {
       without_url: raw.filter(p => !String(p.image_url || "").trim()).length,
       auto_restored: raw.filter(p => String(p.image_url || "").includes("/products/official-auto/")).length,
     };
-    let mediaSync: { attempts: number; attached: number; unresolved: number; failed: number;
+    let mediaSync: { attempts: number; attached: number; upgraded: number; unresolved: number; failed: number;
       last_attempt_unix: number | null } | null = null;
     if (usingCloudflareStore()) {
       try {
@@ -38,12 +38,13 @@ export async function GET() {
           SHOP_DB?: { prepare(sql: string): { first<T>(): Promise<T | null> } }
         };
         const summary = await env.SHOP_DB?.prepare(
-          "SELECT COUNT(*) AS attempts, SUM(CASE WHEN status='attached' THEN 1 ELSE 0 END) AS attached, SUM(CASE WHEN status='unresolved' THEN 1 ELSE 0 END) AS unresolved, SUM(CASE WHEN status='error' THEN 1 ELSE 0 END) AS failed, MAX(checked_at) AS last_attempt_unix FROM shop_media_sync_attempts"
-        ).first<{ attempts: number; attached: number | null; unresolved: number | null;
+          "SELECT COUNT(*) AS attempts, SUM(CASE WHEN status='attached' THEN 1 ELSE 0 END) AS attached, SUM(CASE WHEN status='upgraded' THEN 1 ELSE 0 END) AS upgraded, SUM(CASE WHEN status='unresolved' THEN 1 ELSE 0 END) AS unresolved, SUM(CASE WHEN status='error' THEN 1 ELSE 0 END) AS failed, MAX(checked_at) AS last_attempt_unix FROM shop_media_sync_attempts"
+        ).first<{ attempts: number; attached: number | null; upgraded: number | null; unresolved: number | null;
           failed: number | null; last_attempt_unix: number | null }>();
         if (summary) mediaSync = {
           attempts: Number(summary.attempts || 0),
           attached: Number(summary.attached || 0),
+          upgraded: Number(summary.upgraded || 0),
           unresolved: Number(summary.unresolved || 0),
           failed: Number(summary.failed || 0),
           last_attempt_unix: summary.last_attempt_unix || null,

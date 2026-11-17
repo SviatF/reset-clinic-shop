@@ -1,4 +1,5 @@
 import verified from "../../data/verified-supplier-photo-pages.json" with { type: "json" };
+import { imageDimensions, betterPhoto } from "./image-dimensions.mjs";
 
 // Cloudflare Cron job: no public write endpoint, no admin clicking.
 const HOSTS = {
@@ -9,7 +10,7 @@ const HOSTS = {
   "OLIE'RE PARIS":["oliere.paris","www.oliere.paris"],
   "Cetaphil":["cetaphil.ua","www.cetaphil.ua","cetaphil.com","www.cetaphil.com"],
 };
-const IGNORE=new Set(["hydropeptide","sensilis","decaar","cuskin","oliere","paris","cetaphil","the","and","for","skin","cream","serum","spf","with","gel","body","day"]);
+const IGNORE=new Set(["hydropeptide","sensilis","decaar","cuskin","oliere","paris","cetaphil","dr","solution","clean","the","and","for","skin","spf","with","body","day"]);
 const normalize=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
  .replace(/(\d+),(\d+)/g,"$1.$2").replace(/[^a-z0-9а-яіїєґ.%+]+/giu," ").replace(/\s+/g," ").trim();
 const distinctive=s=>normalize(String(s||"").split(/[—–]/)[0]).split(" ")
@@ -18,13 +19,16 @@ function attributes(text){
  const t=normalize(text);
  return {percent:[...t.matchAll(/(\d+(?:\.\d+)?)\s*%/g)].map(m=>Number(m[1])).sort().join(","),
    spf:t.match(/spf\s*(\d{1,3})/i)?.[1]||null,
-   volume:[...t.matchAll(/(\d+(?:\.\d+)?)\s*(мл|ml|г|gr|g|oz)(?![a-zа-яіїєґ])/giu)].map(m=>m[2]+":"+Number(m[1])).sort().join(","),
+   volume:[...new Set([...t.matchAll(/(\d+(?:\.\d+)?)\s*(мл|ml|г|gr|g|oz)(?![a-zа-яіїєґ])/giu)]
+      .map(m=>({ml:"ml","мл":"ml","г":"g",gr:"g",g:"g",oz:"oz"})[m[2]]+":"+Number(m[1])))].sort().join(","),
    shade:String(text||"").match(/[№#]\s*(\d{1,3})/i)?.[1]||t.match(/(?:shade|тон|відтінок|make\s+up|cushion)\s*(\d{1,3})/i)?.[1]||null,
-   type:["bb","cc","retinol","retinal","bakuchiol","tinted","non tinted","kids"].filter(w=>t.includes(w)).join(",")};
+   type:["bb","cc","retinol","retinal","bakuchiol","tinted","non tinted","kids"].filter(w=>new RegExp("\\b"+w+"\\b","i").test(t)).join(","),
+   form:["cream","toner","serum","ampoule","lotion","mask","gel","foam","cleanser","scrub","essence","peeling","powder","bb","cc"]
+     .filter(w=>new RegExp("\\b"+w+"\\b","i").test(t)).join(",")};
 }
 export function validIdentity(first,second){
  const a=attributes(first),b=attributes(second);
- for(const k of ["percent","spf","volume","shade","type"])
+ for(const k of ["percent","spf","volume","shade","type","form"])
    if(a[k]&&b[k]&&a[k]!==b[k])return false;
  const x=new Set(distinctive(first)),y=new Set(distinctive(second));
  const intersection=[...x].filter(w=>y.has(w));
@@ -143,7 +147,7 @@ async function binaryPhoto(source,brand){
  if(bytes.length<2500||bytes.length>7_000_000)throw Error("Invalid photo byte length");
  const ext=imageExt(bytes,(res.headers.get("content-type")||"").split(";")[0].trim().toLowerCase());
  if(!ext)throw Error("Invalid photo bytes or MIME");
- return {bytes,ext,mime:"image/"+(ext==="jpg"?"jpeg":ext)};
+ return {bytes,ext,mime:"image/"+(ext==="jpg"?"jpeg":ext),dimensions:imageDimensions(bytes)};
 }
 async function catalog(env){
  const doc=await env.SHOP_DB.prepare(
@@ -157,7 +161,7 @@ async function status(env,slug,state,detail){
    "ON CONFLICT(slug) DO UPDATE SET status=excluded.status,detail=excluded.detail,checked_at=excluded.checked_at"
  ).bind(slug,state,String(detail||"").slice(0,230)).run();
 }
-async function attach(env,product,source,photo){
+async function attach(env,product,source,photo,expectedImageUrl=null){
  const digest=new Uint8Array(await crypto.subtle.digest("SHA-256",photo.bytes));
  const fingerprint=[...digest.slice(0,8)].map(b=>b.toString(16).padStart(2,"0")).join("");
  const key="products/official-auto/"+product.slug+"-"+fingerprint+"."+photo.ext;
@@ -168,7 +172,7 @@ async function attach(env,product,source,photo){
  for(let attempt=0;attempt<6;attempt++){
    const {rows,version}=await catalog(env);
    const match=rows.find(p=>p.id===product.id&&p.slug===product.slug&&p.brand===product.brand);
-   if(!match||match.image_url)return "skipped";
+   if(!match || (expectedImageUrl===null?Boolean(match.image_url):match.image_url!==expectedImageUrl))return "skipped";
    const next=rows.map(p=>p.id===product.id?{...p,image_url:url,updated_at:new Date().toISOString()}:p);
    const result=await env.SHOP_DB.prepare("UPDATE shop_documents "+
      "SET content=?,version=version+1,updated_at=datetime('now') "+
@@ -178,6 +182,18 @@ async function attach(env,product,source,photo){
  }
  throw Error("Concurrent update to D1, retry later");
 }
+async function lowResolutionR2Photo(env,product) {
+  if(product.brand!=="CU SKIN" || !product.image_url?.startsWith("/shop-media/products/") ||
+     product.image_url.includes("/official-auto/"))return null;
+  const key=product.image_url.slice("/shop-media/".length);
+  if(!/^products\/[-\w/.]+\.(?:jpg|jpeg|png|webp)$/i.test(key))return null;
+  const head=await env.SHOP_MEDIA.get(key,{range:{offset:0,length:65536}});
+  if(!head)return null;
+  const dimensions=imageDimensions(new Uint8Array(await head.arrayBuffer()));
+  if(!dimensions || Math.max(dimensions.width,dimensions.height)>=550 ||
+    dimensions.width*dimensions.height>=250000)return null;
+  return dimensions;
+}
 export async function reconcile(env,now=Math.floor(Date.now()/1000)){
  await env.SHOP_DB.prepare("CREATE TABLE IF NOT EXISTS shop_media_sync_attempts ("+
    "slug TEXT PRIMARY KEY,status TEXT NOT NULL,detail TEXT,checked_at INTEGER NOT NULL)").run();
@@ -186,19 +202,39 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
    "SELECT slug FROM shop_media_sync_attempts WHERE checked_at>?")
    .bind(now-12*3600).all();
  const recent=new Set((checked.results||[]).map(row=>row.slug));
- const pending=rows.filter(p=>p&&p.slug&&p.brand&&p.name&&!p.image_url&&
+ const missing=rows.filter(p=>p&&p.slug&&p.brand&&p.name&&!p.image_url&&
    HOSTS[p.brand]&&!recent.has(p.slug));
- pending.sort((a,b)=>Number(Boolean(verified[b.slug]))-Number(Boolean(verified[a.slug])));
- const summary={pending:pending.length,attempted:0,attached:0,skipped:0,failed:0};
- for(const product of pending.slice(0,6)){
+ missing.sort((a,b)=>Number(Boolean(verified[b.slug]))-Number(Boolean(verified[a.slug])));
+ const pending=missing.map(product=>({product,originalDimensions:null}));
+ // After missing-photo processing, also replace tiny CU SKIN workbook thumbnails.
+ // Never overwrite custom photos of unknown quality or newer uploads.
+ const remaining=Math.max(0,6-pending.length);
+ if(remaining>0){
+   const candidates=rows.filter(p=>p?.brand==="CU SKIN" && p.image_url &&
+      !recent.has(p.slug)).slice(0,24);
+   for(const product of candidates){
+     if(pending.length>=6)break;
+     try{
+       const originalDimensions=await lowResolutionR2Photo(env,product);
+       if(originalDimensions)pending.push({product,originalDimensions});
+     }catch(e){console.warn("CU SKIN image inspection failed",product.slug,String(e));}
+   }
+ }
+ const summary={pending:missing.length,attempted:0,attached:0,upgraded:0,skipped:0,failed:0};
+ for(const {product,originalDimensions} of pending.slice(0,6)){
    summary.attempted++;
    try{
      const source=await findPhoto(product);
      if(!source){summary.skipped++;await status(env,product.slug,"unresolved","No exact supplier image");continue;}
      const image=await binaryPhoto(source,product.brand);
-     const result=await attach(env,product,source,image);
-     summary[result==="attached"?"attached":"skipped"]++;
-     await status(env,product.slug,result,source.page);
+     if(originalDimensions && !betterPhoto(originalDimensions,image.dimensions)){
+       summary.skipped++;
+       await status(env,product.slug,"unresolved","Official image is not sufficiently better than the existing thumbnail");
+       continue;
+     }
+     const result=await attach(env,product,source,image,originalDimensions?product.image_url:null);
+     summary[result==="attached"?(originalDimensions?"upgraded":"attached"):"skipped"]++;
+     await status(env,product.slug,result==="attached"&&originalDimensions?"upgraded":result,source.page);
    }catch(e){
      summary.failed++;
      await status(env,product.slug,"error",e instanceof Error?e.message:String(e));
