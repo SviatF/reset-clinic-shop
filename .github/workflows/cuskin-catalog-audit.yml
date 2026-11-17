@@ -39,11 +39,11 @@ jobs:
         run: |
           node --input-type=module <<'JS'
           const sitemap=await (await fetch('https://cu.ua/sitemap.xml')).text();
-          const locs=[...sitemap.matchAll(/<loc>([^<]+)<\\/loc>/g)].map(x=>x[1]);
+          const locs=sitemap.split('<loc>').slice(1).map(x=>x.split('<')[0]);
           console.log('SITEMAP',JSON.stringify({total:locs.length,first:locs.slice(0,35),tail:locs.slice(-15),numeric:locs.filter(x=>/\\/\\d+$/.test(x)).length}));
           const js=await (await fetch('https://cu.ua/main.2971ad9303550994.js')).text();
           console.log('MAIN_JS',js.length);
-          const urls=[...new Set([...js.matchAll(/https?:\\/\\/[^\s"'<>\\\x60]{5,180}/g)].map(x=>x[0].slice(0,200)))];
+          const urls=[...new Set(js.split('https://').slice(1).map(s=>'https://'+s.slice(0,150).split('"')[0].split("'")[0]))];
           console.log('JS_URLS',JSON.stringify(urls.slice(0,120)));
           for(const term of ['api/','/api','getProducts','getProduct','productId','assortment','environments','graphql','BASE_URL','baseUrl','apiUrl','image_url','imageUrl','cdn','s3.','bucket']){
             let ix=-1,n=0,examples=[];
