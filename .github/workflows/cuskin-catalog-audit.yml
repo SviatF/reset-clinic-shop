@@ -35,6 +35,42 @@ jobs:
             }catch(e){console.log('ERROR',url,String(e))}
           }
           JS
+      - name: Discover official product data sources
+        run: |
+          node --input-type=module <<'JS'
+          const sitemap=await (await fetch('https://cu.ua/sitemap.xml')).text();
+          const locs=[...sitemap.matchAll(/<loc>([^<]+)<\\/loc>/g)].map(x=>x[1]);
+          console.log('SITEMAP',JSON.stringify({total:locs.length,first:locs.slice(0,35),tail:locs.slice(-15),numeric:locs.filter(x=>/\\/\\d+$/.test(x)).length}));
+          const js=await (await fetch('https://cu.ua/main.2971ad9303550994.js')).text();
+          console.log('MAIN_JS',js.length);
+          const urls=[...new Set([...js.matchAll(/https?:\\/\\/[^\s"'<>\\\x60]{5,180}/g)].map(x=>x[0].slice(0,200)))];
+          console.log('JS_URLS',JSON.stringify(urls.slice(0,120)));
+          for(const term of ['api/','/api','getProducts','getProduct','productId','assortment','environments','graphql','BASE_URL','baseUrl','apiUrl','image_url','imageUrl','cdn','s3.','bucket']){
+            let ix=-1,n=0,examples=[];
+            while((ix=js.indexOf(term,ix+1))>=0){n++;if(examples.length<4)examples.push(js.slice(Math.max(0,ix-130),ix+250));}
+            console.log('JS_TERM',term,n,JSON.stringify(examples));
+          }
+          JS
+      - name: Read-only live D1 catalogue statistics
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node --input-type=module <<'JS'
+          const id='38a072d9-bb85-4417-bf92-4f0652cc4056';
+          const res=await fetch('https://api.cloudflare.com/client/v4/accounts/'+process.env.CLOUDFLARE_ACCOUNT_ID+'/d1/database/'+id+'/query',{
+           method:'POST',headers:{'Authorization':'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},
+           body:JSON.stringify({sql:"SELECT content, version FROM shop_documents WHERE pathname='data/products.json'"}),signal:AbortSignal.timeout(10000)});
+          const ans=await res.json();if(!ans.success){console.log('D1_ERROR',JSON.stringify(ans.errors));process.exit(0);}
+          const row=ans.result?.[0]?.results?.[0];
+          if(!row){console.log('D1_MISSING_DOC');process.exit(0)}
+          const all=JSON.parse(row.content);
+          const cu=all.filter(p=>p.brand==='CU SKIN');
+          console.log('LIVE_D1',JSON.stringify({version:row.version,total:all.length,cu:cu.length,
+            supplierSkus:cu.filter(p=>/^300\\d{3}$/.test(String(p.sku||''))).length,
+            photos:cu.filter(p=>p.image_url).length,draft:cu.filter(p=>p.status==='draft').length,
+            sample:cu.slice(-5).map(p=>({id:p.id,sku:p.sku,name:p.name,image_url:p.image_url?.slice(0,150),created_at:p.created_at}))}));
+          JS
       - name: Upload HTML for audit
         if: always()
         uses: actions/upload-artifact@v4
