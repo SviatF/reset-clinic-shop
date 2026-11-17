@@ -31,7 +31,7 @@ export async function GET() {
       auto_restored: raw.filter(p => String(p.image_url || "").includes("/products/official-auto/")).length,
     };
     let mediaSync: { attempts: number; attached: number; upgraded: number; unresolved: number; failed: number;
-      last_attempt_unix: number | null } | null = null;
+      last_attempt_unix: number | null; failure_categories?: Record<string, number> } | null = null;
     if (usingCloudflareStore()) {
       try {
         const env = getCloudflareContext().env as unknown as {
@@ -49,6 +49,32 @@ export async function GET() {
           failed: Number(summary.failed || 0),
           last_attempt_unix: summary.last_attempt_unix || null,
         };
+        if(mediaSync) {
+          // Public health exposes only categorical aggregate counts, never
+          // supplier URLs, individual product names or sensitive D1 data.
+          const categories = await (env.SHOP_DB as unknown as {
+            prepare(sql:string): { all<T>(): Promise<{results:T[]}> }
+          }).prepare(`
+            SELECT
+              CASE
+                WHEN status IN ('attached','upgraded') THEN 'saved'
+                WHEN detail LIKE '%HTTP 403%' OR detail LIKE '%HTTP 401%' THEN 'source_forbidden'
+                WHEN detail LIKE '%HTTP 404%' THEN 'source_not_found'
+                WHEN detail LIKE '%Redirect%' OR detail LIKE '%redirect%' THEN 'source_redirect'
+                WHEN detail LIKE '%Source HTTP%' OR detail LIKE '%unavailable%' THEN 'source_network'
+                WHEN detail LIKE '%title differs%' OR detail LIKE '%product title%' THEN 'identity_mismatch'
+                WHEN detail LIKE '%No allowed main product image%' THEN 'image_not_found'
+                WHEN detail LIKE '%Search returned no product links%' THEN 'search_no_results'
+                WHEN detail LIKE '%No exact supplier image%' THEN 'previous_generic_failure'
+                WHEN detail LIKE '%better%' THEN 'low_quality_source'
+                ELSE 'other'
+              END AS category, COUNT(*) AS total
+            FROM shop_media_sync_attempts GROUP BY category
+          `).all<{category:string;total:number}>();
+          mediaSync.failure_categories = Object.fromEntries(
+            (categories.results || []).map(item=>[item.category,Number(item.total)||0])
+          );
+        }
       } catch {
         // Cron may not have executed yet, in which case its audit table does not exist.
       }
