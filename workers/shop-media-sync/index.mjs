@@ -69,22 +69,18 @@ function tag(html,name){
  return decodeHtml((html.match(r)?.[1]||"").replace(/<[^>]+>/g," "));
 }
 function tagAttribute(tag,name) {
- const escaped=name.replace(/[-/\\^$*+?.()|[\]{}]/g,"\\function tag(html,name){
- const r=new RegExp("<"+name+"\\b[^>]*>([\\s\\S]*?)<\\/"+name+">","i");
- return decodeHtml((html.match(r)?.[1]||"").replace(/<[^>]+>/g," "));
-}");
- const pattern=new RegExp("(?:\\s|^)"+escaped+"\\s*=\\s*(?:\\\"([^\\\"]+)\\\"|'([^']+)')","i");
+ const pattern=new RegExp("\\b"+name+"\\s*=\\s*(?:\"([^\"]+)\"|'([^']+)')","i");
  const hit=tag.match(pattern);
  return hit?decodeHtml(hit[1]||hit[2]):null;
 }
-/** The product's main zoom image only; never use recommended products. */
+/** Only a product's main zoom image. Never use recommendations or logos. */
 export function officialMainGalleryImage(html,page,brand) {
  if(brand!=="Sensilis")return null;
  const photos=[...html.matchAll(/<img\b[^>]*>/gi)].map(m=>m[0]);
  const primary=photos.find(image=>tagAttribute(image,"id")==="zoom");
  if(primary){
    const raw=tagAttribute(primary,"data-zoom-image")||tagAttribute(primary,"src");
-   try{
+   try {
      const url=new URL(raw,page);
      if(allowed(url.href,brand,true))return url.href;
    }catch{}
