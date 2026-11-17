@@ -11,9 +11,19 @@ const HOSTS = {
   "Cetaphil":["cetaphil.ua","www.cetaphil.ua","cetaphil.com","www.cetaphil.com"],
 };
 const IGNORE=new Set(["hydropeptide","sensilis","decaar","cuskin","oliere","paris","cetaphil","dr","solution","clean","the","and","for","skin","spf","with","body","day"]);
-const normalize=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
+function decodeHtml(value) {
+ return String(value||"").replace(/&(#x[0-9a-f]+|#[0-9]+|amp|quot|apos|nbsp|lt|gt|ndash|mdash);/gi,(_,entity)=>{
+   const name=entity.toLowerCase();
+   const named={amp:"&",quot:'"',apos:"'",nbsp:" ",lt:"<",gt:">",ndash:"–",mdash:"—"};
+   if(named[name]!==undefined)return named[name];
+   const hex=name.startsWith("#x");
+   const code=Number.parseInt(name.slice(hex?2:1),hex?16:10);
+   return Number.isInteger(code)&&code>0&&code<=0x10ffff?String.fromCodePoint(code):" ";
+ });
+}
+const normalize=s=>decodeHtml(s).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
  .replace(/(\d+),(\d+)/g,"$1.$2").replace(/[^a-z0-9а-яіїєґ.%+]+/giu," ").replace(/\s+/g," ").trim();
-const distinctive=s=>normalize(String(s||"").split(/[—–]/)[0]).split(" ")
+const distinctive=s=>normalize(decodeHtml(s).split(/[—–]/)[0]).split(" ")
  .filter(t=>t.length>2&&!IGNORE.has(t));
 function attributes(text){
  const t=normalize(text);
@@ -50,13 +60,13 @@ function meta(html,name){
    const attr=tag.match(/\b(?:property|name)\s*=\s*(?:"([^"]+)"|'([^']+)')/i);
    if((attr?.[1]||attr?.[2])!==name)continue;
    const val=tag.match(/\bcontent\s*=\s*(?:"([^"]+)"|'([^']+)')/i);
-   if(val)return (val[1]||val[2]).replace(/&amp;/g,"&");
+   if(val)return decodeHtml(val[1]||val[2]);
  }
  return null;
 }
 function tag(html,name){
  const r=new RegExp("<"+name+"\\b[^>]*>([\\s\\S]*?)<\\/"+name+">","i");
- return (html.match(r)?.[1]||"").replace(/<[^>]+>/g," ");
+ return decodeHtml((html.match(r)?.[1]||"").replace(/<[^>]+>/g," "));
 }
 async function get(url,brand,accept="text/html"){
  if(!allowed(url,brand,accept.startsWith("image/")))throw Error("Unapproved supplier host");
