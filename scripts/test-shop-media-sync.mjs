@@ -1,11 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import worker, { validIdentity, reconcile } from "../workers/shop-media-sync/index.mjs";
+import worker, { validIdentity, reconcile, officialMainGalleryImage } from "../workers/shop-media-sync/index.mjs";
 import { imageDimensions, betterPhoto } from "../workers/shop-media-sync/image-dimensions.mjs";
 
 test("identity: protect variants and accept verified supplier title",()=>{
   assert.equal(validIdentity("HydroPeptide Sun & Sleep — тревел-набір для догляду", "Sun & Sleep | HydroPeptide"),true);
   assert.equal(validIdentity("DÉCAAR Rebalancing Cream 24hr — балансувальний крем", "Rebalancing Cream 24hr | DÉCAAR"),true);
+  assert.equal(validIdentity("HydroPeptide Sun & Sleep — тревел-набір","Sun &#038; Sleep &#8211; Тревел набір для догляду"),true);
   assert.equal(validIdentity("HydroPeptide Sun Slick SPF 50", "HydroPeptide Sun Slick SPF 30"),false);
   assert.equal(validIdentity("CU SKIN Retinol 0.3%", "CU SKIN Retinol 1%"),false);
   assert.equal(validIdentity("Sensilis Make-Up 01", "Sensilis Make-Up 03"),false);
@@ -192,4 +193,44 @@ test("cron upgrades only an inferior CU SKIN thumbnail with a verified larger of
     assert.equal(retry.upgraded,0);
     assert.equal(db.updates.length,1);
   }finally{globalThis.fetch=originalFetch;}
+});
+
+test("Sensilis: use only the product zoom gallery image, not unrelated recommendations",()=>{
+ const url="https://sensilis.com.ua/upgrade-ampoules/";
+ const html='<div class="recommended"><img src="https://sensilis.com.ua/image/catalog/other.png"></div>'+
+  '<img src="https://sensilis.com.ua/image/cache/01-thumb.png" title="Upgrade Ampoules" id="zoom" alt="Upgrade Ampoules" data-zoom-image="https://sensilis.com.ua/image/cache/catalog/products/Products/Upgrade/Upgrade-Ampoules/01-750x1000.png"/>';
+ assert.equal(officialMainGalleryImage(html,url,"Sensilis"),
+  "https://sensilis.com.ua/image/cache/catalog/products/Products/Upgrade/Upgrade-Ampoules/01-750x1000.png");
+ assert.equal(officialMainGalleryImage('<img src="https://sensilis.com.ua/image/catalog/other.png">',url,"Sensilis"),null);
+ assert.equal(officialMainGalleryImage(html,url,"DÉCAAR"),null);
+});
+test("Sensilis without OpenGraph: photo imported from its verified main gallery",async()=>{
+ const product={id:"sen-1",slug:"supplier-sensilis-upgrade-ampoules",brand:"Sensilis",
+  name:"Sensilis Upgrade Ampoules",price:1746,sale_price:null,stock_quantity:0,status:"draft",
+  image_url:null};
+ const db=fakeDb([product]),objects=new Map();
+ const env={SHOP_DB:db.client,SHOP_MEDIA:{
+   async put(key,data,meta){objects.set(key,{data,meta});},
+   async head(key){return objects.get(key)||null;}
+ }};
+ const png=fakePng(750,1000);
+ const originalFetch=globalThis.fetch;
+ globalThis.fetch=async(url)=>{
+   if(url==="https://sensilis.com.ua/upgrade-ampoules/")
+    return new Response('<h1>Upgrade Ampoules</h1>'+
+       '<img src="/image/cache/01-555x740.png" title="Upgrade Ampoules" id="zoom" data-zoom-image="https://sensilis.com.ua/image/cache/catalog/products/Products/Upgrade/Upgrade-Ampoules/01-750x1000.png"/>',
+       {headers:{"content-type":"text/html"}});
+   if(url==="https://sensilis.com.ua/image/cache/catalog/products/Products/Upgrade/Upgrade-Ampoules/01-750x1000.png")
+    return new Response(png,{headers:{"content-type":"image/png"}});
+   throw Error("Unexpected supplier URL "+url);
+ };
+ try {
+   const summary=await reconcile(env,Math.floor(Date.now()/1000));
+   assert.equal(summary.attached,1);
+   assert.equal(summary.failed,0);
+   assert.ok(db.read()[0].image_url.startsWith("/shop-media/products/official-auto/"));
+   assert.equal(db.read()[0].price,1746);
+   assert.equal(db.read()[0].status,"draft");
+   assert.equal(objects.size,1);
+ }finally{globalThis.fetch=originalFetch;}
 });
