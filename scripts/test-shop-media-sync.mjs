@@ -35,7 +35,7 @@ function fakeDb(products){
             },
             async all(){
               if(query.startsWith("select slug from shop_media_sync_attempts"))
-                return {results:[...attempts.entries()].filter(([,v])=>v.checked_at>values[0]).map(([slug])=>({slug}))};
+                return {results:[...attempts.entries()].filter(([,v])=>v.checked_at>values[0]).map(([slug,v])=>({slug,status:v.status,detail:v.detail}))};
               throw Error("Unrecognized all "+sql);
             },
             async run(){
@@ -148,6 +148,26 @@ test("intrinsic image header parsing and minimum photo-quality improvement",()=>
     ...new Array(20).fill(0)]);
   assert.deepEqual(imageDimensions(jpeg),{width:200,height:100});
 });
+test("legacy unresolved attempts are retried after supplier parser version upgrade",async()=>{
+ const product={id:"hp-old",slug:"supplier-hydropeptide-sun-sleep",brand:"HydroPeptide",
+  name:"HydroPeptide Sun & Sleep",price:4342.17,status:"draft",image_url:null};
+ const db=fakeDb([product]);
+ db.attempts.set(product.slug,{status:"unresolved",detail:"No exact supplier image",
+   checked_at:Math.floor(Date.now()/1000)});
+ const env={SHOP_DB:db.client,SHOP_MEDIA:{async head(){return null;}}};
+ const previous=globalThis.fetch;
+ let called=0;
+ globalThis.fetch=async()=>{called++;return new Response("Blocked",{status:403});};
+ try {
+   const result=await reconcile(env,Math.floor(Date.now()/1000));
+   assert.equal(result.attempted,1,"Old parser failure must not block the new identity rules");
+   assert.ok(called>0);
+   assert.ok(db.attempts.get(product.slug).detail.startsWith("supplier-parser-v2: "));
+   const again=await reconcile(env,Math.floor(Date.now()/1000));
+   assert.equal(again.attempted,0,"New parser failure should honor backoff");
+ }finally{globalThis.fetch=previous;}
+});
+
 test("cron upgrades only an inferior CU SKIN thumbnail with a verified larger official photo",async()=>{
   const product={id:"cu-1",slug:"supplier-cuskin-bifida-barrier-cream",brand:"CU SKIN",
     name:"CU SKIN Dr. Solution Bifida Barrier Cream",sku:"300120",size:"50 мл",
