@@ -278,7 +278,7 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
  // upgrades, but falls back to missing images if no upgrades are eligible.
  const pending=missing.slice(0,4).map(product=>({product,originalDimensions:null}));
  const cuCandidates=rows.filter(p=>p?.brand==="CU SKIN" && p.image_url &&
-    !recent.has(p.slug)).slice(0,70);
+    !recent.has(p.slug)).slice(0,24);
  let upgrades=0;
  for(const product of cuCandidates){
    if(upgrades>=2)break;
