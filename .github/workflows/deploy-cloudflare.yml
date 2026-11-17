@@ -37,3 +37,10 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npm run cf:deploy
+      - name: Verify live Worker health and photo sync counts
+        continue-on-error: true
+        run: |
+          curl --fail --silent --show-error --retry 6 --retry-delay 2 --retry-all-errors \
+            "https://reset-clinic-shop.oleg22777.workers.dev/api/health" \
+            | python3 -m json.tool
+
