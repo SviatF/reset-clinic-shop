@@ -191,7 +191,7 @@ async function status(env,slug,state,detail){
  await env.SHOP_DB.prepare(
    "INSERT INTO shop_media_sync_attempts(slug,status,detail,checked_at) VALUES(?,?,?,unixepoch()) "+
    "ON CONFLICT(slug) DO UPDATE SET status=excluded.status,detail=excluded.detail,checked_at=excluded.checked_at"
- ).bind(slug,state,String(detail||"").slice(0,230)).run();
+ ).bind(slug,state,("supplier-parser-v2: "+String(detail||"")).slice(0,230)).run();
 }
 async function attach(env,product,source,photo,expectedImageUrl=null){
  const digest=new Uint8Array(await crypto.subtle.digest("SHA-256",photo.bytes));
@@ -231,9 +231,10 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
    "slug TEXT PRIMARY KEY,status TEXT NOT NULL,detail TEXT,checked_at INTEGER NOT NULL)").run();
  const {rows}=await catalog(env);
  const checked=await env.SHOP_DB.prepare(
-   "SELECT slug FROM shop_media_sync_attempts WHERE checked_at>?")
+   "SELECT slug,status,detail FROM shop_media_sync_attempts WHERE checked_at>?")
    .bind(now-12*3600).all();
- const recent=new Set((checked.results||[]).map(row=>row.slug));
+ const recent=new Set((checked.results||[]).filter(row=>
+   String(row.detail||"").startsWith("supplier-parser-v2: ")).map(row=>row.slug));
  const missing=rows.filter(p=>p&&p.slug&&p.brand&&p.name&&!p.image_url&&
    HOSTS[p.brand]&&!recent.has(p.slug));
  missing.sort((a,b)=>Number(Boolean(verified[b.slug]))-Number(Boolean(verified[a.slug])));
