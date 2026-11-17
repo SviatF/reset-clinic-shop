@@ -40,7 +40,7 @@ jobs:
           node --input-type=module <<'JS'
           const sitemap=await (await fetch('https://cu.ua/sitemap.xml')).text();
           const locs=sitemap.split('<loc>').slice(1).map(x=>x.split('<')[0]);
-          console.log('SITEMAP',JSON.stringify({total:locs.length,first:locs.slice(0,35),tail:locs.slice(-15),numeric:locs.filter(x=>/\\/\\d+$/.test(x)).length}));
+          console.log('SITEMAP',JSON.stringify({total:locs.length,first:locs.slice(0,35),tail:locs.slice(-15),numeric:locs.filter(x=>String(Number(x.split('/').at(-1)))===x.split('/').at(-1)).length}));
           const js=await (await fetch('https://cu.ua/main.2971ad9303550994.js')).text();
           console.log('MAIN_JS',js.length);
           const urls=[...new Set(js.split('https://').slice(1).map(s=>'https://'+s.slice(0,150).split('"')[0].split("'")[0]))];
