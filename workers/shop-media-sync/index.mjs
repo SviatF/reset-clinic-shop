@@ -68,6 +68,30 @@ function tag(html,name){
  const r=new RegExp("<"+name+"\\b[^>]*>([\\s\\S]*?)<\\/"+name+">","i");
  return decodeHtml((html.match(r)?.[1]||"").replace(/<[^>]+>/g," "));
 }
+function tagAttribute(tag,name) {
+ const escaped=name.replace(/[-/\\^$*+?.()|[\]{}]/g,"\\function tag(html,name){
+ const r=new RegExp("<"+name+"\\b[^>]*>([\\s\\S]*?)<\\/"+name+">","i");
+ return decodeHtml((html.match(r)?.[1]||"").replace(/<[^>]+>/g," "));
+}");
+ const pattern=new RegExp("(?:\\s|^)"+escaped+"\\s*=\\s*(?:\\\"([^\\\"]+)\\\"|'([^']+)')","i");
+ const hit=tag.match(pattern);
+ return hit?decodeHtml(hit[1]||hit[2]):null;
+}
+/** The product's main zoom image only; never use recommended products. */
+export function officialMainGalleryImage(html,page,brand) {
+ if(brand!=="Sensilis")return null;
+ const photos=[...html.matchAll(/<img\b[^>]*>/gi)].map(m=>m[0]);
+ const primary=photos.find(image=>tagAttribute(image,"id")==="zoom");
+ if(primary){
+   const raw=tagAttribute(primary,"data-zoom-image")||tagAttribute(primary,"src");
+   try{
+     const url=new URL(raw,page);
+     if(allowed(url.href,brand,true))return url.href;
+   }catch{}
+ }
+ return null;
+}
+
 async function get(url,brand,accept="text/html"){
  if(!allowed(url,brand,accept.startsWith("image/")))throw Error("Unapproved supplier host");
  const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),10000);
@@ -136,9 +160,11 @@ async function findPhoto(product){
      const identity=candidate.title||product.name;
      if(!actual.some(title=>validIdentity(identity,title)&&validIdentity(product.name,title)))continue;
      const image=meta(html,"og:image")||meta(html,"og:image:secure_url")||meta(html,"twitter:image");
-     const dest=new URL(image||"",candidate.url);
-     if(!allowed(dest.href,product.brand,true))continue;
-     return {url:dest.href,page:candidate.url};
+     const gallery=officialMainGalleryImage(html,candidate.url,product.brand);
+     const dest=image?new URL(image,candidate.url):null;
+     const verified=dest&&allowed(dest.href,product.brand,true)?dest.href:gallery;
+     if(!verified)continue;
+     return {url:verified,page:candidate.url};
    }catch{}
  }
  return null;
