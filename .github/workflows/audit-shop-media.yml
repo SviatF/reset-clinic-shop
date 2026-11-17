@@ -14,3 +14,20 @@ jobs:
           curl --fail --silent --show-error --retry 5 --retry-delay 2 --retry-all-errors \
             "https://reset-clinic-shop.oleg22777.workers.dev/api/health" \
             | python3 -m json.tool
+
+      - name: Inspect supplier HTML metadata
+        run: |
+          python3 - <<'PY'
+          import urllib.request,re
+          for url in ['https://hydropeptide.ua/product/sun-sleep/','https://sensilis.com.ua/upgrade-ampoules/','https://decaar.com.ua/d746/','https://www.cu.ua/']:
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'RESET-Shop-Verified-Media-Sync','Accept':'text/html'})
+              with urllib.request.urlopen(req,timeout=12) as response:
+                page=response.read(1600000).decode('utf-8','replace')
+                print('PAGE',url,'HTTP',response.status,'FINAL',response.url)
+              titles=re.findall(r'<title[^>]*>(.*?)</title>',page,re.I|re.S)
+              h1s=re.findall(r'<h1[^>]*>(.*?)</h1>',page,re.I|re.S)
+              metas=[m for m in re.findall(r'<meta\\b[^>]*>',page,re.I) if re.search('og:image|twitter:image|og:title',m,re.I)]
+              print('TITLE',titles[:1],'H1',h1s[:1],'META',metas[:5])
+            except Exception as error: print('PAGE',url,'ERROR',repr(error))
+          PY
