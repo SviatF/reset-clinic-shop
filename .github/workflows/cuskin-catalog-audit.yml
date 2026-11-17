@@ -1,0 +1,44 @@
+name: Audit official CU SKIN catalogue (staging)
+on:
+  push:
+    branches: [fix/cuskin-official-catalog-20261117]
+    paths:
+      - '.github/workflows/cuskin-catalog-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Probe official catalog HTML / product / sitemaps
+        run: |
+          node --input-type=module <<'JS'
+          import {writeFileSync} from 'node:fs';
+          for(const url of ['https://cu.ua/','https://cu.ua/151','https://cu.ua/sitemap.xml','https://www.cu.ua/','https://cu.ua/robots.txt']){
+            try {
+              const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 (compatible; RESETShopAudit/1.0)'},signal:AbortSignal.timeout(12000)});
+              const body=await r.text();const slug=url.replace(/[^a-z0-9]+/gi,'-').slice(-60);
+              writeFileSync('/tmp/'+slug+'.html',body);
+              console.log('PAGE',JSON.stringify({url,redirect:r.url,status:r.status,mime:r.headers.get('content-type'),bytes:body.length,first:body.slice(0,600),
+                title:body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1],
+                productMentions:(body.match(/Clean-Up|CU Dr|Vitamin U/gi)||[]).length,
+                nextData:body.includes('__NEXT_DATA__'),nuxtData:body.includes('__NUXT__'),
+                scripts:[...body.matchAll(/<script[^>]+src=["']([^"']+)/gi)].map(x=>x[1]).slice(0,12),
+                links:[...body.matchAll(/<a[^>]+href=["']([^"']+)/gi)].map(x=>x[1]).filter(x=>/^\/?\d+|category|product|catalog/i.test(x)).slice(0,25),
+                imageSamples:[...body.matchAll(/<img[^>]+(?:src|data-src)=["']([^"']+)/gi)].map(x=>x[1]).slice(0,15)}));
+            }catch(e){console.log('ERROR',url,String(e))}
+          }
+          JS
+      - name: Upload HTML for audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cu-skin-public-html
+          path: /tmp/https-cu-ua*.html
+          if-no-files-found: ignore
