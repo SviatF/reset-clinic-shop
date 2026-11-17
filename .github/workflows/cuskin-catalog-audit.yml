@@ -51,6 +51,30 @@ jobs:
             console.log('JS_TERM',term,n,JSON.stringify(examples));
           }
           JS
+      - name: Probe official product API and image sizes
+        run: |
+          node --input-type=module <<'JS'
+          for(const url of ['https://key.cu.ua/api/products/?page_size=200&page=1',
+                          'https://key.cu.ua/api/product/151',
+                          'https://key.cu.ua/robots.txt']){
+           try{
+            const res=await fetch(url,{headers:{accept:'application/json'},signal:AbortSignal.timeout(15000)});
+            const body=await res.text();
+            console.log('API',JSON.stringify({url,status:res.status,mime:res.headers.get('content-type'),bytes:body.length}));
+            try{
+             const obj=JSON.parse(body);
+             const rows=Array.isArray(obj)?obj:obj.results;
+             console.log('API_DATA',JSON.stringify({url,shape:Object.keys(obj),count:obj.count,n:rows?.length,
+               sample:rows?.slice(0,4).map(p=>p),
+               detail:rows?undefined:obj}).slice(0,18000));
+             if(rows?.length){
+               const candidates=rows.filter(p=>p.vendorCode||p.vendor_code||p.images||p.image||p.photos);
+               console.log('API_SAMPLE_FIELDS',JSON.stringify(candidates.slice(12,15)).slice(0,9000));
+             }
+            }catch{console.log('API_TEXT',body.slice(0,500))}
+           }catch(e){console.log('API_ERROR',url,String(e))}
+          }
+          JS
       - name: Read-only live D1 catalogue statistics
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
