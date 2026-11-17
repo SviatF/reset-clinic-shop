@@ -27,7 +27,7 @@ jobs:
                 print('PAGE',url,'HTTP',response.status,'FINAL',response.url)
               titles=re.findall(r'<title[^>]*>(.*?)</title>',page,re.I|re.S)
               h1s=re.findall(r'<h1[^>]*>(.*?)</h1>',page,re.I|re.S)
-              metas=[m for m in re.findall(r'<meta\\b[^>]*>',page,re.I) if re.search('og:image|twitter:image|og:title',m,re.I)]
+              metas=[m for m in re.findall(r'<meta\b[^>]*>',page,re.I) if re.search('og:image|twitter:image|og:title',m,re.I)]
               print('TITLE',titles[:1],'H1',h1s[:1],'META',metas[:5])
             except Exception as error: print('PAGE',url,'ERROR',repr(error))
           PY
