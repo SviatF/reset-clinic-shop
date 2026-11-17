@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import worker, { validIdentity, reconcile } from "../workers/shop-media-sync/index.mjs";
+import { imageDimensions, betterPhoto } from "../workers/shop-media-sync/image-dimensions.mjs";
 
 test("identity: protect variants and accept verified supplier title",()=>{
   assert.equal(validIdentity("HydroPeptide Sun & Sleep — тревел-набір для догляду", "Sun & Sleep | HydroPeptide"),true);
@@ -10,6 +11,8 @@ test("identity: protect variants and accept verified supplier title",()=>{
   assert.equal(validIdentity("Sensilis Make-Up 01", "Sensilis Make-Up 03"),false);
   assert.equal(validIdentity("Sensilis Cushion №21", "Sensilis Cushion №23"),false);
   assert.equal(validIdentity("CU SKIN Vitamin U Cream 7мл", "CU SKIN Vitamin U Cream 50мл"),false);
+  assert.equal(validIdentity("CU SKIN Bifida Barrier Cream", "CU SKIN Bifida Barrier Toner"),false);
+  assert.equal(validIdentity("CU SKIN Retinol Activator 0.5% Cream", "CU SKIN Retinol Activator 1% Cream"),false);
   assert.equal(validIdentity("HydroPeptide A", "HydroPeptide B"),false);
 });
 function fakeDb(products){
@@ -120,5 +123,73 @@ test("cron: independently fetch image, verify R2 object, update only D1 image_ur
     assert.equal(accesses,before,"No retry loop for unresolved item");
     assert.equal(db.updates.length,1);
     assert.equal((await worker.fetch()).status,404,"No exposed public mutation route");
+  }finally{globalThis.fetch=originalFetch;}
+});
+
+
+function fakePng(width,height){
+  const bytes=new Uint8Array(3000);
+  bytes.set([137,80,78,71,13,10,26,10],0);
+  bytes.set([0,0,0,13,73,72,68,82],8);
+  const store=(offset,n)=>{bytes[offset]=(n>>>24)&255;bytes[offset+1]=(n>>>16)&255;
+    bytes[offset+2]=(n>>>8)&255;bytes[offset+3]=n&255;};
+  store(16,width);store(20,height);
+  return bytes;
+}
+test("intrinsic image header parsing and minimum photo-quality improvement",()=>{
+  assert.deepEqual(imageDimensions(fakePng(90,74)),{width:90,height:74});
+  assert.deepEqual(imageDimensions(fakePng(1000,1000)),{width:1000,height:1000});
+  assert.equal(betterPhoto({width:90,height:74},{width:1000,height:1000}),true);
+  assert.equal(betterPhoto({width:90,height:74},{width:100,height:100}),false);
+  assert.equal(betterPhoto({width:1000,height:1000},{width:1200,height:1200}),false);
+  assert.equal(imageDimensions(new Uint8Array(35)),null);
+  const jpeg=new Uint8Array([255,216,255,192,0,17,8,0,100,0,200,1,1,17,0,2,17,0,3,17,0,255,217,
+    ...new Array(20).fill(0)]);
+  assert.deepEqual(imageDimensions(jpeg),{width:200,height:100});
+});
+test("cron upgrades only an inferior CU SKIN thumbnail with a verified larger official photo",async()=>{
+  const product={id:"cu-1",slug:"supplier-cuskin-bifida-barrier-cream",brand:"CU SKIN",
+    name:"CU SKIN Dr. Solution Bifida Barrier Cream",sku:"300120",size:"50 мл",
+    price:1932,sale_price:1550,stock_quantity:12,track_stock:true,status:"active",
+    image_url:"/shop-media/products/2026-11-16/tiny.png"};
+  const other={...product,id:"cu-2",slug:"other-original",name:"CU SKIN Vitamin U Cream",
+    image_url:"/shop-media/products/2026-11-16/good.png",price:2800};
+  const db=fakeDb([product,other]),objects=new Map();
+  const originalPhoto=fakePng(90,74),goodPhoto=fakePng(1000,1000);
+  const env={SHOP_DB:db.client,SHOP_MEDIA:{
+    async get(key){if(key.endsWith("tiny.png"))return {arrayBuffer:async()=>originalPhoto.buffer};
+      if(key.endsWith("good.png"))return {arrayBuffer:async()=>goodPhoto.buffer};return null;},
+    async put(key,data,metadata){objects.set(key,{data,metadata});},
+    async head(key){return objects.get(key)||null;}
+  }};
+  const originalFetch=globalThis.fetch;
+  globalThis.fetch=async(url)=>{
+    if(String(url).startsWith("https://cu.ua/?s="))
+      return new Response('<a href="/product/bifida-barrier-cream/">Product</a>',
+        {headers:{"content-type":"text/html"}});
+    if(url==="https://cu.ua/product/bifida-barrier-cream/")
+      return new Response('<h1>CU SKIN Dr. Solution Bifida Barrier Cream</h1>'+
+        '<meta property="og:image" content="https://cu.ua/image/bifida-barrier-cream.png">',
+        {headers:{"content-type":"text/html"}});
+    if(url==="https://cu.ua/image/bifida-barrier-cream.png")
+      return new Response(goodPhoto,{headers:{"content-type":"image/png"}});
+    throw Error("Unexpected URL "+url);
+  };
+  try{
+    const result=await reconcile(env,Math.floor(Date.now()/1000));
+    assert.equal(result.upgraded,1);
+    assert.equal(result.attached,0);
+    const latest=db.read();
+    assert.ok(latest[0].image_url.includes("/products/official-auto/"));
+    assert.equal(latest[0].price,1932);
+    assert.equal(latest[0].sale_price,1550);
+    assert.equal(latest[0].stock_quantity,12);
+    assert.equal(latest[0].status,"active");
+    assert.deepEqual(latest[1],other,"High-quality existing photo must not change");
+    assert.equal(objects.size,1);
+    assert.equal(db.attempts.get(product.slug).status,"upgraded");
+    const retry=await reconcile(env,Math.floor(Date.now()/1000));
+    assert.equal(retry.upgraded,0);
+    assert.equal(db.updates.length,1);
   }finally{globalThis.fetch=originalFetch;}
 });
