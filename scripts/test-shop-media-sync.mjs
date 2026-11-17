@@ -34,8 +34,8 @@ function fakeDb(products){
               throw Error("Unrecognized first "+sql);
             },
             async all(){
-              if(query.startsWith("select slug from shop_media_sync_attempts"))
-                return {results:[...attempts.entries()].filter(([,v])=>v.checked_at>values[0]).map(([slug])=>({slug}))};
+              if(query.startsWith("select slug,status,detail from shop_media_sync_attempts"))
+                return {results:[...attempts.entries()].filter(([,v])=>v.checked_at>values[0]).map(([slug,v])=>({slug,status:v.status,detail:v.detail}))};
               throw Error("Unrecognized all "+sql);
             },
             async run(){
@@ -233,4 +233,33 @@ test("Sensilis without OpenGraph: photo imported from its verified main gallery"
    assert.equal(db.read()[0].status,"draft");
    assert.equal(objects.size,1);
  }finally{globalThis.fetch=originalFetch;}
+});
+
+test("new matcher revision retries old unresolved supplier rows immediately",async()=>{
+  const item={id:"sen-retry",slug:"supplier-sensilis-upgrade-ampoules",brand:"Sensilis",
+    name:"Sensilis Upgrade Ampoules",image_url:null,status:"draft",price:1000};
+  const db=fakeDb([item]), objects=new Map();
+  db.attempts.set(item.slug,{status:"unresolved",detail:"No exact supplier image",
+    checked_at:Math.floor(Date.now()/1000)});
+  const env={SHOP_DB:db.client,SHOP_MEDIA:{
+    async put(key,data,meta){objects.set(key,{data,meta});},
+    async head(key){return objects.get(key)||null;}
+  }};
+  const bytes=fakePng(750,1000);
+  const prior=globalThis.fetch;
+  globalThis.fetch=async url=>{
+    if(url==="https://sensilis.com.ua/upgrade-ampoules/")
+      return new Response('<h1>Upgrade Ampoules</h1>'+
+        '<img id="zoom" data-zoom-image="https://sensilis.com.ua/image/catalog/ampoules.png">',
+        {headers:{"Content-Type":"text/html"}});
+    if(url==="https://sensilis.com.ua/image/catalog/ampoules.png")
+      return new Response(bytes,{headers:{"Content-Type":"image/png"}});
+    throw Error("Unexpected URL "+url);
+  };
+  try {
+    const report=await reconcile(env,Math.floor(Date.now()/1000));
+    assert.equal(report.attached,1,"Old failure must be retried after matcher update");
+    assert.equal(objects.size,1);
+    assert.match(db.attempts.get(item.slug).detail,/supplier-gallery-2026-11-17-r2/);
+  }finally{globalThis.fetch=prior;}
 });
