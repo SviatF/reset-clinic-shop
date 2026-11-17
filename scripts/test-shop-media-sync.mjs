@@ -260,6 +260,34 @@ test("new matcher revision retries old unresolved supplier rows immediately",asy
     const report=await reconcile(env,Math.floor(Date.now()/1000));
     assert.equal(report.attached,1,"Old failure must be retried after matcher update");
     assert.equal(objects.size,1);
-    assert.match(db.attempts.get(item.slug).detail,/supplier-gallery-2026-11-17-r2/);
+    assert.match(db.attempts.get(item.slug).detail,/supplier-gallery-2026-11-17-r3/);
   }finally{globalThis.fetch=prior;}
+});
+
+test("official supplier redirects are followed only inside the same allowlisted brand",async()=>{
+ const product={id:"sen-redirect",slug:"supplier-sensilis-upgrade-ampoules",brand:"Sensilis",
+   name:"Sensilis Upgrade Ampoules",image_url:null,status:"draft",price:1000};
+ const db=fakeDb([product]), objects=new Map();
+ const env={SHOP_DB:db.client,SHOP_MEDIA:{
+   async put(key,data,meta){objects.set(key,{data,meta});},
+   async head(key){return objects.get(key)||null;}
+ }};
+ const bytes=fakePng(750,1000), originalFetch=globalThis.fetch;
+ globalThis.fetch=async url=>{
+   if(url==="https://sensilis.com.ua/upgrade-ampoules/")
+     return new Response(null,{status:301,headers:{location:"https://www.sensilis.com.ua/upgrade-ampoules/"}});
+   if(url==="https://www.sensilis.com.ua/upgrade-ampoules/")
+     return new Response('<h1>Upgrade Ampoules</h1>'+
+       '<img id="zoom" data-zoom-image="https://sensilis.com.ua/image/catalog/ampoules.png">',
+       {headers:{"Content-Type":"text/html"}});
+   if(url==="https://sensilis.com.ua/image/catalog/ampoules.png")
+     return new Response(bytes,{headers:{"Content-Type":"image/png"}});
+   throw Error("Unexpected URL "+url);
+ };
+ try{
+   const result=await reconcile(env,Math.floor(Date.now()/1000));
+   assert.equal(result.attached,1);
+   assert.equal(result.failed,0);
+   assert.equal(objects.size,1);
+ }finally{globalThis.fetch=originalFetch;}
 });
