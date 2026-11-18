@@ -268,4 +268,4 @@ export async function publishVerifiedSupplierDrafts(env,{limit=LIMIT_PER_CRON,ma
   console.log("Verified supplier catalog draft publishing",JSON.stringify(result));
   return result;
 }
-export { verifiedUrl, mainGallery, variantIsCompatible, eligible, VERSION as VERIFIED_DRAFT_SYNC_VERSION };
+export { verifiedUrl, mainGallery, variantIsCompatible, eligible, fetchVerifiedSource, VERSION as VERIFIED_DRAFT_SYNC_VERSION };
