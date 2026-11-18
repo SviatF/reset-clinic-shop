@@ -8,7 +8,6 @@ const PREFIX = "/shop-media/products/cu-skin-official/";
 const STATUSES_DONE = new Set(["attached", "created", "already", "kept"]);
 const SAFE_IMAGE_HOST = "key.cu.ua";
 const skipWords = /^(?:cu|cuskin|skin)$/;
-const sizeRegex = /(\d+(?:[.,]\d+)?)\s*(мл|ml|г|g|гр|шт|pcs)\b/giu;
 
 function normalize(text) {
   return String(text || "").normalize("NFKC").toLowerCase()
@@ -31,7 +30,8 @@ function sizes(value) {
 function variantIncompatible(product, official) {
   const a=sizes(product.size), b=sizes(official.volumes.join(" "));
   if(a && b && !b.split(",").includes(a))return true;
-  const get=(text,re)=>(String(text||"").match(re)||[]).map(x=>x.toLowerCase()).sort().join(",");
+  const get=(text,re)=>(String(text||"").match(re)||[])
+    .map(x=>x.toLowerCase().replace(",",".").replace(/[^0-9.]/g,"")).sort().join(",");
   const current=String(product.name||"").split("|").at(-1);
   const source=official.name;
   const check=[
