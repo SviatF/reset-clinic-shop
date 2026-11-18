@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { PointerEvent } from "react";
 import QuickAddButton from "@/components/QuickAddButton";
 import SmartProductImage from "@/components/SmartProductImage";
+import { getInventoryState } from "@/lib/inventory-state";
 
 type CardProduct = {
   slug: string;
@@ -16,6 +17,7 @@ type CardProduct = {
   discountPercent?: number;
   trackStock?: boolean;
   stockQuantity?: number;
+  inventoryStatus?: "auto" | "unknown" | "out_of_stock";
   size?: string;
   imageUrl?: string | null;
   shortDescription?: string;
@@ -29,7 +31,8 @@ const categoryLabels: Record<string, string> = { face: "FACE CARE", body: "BODY 
 export default function PremiumProductCard({ index = 1, productData }: { index?: number; productData: CardProduct }) {
   const cardNumber = String(index).padStart(2, "0");
   const current = productData;
-  const needsPrice = !(Number(current.price) > 0);
+  const inventory=getInventoryState({brand:current.brand||"",price:current.price,track_stock:current.trackStock,stock_quantity:current.stockQuantity,inventory_status:current.inventoryStatus});
+  const needsPrice=inventory==="priced_missing";
   const onSale = Number(current.discountPercent) > 0 && Number(current.originalPrice) > Number(current.price);
   const savings = onSale ? Math.round((Number(current.originalPrice) - Number(current.price)) * 100) / 100 : 0;
   const href = `/product/${current.slug}`;
@@ -80,7 +83,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
             <div className="premium-product-meta"><div className={`shop-price-stack${onSale ? " shop-price-stack--sale" : ""}`}>{onSale && <del className="shop-price-before">{Number(current.originalPrice).toFixed(2)} грн</del>}<strong className="shop-price-current">{needsPrice ? "Ціна уточнюється" : Number(current.price).toFixed(2) + " грн"}</strong>{onSale && <small className="shop-saving-label">Економія {savings.toLocaleString("uk-UA", { maximumFractionDigits: 2 })} грн</small>}</div><span>Детальніше <b><ArrowUpRight /></b></span></div>
           </div>
         </Link>
-        <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: !needsPrice && (current.trackStock !== true || Number(current.stockQuantity ?? 0) > 0) }} />
+        <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: inventory==="available", availability: inventory }} />
       </div>
     </article>
   );
