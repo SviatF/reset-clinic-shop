@@ -10,13 +10,14 @@ import { readCategories } from "@/lib/catalog-categories";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const allowed = new Set(["slug","name","brand","sku","category","subcategory_slugs","product_line","status","short_description","description","price","sale_price","stock_quantity","track_stock","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
+const allowed = new Set(["slug","name","brand","sku","category","subcategory_slugs","product_line","status","short_description","description","price","sale_price","stock_quantity","track_stock","inventory_status","size","image_url","secondary_image_url","hover_label","hover_title","hover_text","how_to_use","key_ingredients","inci","seo_title","seo_description","seo_keywords","featured","sort_order","published_at"]);
 
 function sanitize(body: Record<string, unknown>) {
   const next: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(body || {})) if (allowed.has(key)) next[key] = value;
   if ("slug" in next && typeof next.slug === "string") next.slug = slugifyUkr(next.slug);
   if ("price" in next) next.price = Math.max(0, Number(next.price) || 0);
+  if ("inventory_status" in next && !["auto","unknown","out_of_stock"].includes(String(next.inventory_status))) throw new Error("Некоректний статус наявності");
   if ("stock_quantity" in next) next.stock_quantity = Math.max(0, Math.trunc(Number(next.stock_quantity) || 0));
   if ("sort_order" in next) next.sort_order = Math.trunc(Number(next.sort_order) || 0);
   if ("key_ingredients" in next && !Array.isArray(next.key_ingredients)) next.key_ingredients = [];
