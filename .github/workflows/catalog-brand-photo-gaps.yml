@@ -32,7 +32,7 @@ jobs:
                 if(page===1||media.length)console.log('PUBLIC_BRAND_PAGE',JSON.stringify({brand,page,http:res.status,media:media.length,withImage,withPlaceholder,
                   countText:html.match(/<strong>(\d+)<\/strong>\s*товар/g)?.slice(0,1),sampleNames:productnames.slice(0,5)}));
                 total+=media.length;images+=withImage;checked+=withPlaceholder;
-                if(media.length===0||media.length<25)break;
+                if(media.length===0||media.length<24)break;
               }catch(e){console.log("BRAND_ERROR",brand,page,String(e));break;}
             }
             console.log("BRAND_SUMMARY",JSON.stringify({brand,total,withImage:images,placeholder:checked}));
