@@ -60,3 +60,5 @@ print("CU_LIVE_QUALITY_SUMMARY",json.dumps({"total":len(rows),"legacy_files":len
       "opaque_corners":len(opaque),"errors":len(failed)},ensure_ascii=False))
 for row in legacy+small+failed:
     print("CU_LIVE_PHOTO_ISSUE",json.dumps(row,ensure_ascii=False))
+for row in opaque:
+    print("CU_LIVE_OPAQUE",json.dumps(row,ensure_ascii=False))
