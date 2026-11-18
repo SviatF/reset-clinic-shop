@@ -320,10 +320,15 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
 export default {
  async scheduled(_event,env,context){
    context.waitUntil((async()=>{
+     // Publishing existing verified photos takes priority over the slow
+     // supplier-image downloads. Never let an image request consume the CRON
+     // event's execution budget before queued catalogue listings are released.
+     try {
+       const result = await releaseOfficialCUListings(env);
+       console.log("CU SKIN catalog release",JSON.stringify(result));
+     }catch(error){console.error("CU SKIN draft publishing failed",error);}
      try { await reconcileOfficial(env,{limit:8}); }
      catch(error){console.error("Official CU SKIN sync failed",error);}
-     try { await releaseOfficialCUListings(env); }
-     catch(error){console.error("CU SKIN draft publishing failed",error);}
      await reconcile(env);
    })());
  },
