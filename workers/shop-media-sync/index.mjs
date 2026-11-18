@@ -3,6 +3,7 @@ import { imageDimensions, betterPhoto } from "./image-dimensions.mjs";
 import { reconcileOfficial } from "./cuskin-official.mjs";
 import { releaseOfficialCUListings } from "./catalog-release.mjs";
 import { publishVerifiedSupplierDrafts } from "./verified-drafts.mjs";
+import { backfillVerifiedLocalMedia } from "./local-media-backfill.mjs";
 
 // Cloudflare Cron job: no public write endpoint, no admin clicking.
 // Bump this identifier whenever source detection or matching improves, so
@@ -321,6 +322,8 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
 export default {
  async scheduled(_event,env,context){
    context.waitUntil((async()=>{
+     try{await backfillVerifiedLocalMedia(env);}
+     catch(error){console.error("Verified local supplier photo D1 backfill failed",error);}
      // Publishing existing verified photos takes priority over the slow
      // supplier-image downloads. Never let an image request consume the CRON
      // event's execution budget before queued catalogue listings are released.
