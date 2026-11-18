@@ -42,3 +42,5 @@ jobs:
 # Verify post-CRON transparent product photo coverage after revision v4.
 
 # Post-deploy official alpha sync progress verification.
+
+# Verify all 25 CU SKIN source photo listings became publicly visible.
