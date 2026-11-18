@@ -1,0 +1,46 @@
+name: Identify exact unpublished supplier draft slugs from live storefront
+on:
+  push:
+    branches: [audit/live-draft-inventory-20261118]
+    paths:
+      - '.github/workflows/audit-unpublished-seed-catalog.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare published slugs against verified supplier import manifest
+        run: |
+          node --input-type=module <<'JS'
+          import fs from "node:fs";
+          const root="https://shop.resetclinic.org";
+          const imported=JSON.parse(fs.readFileSync("data/supplier-import-2026-11-11.json","utf8")).items;
+          const seed=JSON.parse(fs.readFileSync("data/products.json","utf8"));
+          const verified=JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.json","utf8"));
+          let published=new Set(),pages=[];
+          for(let p=1;p<=19;p++){
+           const res=await fetch(root+"/catalog?page="+p,{signal:AbortSignal.timeout(14000)});
+           const html=await res.text();
+           const slugs=[...html.matchAll(/class="rs-card-name"\s+href="\/product\/([^"]+)"/g)].map(x=>decodeURIComponent(x[1]));
+           if(!slugs.length){
+            const hrefs=[...html.matchAll(/href="\/product\/([^"]+)"/g)].map(x=>decodeURIComponent(x[1]));
+            slugs.push(...hrefs);
+           }
+           slugs.forEach(x=>published.add(x));
+           pages.push({page:p,count:slugs.length});
+           if(slugs.length<24)break;
+          }
+          const seedBy=new Map(seed.map(x=>[x.slug,x]));
+          const unpub=imported.filter(x=>!published.has(x.slug)).map(x=>{
+           const product=seedBy.get(x.slug),src=verified[x.slug];
+           return {slug:x.slug,brand:x.brand,seedStatus:product?.status,name:product?.name,sku:product?.sku,
+             price:product?.price,exactSource:!!src,sourceUrl:src?.page||null};
+          });
+          const per={};
+          for(const row of unpub){const x=per[row.brand]||={total:0,source:0};x.total++;if(row.exactSource)x.source++;}
+          console.log("LIVE_STORE_SLUG_AUDIT",JSON.stringify({pages,published:published.size,source:imported.length,missingPublished:unpub.length,per}));
+          for(const row of unpub)console.log("LIVE_UNPUBLISHED_SEED",JSON.stringify(row));
+          JS
