@@ -39,3 +39,5 @@ jobs:
           }
           console.log("LIVE_CUSKIN_LABELS",JSON.stringify({total,priceUnknown,stockUnknown,outOfStock,buttons}));
           JS
+
+# Recheck after successful main deployment of inventory review dashboard.
