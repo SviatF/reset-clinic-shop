@@ -99,6 +99,14 @@ export default function AdminProductsClient() {
   }
 
   useEffect(() => { load().catch((err) => setMessage(err.message)); }, []);
+  useEffect(() => {
+    // Deep links from the inventory review open the correct status, brand and SKU.
+    const params=new URLSearchParams(window.location.search);
+    const status=params.get("status");
+    if(status==="draft"||status==="active"||status==="archived")setStatusFilter(status);
+    const brand=params.get("brand");if(brand)setBrandFilter(brand);
+    const search=params.get("q");if(search)setQuery(search);
+  }, []);
 
   async function persistRecoveredCatalog() {
     if (!window.confirm(`Додати ${recovery?.missing ?? "відсутні"} товарів із резервного каталогу до D1? Наявні товари, їхні ціни, залишки та редагування збережуться.`)) return;
