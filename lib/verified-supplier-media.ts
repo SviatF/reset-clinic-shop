@@ -3,8 +3,10 @@
  */
 export const OFFICIAL_BRAND_HOSTS: Record<string,string[]> = {
   "HydroPeptide":["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com"],
-  "Sensilis":["sensilis.com.ua","www.sensilis.com.ua"],
+  "Sensilis":["sensilis.com.ua","www.sensilis.com.ua","sensilis.com","www.sensilis.com","karvatska.store"],
   "DÉCAAR":["decaar.com.ua","www.decaar.com.ua"],
+  "Cetaphil":["avepharm.com.ua"],
+  "CU SKIN":["cu.ua","key.cu.ua"],
 };
 const imageCDNs=["cdn.shopify.com"];
 export type OfficialSource={brand:string;page:string;title:string};
