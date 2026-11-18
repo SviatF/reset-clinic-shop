@@ -31,3 +31,5 @@ jobs:
 # Recheck live official import coverage and remaining SKU queue.
 
 # Verify CU SKIN completion without mutating production.
+
+# Validate that the scheduled worker has exhausted the 112-item queue.
