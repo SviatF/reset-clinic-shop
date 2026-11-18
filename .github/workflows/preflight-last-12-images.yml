@@ -1,0 +1,22 @@
+name: Verify final supplier product photos
+on:
+  push:
+    branches: [feat/finish-remaining-12-draft-images-20261118]
+    paths:
+      - 'data/verified-supplier-photo-pages.json'
+      - 'workers/shop-media-sync/verified-drafts.mjs'
+      - 'scripts/preflight-last-12-media.mjs'
+      - '.github/workflows/preflight-last-12-images.yml'
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source identity, image MIME and original resolution for each candidate
+        run: node scripts/preflight-last-12-media.mjs
