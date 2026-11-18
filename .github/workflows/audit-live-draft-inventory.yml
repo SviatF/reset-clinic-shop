@@ -45,3 +45,5 @@ jobs:
 # Verify post-PR65 scheduled manufacturer photo-sync results.
 
 # Verify live counts after catalog-only mode and prioritized verified draft photo worker deploy.
+
+# Verify the five new official draft photo sources after PR67 production deployment.
