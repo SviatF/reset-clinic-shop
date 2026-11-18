@@ -31,7 +31,7 @@ function envWith(rows){
           }
           throw Error("Unexpected bound SQL: "+sql);
         }
-      }};
+      };
     }
   }},
   SHOP_MEDIA:{async head(key){return images.get(key)||null},async put(key,data,meta){images.set(key,{data,meta})}},
