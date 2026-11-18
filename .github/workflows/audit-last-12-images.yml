@@ -1,0 +1,41 @@
+name: Audit exact last 12 product photos
+on:
+  push:
+    branches: [feat/finish-remaining-12-draft-images-20261118]
+    paths: [.github/workflows/audit-last-12-images.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Inspect source image galleries and health (read only)
+        run: |
+          node --input-type=module <<'JS'
+          const pages=[["source-lip-balm-ukraine","https://sensilis.com.ua/lip-balm/"],["source-pure-age-04","https://sensilis.com.ua/pure-age-perfection-make-up-04/"],["source-pure-age-05","https://sensilis.com.ua/pure-age-perfection-make-up-05/"],["source-upgrade-01","https://sensilis.com.ua/upgrade-make-up-01/"],["source-upgrade-02","https://sensilis.com.ua/upgrade-make-up-02/"],["source-upgrade-03","https://sensilis.com.ua/upgrade-make-up-03/"],["source-hydra-mask","https://sensilis.com/en/skincare/face-masks/hydra-essence-confort-mask"],["source-blackpeel","https://sensilis.com/en/skincare/cleansing-and-exfoliating/revitalising-and-brightening-peel-with-charcoal-blackpeel"],["source-pure-age-official","https://sensilis.com/en/face/makeup/anti-blemish-make-up-pureagemakeup"],["source-upgrade-official","https://sensilis.com/en/face/lifting-effect-make-up-treatment-upgrademakeup"],["source-lipbalm-official","https://sensilis.com/en/skincare/lip-balm/protective-restorative-and-moisturizing-lip-balm-hydraction"],["source-cetaphil","https://avepharm.com.ua/product/cetaphil-micelyarna-emulsiya-dlya-ochishchennya-normalnoji-suhoji-ta-chutlivoji-shkiri-500-ml/"],["source-cu153","https://cu.ua/153"]];
+          const out=[];
+          let cursor=0;
+          async function worker(){
+            while(cursor<pages.length){
+              const [name,url]=pages[cursor++];
+              try {
+               const r=await fetch(url,{redirect:"follow",signal:AbortSignal.timeout(17000),headers:{"User-Agent":"Mozilla/5.0","Accept":"text/html"}});
+               const html=await r.text(),h1=html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+               const meta=[...html.matchAll(/<meta\b[^>]*(?:property|name)=["'](?:og:image|twitter:image)["'][^>]*>/ig)].map(m=>m[0].match(/content=["']([^"']+)/i)?.[1]).filter(Boolean);
+               const imgs=[...html.matchAll(/<img\b[^>]*>/ig)].map(m=>m[0]).slice(0,60);
+               const imgInfo=imgs.map(t=>({alt:t.match(/\balt=["']([^"']+)/i)?.[1]?.slice(0,90),
+                 zoom:t.match(/data-zoom-image=["']([^"']+)/i)?.[1],
+                 src:t.match(/\b(?:src|data-src)=["']([^"']+)/i)?.[1]})).filter(o=>o.zoom||/sensilis|cetaphil|cu|skin|lip|mascara|make|retin|black|peel|confort/i.test((o.alt||"")+" "+(o.src||""))).slice(0,16);
+               const urls=[...new Set([...html.matchAll(/(?:(?:https?:)?\/\/)?[^"'\s<>]+(?:\.png|\.jpg|\.webp)(?:\?[^"'\s<>]*)?/gi)].map(x=>x[0]).filter(x=>/04|05|02|03|UPGRADE|PUREAGE|RESURF|HYDRA/i.test(x)))].slice(0,25);
+               const item={name,status:r.status,final:r.url,bytes:html.length,title:html.match(/<title[^>]*>([^<]+)/i)?.[1],h1,meta,imgs:imgInfo,relatedImages:urls};
+               console.log("PHOTO_SOURCE_AUDIT",JSON.stringify(item).slice(0,5500));
+               out.push(item);
+              }catch(e){console.log("PHOTO_SOURCE_AUDIT",JSON.stringify({name,error:String(e)}))}
+            }
+          }
+          await Promise.all([worker(),worker(),worker()]);
+          const r=await fetch("https://shop.resetclinic.org/api/health",{cache:"no-store"});
+          const h=await r.json();
+          console.log("PHOTO_LIVE_STATE",JSON.stringify({status:h.status,inventory:h.inventory_health,verified:h.photo_health?.verified_draft_sync,cu:h.photo_health?.cu_skin}).slice(0,12000));
+          JS
