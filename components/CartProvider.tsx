@@ -79,6 +79,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     total: items.reduce((sum, item) => sum + item.price * item.qty, 0),
     isCartOpen,
     add: (item, qty = 1) => {
+      if (!Number.isFinite(item.price) || !(item.price > 0)) return;
       setItems((current) => {
         const exists = current.find((row) => row.slug === item.slug);
         return exists
