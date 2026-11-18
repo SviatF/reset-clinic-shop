@@ -7,8 +7,8 @@ import {
 const manifest=JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.json","utf8"));
 const catalog=JSON.parse(fs.readFileSync("data/products.json","utf8"));
 const bySlug=new Map(catalog.map(p=>[p.slug,p]));
-const domains=new Set(["hydropeptide.ua","hydropeptide.com","sensilis.com.ua","decaar.com.ua"]);
-assert.equal(Object.keys(manifest).length,59);
+const domains=new Set(["hydropeptide.ua","hydropeptide.com","sensilis.com.ua","sensilis.com","decaar.com.ua","karvatska.store","avepharm.com.ua","cu.ua"]);
+assert.equal(Object.keys(manifest).length,71);
 for(const [slug,source] of Object.entries(manifest)){
  const product=bySlug.get(slug);
  assert.ok(product,"No corresponding merchant item "+slug);
@@ -52,4 +52,4 @@ for (const slug of [
  "supplier-sensilis-pure-age-perfection-make-up-04-04",
  "supplier-sensilis-upgrade-make-up-02-02",
 ]) assert.equal(manifest[slug],undefined,"Unsafe 404/shared-variant image mapping must not be shipped");
-console.log("59 verified source entries, including five newly validated photo origins");
+console.log("71 exact reviewed product page mappings, including final supplier images with validated media identity");
