@@ -42,3 +42,5 @@ jobs:
           JS
 
 # Verify first scheduled official manufacturer draft recovery after PRs 62 and 63.
+
+# Recheck latest verified supplier drafts and raw D1 photo URL backfill.
