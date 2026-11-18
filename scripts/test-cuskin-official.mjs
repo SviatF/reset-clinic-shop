@@ -63,9 +63,12 @@ function manyRows(baseRows){
 }
 test("exact article matches without replacing price, discounts, stock, publication",()=>{
  assert.equal(planOfficialProduct([base],official).kind,"update");
+ assert.equal(planOfficialProduct([{...base,size:"50 г"}],official).kind,"update","Exact SKU tolerates supplier mass/volume notation");
+ assert.equal(planOfficialProduct([{...base,size:"7 г"}],official).kind,"conflict","Different quantity stays blocked");
  assert.equal(planOfficialProduct([{...base,size:"7 мл"}],official).kind,"conflict");
  assert.equal(planOfficialProduct([{...base,sku:"CU-SKIN-002",size:"50 мл",name:"CU SKIN Another Product"}],official).kind,"create");
  assert.equal(planOfficialProduct([base,{...base,id:"duplicate"}],official).kind,"conflict");
+ assert.equal(planOfficialProduct([{...base,sku:"CU-SKIN-002",size:"50 г",name:official.name}],official).kind,"create","Legacy name matching cannot use g/ml exception");
 });
 test("official 470px photo replaces workbook thumbnail, preserving all commercial fields",async()=>{
  const env=fakeEnvironment(manyRows([base]));
