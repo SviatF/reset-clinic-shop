@@ -4,14 +4,17 @@ import Link from "next/link";
 import SmartProductImage from "@/components/SmartProductImage";
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
+import { getInventoryState } from "@/lib/inventory-state";
 import type { StoreProduct } from "@/lib/store-products";
 const money=(v:number)=>new Intl.NumberFormat("uk-UA",{maximumFractionDigits:2}).format(v);
 
 export default function ShopProductCard({item}:{item:StoreProduct}){
  const {add}=useCart();
  const [added,setAdded]=useState(false);
- const needsPrice = !(Number(item.price) > 0);
- const canBuy=!needsPrice && (!item.trackStock||item.stockQuantity>0);
+ const availability=getInventoryState({brand:item.brand,price:item.price,track_stock:item.trackStock,stock_quantity:item.stockQuantity,inventory_status:item.inventoryStatus});
+ const needsPrice=availability==="priced_missing";
+ const needsAvailability=availability==="unconfirmed";
+ const canBuy=availability==="available";
  const onSale=item.discountPercent>0&&item.originalPrice>item.price;
  const savings=onSale?Math.round((item.originalPrice-item.price)*100)/100:0;
  const isOfficialCutout = item.brand === "CU SKIN" && String(item.imageUrl || "").includes("/products/cu-skin-official/");
@@ -26,11 +29,13 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
    {item.size&&<span className="rs-card-size">{item.size}</span>}
    <div className="rs-card-footer">
     <div className={`shop-price-stack${onSale ? " shop-price-stack--sale" : ""}`}>{onSale && <del className="shop-price-before">{money(item.originalPrice)} грн</del>}<strong className="rs-card-price shop-price-current">{needsPrice ? "Ціна уточнюється" : <>{money(item.price)} <small>грн</small></>}</strong>{onSale && <span className="shop-saving-label">Економія {money(savings)} грн</span>}</div>
-    <button type="button" className="rs-card-add" disabled={!canBuy}
-     aria-label={needsPrice ? "Ціна уточнюється: "+item.name : "Додати до кошика: "+item.name}
-     onClick={()=>{if(!canBuy)return;add({slug:item.slug,name:item.name,price:item.price},1);setAdded(true)}}>
-     {needsPrice?"Уточнити ціну":!canBuy?"Немає":added?"Додано ✓":"У кошик +"}
-    </button>
+    {(needsPrice||needsAvailability)
+      ? <Link href="/contacts" className="rs-card-add rs-card-inquiry" aria-label={(needsPrice?"Уточнити ціну: ":"Уточнити наявність: ")+item.name}>{needsPrice?"Уточнити ціну ↗":"Наявність? ↗"}</Link>
+      : <button type="button" className="rs-card-add" disabled={!canBuy}
+        aria-label={canBuy?"Додати до кошика: "+item.name:"Немає в наявності: "+item.name}
+        onClick={()=>{if(!canBuy)return;add({slug:item.slug,name:item.name,price:item.price},1);setAdded(true)}}>
+        {!canBuy?"Немає":added?"Додано ✓":"У кошик +"}
+       </button>}
    </div>
   </div>
  </article>;
