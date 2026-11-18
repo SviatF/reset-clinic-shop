@@ -45,9 +45,11 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       const category=(changes.category || current.category) as ProductRecord["category"];
       const subs=Array.isArray(changes.subcategory_slugs)?changes.subcategory_slugs:current.subcategory_slugs||[];
       if(subs.some((slug:string)=>!categories.some(c=>c.parent_slug===category&&c.slug===slug&&c.status==="active")))throw new Error("Підкатегорія не належить до вибраного розділу");
-      if(status==="active" && Number(changes.price ?? current.price)<=0 &&
-         !(current.brand==="CU SKIN" && String(current.id).startsWith("cu-official-") && current.status==="active"))
-        throw new Error("Не можна публікувати товар із нульовою ціною");
+      // Editing an already published catalog-only listing must remain possible.
+      // Prevent direct draft -> active with a zero price outside the explicit,
+      // authenticated bulk catalog-only preview/confirmation flow.
+      if(status==="active" && Number(changes.price ?? current.price)<=0 && current.status!=="active")
+        throw new Error("Для публікації без ціни використайте розділ «Публікація та фотографії»");
       const salePrice = validateSalePrice(changes.price ?? current.price, "sale_price" in changes ? changes.sale_price : current.sale_price);
       const updated = { ...current, ...changes, sale_price: salePrice, status, published_at: status === "active" ? current.published_at || now : current.published_at, updated_at: now } as ProductRecord;
       const copy = [...products];
