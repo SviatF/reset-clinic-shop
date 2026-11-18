@@ -27,3 +27,5 @@ jobs:
           }
           JS
 # Check post-deployment official CU SKIN photo progress (read only).
+
+# Recheck live official import coverage and remaining SKU queue.
