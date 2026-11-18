@@ -27,14 +27,22 @@ export async function GET() {
     // Public read-only aggregate; never expose product records or API tokens.
     const raw = rawCatalog.data.filter(p => p.slug !== "parsley-seed-anti-oxidant-eye-cream");
     const cuSkin = raw.filter(p => p.brand === "CU SKIN");
+    const newCuSkin = cuSkin.filter(p => String(p.id).startsWith("cu-official-"));
     const photoCounts = {
       without_url: raw.filter(p => !String(p.image_url || "").trim()).length,
+      live_active_missing_photo: products.filter(p => p.status === "active" && !String(p.image_url || "").trim()).length,
+      raw_active_missing_photo: raw.filter(p => p.status === "active" && !String(p.image_url || "").trim()).length,
       auto_restored: raw.filter(p => String(p.image_url || "").includes("/products/official-auto/")).length,
       cu_skin: {
         total: cuSkin.length,
         with_official_photo: cuSkin.filter(p => String(p.image_url || "").includes("/products/cu-skin-official/")).length,
         without_photo: cuSkin.filter(p => !String(p.image_url || "").trim()).length,
         published: cuSkin.filter(p => p.status === "active").length,
+        new_official_catalog_total: newCuSkin.length,
+        new_official_catalog_published: newCuSkin.filter(p => p.status === "active").length,
+        new_official_catalog_drafts: newCuSkin.filter(p => p.status === "draft").length,
+        release_eligible: newCuSkin.filter(p => p.status === "draft" &&
+          p.image_url?.startsWith("/shop-media/products/cu-skin-official/")).length,
       },
     };
     let cuOfficialSync: { checked: number; attached: number; created: number; kept: number; conflicts: number; failed: number } | null = null;
