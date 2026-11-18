@@ -1,0 +1,81 @@
+name: Inspect supplier prices and live missing catalog photos
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/catalog-price-missing-audit.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect source price availability and catalog missing photo scope (read-only)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const source=JSON.parse(fs.readFileSync('data/cu-skin-official-snapshot.json','utf8')).products;
+          const excel=JSON.parse(fs.readFileSync('data/cu-skin-retail-prices-2026-11-12.json','utf8')).prices_uah;
+          const missingSourcePrices=source.filter(p=>!excel[p.sku]);
+          const api=await (await fetch('https://key.cu.ua/api/products/?page_size=100&page=1',{signal:AbortSignal.timeout(15000)})).json();
+          const sample=api.results?.find(x=>String(x.vendorCode)==='199')||api.results?.[0];
+          console.log('API_FIELDS',JSON.stringify(Object.keys(sample||{})));
+          console.log('API_PRODUCT_SAMPLE',JSON.stringify(sample).slice(0,6500));
+          const priceCandidates=[];
+          for(const p of missingSourcePrices){
+            const item=api.results?.find(x=>String(x.vendorCode)===p.vendorCode);
+            if(item){
+              const found={sku:p.sku,name:p.name,apiPriceKeys:Object.entries(item).filter(([key])=>/price|cost|discount|stock|available/i.test(key))};
+              priceCandidates.push(found);
+            }
+          }
+          console.log('API_SOURCE_PRICES',JSON.stringify(priceCandidates).slice(0,25000));
+          for(const url of ['https://key.cu.ua/api/product/199','https://key.cu.ua/api/products/199/','https://key.cu.ua/api/product/260']){
+            try{
+              const res=await fetch(url,{signal:AbortSignal.timeout(13000)});
+              const d=await res.text();
+              console.log('API_DETAIL',JSON.stringify({url,http:res.status,size:d.length,head:d.slice(0,3000)}));
+            }catch(e){console.log('API_DETAIL_ERROR',url,String(e))}
+          }
+          const token=process.env.CLOUDFLARE_API_TOKEN,account=process.env.CLOUDFLARE_ACCOUNT_ID;
+          if(!token||!account){console.log('NO_D1_SECRET');process.exit(0);}
+          const id='38a072d9-bb85-4417-bf92-4f0652cc4056';
+          const res=await fetch('https://api.cloudflare.com/client/v4/accounts/'+account+'/d1/database/'+id+'/query',{
+           method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+           body:JSON.stringify({sql:"SELECT content,version FROM shop_documents WHERE pathname='data/products.json'"}),
+           signal:AbortSignal.timeout(30000)});
+          const ans=await res.json();
+          if(!ans.success){console.log('D1_ERROR',JSON.stringify(ans.errors));process.exit(1)}
+          const row=ans.result?.[0]?.results?.[0];
+          const products=JSON.parse(row.content);
+          console.log('D1_CATALOG',JSON.stringify({version:row.version,total:products.length}));
+          const groups={};
+          for(const p of products){
+            const group=groups[p.brand] ||= {total:0,active:0,draft:0,missing:0,missingActive:0,zeroPrice:0,draftWithPrice:0,draftWithPicture:0};
+            group.total++;if(p.status==='active')group.active++;if(p.status==='draft')group.draft++;
+            if(!p.image_url){group.missing++;if(p.status==='active')group.missingActive++;}
+            if(!(Number(p.price)>0))group.zeroPrice++;
+            if(p.status==='draft'&&Number(p.price)>0)group.draftWithPrice++;
+            if(p.status==='draft'&&p.image_url)group.draftWithPicture++;
+          }
+          console.log('D1_BY_BRAND',JSON.stringify(groups));
+          const cu=products.filter(p=>p.brand==='CU SKIN');
+          console.log('D1_CUSKIN_DRAFTS',JSON.stringify(cu.filter(p=>p.status==='draft').map(p=>({
+            sku:p.sku,name:p.name,price:p.price,size:p.size,image:!!p.image_url,stock:p.stock_quantity,track_stock:p.track_stock,
+            inSheet:!!excel[p.sku]
+          }))).slice(0,18000));
+          console.log('D1_MISSING_ACTIVE',JSON.stringify(products.filter(p=>p.status==='active'&&!p.image_url).map(p=>({
+            brand:p.brand,sku:p.sku,slug:p.slug,name:p.name,size:p.size,price:p.price
+          }))).slice(0,35000));
+          console.log('D1_MISSING_DRAFT_COUNTS',JSON.stringify(products.filter(p=>p.status==='draft'&&!p.image_url).reduce((a,p)=>(a[p.brand]=(a[p.brand]||0)+1,a),{})));
+          const d1_source=source.filter(s=>cu.some(p=>p.sku===s.sku));
+          console.log('CU_MATCH',JSON.stringify({matched:d1_source.length,sourceTotal:source.length,cuTotal:cu.length}));
+          JS
