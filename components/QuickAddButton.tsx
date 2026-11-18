@@ -16,7 +16,7 @@ export default function QuickAddButton({ item }: { item: QuickProduct }) {
   }, []);
 
   function handleAdd() {
-    if (current.inStock === false) return;
+    if (current.inStock === false || !(current.price > 0)) return;
     add({ slug: current.slug, name: current.name, price: current.price }, 1);
     setAdded(true);
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -28,10 +28,10 @@ export default function QuickAddButton({ item }: { item: QuickProduct }) {
       type="button"
       className={`quick-add ${added ? "is-added" : ""}`}
       onClick={handleAdd}
-      disabled={current.inStock === false}
+      disabled={current.inStock === false || !(current.price > 0)}
       aria-live="polite"
     >
-      {current.inStock === false ? "Немає в наявності" : added ? <>Додано <span>✓</span></> : <>Додати до кошика <span>+</span></>}
+      {!(current.price > 0) ? "Ціна уточнюється" : current.inStock === false ? "Немає в наявності" : added ? <>Додано <span>✓</span></> : <>Додати до кошика <span>+</span></>}
     </button>
   );
 }

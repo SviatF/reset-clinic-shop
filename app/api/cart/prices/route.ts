@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         continue;
       }
       const item = bySlug.get(slug);
-      if (item) prices[slug] = getProductPricing(item).price;
+      if (item && Number(item.price) > 0) prices[slug] = getProductPricing(item).price;
     }
     return NextResponse.json({ prices }, { headers: { "Cache-Control": "no-store" } });
   } catch {
