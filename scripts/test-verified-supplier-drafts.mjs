@@ -126,3 +126,20 @@ test("retry a previous skipped product after the D1 catalog was restored",async(
    assert.ok(env.items()[0].image_url.includes("/verified-drafts/"));
  }finally{globalThis.fetch=original}
 });
+
+
+test("prioritize a real missing-photo draft ahead of already-published vendor entries",async()=>{
+ const env=envWith(many([product]));
+ const inactive=Object.fromEntries(Array.from({length:16},(_,i)=>[
+   "already-published-"+i,{...known[slug],title:"Unrelated "+i}
+ ]));
+ const manifest={...inactive,...known};
+ const prior=globalThis.fetch;globalThis.fetch=sourceFetch();
+ try{
+  const res=await publishVerifiedSupplierDrafts(env,{manifest,limit:1});
+  assert.equal(res.actionable,1);
+  assert.equal(res.attempted,1);
+  assert.equal(res.published,1);
+  assert.equal(env.items()[0].status,"active");
+ }finally{globalThis.fetch=prior;}
+});

@@ -12,11 +12,11 @@ type Product = {
 };
 type PublishRow = {
   id: string; name: string; brand: string; eligible: boolean; reason: string | null;
-  zeroStock: boolean; imageUrl: string | null; stock: number; price: number;
+  zeroStock: boolean; catalogOnly: boolean; imageUrl: string | null; stock: number; price: number;
 };
 type Preview = {
   version: string; rows: PublishRow[]; eligibleCount: number;
-  skippedCount: number; zeroStockCount: number;
+  skippedCount: number; zeroStockCount: number; catalogOnlyCount: number;
 };
 export default function AdminPublishingClient({
   products, writable, onFinished, onClose, onEdit,
@@ -25,6 +25,7 @@ export default function AdminPublishingClient({
   onFinished: () => Promise<void>; onClose: () => void; onEdit: (id: string) => void;
 }) {
   const [tab, setTab] = useState<"drafts" | "photos">("drafts");
+  const [catalogOnly,setCatalogOnly] = useState(true);
   const [brand, setBrand] = useState("all");
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -45,7 +46,7 @@ export default function AdminPublishingClient({
     );
   }, [tab, drafts, missingPhoto, brand, search]);
   const eligibleOnScreen = visible.filter(p => p.status === "draft" &&
-    Number(p.price) > 0 && Boolean(String(p.image_url || "").trim())).map(p => p.id);
+    (Number(p.price) > 0 || (catalogOnly && Number(p.price) === 0)) && Boolean(String(p.image_url || "").trim())).map(p => p.id);
   const selected = new Set(selectedIds);
   const previewReady = preview?.rows.filter(r => r.eligible).length || 0;
 
@@ -64,7 +65,7 @@ export default function AdminPublishingClient({
     try {
       const response = await fetch("/api/admin/products/bulk-publish", {
         method:"POST",headers:{"Content-Type":"application/json"},
-        cache:"no-store",body:JSON.stringify({mode:"preview",ids:selectedIds}),
+        cache:"no-store",body:JSON.stringify({mode:"preview",ids:selectedIds,catalogOnly}),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Не вдалося перевірити товари");
@@ -74,18 +75,20 @@ export default function AdminPublishingClient({
   }
   async function publish() {
     if (!preview || busy || !previewReady || !writable) return;
-    const warning = preview.zeroStockCount
-      ? `\n\nУ ${preview.zeroStockCount} товарів залишок 0 — вони будуть видимі, але показуватимуться як відсутні в наявності. Залишки не змінюються.` : "";
+    const warning = (preview.catalogOnlyCount
+      ? `\n\n${preview.catalogOnlyCount} товарів без ціни будуть лише в каталозі з написом «Ціна уточнюється». Купити їх онлайн до внесення ціни неможливо.` : "")+
+      (preview.zeroStockCount
+      ? `\n\nУ ${preview.zeroStockCount} товарів нульовий облікований залишок. Це не означає підтверджену відсутність; купівля залежить від складського статусу.` : "");
     if (!window.confirm(`Опублікувати ${preview.eligibleCount} товарів? ${preview.skippedCount} неповних карток будуть пропущені.${warning}\n\nПісля підтвердження товари стануть доступні в магазині.`)) return;
     setBusy(true);setError("");setMessage("");
     try {
       const response = await fetch("/api/admin/products/bulk-publish",{
         method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",
-        body:JSON.stringify({mode:"commit",ids:selectedIds,version:preview.version,confirm:true}),
+        body:JSON.stringify({mode:"commit",ids:selectedIds,version:preview.version,confirm:true,catalogOnly}),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Не вдалося опублікувати");
-      setMessage(`Опубліковано ${data.published} товарів. Пропущено: ${data.skipped}. Із нульовим залишком: ${data.zeroStock}.`);
+      setMessage(`Опубліковано ${data.published} товарів. Із них без ціни (без купівлі): ${data.catalogOnly||0}. Пропущено: ${data.skipped}.`);
       setPreview(null);setSelectedIds([]);
       try { await onFinished(); } catch {
         setError("Товари збережено в D1, але оновити список не вдалося. Перезавантажте сторінку.");
@@ -135,16 +138,14 @@ export default function AdminPublishingClient({
     <div className="admin-publish-metrics">
       <div><span>ЧЕРНЕТКИ</span><strong>{drafts.length}</strong><small>Очікують публікації</small></div>
       <div><span>БЕЗ ФОТО</span><strong>{missingPhoto.length}</strong><small>Усі статуси й бренди</small></div>
-      <div><span>ГОТОВІ ЧЕРНЕТКИ</span><strong>{drafts.filter(p => Number(p.price)>0 && Boolean(p.image_url)).length}</strong><small>Мають ціну та URL фото</small></div>
+      <div><span>З ФОТО · МОЖНА ПОКАЗАТИ</span><strong>{drafts.filter(p => Boolean(p.image_url)).length}</strong><small>Без ціни — лише каталог, без оформлення покупки</small></div>
     </div>
     <div className="admin-publish-tabs">
       <button type="button" className={tab==="drafts"?"is-active":""} onClick={()=>changeTab("drafts")}>Публікація чернеток</button>
       <button type="button" className={tab==="photos"?"is-active":""} onClick={()=>changeTab("photos")}>Товари без фотографій ({missingPhoto.length})</button>
     </div>
-    {tab==="photos" && <>
-     <AdminHistolabPhotoRepair disabled={!writable||busy} onFinished={onFinished} />
-     <AdminVerifiedSupplierRepair disabled={!writable||busy} onFinished={onFinished} />
-    </>}
+    {tab==="photos" && <AdminHistolabPhotoRepair disabled={!writable||busy} onFinished={onFinished} />}
+    {missingPhoto.some(p=>p.status==="draft") && <AdminVerifiedSupplierRepair disabled={!writable||busy} onFinished={async()=>{resetPreview();setSelectedIds([]);await onFinished();}} />}
     <div className="admin-publish-filters">
       <label><span>Бренд</span><select value={brand} onChange={e=>{setBrand(e.target.value);resetPreview();setSelectedIds([]);}}>
         <option value="all">Усі бренди</option>{brands.map(value=><option key={value} value={value}>{value}</option>)}
@@ -154,10 +155,11 @@ export default function AdminPublishingClient({
     </div>
     {tab==="drafts" && <div className="admin-publish-toolbar">
       <div><strong>{visible.length} чернеток у вибірці</strong>
-        <small>Для публікації потрібні фото та ціна. Нульові залишки залишаються незмінними.</small>
+        <small>Фото обов'язкове. Без підтвердженої ціни товар можна показати як каталог без можливості замовлення.</small>
       </div>
       <div className="admin-publish-actions">
-        <button type="button" onClick={()=>{setSelectedIds([...new Set(eligibleOnScreen)]);resetPreview();}}>Вибрати готові ({eligibleOnScreen.length})</button>
+        <label className="admin-check" title="Товари без ціни будуть лише видимими, оформлення замовлення заблоковане"><input type="checkbox" checked={catalogOnly} onChange={e=>{setCatalogOnly(e.target.checked);setSelectedIds([]);resetPreview();}}/><span>Без ціни — у каталог</span></label>
+        <button type="button" onClick={()=>{setSelectedIds([...new Set(eligibleOnScreen)]);resetPreview();}}>Вибрати з фото ({eligibleOnScreen.length})</button>
         <button type="button" onClick={()=>{setSelectedIds(visible.map(p=>p.id));resetPreview();}}>Усі у вибірці</button>
         <button type="button" onClick={()=>{setSelectedIds([]);resetPreview();}}>Скинути</button>
       </div>
@@ -165,7 +167,7 @@ export default function AdminPublishingClient({
     <div className="admin-publish-products">
       {visible.map(p=>{
         const hasPhoto = Boolean(String(p.image_url || "").trim());
-        const ready = p.status==="draft" && Number(p.price)>0 && hasPhoto;
+        const ready = p.status==="draft" && hasPhoto && (Number(p.price)>0 || (catalogOnly&&Number(p.price)===0));
         return <div className="admin-publish-row" key={p.id}>
           {tab==="drafts" && <input type="checkbox" aria-label={"Обрати "+p.name}
             checked={selected.has(p.id)} onChange={e=>toggle(p.id,e.target.checked)} />}
@@ -173,11 +175,11 @@ export default function AdminPublishingClient({
           <div className="admin-publish-identity"><strong>{p.name}</strong>
             <small>{p.brand} · {p.sku || "Без SKU"}</small>
             {tab==="drafts"
-              ? <em className={ready?"is-ready":"is-warning"}>{!hasPhoto?"Немає фото":Number(p.price)<=0?"Немає ціни":p.track_stock&&p.stock_quantity<=0?"Готовий · залишок 0":"Готовий до публікації"}</em>
+              ? <em className={ready?"is-ready":"is-warning"}>{!hasPhoto?"Немає фото":Number(p.price)<=0?"Лише каталог · ціна уточнюється":p.track_stock&&p.stock_quantity<=0?"Готовий · склад уточнюється":"Готовий до публікації"}</em>
               : <em className="is-warning">Відсутній URL зображення</em>}
           </div>
           <div className="admin-publish-price">
-            <strong>{Number(p.price).toLocaleString("uk-UA")} грн</strong>
+            <strong>{Number(p.price)>0?Number(p.price).toLocaleString("uk-UA")+" грн":"Ціна уточнюється"}</strong>
             <small>{p.status==="draft"?"Чернетка":p.status==="active"?"Опубліковано":"Архів"}</small>
           </div>
           <div className="admin-publish-row-buttons">
@@ -199,7 +201,7 @@ export default function AdminPublishingClient({
     {tab==="drafts" && <div className="admin-publish-footer">
       <div>
         <strong>Обрано: {selectedIds.length}</strong>
-        {preview ? <small>Можна опублікувати: {preview.eligibleCount} · Пропустити: {preview.skippedCount} · Із нульовим залишком: {preview.zeroStockCount}</small>
+        {preview ? <small>Можна опублікувати: {preview.eligibleCount} · Без ціни: {preview.catalogOnlyCount||0} · Пропустити: {preview.skippedCount} · Залишок 0: {preview.zeroStockCount}</small>
           : <small>Спочатку перевірте обрані товари, тоді підтвердьте публікацію.</small>}
       </div>
       <div className="admin-publish-actions">

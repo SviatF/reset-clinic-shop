@@ -5,7 +5,7 @@ import { imageDimensions } from "./image-dimensions.mjs";
  * Only exact product-specific URLs curated in the repository. Never guess
  * a photo from general product search or replace an unrelated item's image.
  */
-const VERSION="verified-supplier-draft-2026-11-18-v2";
+const VERSION="verified-supplier-draft-2026-11-18-v3";
 const LIMIT_PER_CRON=8;
 const HOSTS={
   "HydroPeptide":new Set(["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com","cdn.shopify.com"]),
@@ -189,21 +189,26 @@ export async function publishVerifiedSupplierDrafts(env,{limit=LIMIT_PER_CRON,ma
   await env.SHOP_DB.prepare("CREATE TABLE IF NOT EXISTS shop_verified_draft_media("+
     "slug TEXT PRIMARY KEY,status TEXT NOT NULL,detail TEXT,checked_at INTEGER NOT NULL)").run();
   const entries=Object.entries(manifest);
-  const recent=await env.SHOP_DB.prepare(
-    "SELECT slug,status,detail,checked_at FROM shop_verified_draft_media").all();
-  const attempts=new Map((recent.results||[]).map(p=>[p.slug,p]));
-  const pending=entries.filter(([slug])=>{
-    const current=attempts.get(slug);
-    if(!current||!String(current.detail||"").startsWith(VERSION+" | "))return true;
-    if(["published","skipped"].includes(current.status))return false;
-    return Number(current.checked_at)<now-1800;
-  }).slice(0,Math.max(0,Math.min(12,limit)));
-  let result={planned:entries.length,attempted:0,published:0,skipped:0,error:0};
-  // Check current D1 product state ONCE to skip rows already live or edited.
+  // Prioritize only drafts that CURRENTLY need photos. The previous version
+  // exhausted its per-run quota on 38 already-active/skipped records and
+  // starved the 12 Sensilis + 2 HydroPeptide photo gaps.
   const current=await env.SHOP_DB.prepare(
     "SELECT content,version FROM shop_documents WHERE pathname='data/products.json'").first();
   if(!current)throw Error("D1 products document missing");
   const products=JSON.parse(current.content);
+  const actionable=entries.filter(([slug,known])=>eligible(products,slug,known));
+  const recent=await env.SHOP_DB.prepare(
+    "SELECT slug,status,detail,checked_at FROM shop_verified_draft_media").all();
+  const attempts=new Map((recent.results||[]).map(p=>[p.slug,p]));
+  const pending=actionable.filter(([slug])=>{
+    const previous=attempts.get(slug);
+    if(!previous||!String(previous.detail||"").startsWith(VERSION+" | "))return true;
+    // The D1 document is authoritative. An old skip may become actionable
+    // after a separate supplier import, so skips must not be permanent.
+    if(previous.status==="published")return false;
+    return Number(previous.checked_at)<now-1800;
+  }).slice(0,Math.max(0,Math.min(12,limit)));
+  let result={planned:entries.length,actionable:actionable.length,attempted:0,published:0,skipped:0,error:0};
   for(const [slug,known] of pending){
     result.attempted++;
     let status="skipped",detail="Not a missing verified draft";
