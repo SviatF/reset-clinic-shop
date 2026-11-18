@@ -6,6 +6,7 @@ featured image. Save original content as-is except efficient WebP encoding;
 NO subject cutouts, upscaling, hallucinated packaging or guessed media.
 """
 import json
+import hashlib
 from io import BytesIO
 from pathlib import Path
 from urllib.parse import urlparse
@@ -44,7 +45,8 @@ record.update({
     "verification_status":"matched_exact_product_title",
     "verified_page":PAGE.replace(".js",""),
     "verified_supplier_title":EXPECTED,
-    "retrieved_image_source":url
+    "retrieved_image_source":url,
+    "retrieved_sha256": hashlib.sha256(TARGET.read_bytes()).hexdigest()
 })
 MAP.write_text(json.dumps(mapping,ensure_ascii=False,indent=2)+"\n")
 print("RECOVERED_STUDIO",json.dumps({
