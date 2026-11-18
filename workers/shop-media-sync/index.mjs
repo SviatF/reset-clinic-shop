@@ -2,6 +2,7 @@ import verified from "../../data/verified-supplier-photo-pages.json" with { type
 import { imageDimensions, betterPhoto } from "./image-dimensions.mjs";
 import { reconcileOfficial } from "./cuskin-official.mjs";
 import { releaseOfficialCUListings } from "./catalog-release.mjs";
+import { publishVerifiedSupplierDrafts } from "./verified-drafts.mjs";
 
 // Cloudflare Cron job: no public write endpoint, no admin clicking.
 // Bump this identifier whenever source detection or matching improves, so
@@ -329,6 +330,8 @@ export default {
      }catch(error){console.error("CU SKIN draft publishing failed",error);}
      try { await reconcileOfficial(env,{limit:8}); }
      catch(error){console.error("Official CU SKIN sync failed",error);}
+     try { await publishVerifiedSupplierDrafts(env,{limit:12}); }
+     catch(error){console.error("Verified supplier draft sync failed",error);}
      await reconcile(env);
    })());
  },
