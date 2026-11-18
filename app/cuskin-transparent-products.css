@@ -1,0 +1,36 @@
+/*
+ * CU SKIN official PNG files already contain true alpha transparency.
+ * Use one coherent card/stage background instead of the old rectangular
+ * white/grey media tile. This does not re-encode, cut, or blur product media.
+ * Scope ONLY to cu.ua images imported into products/cu-skin-official R2 keys.
+ */
+.rs-card.rs-card--cu-skin-cutout {
+  background: #f5f2ee !important;
+}
+.rs-card.rs-card--cu-skin-cutout .rs-card-media {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.rs-card.rs-card--cu-skin-cutout .rs-card-media > img {
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 11px 13px rgba(50, 36, 32, .085));
+}
+.premium-product-card.premium-product-card--cu-skin-cutout .premium-card-surface {
+  background: #f5f2ee !important;
+}
+.premium-product-card.premium-product-card--cu-skin-cutout .premium-product-media {
+  background: transparent !important;
+}
+.premium-product-card.premium-product-card--cu-skin-cutout .premium-product-stage > img {
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+}
+.product-page--cu-skin-cutout.product-page-feminine .product-object-stage {
+  background: linear-gradient(145deg, #f4f0eb, #ece5df) !important;
+}
+.product-page--cu-skin-cutout .product-object-stage > img {
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+}
