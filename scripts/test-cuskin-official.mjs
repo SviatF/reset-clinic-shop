@@ -44,7 +44,7 @@ function fakeEnvironment(initial) {
          }
          throw Error("unexpected bound run "+sql);
         },
-      }};
+      };
       },
       async all(){if(q.startsWith("select vendor_code"))return {results:[...attempts.values()]};throw Error("unexpected all "+sql)},
     };
