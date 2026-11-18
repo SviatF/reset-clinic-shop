@@ -1,0 +1,42 @@
+name: Verify live photo recovery and publication totals
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/verified-drafts-live-check.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Read public D1/R2 aggregates and storefront listing results
+        run: |
+          node --input-type=module <<'JS'
+          const base="https://shop.resetclinic.org";
+          const result=await (await fetch(base+"/api/health",{cache:"no-store"})).json();
+          console.log("LIVE_PHOTO_HEALTH",JSON.stringify({
+            status:result.status,products:result.totals?.products,
+            rawPhotoMissing:result.photo_health?.without_url,
+            activeRawMissing:result.photo_health?.raw_active_missing_photo,
+            activeEffectiveMissing:result.photo_health?.live_active_missing_photo,
+            cuSkin:result.photo_health?.cu_skin,
+            cuSync:result.photo_health?.cu_official_sync,
+            verifiedDrafts:result.photo_health?.verified_draft_sync
+          }));
+          for(const brand of ["CU SKIN","DÉCAAR","Sensilis","HydroPeptide","OLIE'RE PARIS"]){
+            let total=0,withPhoto=0,withoutPhoto=0,noPrice=0;
+            for(let page=1;page<=8;page++){
+              const html=await (await fetch(base+"/catalog?brand="+encodeURIComponent(brand)+"&page="+page)).text();
+              const cards=[...html.matchAll(/<article\s+class="rs-card[^"]*"[^>]*>[\s\S]*?<\/article>/gi)].map(m=>m[0]);
+              total+=cards.length;
+              for(const card of cards){
+                if(card.includes("<img"))withPhoto++;else withoutPhoto++;
+                if(card.includes("Ціна уточнюється"))noPrice++;
+              }
+              if(cards.length<24)break;
+            }
+            console.log("LIVE_BRAND_COUNT",JSON.stringify({brand,total,withPhoto,withoutPhoto,noPrice}));
+          }
+          JS
