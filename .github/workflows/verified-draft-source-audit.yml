@@ -1,0 +1,46 @@
+name: Audit 54 verified draft photo source pages
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/verified-draft-source-audit.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify official URLs for unpublished shop drafts (read only)
+        run: |
+          node --input-type=module <<'JS'
+          import fs from "node:fs";
+          const pages=JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.json","utf8"));
+          const rows=JSON.parse(fs.readFileSync("data/products.json","utf8"));
+          const keys=Object.keys(pages);
+          let i=0,results=[];
+          async function fetchOne(){
+            while(i<keys.length){
+              const slug=keys[i++],data=pages[slug],product=rows.find(p=>p.slug===slug);
+              const out={brand:data.brand,slug,status:null,title:data.title,candidate:data.page,sku:product?.sku,price:product?.price};
+              try{
+                const r=await fetch(data.page,{signal:AbortSignal.timeout(14000),headers:{"User-Agent":"Mozilla/5.0"}});
+                const html=await r.text();
+                out.status=r.status;out.redirect=r.url;
+                out.actual=html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]*>/g," ").replace(/\s+/g," ").slice(0,160)||null;
+                out.og=html.match(/<meta\b[^>]*property=["']og:image["'][^>]*>/i)?.[0]?.match(/content=["']([^"']+)/)?.[1]||null;
+                out.ogtitle=html.match(/<meta\b[^>]*property=["']og:title["'][^>]*>/i)?.[0]?.match(/content=["']([^"']+)/)?.[1]||null;
+              }catch(e){out.error=String(e).slice(0,125)}
+              results.push(out);
+              console.log("VERIFIED_DRAFT_PAGE",JSON.stringify(out));
+            }
+          }
+          await Promise.all(Array.from({length:7},fetchOne));
+          const byBrand={};
+          for(const r of results){const b=byBrand[r.brand] ||= {checked:0,ok:0,og:0,error:0};b.checked++;if(r.status===200)b.ok++;if(r.og)b.og++;if(r.error)b.error++;}
+          console.log("VERIFIED_DRAFT_SUMMARY",JSON.stringify(byBrand));
+          JS
