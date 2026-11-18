@@ -1,0 +1,26 @@
+name: Preview CU SKIN transparent product photos
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/cuskin-background-preview.yml'
+      - 'scripts/audit-cuskin-background.py'
+permissions:
+  contents: read
+jobs:
+  photo-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow==11.3.0
+      - name: Download source photos and analyze alpha channels
+        run: python scripts/audit-cuskin-background.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cuskin-transparent-preview
+          path: cuskin-photo-preview
+          retention-days: 7
