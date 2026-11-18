@@ -40,3 +40,5 @@ jobs:
 # After deploying exact-SKU alpha preference, recheck verified picture coverage.
 
 # Verify post-CRON transparent product photo coverage after revision v4.
+
+# Post-deploy official alpha sync progress verification.
