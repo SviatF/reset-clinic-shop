@@ -53,3 +53,5 @@ jobs:
 # Check first 2-minute Cloudflare scheduled R2 gallery import cycle for PR68.
 
 # Confirm all three remaining exact product source photos published after PR68.
+
+# Final verification of the archived non-SKU placeholder after PR69 deploy.
