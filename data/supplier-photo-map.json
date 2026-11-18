@@ -1790,7 +1790,7 @@
     "clean_matte_coverage": 0.2382
   },
   "profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris": {
-    "image_url": null,
+    "image_url": "/supplier-photos/oliere/studio-professional-styling-bundle.webp",
     "source_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/21.png?v=1760560713",
     "supplier": "OLIE\\u0027RE PARIS",
     "match_score": 1,
@@ -1800,8 +1800,11 @@
     "studio_sha256": "fc37a14f0351aed719188ea5c08abde37476f195715c50c4209052ed788c59cd",
     "legacy_image_url": "https://cdn.shopify.com/s/files/1/0765/2812/4147/files/21.png?v=1760560713",
     "legacy_studio_image_url": "/supplier-photos/studio/profesiinyi-nabir-dlia-ukladannia-volossia-studio-olie-re-paris.webp",
-    "verification_status": "needs_review",
-    "verified_by": "not_present_in_current_official_shopify_catalog"
+    "verification_status": "matched_exact_product_title",
+    "verified_by": "not_present_in_current_official_shopify_catalog",
+    "verified_page": "https://pinkygreen.shop/collections/studio/products/profesiynyy-nabir-dlya-ukladannya-volossya-studio-oliere-paris",
+    "verified_supplier_title": "Професійний набір для укладання волосся Studio OLIE'RE PARIS",
+    "retrieved_image_source": "https://cdn.shopify.com/s/files/1/0673/9777/9643/files/11_11_8494334a-c15c-4e75-8739-6b3564fd1b4c_1.png?v=1772518420"
   },
   "mus-profesiinyi-dlia-volossia-studio-olie-re-paris-400-ml": {
     "image_url": "/supplier-photos/clean/mus-profesiinyi-dlia-volossia-studio-olie-re-paris-400-ml.webp",
