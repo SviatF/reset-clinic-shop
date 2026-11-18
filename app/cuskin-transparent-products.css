@@ -34,3 +34,26 @@
   background: transparent !important;
   mix-blend-mode: normal !important;
 }
+
+
+/* Inventory is unconfirmed, not sold out: keep the inquiry path actionable. */
+.rs-card-add.rs-card-inquiry,
+.quick-add.quick-add--inquiry {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+  text-decoration: none !important;
+  white-space: nowrap;
+  font-size: 11px !important;
+  line-height: 1.25;
+  background: #1d1c19 !important;
+  color: #fff !important;
+  border-radius: 0;
+  padding-inline: 11px;
+}
+.rs-card-add.rs-card-inquiry:focus-visible,
+.quick-add.quick-add--inquiry:focus-visible {
+  outline: 2px solid #af477d;
+  outline-offset: 3px;
+}
