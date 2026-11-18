@@ -51,7 +51,12 @@ function fakeEnvironment(initial) {
    }
   },
   SHOP_MEDIA:{
-   async get(key){if(key.includes("tiny.png"))return {arrayBuffer:async()=>png(100,140).buffer};return null},
+   async get(key){
+    if(key.includes("tiny.png"))return {arrayBuffer:async()=>png(100,140).buffer};
+    if(key.includes("legacy-opaque.png"))return {arrayBuffer:async()=>png(800,900).buffer};
+    if(key.includes("merchant-cutout.png"))return {arrayBuffer:async()=>png(1000,1100).buffer};
+    return null;
+   },
    async head(key){return objects.get(key)||null},
    async put(key,data,meta){objects.set(key,{data,meta})},
   }
@@ -135,4 +140,36 @@ test("CU SKIN multipack: identical numbers in different separator formats match 
  const cc={...official,vendorCode:"153",sku:"300153",name:"CU: VITAMIN U CC CREAM SPF 40 / PA+++",volumes:["45 мл"]};
  const spf38={...base,sku:"300153",name:"CU SKIN VITAMIN U CC CREAM SPF 38+ РА+++",size:"45мл"};
  assert.equal(planOfficialProduct([spf38],cc).kind,"conflict","SPF38 and SPF40 must not silently share an image");
+});
+
+test("opaque 800x900 old photo is upgraded to exact SKU transparent PNG after revision bump",async()=>{
+ const row={...base,image_url:"/shop-media/products/official-auto/legacy-opaque.png"};
+ const env=fakeEnvironment(manyRows([row]));
+ env.attempts.set("151",{
+   vendor_code:"151",status:"kept",
+   detail:"cu-official-2026-11-18-v3 | Existing image has greater intrinsic dimensions",
+   checked_at:Math.floor(Date.now()/1000)
+ });
+ const previous=globalThis.fetch;
+ globalThis.fetch=async()=>new Response(png(470,470),{status:200,headers:{"content-type":"image/png"}});
+ try{
+   const result=await reconcileOfficial(env,{sources:[official],prices:{"300151":1134},limit:1});
+   assert.equal(result.attached,1,"Old opaque kept image should be replaced, not skipped");
+   assert.ok(env.read()[0].image_url.includes("/cu-skin-official/"));
+   assert.equal(env.read()[0].sale_price,1499,"Merchant discount must remain");
+   assert.equal(env.read()[0].price,1999);
+   assert.equal(env.read()[0].stock_quantity,15);
+ }finally{globalThis.fetch=previous;}
+});
+test("genuinely larger merchant-cutout photo is never replaced by smaller 470px source",async()=>{
+ const row={...base,image_url:"/shop-media/products/merchant-cutout.png"};
+ const env=fakeEnvironment(manyRows([row]));
+ const previous=globalThis.fetch;
+ globalThis.fetch=async()=>new Response(png(470,470),{status:200,headers:{"content-type":"image/png"}});
+ try{
+   const result=await reconcileOfficial(env,{sources:[official],prices:{"300151":1134},limit:1});
+   assert.equal(result.kept,1);
+   assert.equal(env.read()[0].image_url,row.image_url);
+   assert.equal(env.read()[0].price,row.price);
+ }finally{globalThis.fetch=previous;}
 });
