@@ -23,7 +23,7 @@ jobs:
               const products=images.filter(tag=>tag.includes('product')||tag.includes('media'));
               const parse=(tag,field)=>tag.match(new RegExp(field+'="([^"]*)"'))?.[1]||null;
               console.log('LIVE_PAGE',JSON.stringify({page,status:res.status,bytes:html.length,totalImgs:images.length,
-                images:products.map(tag=>({src:parse(tag,'src'),alt:parse(tag,'alt')}).slice(0,30)).slice(0,28)}).slice(0,20000));
+                images:products.map(tag=>({src:parse(tag,'src'),alt:parse(tag,'alt')})).slice(0,28)}).slice(0,20000));
             }catch(e){console.log('LIVE_ERROR',url,String(e))}
           }
           JS
