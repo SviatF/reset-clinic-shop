@@ -40,3 +40,5 @@ jobs:
             console.log("LIVE_BRAND_COUNT",JSON.stringify({brand,total,withPhoto,withoutPhoto,noPrice}));
           }
           JS
+
+# Verify first scheduled official manufacturer draft recovery after PRs 62 and 63.
