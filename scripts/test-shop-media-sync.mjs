@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import worker, { validIdentity, reconcile, officialMainGalleryImage } from "../workers/shop-media-sync/index.mjs";
+import worker, { validIdentity, reconcile, officialMainGalleryImage, lowResolutionR2Photo } from "../workers/shop-media-sync/index.mjs";
 import { imageDimensions, betterPhoto } from "../workers/shop-media-sync/image-dimensions.mjs";
 
 test("identity: protect variants and accept verified supplier title",()=>{
@@ -337,4 +337,12 @@ test("large missing-photo backlog still leaves room for blurry CU SKIN upgrades"
    assert.equal(product.sale_price,1800);
    assert.equal(product.stock_quantity,10);
  }finally{globalThis.fetch=originalFetch;}
+});
+
+test("legacy CU SKIN quality detector must never reprocess exact cu.ua official images",async()=>{
+  let reads=0;
+  const env={SHOP_MEDIA:{async get(){reads++; throw Error("Official images should not be fetched by old matcher")}}};
+  const product={brand:"CU SKIN",image_url:"/shop-media/products/cu-skin-official/151-verified.png"};
+  assert.equal(await lowResolutionR2Photo(env,product),null);
+  assert.equal(reads,0);
 });
