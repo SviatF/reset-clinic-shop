@@ -32,6 +32,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
   const onSale = Number(current.discountPercent) > 0 && Number(current.originalPrice) > Number(current.price);
   const savings = onSale ? Math.round((Number(current.originalPrice) - Number(current.price)) * 100) / 100 : 0;
   const href = `/product/${current.slug}`;
+  const isOfficialCutout = current.brand === "CU SKIN" && String(current.imageUrl || "").includes("/products/cu-skin-official/");
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
     if (event.pointerType === "touch") return;
@@ -55,7 +56,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
   }
 
   return (
-    <article className="premium-product-card" onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>
+    <article className={`premium-product-card${isOfficialCutout ? " premium-product-card--cu-skin-cutout" : ""}`} onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>
       <div className="premium-card-surface">
         <Link href={href} className="premium-product-link" aria-label={`Відкрити ${current.name}`}>
           <div className="premium-product-media">

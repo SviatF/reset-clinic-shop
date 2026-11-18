@@ -13,7 +13,8 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
  const canBuy=!item.trackStock||item.stockQuantity>0;
  const onSale=item.discountPercent>0&&item.originalPrice>item.price;
  const savings=onSale?Math.round((item.originalPrice-item.price)*100)/100:0;
- return <article className={`${item.brand === "OLIE\u0027RE PARIS" ? "rs-card rs-card--hair-cutout" : "rs-card"}${onSale ? " rs-card--on-sale" : ""}`}>
+ const isOfficialCutout = item.brand === "CU SKIN" && String(item.imageUrl || "").includes("/products/cu-skin-official/");
+ return <article className={`${item.brand === "OLIE\u0027RE PARIS" ? "rs-card rs-card--hair-cutout" : "rs-card"}${isOfficialCutout ? " rs-card--cu-skin-cutout" : ""}${onSale ? " rs-card--on-sale" : ""}`}>
   <Link className="rs-card-media" href={"/product/"+item.slug} aria-label={"Переглянути "+item.name}>
    <SmartProductImage src={item.imageUrl} alt={item.name} fallback={<div className="rs-card-placeholder"><strong>{item.brand}</strong><small>Фото додається</small></div>} />
    {onSale && <span className="shop-sale-badge rs-card-sale-badge">−{item.discountPercent}%</span>}
