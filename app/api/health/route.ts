@@ -7,6 +7,7 @@ import { shopMediaBucket } from "@/lib/r2-media";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { readJsonStore, PRODUCTS_PATH } from "@/lib/json-store";
 import type { ProductRecord } from "@/lib/commerce-types";
+import { getInventoryState } from "@/lib/inventory-state";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -44,6 +45,37 @@ export async function GET() {
         release_eligible: newCuSkin.filter(p => p.status === "draft" &&
           p.image_url?.startsWith("/shop-media/products/cu-skin-official/")).length,
       },
+    };
+    const aggregateByBrand = products.reduce((acc, item) => {
+      const key=item.brand||"unknown";
+      const group=acc[key] ||= { total:0,active:0,draft:0,missing_photo:0,draft_missing_photo:0,active_missing_photo:0,
+        active_unconfirmed_stock:0,active_confirmed_out:0,active_available:0,active_unpriced:0 };
+      group.total++;
+      if(item.status==="active") {
+        group.active++;
+        if(!item.image_url)group.active_missing_photo++;
+        const state=getInventoryState({brand:item.brand,price:item.price,track_stock:item.track_stock,
+          stock_quantity:item.stock_quantity,inventory_status:item.inventory_status});
+        if(state==="unconfirmed")group.active_unconfirmed_stock++;
+        else if(state==="confirmed_out")group.active_confirmed_out++;
+        else if(state==="available")group.active_available++;
+        else if(state==="priced_missing")group.active_unpriced++;
+      }
+      if(item.status==="draft"){group.draft++;if(!item.image_url)group.draft_missing_photo++;}
+      if(!item.image_url)group.missing_photo++;
+      return acc;
+    }, {} as Record<string, {
+      total:number;active:number;draft:number;missing_photo:number;draft_missing_photo:number;
+      active_missing_photo:number;active_unconfirmed_stock:number;active_confirmed_out:number;
+      active_available:number;active_unpriced:number
+    }>);
+    const inventoryHealth={
+      draft_total:products.filter(p=>p.status==="draft").length,
+      draft_missing_photo:products.filter(p=>p.status==="draft"&&!p.image_url).length,
+      draft_with_photo:products.filter(p=>p.status==="draft"&&!!p.image_url).length,
+      draft_with_price:products.filter(p=>p.status==="draft"&&Number(p.price)>0).length,
+      active_missing_photo:products.filter(p=>p.status==="active"&&!p.image_url).length,
+      brands:aggregateByBrand,
     };
     let verifiedDraftSync: {checked:number;published:number;skipped:number;failed:number}|null=null;
     let cuOfficialSync: { checked: number; attached: number; created: number; kept: number; conflicts: number; failed: number } | null = null;
@@ -138,6 +170,7 @@ export async function GET() {
       writable,
       totals: { products: products.length, categories: categories.length, brands: brands.length },
       photo_health: { ...photoCounts, cron: mediaSync, cu_official_sync: cuOfficialSync, verified_draft_sync: verifiedDraftSync },
+      inventory_health: inventoryHealth,
     }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Staging health catalog failure", error);

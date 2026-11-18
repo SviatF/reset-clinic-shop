@@ -1,3 +1,4 @@
+import { getInventoryState } from "@/lib/inventory-state";
 import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -46,8 +47,10 @@ export default async function DynamicProductPage({ params }: Props) {
   const brandUrl = `/catalog?brand=${encodeURIComponent(item.brand)}`;
   const categoryName = item.category === "body" ? "Тіло" : item.category === "hair" ? "Волосся" : item.category === "face" ? "Обличчя" : "Каталог";
   const categoryPath = item.category === "body" ? "/body" : item.category === "hair" ? "/hair" : item.category === "face" ? "/face" : "/catalog";
-  const needsPrice = !(Number(item.price) > 0);
-  const inStock = !needsPrice && (!item.trackStock || item.stockQuantity > 0);
+  const inventory = getInventoryState({brand:item.brand,price:item.price,track_stock:item.trackStock,stock_quantity:item.stockQuantity,inventory_status:item.inventoryStatus});
+  const needsPrice = inventory === "priced_missing";
+  const needsAvailability = inventory === "unconfirmed";
+  const inStock = inventory === "available";
   const onSale = item.discountPercent > 0 && item.originalPrice > item.price;
   const savings = onSale ? Math.round((item.originalPrice - item.price) * 100) / 100 : 0;
   const productSchema = {
@@ -66,7 +69,7 @@ export default async function DynamicProductPage({ params }: Props) {
       url: absoluteUrl(path),
       priceCurrency: "UAH",
       price: Number(item.price).toFixed(2),
-      availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      ...(needsAvailability ? {} : {availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"}),
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteConfig.url}/#organization` },
     }}),
@@ -105,15 +108,15 @@ export default async function DynamicProductPage({ params }: Props) {
               <div className="product-purchase-deck product-purchase-deck-light">
                 <div className="product-price-row product-price-card product-price-card-light">
                   <div className="product-price-main"><span className="product-price-label">{onSale ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{onSale && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className="product-price-number">{needsPrice ? "Ціна уточнюється" : <>{Number(item.price).toFixed(2)} <em>грн</em></>}</strong>{onSale && <span className="shop-saving-label shop-detail-saving-label">Економія {savings.toLocaleString("uk-UA", { maximumFractionDigits: 2 })} грн</span>}</div>
-                  <div className="product-price-side"><span>RESET CLINIC</span><small>{needsPrice ? "Вартість за запитом" : inStock ? "Доступно до замовлення" : "Немає в наявності"}</small></div>
+                  <div className="product-price-side"><span>RESET CLINIC</span><small>{needsPrice ? "Вартість за запитом" : needsAvailability ? "Наявність уточнюється" : inStock ? "Доступно до замовлення" : "Немає в наявності"}</small></div>
                 </div>
-                {needsPrice ? <Link href="/consultation" className="checkout-payment-error">Уточнити ціну та наявність →</Link> : inStock ? <ProductActions item={{ slug: item.slug, name: item.name, price: Number(item.price), maxQty: item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
+                {needsPrice ? <Link href="/contacts" className="checkout-payment-error">Уточнити ціну та наявність →</Link> : needsAvailability ? <Link href="/contacts" className="checkout-payment-error">Уточнити наявність товару →</Link> : inStock ? <ProductActions item={{ slug: item.slug, name: item.name, price: Number(item.price), maxQty: item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
                 <div className="product-shipping-line"><span>ДОСТАВКА</span><strong>Безкоштовно від 5000 грн</strong></div>
               </div>
 
               <div className="product-meta-strip">
                 {item.size && <span><b>{item.size}</b> ОБ’ЄМ</span>}
-                <span className="product-order-status"><i /> {needsPrice ? "ЦІНА УТОЧНЮЄТЬСЯ" : inStock ? "ДОСТУПНО ДО ЗАМОВЛЕННЯ" : "НЕМАЄ В НАЯВНОСТІ"}</span>
+                <span className="product-order-status"><i /> {needsPrice ? "ЦІНА УТОЧНЮЄТЬСЯ" : needsAvailability ? "НАЯВНІСТЬ УТОЧНЮЄТЬСЯ" : inStock ? "ДОСТУПНО ДО ЗАМОВЛЕННЯ" : "НЕМАЄ В НАЯВНОСТІ"}</span>
                 <Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} <ArrowUpRight /></Link>
               </div>
 

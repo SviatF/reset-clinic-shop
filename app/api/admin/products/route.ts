@@ -41,6 +41,7 @@ function normalizeProduct(body: any, id: string, createdAt: string): ProductReco
     currency: "UAH",
     stock_quantity: Math.max(0, Math.trunc(Number(body?.stock_quantity) || 0)),
     track_stock: body?.track_stock !== false,
+    inventory_status: ["auto","unknown","out_of_stock"].includes(body?.inventory_status) ? body.inventory_status : "auto",
     size: clean(body?.size, 80) || null,
     image_url: clean(body?.image_url, 1200) || null,
     secondary_image_url: clean(body?.secondary_image_url, 1200) || null,

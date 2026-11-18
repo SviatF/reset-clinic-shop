@@ -15,7 +15,7 @@ const empty = {
   price: "", sale_price: "", discount_percent: "", promo_enabled: false, stock_quantity: "0", size: "", short_description: "", description: "",
   image_url: "", secondary_image_url: "", hover_label: "ПРИЗНАЧЕННЯ", hover_title: "", hover_text: "",
   how_to_use: "", key_ingredients_text: "", inci: "", seo_title: "", seo_description: "",
-  featured: false, sort_order: "0", track_stock: true,
+  featured: false, sort_order: "0", track_stock: true, inventory_status: "auto",
 };
 
 function fromProduct(product: Product) {
@@ -23,6 +23,7 @@ function fromProduct(product: Product) {
   return {
     ...empty,
     ...product,
+    inventory_status: product.inventory_status || "auto",
     price: String(product.price ?? ""),
     sale_price: pricing.onSale ? String(pricing.price) : "",
     discount_percent: pricing.onSale ? String(pricing.discountPercent) : "",
@@ -98,6 +99,14 @@ export default function AdminProductsClient() {
   }
 
   useEffect(() => { load().catch((err) => setMessage(err.message)); }, []);
+  useEffect(() => {
+    // Deep links from the inventory review open the correct status, brand and SKU.
+    const params=new URLSearchParams(window.location.search);
+    const status=params.get("status");
+    if(status==="draft"||status==="active"||status==="archived")setStatusFilter(status);
+    const brand=params.get("brand");if(brand)setBrandFilter(brand);
+    const search=params.get("q");if(search)setQuery(search);
+  }, []);
 
   async function persistRecoveredCatalog() {
     if (!window.confirm(`Додати ${recovery?.missing ?? "відсутні"} товарів із резервного каталогу до D1? Наявні товари, їхні ціни, залишки та редагування збережуться.`)) return;
@@ -383,6 +392,7 @@ export default function AdminProductsClient() {
             <label><span>Сортування</span><input type="number" value={form.sort_order} onChange={(e) => update("sort_order", e.target.value)} /></label>
             <label className="admin-check"><input type="checkbox" checked={form.featured} onChange={(e) => update("featured", e.target.checked)} /><span>Показувати в рекомендованих</span></label>
             <label className="admin-check"><input type="checkbox" checked={form.track_stock} onChange={(e) => update("track_stock", e.target.checked)} /><span>Відслідковувати stock</span></label>
+            <label className="admin-field"><span>Підтвердження наявності</span><select value={form.inventory_status || "auto"} onChange={(e) => update("inventory_status", e.target.value)}><option value="auto">Автоматично за залишком</option><option value="unknown">Наявність уточнюється</option><option value="out_of_stock">Немає в наявності (підтверджено)</option></select></label>
           </div></section>
 
           <section className="admin-form-section admin-promo-section" id="sale-settings">

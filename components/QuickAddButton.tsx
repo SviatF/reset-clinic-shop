@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/CartProvider";
+import Link from "next/link";
+import type { InventoryState } from "@/lib/inventory-state";
 
-type QuickProduct = { slug: string; name: string; price: number; inStock?: boolean };
+type QuickProduct = { slug: string; name: string; price: number; inStock?: boolean; availability?: InventoryState };
 
 export default function QuickAddButton({ item }: { item: QuickProduct }) {
   const { add } = useCart();
@@ -23,6 +25,11 @@ export default function QuickAddButton({ item }: { item: QuickProduct }) {
     timerRef.current = setTimeout(() => setAdded(false), 1300);
   }
 
+  if(current.availability==="unconfirmed"||current.availability==="priced_missing") {
+    return <Link className="quick-add quick-add--inquiry" href="/contacts" aria-label={(current.availability==="priced_missing"?"Уточнити ціну: ":"Уточнити наявність: ")+current.name}>
+      {current.availability==="priced_missing"?"Уточнити ціну ↗":"Уточнити наявність ↗"}
+    </Link>;
+  }
   return (
     <button
       type="button"
