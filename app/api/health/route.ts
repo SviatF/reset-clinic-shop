@@ -45,6 +45,7 @@ export async function GET() {
           p.image_url?.startsWith("/shop-media/products/cu-skin-official/")).length,
       },
     };
+    let verifiedDraftSync: {checked:number;published:number;skipped:number;failed:number}|null=null;
     let cuOfficialSync: { checked: number; attached: number; created: number; kept: number; conflicts: number; failed: number } | null = null;
     let mediaSync: { attempts: number; attached: number; upgraded: number; unresolved: number; failed: number;
       last_attempt_unix: number | null; failure_categories?: Record<string, number> } | null = null;
@@ -112,6 +113,22 @@ export async function GET() {
         // Safe before the first scheduled CU SKIN sync initializes its audit table.
       }
     }
+    if (usingCloudflareStore()) {
+      try {
+        const env = getCloudflareContext().env as unknown as {
+          SHOP_DB?: { prepare(sql:string): {first<T>():Promise<T|null>} }
+        };
+        const summary = await env.SHOP_DB?.prepare(
+          "SELECT COUNT(*) AS checked, SUM(CASE WHEN status='published' THEN 1 ELSE 0 END) AS published, SUM(CASE WHEN status='skipped' THEN 1 ELSE 0 END) AS skipped, SUM(CASE WHEN status='error' THEN 1 ELSE 0 END) AS failed FROM shop_verified_draft_media"
+        ).first<{checked:number|null;published:number|null;skipped:number|null;failed:number|null}>();
+        if(summary)verifiedDraftSync={
+          checked:Number(summary.checked||0),published:Number(summary.published||0),
+          skipped:Number(summary.skipped||0),failed:Number(summary.failed||0)
+        };
+      }catch{
+        // The table is initialized by the scheduled photo sync after deploy.
+      }
+    }
     return NextResponse.json({
       status: "ok",
       media: process.env.SHOP_MEDIA_BACKEND === "r2" && Boolean(shopMediaBucket()) ? "r2" : "legacy",
@@ -120,7 +137,7 @@ export async function GET() {
       storage,
       writable,
       totals: { products: products.length, categories: categories.length, brands: brands.length },
-      photo_health: { ...photoCounts, cron: mediaSync, cu_official_sync: cuOfficialSync },
+      photo_health: { ...photoCounts, cron: mediaSync, cu_official_sync: cuOfficialSync, verified_draft_sync: verifiedDraftSync },
     }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Staging health catalog failure", error);
