@@ -45,6 +45,8 @@ jobs:
         run: npm run cf:media:test
       - name: Verify official CU SKIN replacement and D1/R2 safeguards
         run: node --test scripts/test-cuskin-official.mjs
+      - name: Verify CU SKIN catalog-only publishing with exact SKUs
+        run: node --test scripts/test-cuskin-publish.mjs
       - name: Build Cloudflare scheduled photo Worker (dry run)
         run: npx wrangler deploy --dry-run --config workers/shop-media-sync/wrangler.jsonc --outdir .tmp/shop-media-cron
       - name: TypeScript check
