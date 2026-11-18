@@ -248,9 +248,10 @@ async function attach(env,product,source,photo,expectedImageUrl=null){
  }
  throw Error("Concurrent update to D1, retry later");
 }
-async function lowResolutionR2Photo(env,product) {
+export async function lowResolutionR2Photo(env,product) {
   if(product.brand!=="CU SKIN" || !product.image_url?.startsWith("/shop-media/products/") ||
-     product.image_url.includes("/official-auto/"))return null;
+     product.image_url.includes("/official-auto/") ||
+     product.image_url.includes("/cu-skin-official/"))return null;
   const key=product.image_url.slice("/shop-media/".length);
   if(!/^products\/[-\w/.]+\.(?:jpg|jpeg|png|webp)$/i.test(key))return null;
   const head=await env.SHOP_MEDIA.get(key,{range:{offset:0,length:65536}});
