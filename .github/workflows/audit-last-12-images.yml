@@ -22,7 +22,7 @@ jobs:
               try {
                const r=await fetch(url,{redirect:"follow",signal:AbortSignal.timeout(17000),headers:{"User-Agent":"Mozilla/5.0","Accept":"text/html"}});
                const html=await r.text(),h1=html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
-               const meta=[...html.matchAll(/<meta\b[^>]*(?:property|name)=["'](?:og:image|twitter:image)["'][^>]*>/ig)].map(m=>m[0].match(/content=["']([^"']+)/i)?.[1]).filter(Boolean);
+             const meta=(html.match(/<meta[^>]+>/gi)||[]).filter(x=>/og:image/i.test(x)).map(x=>x.match(/content=["']([^"']+)/i)?.[1]).filter(Boolean);
                const imgs=[...html.matchAll(/<img\b[^>]*>/ig)].map(m=>m[0]).slice(0,60);
                const imgInfo=imgs.map(t=>({alt:t.match(/\balt=["']([^"']+)/i)?.[1]?.slice(0,90),
                  zoom:t.match(/data-zoom-image=["']([^"']+)/i)?.[1],
@@ -51,8 +51,8 @@ jobs:
            try{
              const r=await fetch(url,{redirect:"follow",signal:AbortSignal.timeout(12000),headers:{"User-Agent":"Mozilla/5.0"}});
              const html=await r.text();
-             const h1=html.match(/<h1[^>]*>([\\s\\S]*?)<\\/h1>/i)?.[1]?.replace(/<[^>]+>/g," ").trim();
-             const meta=[...html.matchAll(/<meta\\b[^>]*(?:property|name)=["']og:image["'][^>]*>/ig)].map(m=>m[0].match(/content=["']([^"']+)/i)?.[1]).filter(Boolean);
+             const h1=html.match(new RegExp("<h1[^>]*>(.*?)</h1>","is"))?.[1]?.replace(/<[^>]+>/g," ").trim();
+             const meta=(html.match(/<meta[^>]+>/gi)||[]).filter(x=>/og:image/i.test(x)).map(x=>x.match(/content=["']([^"']+)/i)?.[1]).filter(Boolean);
              console.log("EXTRA_SOURCE",JSON.stringify({name,status:r.status,h1,meta,title:html.match(/<title[^>]*>([^<]+)/i)?.[1],size:html.length}).slice(0,1200));
            }catch(e){console.log("EXTRA_SOURCE",JSON.stringify({name,error:String(e)}))}
           }
