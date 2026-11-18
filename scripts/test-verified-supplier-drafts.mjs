@@ -109,3 +109,20 @@ test("small supplier image cannot be used to publish a draft",async()=>{
   assert.equal(env.images.size,0);
  }finally{globalThis.fetch=original}
 });
+
+test("retry a previous skipped product after the D1 catalog was restored",async()=>{
+ const env=envWith(many([product]));
+ env.attempted.set(slug,{
+   slug,status:"skipped",detail:"verified-supplier-draft-2026-11-18-v1 | Not a missing verified draft",
+   checked_at:Math.floor(Date.now()/1000)
+ });
+ const original=globalThis.fetch;
+ globalThis.fetch=sourceFetch();
+ try{
+   const result=await publishVerifiedSupplierDrafts(env,{manifest:known,limit:1});
+   assert.equal(result.attempted,1);
+   assert.equal(result.published,1);
+   assert.equal(env.items()[0].status,"active");
+   assert.ok(env.items()[0].image_url.includes("/verified-drafts/"));
+ }finally{globalThis.fetch=original}
+});
