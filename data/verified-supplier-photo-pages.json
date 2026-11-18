@@ -293,5 +293,80 @@
     "brand": "HydroPeptide",
     "page": "https://hydropeptide.ua/product/antivozrastnoy-toniziruyuschiy-losion/",
     "title": "Pre-Treatment Toner"
+  },
+  "supplier-sensilis-hydra-essence-confort-mask": {
+    "brand": "Sensilis",
+    "page": "https://karvatska.store/hydra-essence-confort-mask/",
+    "title": "Hydra Essence Confort Mask",
+    "photo": "https://karvatska.store/image/cache/catalog/040-1000x1250w.png",
+    "sourceType": "merchant-exact-product"
+  },
+  "supplier-sensilis-lip-balm": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/lip-balm/",
+    "title": "Lip Balm"
+  },
+  "supplier-sensilis-pure-age-perfection-make-up-04-04": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/pure-age-perfection-make-up-04/",
+    "title": "Pure Age Perfection Make-Up 04",
+    "linePackshot": true
+  },
+  "supplier-sensilis-pure-age-perfection-make-up-05-05": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/pure-age-perfection-make-up-05/",
+    "title": "Pure Age Perfection Make-Up 05",
+    "photo": "https://sensilis.com.ua/image/cache/catalog/products/Products/MAKE-UP/Pure-Age-Perfection/05-750x1000.png"
+  },
+  "supplier-sensilis-resurfacing-black-peel": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com/en/skincare/cleansing-and-exfoliating/revitalising-and-brightening-peel-with-charcoal-blackpeel",
+    "title": "Resurfacing Black Peel"
+  },
+  "supplier-sensilis-upgrade-make-up-01-01": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/upgrade-make-up-01/",
+    "title": "Upgrade Make-Up 01",
+    "linePackshot": true
+  },
+  "supplier-sensilis-upgrade-make-up-02-02": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/upgrade-make-up-02/",
+    "title": "Upgrade Make-Up 02",
+    "linePackshot": true
+  },
+  "supplier-sensilis-upgrade-make-up-03-03": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/upgrade-make-up-03/",
+    "title": "Upgrade Make-Up 03",
+    "linePackshot": true
+  },
+  "supplier-cetaphil-500": {
+    "brand": "Cetaphil",
+    "page": "https://avepharm.com.ua/product/cetaphil-micelyarna-emulsiya-dlya-ochishchennya-normalnoji-suhoji-ta-chutlivoji-shkiri-500-ml/",
+    "title": "Cetaphil Міцелярна емульсія для очищення нормальної, сухої та чутливої шкіри, 500 мл",
+    "photo": "https://avepharm.com.ua/storage/8705/4.jpg",
+    "sourceType": "merchant-exact-product"
+  },
+  "cu-skin-catalog-004": {
+    "brand": "CU SKIN",
+    "page": "https://cu.ua/153",
+    "title": "Vitamin U CC Cream SPF40",
+    "snapshotSku": "300153",
+    "photo": "https://key.cu.ua/src/media/470_470_2.png"
+  },
+  "supplier-cuskin-clean-up-ex-c-after-cream": {
+    "brand": "CU SKIN",
+    "page": "https://cu.ua/137",
+    "title": "Clean-Up EX-C After Cream",
+    "snapshotSku": "300137",
+    "photo": "https://key.cu.ua/src/media/470_470_CP6vIqq.png"
+  },
+  "supplier-cuskin-clean-up-super-sun-screen-spf-50-pa": {
+    "brand": "CU SKIN",
+    "page": "https://cu.ua/149",
+    "title": "Clean-Up Super Sun Screen SPF 50+ PA++++",
+    "snapshotSku": "300149",
+    "photo": "https://key.cu.ua/src/media/470_470_djVJtQv.png"
   }
 }

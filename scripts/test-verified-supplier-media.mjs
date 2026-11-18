@@ -7,8 +7,8 @@ import {
 const manifest=JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.json","utf8"));
 const catalog=JSON.parse(fs.readFileSync("data/products.json","utf8"));
 const bySlug=new Map(catalog.map(p=>[p.slug,p]));
-const domains=new Set(["hydropeptide.ua","hydropeptide.com","sensilis.com.ua","decaar.com.ua"]);
-assert.equal(Object.keys(manifest).length,59);
+const domains=new Set(["hydropeptide.ua","hydropeptide.com","sensilis.com.ua","sensilis.com","decaar.com.ua","karvatska.store","avepharm.com.ua","cu.ua"]);
+assert.equal(Object.keys(manifest).length,71);
 for(const [slug,source] of Object.entries(manifest)){
  const product=bySlug.get(slug);
  assert.ok(product,"No corresponding merchant item "+slug);
@@ -46,10 +46,17 @@ for (const slug of [
  "supplier-hydropeptide-solar-defense-body-spf-30",
  "supplier-hydropeptide-pre-treatment-toner",
 ]) assert.ok(manifest[slug],"Missing checked official product source: "+slug);
+// A previously missing source can be included only with a validated exact
+// replacement; shared family images must be explicitly flagged as illustrative.
+assert.equal(manifest["supplier-sensilis-mascara"],undefined,"Generic mascara is not a SKU");
 for (const slug of [
- "supplier-sensilis-mascara",
- "supplier-sensilis-hydra-essence-confort-mask",
  "supplier-sensilis-pure-age-perfection-make-up-04-04",
+ "supplier-sensilis-upgrade-make-up-01-01",
  "supplier-sensilis-upgrade-make-up-02-02",
-]) assert.equal(manifest[slug],undefined,"Unsafe 404/shared-variant image mapping must not be shipped");
-console.log("59 verified source entries, including five newly validated photo origins");
+ "supplier-sensilis-upgrade-make-up-03-03",
+]) {
+ assert.equal(manifest[slug].linePackshot,true,"Illustrative shade photo must be explicitly flagged");
+ assert.ok(manifest[slug].page.startsWith("https://sensilis.com.ua/"),"Official exact shade landing required");
+}
+assert.ok(manifest["supplier-sensilis-hydra-essence-confort-mask"].photo.endsWith("040-1000x1250w.png"));
+console.log("71 exact reviewed product page mappings, including final supplier images with validated media identity");

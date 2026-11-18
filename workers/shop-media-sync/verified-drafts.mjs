@@ -1,20 +1,25 @@
 import verifiedPages from "../../data/verified-supplier-photo-pages.json" with { type: "json" };
+import officialCU from "../../data/cu-skin-official-snapshot.json" with { type: "json" };
 import { imageDimensions } from "./image-dimensions.mjs";
 
 /**
  * Only exact product-specific URLs curated in the repository. Never guess
  * a photo from general product search or replace an unrelated item's image.
  */
-const VERSION="verified-supplier-draft-2026-11-18-v3";
+const VERSION="verified-supplier-draft-2026-11-18-v4";
 const LIMIT_PER_CRON=8;
 const HOSTS={
   "HydroPeptide":new Set(["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com","cdn.shopify.com"]),
-  "Sensilis":new Set(["sensilis.com.ua","www.sensilis.com.ua"]),
+  "Sensilis":new Set(["sensilis.com.ua","www.sensilis.com.ua","sensilis.com","www.sensilis.com","karvatska.store"]),
+  "Cetaphil":new Set(["avepharm.com.ua"]),
+  "CU SKIN":new Set(["key.cu.ua"]),
   "DÉCAAR":new Set(["decaar.com.ua","www.decaar.com.ua"]),
 };
 const PRODUCT_HOSTS={
   "HydroPeptide":new Set(["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com"]),
-  "Sensilis":new Set(["sensilis.com.ua","www.sensilis.com.ua"]),
+  "Sensilis":new Set(["sensilis.com.ua","www.sensilis.com.ua","sensilis.com","www.sensilis.com","karvatska.store"]),
+  "Cetaphil":new Set(["avepharm.com.ua"]),
+  "CU SKIN":new Set(["cu.ua"]),
   "DÉCAAR":new Set(["decaar.com.ua","www.decaar.com.ua"]),
 };
 const entries=Object.entries(verifiedPages);
@@ -86,7 +91,8 @@ function mainGallery(html,brand){
   if(brand==="Sensilis"){
     const tag=(html.match(/<img\b[^>]*\bid\s*=\s*["']zoom["'][^>]*>/i)||[])[0]||
       (html.match(/<img\b[^>]*>/gi)||[]).find(x=>attr(x,"id")==="zoom");
-    return tag&&(attr(tag,"data-zoom-image")||attr(tag,"src"));
+    return (tag&&(attr(tag,"data-zoom-image")||attr(tag,"src"))) ||
+      meta(html,"og:image")||meta(html,"og:image:secure_url");
   }
   return meta(html,"og:image")||meta(html,"og:image:secure_url");
 }
@@ -100,36 +106,65 @@ function bytesExt(bytes,mime){
 async function fetchVerifiedSource(known,product){
   if(!variantIsCompatible(known.title,product.name))
     throw Error("Mapped title variant differs from catalog");
-  if(!normalize(product.name).includes(normalize(known.title))){
+  if(!normalize(product.name).includes(normalize(known.title)))
     throw Error("Source product name is not in the matching catalog title");
+  let imageUrl=null;
+  if(known.brand==="CU SKIN" && known.snapshotSku){
+    // cu.ua product pages render the catalog in a JS app without an H1.
+    // Its audited first-party catalog snapshot binds exact official SKU,
+    // volume and source image, avoiding guesses against catalog search.
+    const sku=officialCU.products.find(row=>row.sku===known.snapshotSku);
+    if(!sku || sku.sourceUrl!==known.page || sku.mainImage!==known.photo ||
+       !normalize(sku.name).includes(normalize(known.title)))
+      throw Error("Official CU SKU or source photo does not match audited feed");
+    if(product.size && !sku.volumes?.includes(product.size))
+      throw Error("Official CU SKU has a different package size");
+    imageUrl=verifiedUrl(sku.mainImage,known.brand,true);
+    if(!imageUrl)throw Error("Official CU media URL denied");
+  }else {
+    if(known.snapshotSku)throw Error("Unsupported supplier snapshot override");
+    const res=await get(known.page,known.brand);
+    if(!(res.headers.get("content-type")||"").includes("text/html"))
+      throw Error("Supplier page is not HTML");
+    if(Number(res.headers.get("content-length")||0)>1_800_000)
+      throw Error("Supplier product page too large");
+    const html=await res.text();
+    if(html.length>1_800_000)throw Error("Supplier product page too large");
+    const pageTitle=mainTitle(html);
+    if(!pageTitle||pageTitle.length<3)throw Error("Supplier product H1 missing");
+    if(!variantIsCompatible(known.title,pageTitle) ||
+       !variantIsCompatible(product.name,pageTitle))
+      throw Error("Supplier live page has a different variant");
+    if(known.sourceType==="merchant-exact-product" &&
+       !normalize(pageTitle).includes(normalize(known.title)))
+      throw Error("Exact merchant product H1 does not match requested SKU");
+    if(known.brand!=="DÉCAAR" && known.brand!=="Cetaphil" &&
+        !String(known.sourceType||"").startsWith("merchant-")){
+      const expected=normalize(known.title).replace(/\s+/g," ");
+      const actual=normalize(pageTitle);
+      const key=expected.split(" ").filter(x=>x.length>3);
+      const intersection=key.filter(x=>actual.includes(x)).length;
+      if(key.length>0 && intersection<Math.max(1,Math.ceil(key.length*.5)))
+        throw Error("Supplier live page title does not match mapped model");
+    }
+    // For an exact product source, allow selecting the original gallery file
+    // instead of a resized/incorrect OG thumbnail, but require that exact
+    // asset URL to be present in this product page's returned HTML.
+    const raw=known.photo||mainGallery(html,known.brand);
+    if(known.photo && !html.includes(known.photo) &&
+       !html.includes(known.photo.replace(/&/g,"&amp;"))){
+      // The supplier exposes only a 292px derivative in its product page,
+      // while the 500ml original is available at the very same media ID.
+      // Never permit arbitrary cross-product substitutions.
+      const source=new URL(known.photo);
+      const original=known.brand==="Cetaphil" && source.hostname==="avepharm.com.ua"
+        ? source.pathname.match(/^\/storage\/(\d+)\/([a-zA-Z0-9_-]+)\.jpg$/):null;
+      if(!original || !html.includes("/storage/"+original[1]+"/conversions/"+original[2]+"-"))
+        throw Error("The reviewed photo is not tied to the exact supplier gallery");
+    }
+    imageUrl=raw?verifiedUrl(raw,known.brand,true,known.page):null;
+    if(!imageUrl)throw Error("No verified original product image");
   }
-  const res=await get(known.page,known.brand);
-  if(!(res.headers.get("content-type")||"").includes("text/html"))
-    throw Error("Supplier page is not HTML");
-  if(Number(res.headers.get("content-length")||0)>1_800_000)
-    throw Error("Supplier product page too large");
-  const html=await res.text();
-  if(html.length>1_800_000)throw Error("Supplier product page too large");
-  const pageTitle=mainTitle(html);
-  if(!pageTitle||pageTitle.length<3)throw Error("Supplier product H1 missing");
-  // A curated matching page is authoritative, but an explicit incompatible
-  // SPF, strength or shade on the live page must always stop publication.
-  if(!variantIsCompatible(known.title,pageTitle) ||
-     !variantIsCompatible(product.name,pageTitle))
-    throw Error("Supplier live page has a different variant");
-  // For Sensilis/HydroPeptide the live H1 uses the same model; DÉCAAR H1
-  // is localized in Ukrainian, so the exact reviewed page URL takes precedence.
-  if(known.brand!=="DÉCAAR"){
-    const expected=normalize(known.title).replace(/\s+/g," ");
-    const actual=normalize(pageTitle);
-    const key=expected.split(" ").filter(x=>x.length>3);
-    const intersection=key.filter(x=>actual.includes(x)).length;
-    if(key.length>0 && intersection<Math.max(1,Math.ceil(key.length*.5)))
-      throw Error("Supplier live page title does not match mapped model");
-  }
-  const raw=mainGallery(html,known.brand);
-  const imageUrl=raw?verifiedUrl(raw,known.brand,true,known.page):null;
-  if(!imageUrl)throw Error("No verified original product image");
   const imageRes=await get(imageUrl,known.brand,true);
   const size=Number(imageRes.headers.get("content-length")||0);
   if(size>MAX_SOURCE_BYTES)throw Error("Supplier image too large");
@@ -177,6 +212,10 @@ async function attachPhotoAndPublish(env,slug,known,url){
     }
     const now=new Date().toISOString();
     const next=rows.map(row=>row.id===p.id?{...row,image_url:url,status:"active",
+      ...(known.linePackshot ? {description:(
+        String(row.description||"").trim()+"\n\n"+
+        "Примітка: на фото представлено упаковку лінійки Sensilis. Фактичний відтінок товару визначається назвою його варіанта."
+      ).trim()} : {}),
       published_at:row.published_at||now,updated_at:now}:row);
     const changed=await env.SHOP_DB.prepare(
       "UPDATE shop_documents SET content=?,version=version+1,updated_at=datetime('now') WHERE pathname='data/products.json' AND version=?"
@@ -233,4 +272,4 @@ export async function publishVerifiedSupplierDrafts(env,{limit=LIMIT_PER_CRON,ma
   console.log("Verified supplier catalog draft publishing",JSON.stringify(result));
   return result;
 }
-export { verifiedUrl, mainGallery, variantIsCompatible, eligible, VERSION as VERIFIED_DRAFT_SYNC_VERSION };
+export { verifiedUrl, mainGallery, variantIsCompatible, eligible, fetchVerifiedSource, VERSION as VERIFIED_DRAFT_SYNC_VERSION };
