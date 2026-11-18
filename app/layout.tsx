@@ -36,6 +36,7 @@ import "./admin-products-v2.css";
 import "./admin-bulk-promotions.css";
 import "./admin-publishing.css";
 import "./admin-cuskin-import.css";
+import "./cuskin-transparent-products.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
 import favicon from "@/assets/img/favicon.webp";
 import Header from "@/components/Header";
