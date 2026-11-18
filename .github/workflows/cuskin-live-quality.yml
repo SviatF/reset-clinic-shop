@@ -1,0 +1,21 @@
+name: Audit CU SKIN live image quality (read only)
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - 'scripts/audit-cuskin-live-quality.py'
+      - '.github/workflows/cuskin-live-quality.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow==11.3.0
+      - name: Inspect store images dimensions and alpha
+        run: python scripts/audit-cuskin-live-quality.py
