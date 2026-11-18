@@ -1,0 +1,40 @@
+name: Audit missing photos in published shop by brand
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/catalog-brand-photo-gaps.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Public catalog photo scan
+        run: |
+          node --input-type=module <<'JS'
+          const brands=["Dermafirm","Braderm","Histolab","HydroPeptide","Cetaphil","Sensilis","DÉCAAR","CU SKIN","OLIE'RE PARIS"];
+          for(const brand of brands){
+            let total=0,missing=[],images=0,checked=0,notFound=0;
+            for(let page=1;page<=8;page++){
+              try{
+                const url='https://shop.resetclinic.org/catalog?brand='+encodeURIComponent(brand)+'&page='+page;
+                const res=await fetch(url,{signal:AbortSignal.timeout(16000)});
+                const html=await res.text();
+                const match=html.match(/<article\s+class="rs-card[^"]*"[^>]*>[\s\S]*?<\/article>/gi)||[];
+                const placeholders=[...html.matchAll(/Фото додається/g)].length;
+                // Product cards have repeating rs-card-media markup; fallback is distinguishable.
+                const media=[...html.matchAll(/class="rs-card-media"[^>]*>[\s\S]*?<\/a>/gi)].map(x=>x[0]);
+                const withPlaceholder=media.filter(x=>x.includes("rs-card-placeholder")).length;
+                const withImage=media.filter(x=>x.includes('<img')).length;
+                const productnames=[...html.matchAll(/class="rs-card-name"[^>]*>([^<]+)<\/a>/gi)].map(x=>x[1]);
+                if(page===1||media.length)console.log('PUBLIC_BRAND_PAGE',JSON.stringify({brand,page,http:res.status,media:media.length,withImage,withPlaceholder,
+                  countText:html.match(/<strong>(\d+)<\/strong>\s*товар/g)?.slice(0,1),sampleNames:productnames.slice(0,5)}));
+                total+=media.length;images+=withImage;checked+=withPlaceholder;
+                if(media.length===0||media.length<25)break;
+              }catch(e){console.log("BRAND_ERROR",brand,page,String(e));break;}
+            }
+            console.log("BRAND_SUMMARY",JSON.stringify({brand,total,withImage:images,placeholder:checked}));
+          }
+          JS
