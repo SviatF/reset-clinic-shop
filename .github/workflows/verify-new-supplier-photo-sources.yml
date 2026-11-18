@@ -1,0 +1,58 @@
+name: Verify 14 missing supplier product photo sources
+on:
+  push:
+    branches: [feat/sensilis-twelve-verified-photos-20261118]
+    paths:
+      - '.github/workflows/verify-new-supplier-photo-sources.yml'
+      - 'data/verified-supplier-photo-pages.json'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check each new exact source H1 and product-gallery photo
+        run: |
+          node --input-type=module <<'JS'
+          import fs from "node:fs";
+          const items=Object.entries(JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.json","utf8")))
+            .filter(([slug])=>slug.startsWith("supplier-sensilis-hydra-essence-confort-mask")||
+               slug.startsWith("supplier-sensilis-invisible-matt")||
+               slug.startsWith("supplier-sensilis-lip-balm")||
+               slug.startsWith("supplier-sensilis-mascara")||
+               slug.startsWith("supplier-sensilis-pure-age-perfection-make-up-04")||
+               slug.startsWith("supplier-sensilis-pure-age-perfection-make-up-05")||
+               slug.startsWith("supplier-sensilis-resurfacing-black-peel")||
+               slug.startsWith("supplier-sensilis-skin-barrier")||
+               slug.startsWith("supplier-sensilis-the-cool-rescue")||
+               slug.startsWith("supplier-sensilis-upgrade-make-up-01")||
+               slug.startsWith("supplier-sensilis-upgrade-make-up-02")||
+               slug.startsWith("supplier-sensilis-upgrade-make-up-03")||
+               slug.startsWith("supplier-hydropeptide-solar-defense-body-spf-30")||
+               slug.startsWith("supplier-hydropeptide-pre-treatment-toner"));
+          let i=0,results=[];
+          async function run(){
+            while(i<items.length){
+              const [slug,spec]=items[i++];
+              try{
+               const r=await fetch(spec.page,{redirect:"follow",signal:AbortSignal.timeout(16000),headers:{"User-Agent":"Mozilla/5.0"}});
+               const html=await r.text();
+               const h1=html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()||"";
+               const meta=(html.match(/<meta\b[^>]*\b(?:property|name)=["']og:image["'][^>]*>/i)||[])[0]||"";
+               const og=meta.match(/\bcontent=["']([^"']+)/i)?.[1]||"";
+               const imgs=[...html.matchAll(/<img\b[^>]*>/gi)].map(x=>x[0]);
+               const tag=imgs.find(x=>/\bid=["']zoom["']/.test(x))||"";
+               const zoom=tag.match(/data-zoom-image=["']([^"']+)/i)?.[1]||tag.match(/src=["']([^"']+)/i)?.[1]||"";
+               const x={slug,status:r.status,url:r.url,title:spec.title,h1,og:og.slice(0,250),zoom:zoom.slice(0,250),
+                 photo:spec.brand==="Sensilis"?!!zoom:!!og,
+                 h1Matches:h1.toLowerCase().includes(spec.title.toLowerCase())};
+               results.push(x);console.log("SOURCE_CHECK",JSON.stringify(x));
+              }catch(e){const x={slug,error:String(e)};results.push(x);console.log("SOURCE_CHECK",JSON.stringify(x))}
+            }
+          }
+          await Promise.all(Array.from({length:4},run));
+          console.log("SOURCE_SUMMARY",JSON.stringify({checked:results.length,live:results.filter(x=>x.status===200).length,
+            photo:results.filter(x=>x.photo).length,identity:results.filter(x=>x.h1Matches).length,errors:results.filter(x=>x.error)}));
+          JS
