@@ -37,6 +37,7 @@ export async function GET() {
         published: cuSkin.filter(p => p.status === "active").length,
       },
     };
+    let cuOfficialSync: { checked: number; attached: number; created: number; kept: number; conflicts: number; failed: number } | null = null;
     let mediaSync: { attempts: number; attached: number; upgraded: number; unresolved: number; failed: number;
       last_attempt_unix: number | null; failure_categories?: Record<string, number> } | null = null;
     if (usingCloudflareStore()) {
@@ -86,6 +87,23 @@ export async function GET() {
         // Cron may not have executed yet, in which case its audit table does not exist.
       }
     }
+    if (usingCloudflareStore()) {
+      try {
+        const env = getCloudflareContext().env as unknown as {
+          SHOP_DB?: {prepare(sql: string): {first<T>(): Promise<T | null>}}
+        };
+        const summary = await env.SHOP_DB?.prepare(
+          "SELECT COUNT(*) AS checked, SUM(CASE WHEN status='attached' THEN 1 ELSE 0 END) AS attached, SUM(CASE WHEN status='created' THEN 1 ELSE 0 END) AS created, SUM(CASE WHEN status='kept' THEN 1 ELSE 0 END) AS kept, SUM(CASE WHEN status='conflict' THEN 1 ELSE 0 END) AS conflicts, SUM(CASE WHEN status='error' THEN 1 ELSE 0 END) AS failed FROM shop_cuskin_official_sync"
+        ).first<Record<"checked"|"attached"|"created"|"kept"|"conflicts"|"failed",number|null>>();
+        if (summary) cuOfficialSync = {
+          checked: Number(summary.checked||0),attached: Number(summary.attached||0),
+          created: Number(summary.created||0),kept: Number(summary.kept||0),
+          conflicts: Number(summary.conflicts||0),failed: Number(summary.failed||0),
+        };
+      } catch {
+        // Safe before the first scheduled CU SKIN sync initializes its audit table.
+      }
+    }
     return NextResponse.json({
       status: "ok",
       media: process.env.SHOP_MEDIA_BACKEND === "r2" && Boolean(shopMediaBucket()) ? "r2" : "legacy",
@@ -94,7 +112,7 @@ export async function GET() {
       storage,
       writable,
       totals: { products: products.length, categories: categories.length, brands: brands.length },
-      photo_health: { ...photoCounts, cron: mediaSync },
+      photo_health: { ...photoCounts, cron: mediaSync, cu_official_sync: cuOfficialSync },
     }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Staging health catalog failure", error);
