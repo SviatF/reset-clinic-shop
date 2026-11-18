@@ -29,3 +29,5 @@ jobs:
 # Check post-deployment official CU SKIN photo progress (read only).
 
 # Recheck live official import coverage and remaining SKU queue.
+
+# Verify CU SKIN completion without mutating production.
