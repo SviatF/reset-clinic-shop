@@ -47,3 +47,5 @@ jobs:
 # Verify live counts after catalog-only mode and prioritized verified draft photo worker deploy.
 
 # Verify the five new official draft photo sources after PR67 production deployment.
+
+# Inspect post-PR68 recovered Sensilis / Cetaphil / CU SKIN draft media totals.
