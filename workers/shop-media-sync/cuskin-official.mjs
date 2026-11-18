@@ -159,7 +159,8 @@ async function originalIsBetter(env,url,photo){
   // alpha cutouts; prefer the verified official PNG, not a white tile merely
   // because it has more pixels. This never bypasses variant identity checks.
   if (key.startsWith("products/official-auto/") ||
-      /^products\\/2026-11-16\\/[-\\w.]+\\.jpe?g$/i.test(key)) return false;
+      (key.startsWith("products/2026-11-16/") &&
+       (key.toLowerCase().endsWith(".jpg") || key.toLowerCase().endsWith(".jpeg")))) return false;
   // Keep previously verified, larger supplier photos with real cutout detail.
   if(!/^products\/[-\w/.]+\.(png|jpe?g|webp)$/i.test(key))return false;
   const obj=await env.SHOP_MEDIA.get(key,{range:{offset:0,length:65536}});
