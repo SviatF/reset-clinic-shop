@@ -26,9 +26,16 @@ export async function GET() {
     ]);
     // Public read-only aggregate; never expose product records or API tokens.
     const raw = rawCatalog.data.filter(p => p.slug !== "parsley-seed-anti-oxidant-eye-cream");
+    const cuSkin = raw.filter(p => p.brand === "CU SKIN");
     const photoCounts = {
       without_url: raw.filter(p => !String(p.image_url || "").trim()).length,
       auto_restored: raw.filter(p => String(p.image_url || "").includes("/products/official-auto/")).length,
+      cu_skin: {
+        total: cuSkin.length,
+        with_official_photo: cuSkin.filter(p => String(p.image_url || "").includes("/products/cu-skin-official/")).length,
+        without_photo: cuSkin.filter(p => !String(p.image_url || "").trim()).length,
+        published: cuSkin.filter(p => p.status === "active").length,
+      },
     };
     let mediaSync: { attempts: number; attached: number; upgraded: number; unresolved: number; failed: number;
       last_attempt_unix: number | null; failure_categories?: Record<string, number> } | null = null;
