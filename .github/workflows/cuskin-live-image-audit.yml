@@ -1,0 +1,29 @@
+name: Audit live CU SKIN catalog image links (read-only)
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/cuskin-live-image-audit.yml'
+permissions:
+  contents: read
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Inspect live rendered CU SKIN images without admin access
+        run: |
+          node --input-type=module <<'JS'
+          for(const page of [1,2,3,4]){
+            const url='https://shop.resetclinic.org/catalog?brand=CU%20SKIN&page='+page;
+            try{
+              const res=await fetch(url,{signal:AbortSignal.timeout(15000)});
+              const html=await res.text();
+              const images=[...html.matchAll(/<img\s[^>]*>/gi)].map(m=>m[0]);
+              const products=images.filter(tag=>tag.includes('product')||tag.includes('media'));
+              const parse=(tag,field)=>tag.match(new RegExp(field+'="([^"]*)"'))?.[1]||null;
+              console.log('LIVE_PAGE',JSON.stringify({page,status:res.status,bytes:html.length,totalImgs:images.length,
+                images:products.map(tag=>({src:parse(tag,'src'),alt:parse(tag,'alt')}).slice(0,30)).slice(0,28)}).slice(0,20000));
+            }catch(e){console.log('LIVE_ERROR',url,String(e))}
+          }
+          JS
