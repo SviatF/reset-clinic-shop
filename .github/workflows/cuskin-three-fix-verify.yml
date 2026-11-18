@@ -36,3 +36,5 @@ jobs:
             status:h.status,cu_skin:h.photo_health?.cu_skin,sync:h.photo_health?.cu_official_sync
           }));
           JS
+
+# After deploying exact-SKU alpha preference, recheck verified picture coverage.
