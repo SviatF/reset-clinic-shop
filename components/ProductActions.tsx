@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 
-type ActionProduct = { slug: string; name: string; price: number; maxQty?: number };
+type ActionProduct = { slug: string; name: string; price: number; imageUrl?: string | null; maxQty?: number };
 
 export default function ProductActions({ item }: { item: ActionProduct }) {
   const current = item;
@@ -13,7 +13,7 @@ export default function ProductActions({ item }: { item: ActionProduct }) {
   const { add } = useCart();
 
   function addToCart() {
-    add({ slug: current.slug, name: current.name, price: current.price }, qty);
+    add({ slug: current.slug, name: current.name, price: current.price, imageUrl: current.imageUrl }, qty);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1800);
   }

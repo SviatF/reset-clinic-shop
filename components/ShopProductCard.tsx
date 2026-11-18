@@ -33,7 +33,7 @@ export default function ShopProductCard({item}:{item:StoreProduct}){
       ? <Link href="/contacts" className="rs-card-add rs-card-inquiry" aria-label={(needsPrice?"Уточнити ціну: ":"Уточнити наявність: ")+item.name}>{needsPrice?"Уточнити ціну ↗":"Наявність? ↗"}</Link>
       : <button type="button" className="rs-card-add" disabled={!canBuy}
         aria-label={canBuy?"Додати до кошика: "+item.name:"Немає в наявності: "+item.name}
-        onClick={()=>{if(!canBuy)return;add({slug:item.slug,name:item.name,price:item.price},1);setAdded(true)}}>
+        onClick={()=>{if(!canBuy)return;add({slug:item.slug,name:item.name,price:item.price,imageUrl:item.imageUrl},1);setAdded(true)}}>
         {!canBuy?"Немає":added?"Додано ✓":"У кошик +"}
        </button>}
    </div>

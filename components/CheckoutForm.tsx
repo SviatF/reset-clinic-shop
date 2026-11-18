@@ -4,12 +4,15 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
+import { earnedCartBenefits, physicalCartSubtotal } from "@/lib/cart-benefits";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
   const legacyCertificateInCart = items.some(item => isLegacyCertificateSlug(item.slug));
   const [delivery, setDelivery] = useState("nova");
   const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
+  const earnedBenefits = earnedCartBenefits(physicalCartSubtotal(items));
+  const freeShipping = earnedBenefits.includes("Безкоштовна доставка");
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
 
@@ -89,8 +92,8 @@ export default function CheckoutForm() {
       <section className="checkout-section">
         <h2>Доставка / отримання</h2>
         <div className="delivery-options">
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>{freeShipping ? "Безкоштовно · відділення або поштомат · 1–3 робочі дні" : "Відділення або поштомат · 1–3 робочі дні"}</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>{freeShipping ? "Безкоштовна адресна доставка" : "Адресна доставка за тарифами перевізника"}</span></span></label>
           <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
         </div>
         {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
@@ -98,6 +101,8 @@ export default function CheckoutForm() {
           <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
         </div>}
       </section>
+
+      {earnedBenefits.length > 0 && <p className="checkout-bonus-note"><strong>Бонуси цього замовлення:</strong> {earnedBenefits.join(" · ")}. Подарунки додамо під час комплектації.</p>}
 
       <section className="checkout-section checkout-payment-section">
         <h2>Оплата</h2>

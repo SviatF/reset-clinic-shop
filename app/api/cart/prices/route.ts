@@ -17,6 +17,7 @@ export async function POST(request: Request) {
     const products = await readProducts();
     const bySlug = new Map(products.filter((item) => item.status === "active").map((item) => [item.slug, item]));
     const prices: Record<string, number> = {};
+    const images: Record<string, string | null> = {};
     for (const slug of slugs as string[]) {
       const certificate = certificateFromSlug(slug);
       if (certificate) {
@@ -24,9 +25,12 @@ export async function POST(request: Request) {
         continue;
       }
       const item = bySlug.get(slug);
-      if (item && Number(item.price) > 0) prices[slug] = getProductPricing(item).price;
+      if (item && Number(item.price) > 0) {
+        prices[slug] = getProductPricing(item).price;
+        images[slug] = item.image_url || null;
+      }
     }
-    return NextResponse.json({ prices }, { headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json({ prices, images }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ error: "Не вдалося перевірити актуальні ціни" }, { status: 503 });
   }

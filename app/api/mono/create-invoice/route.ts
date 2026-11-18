@@ -5,6 +5,7 @@ import { appendActivity, mutateOrders, readOrders, newId } from "@/lib/commerce-
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { monoFetch, normalizeOrder, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
 import { certificateFromSlug } from "@/lib/certificate-products";
+import { earnedCartBenefits } from "@/lib/cart-benefits";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -57,7 +58,11 @@ async function persistOrder(args: {
       certificate_recipient_email: clean(args.body.certificate_recipient_email, 120) || null,
       certificate_message: clean(args.body.certificate_message, 500) || null,
       tracking_number: null,
-      admin_notes: null,
+      admin_notes: (() => {
+        const eligibleTotal = args.items.reduce((sum, item) => sum + (certificateFromSlug(item.slug) ? 0 : item.totalAmount), 0) / 100;
+        const benefits = earnedCartBenefits(eligibleTotal);
+        return benefits.length ? "БОНУСИ ЗАМОВЛЕННЯ (товари без сертифікатів): " + benefits.join("; ") : null;
+      })(),
       subtotal: args.amount / 100,
       shipping: 0,
       total: args.amount / 100,

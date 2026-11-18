@@ -22,6 +22,16 @@
 .shipping-copy { display: flex; justify-content: space-between; gap: 18px; font-size: 12px; line-height: 1.4; }
 .shipping-track { height: 3px; background: #dedbd1; margin-top: 12px; overflow: hidden; }
 .shipping-track span { display: block; height: 100%; background: #111; transition: width .35s ease; }
+.shipping-progress { flex-shrink: 0; padding: 12px 0 14px; }
+.cart-benefit { padding: 9px 0; }
+.cart-benefit + .cart-benefit { border-top: 1px solid rgba(25,25,25,.08); }
+.cart-benefit .shipping-track { margin-top: 8px; }
+.cart-benefit .shipping-copy { align-items: baseline; font-size: 11px; gap: 10px; }
+.cart-benefit .shipping-copy b { font-weight: 700; }
+.cart-benefit-percent { color: #555; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.drawer-photo-missing { display: block; padding: 10px; text-align: center; color: #777; font-size: 10px; line-height: 1.4; }
+.drawer-thumb img { max-height: 98px; width: 100%; object-fit: contain; }
+.checkout-bonus-note { margin: 15px 0 22px; padding: 15px 18px; background: #f5f3eb; border: 1px solid #e8e4d9; color: #252520; font-size: 13px; line-height: 1.6; }
 .drawer-items { flex: 1; overflow: auto; padding: 8px 0; }
 .drawer-item { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--reset-line); }
 .drawer-thumb { background: #fff; min-height: 105px; display: flex; align-items: center; justify-content: center; overflow: hidden; }

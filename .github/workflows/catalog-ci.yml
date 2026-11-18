@@ -39,6 +39,8 @@ jobs:
         run: node --experimental-strip-types scripts/test-catalog-publishing.mjs
       - name: Verify official Histolab photo recovery mapping
         run: node --experimental-strip-types scripts/test-histolab-photo-repair.mjs
+      - name: Verify specialist subcategories and multi-category product matching
+        run: node --experimental-strip-types scripts/test-specialist-categories.mjs
       - name: Validate official multi-brand photo recovery mapping
         run: node --experimental-strip-types scripts/test-verified-supplier-media.mjs
       - name: Verify automatic Cloudflare media job (no manual buttons)

@@ -174,5 +174,60 @@
     "description": "",
     "seo_title": "",
     "seo_description": ""
+  },
+  {
+    "id": "face-eye-care",
+    "slug": "eye-care",
+    "name": "Догляд за очима",
+    "parent_slug": "face",
+    "sort_order": 60,
+    "description": "Засоби для делікатного догляду за зоною навколо очей.",
+    "status": "active",
+    "seo_title": "Догляд за очима — RESET Clinic",
+    "seo_description": "Засоби для делікатного догляду за зоною навколо очей."
+  },
+  {
+    "id": "face-lip-care",
+    "slug": "lip-care",
+    "name": "Догляд за губами",
+    "parent_slug": "face",
+    "sort_order": 70,
+    "description": "Професійний догляд, відновлення та захист губ.",
+    "status": "active",
+    "seo_title": "Догляд за губами — RESET Clinic",
+    "seo_description": "Професійний догляд, відновлення та захист губ."
+  },
+  {
+    "id": "face-spot-treatment",
+    "slug": "spot-treatment",
+    "name": "Точкові засоби",
+    "parent_slug": "face",
+    "sort_order": 80,
+    "description": "Засоби для локального нанесення на проблемні ділянки шкіри.",
+    "status": "active",
+    "seo_title": "Точкові засоби — RESET Clinic",
+    "seo_description": "Засоби для локального нанесення на проблемні ділянки шкіри."
+  },
+  {
+    "id": "body-hand-care",
+    "slug": "hand-care",
+    "name": "Догляд за руками",
+    "parent_slug": "body",
+    "sort_order": 50,
+    "description": "Професійні засоби для шкіри рук.",
+    "status": "active",
+    "seo_title": "Догляд за руками — RESET Clinic",
+    "seo_description": "Професійні засоби для шкіри рук."
+  },
+  {
+    "id": "hair-treatment",
+    "slug": "treatment",
+    "name": "Лікувальні засоби",
+    "parent_slug": "hair",
+    "sort_order": 50,
+    "description": "Цільовий догляд за шкірою голови та волоссям.",
+    "status": "active",
+    "seo_title": "Лікувальні засоби — RESET Clinic",
+    "seo_description": "Цільовий догляд за шкірою голови та волоссям."
   }
 ]

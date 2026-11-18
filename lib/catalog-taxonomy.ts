@@ -175,6 +175,61 @@ export const DEFAULT_CATEGORIES:StoreCategory[]=[
     "description": "",
     "seo_title": "",
     "seo_description": ""
+  },
+  {
+    "id": "face-eye-care",
+    "slug": "eye-care",
+    "name": "Догляд за очима",
+    "parent_slug": "face",
+    "sort_order": 60,
+    "description": "Засоби для делікатного догляду за зоною навколо очей.",
+    "status": "active",
+    "seo_title": "Догляд за очима — RESET Clinic",
+    "seo_description": "Засоби для делікатного догляду за зоною навколо очей."
+  },
+  {
+    "id": "face-lip-care",
+    "slug": "lip-care",
+    "name": "Догляд за губами",
+    "parent_slug": "face",
+    "sort_order": 70,
+    "description": "Професійний догляд, відновлення та захист губ.",
+    "status": "active",
+    "seo_title": "Догляд за губами — RESET Clinic",
+    "seo_description": "Професійний догляд, відновлення та захист губ."
+  },
+  {
+    "id": "face-spot-treatment",
+    "slug": "spot-treatment",
+    "name": "Точкові засоби",
+    "parent_slug": "face",
+    "sort_order": 80,
+    "description": "Засоби для локального нанесення на проблемні ділянки шкіри.",
+    "status": "active",
+    "seo_title": "Точкові засоби — RESET Clinic",
+    "seo_description": "Засоби для локального нанесення на проблемні ділянки шкіри."
+  },
+  {
+    "id": "body-hand-care",
+    "slug": "hand-care",
+    "name": "Догляд за руками",
+    "parent_slug": "body",
+    "sort_order": 50,
+    "description": "Професійні засоби для шкіри рук.",
+    "status": "active",
+    "seo_title": "Догляд за руками — RESET Clinic",
+    "seo_description": "Професійні засоби для шкіри рук."
+  },
+  {
+    "id": "hair-treatment",
+    "slug": "treatment",
+    "name": "Лікувальні засоби",
+    "parent_slug": "hair",
+    "sort_order": 50,
+    "description": "Цільовий догляд за шкірою голови та волоссям.",
+    "status": "active",
+    "seo_title": "Лікувальні засоби — RESET Clinic",
+    "seo_description": "Цільовий догляд за шкірою голови та волоссям."
   }
 ];
 /**
@@ -206,9 +261,29 @@ export function inferredSubcategories(name: string, category: string): string[] 
   return [];
 }
 
+/**
+ * Specialist categories are additive: an eye cream remains a cream.
+ * Exact product-name signals avoid confusing "очищення" with eye care.
+ */
+export function specialistSubcategories(name: string, category: string): string[] {
+  const n = name.toLocaleLowerCase("uk");
+  const matches: string[] = [];
+  if (category === "face") {
+    if (/(?:^|[^a-z])eyes?(?:$|[^a-z])|eyelid|eye.?contour|навколо\s+оч|для\s+оч(?:ей)?(?=$|[^а-яіїєґ])|під\s+очима|повік|патч.{0,20}оч/iu.test(n)) matches.push("eye-care");
+    if (/(?:^|[^a-z])lips?(?:$|[^a-z])|для\s+губ|на\s+губ|бальзам\s+для\s+губ/iu.test(n)) matches.push("lip-care");
+    if (/(?:^|[^a-z])spot(?:$|[^a-z])|(?:^|[^a-z])sos(?:$|[^a-z])|точков|локальн|підсушувальн/iu.test(n)) matches.push("spot-treatment");
+  }
+  if (category === "body" && (/(?:^|[^a-z])hands?(?:$|[^a-z])|для\s+рук|догляд\s+за\s+руками/iu.test(n))) matches.push("hand-care");
+  if (category === "hair" && (/лікувальн|проти\s+лупи|від\s+лупи|anti[-\s]?dandruff|dandruff|hair\s*loss|проти\s+випадін|від\s+випадін|себор|псор|psor|алопец|alopecia|дерматит/iu.test(n))) matches.push("treatment");
+  return matches;
+}
+
 /** Explicit assignments always win, including [] to leave an item unassigned. */
 export function productSubcategories(item: { name: string; category: string; subcategory_slugs?: string[] }): string[] {
-  return Array.isArray(item.subcategory_slugs)
+  // Respect intentionally empty merchant-assigned lists.
+  if (Array.isArray(item.subcategory_slugs) && item.subcategory_slugs.length === 0) return [];
+  const assigned = Array.isArray(item.subcategory_slugs)
     ? item.subcategory_slugs
     : inferredSubcategories(item.name, item.category);
+  return [...new Set([...assigned, ...specialistSubcategories(item.name, item.category)])];
 }

@@ -83,7 +83,7 @@ export default function PremiumProductCard({ index = 1, productData }: { index?:
             <div className="premium-product-meta"><div className={`shop-price-stack${onSale ? " shop-price-stack--sale" : ""}`}>{onSale && <del className="shop-price-before">{Number(current.originalPrice).toFixed(2)} грн</del>}<strong className="shop-price-current">{needsPrice ? "Ціна уточнюється" : Number(current.price).toFixed(2) + " грн"}</strong>{onSale && <small className="shop-saving-label">Економія {savings.toLocaleString("uk-UA", { maximumFractionDigits: 2 })} грн</small>}</div><span>Детальніше <b><ArrowUpRight /></b></span></div>
           </div>
         </Link>
-        <QuickAddButton item={{ slug: current.slug, name: current.name, price: Number(current.price), inStock: inventory==="available", availability: inventory }} />
+        <QuickAddButton item={{ slug: current.slug, name: current.name, imageUrl: current.imageUrl, price: Number(current.price), inStock: inventory==="available", availability: inventory }} />
       </div>
     </article>
   );
