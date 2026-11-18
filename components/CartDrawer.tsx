@@ -36,7 +36,7 @@ export default function CartDrawer() {
               </div>
             </div>;
           })}
-        </div>
+        </div>}
 
         {!items.length ? (
           <div className="drawer-empty">
