@@ -16,6 +16,8 @@ export type ProductRecord = {
   currency: string;
   stock_quantity: number;
   track_stock: boolean;
+  /** Merchant-confirmed availability; auto preserves inventory quantity logic. */
+  inventory_status?: "auto" | "unknown" | "out_of_stock";
   size: string | null;
   image_url: string | null;
   secondary_image_url: string | null;
