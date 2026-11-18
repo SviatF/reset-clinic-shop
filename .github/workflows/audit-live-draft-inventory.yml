@@ -43,3 +43,5 @@ jobs:
 # Recheck after successful main deployment of inventory review dashboard.
 
 # Verify post-PR65 scheduled manufacturer photo-sync results.
+
+# Verify live counts after catalog-only mode and prioritized verified draft photo worker deploy.
