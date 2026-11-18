@@ -1,12 +1,6 @@
 name: Verify final supplier product photos
 on:
-  push:
-    branches: [feat/finish-remaining-12-draft-images-20261118]
-    paths:
-      - 'data/verified-supplier-photo-pages.json'
-      - 'workers/shop-media-sync/verified-drafts.mjs'
-      - 'scripts/preflight-last-12-media.mjs'
-      - '.github/workflows/preflight-last-12-images.yml'
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
