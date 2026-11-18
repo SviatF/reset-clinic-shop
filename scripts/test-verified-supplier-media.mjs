@@ -8,7 +8,7 @@ const manifest=JSON.parse(fs.readFileSync("data/verified-supplier-photo-pages.js
 const catalog=JSON.parse(fs.readFileSync("data/products.json","utf8"));
 const bySlug=new Map(catalog.map(p=>[p.slug,p]));
 const domains=new Set(["hydropeptide.ua","hydropeptide.com","sensilis.com.ua","decaar.com.ua"]);
-assert.equal(Object.keys(manifest).length,54);
+assert.equal(Object.keys(manifest).length,59);
 for(const [slug,source] of Object.entries(manifest)){
  const product=bySlug.get(slug);
  assert.ok(product,"No corresponding merchant item "+slug);
@@ -39,4 +39,17 @@ assert.equal(imageExtension(Uint8Array.from([60,104,116,109,108]),"image/jpeg"),
 const aa=manifest["supplier-decaar-absolute-hydro-cream"];
 const plus=manifest["supplier-decaar-absolute-hydro-cream-2"];
 assert.notEqual(aa.page,plus.page,"Hydro Cream and Hydro Cream+ must have distinct sources");
-console.log("36 exact product pages and safe image metadata verified");
+for (const slug of [
+ "supplier-sensilis-invisible-matt",
+ "supplier-sensilis-skin-barrier",
+ "supplier-sensilis-the-cool-rescue",
+ "supplier-hydropeptide-solar-defense-body-spf-30",
+ "supplier-hydropeptide-pre-treatment-toner",
+]) assert.ok(manifest[slug],"Missing checked official product source: "+slug);
+for (const slug of [
+ "supplier-sensilis-mascara",
+ "supplier-sensilis-hydra-essence-confort-mask",
+ "supplier-sensilis-pure-age-perfection-make-up-04-04",
+ "supplier-sensilis-upgrade-make-up-02-02",
+]) assert.equal(manifest[slug],undefined,"Unsafe 404/shared-variant image mapping must not be shipped");
+console.log("59 verified source entries, including five newly validated photo origins");
