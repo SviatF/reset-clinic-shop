@@ -135,6 +135,9 @@ async function fetchVerifiedSource(known,product){
     if(!variantIsCompatible(known.title,pageTitle) ||
        !variantIsCompatible(product.name,pageTitle))
       throw Error("Supplier live page has a different variant");
+    if(known.sourceType==="merchant-exact-product" &&
+       !normalize(pageTitle).includes(normalize(known.title)))
+      throw Error("Exact merchant product H1 does not match requested SKU");
     if(known.brand!=="DÉCAAR" && known.brand!=="Cetaphil" &&
         !String(known.sourceType||"").startsWith("merchant-")){
       const expected=normalize(known.title).replace(/\s+/g," ");
@@ -149,8 +152,16 @@ async function fetchVerifiedSource(known,product){
     // asset URL to be present in this product page's returned HTML.
     const raw=known.photo||mainGallery(html,known.brand);
     if(known.photo && !html.includes(known.photo) &&
-       !html.includes(known.photo.replace(/&/g,"&amp;")))
-      throw Error("The reviewed photo is not in the exact supplier product page");
+       !html.includes(known.photo.replace(/&/g,"&amp;"))){
+      // The supplier exposes only a 292px derivative in its product page,
+      // while the 500ml original is available at the very same media ID.
+      // Never permit arbitrary cross-product substitutions.
+      const source=new URL(known.photo);
+      const original=known.brand==="Cetaphil" && source.hostname==="avepharm.com.ua"
+        ? source.pathname.match(/^\/storage\/(\d+)\/([a-zA-Z0-9_-]+)\.jpg$/):null;
+      if(!original || !html.includes("/storage/"+original[1]+"/conversions/"+original[2]+"-"))
+        throw Error("The reviewed photo is not tied to the exact supplier gallery");
+    }
     imageUrl=raw?verifiedUrl(raw,known.brand,true,known.page):null;
     if(!imageUrl)throw Error("No verified original product image");
   }
