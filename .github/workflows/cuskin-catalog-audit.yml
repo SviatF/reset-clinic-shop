@@ -1,0 +1,113 @@
+name: Audit official CU SKIN catalogue (staging)
+on:
+  push:
+    branches: [fix/cuskin-official-catalog-20261117]
+    paths:
+      - '.github/workflows/cuskin-catalog-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Probe official catalog HTML / product / sitemaps
+        run: |
+          node --input-type=module <<'JS'
+          import {writeFileSync} from 'node:fs';
+          for(const url of ['https://cu.ua/','https://cu.ua/151','https://cu.ua/sitemap.xml','https://www.cu.ua/','https://cu.ua/robots.txt']){
+            try {
+              const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 (compatible; RESETShopAudit/1.0)'},signal:AbortSignal.timeout(12000)});
+              const body=await r.text();const slug=url.replace(/[^a-z0-9]+/gi,'-').slice(-60);
+              writeFileSync('/tmp/'+slug+'.html',body);
+              console.log('PAGE',JSON.stringify({url,redirect:r.url,status:r.status,mime:r.headers.get('content-type'),bytes:body.length,first:body.slice(0,600),
+                title:body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1],
+                productMentions:(body.match(/Clean-Up|CU Dr|Vitamin U/gi)||[]).length,
+                nextData:body.includes('__NEXT_DATA__'),nuxtData:body.includes('__NUXT__'),
+                scripts:[...body.matchAll(/<script[^>]+src=["']([^"']+)/gi)].map(x=>x[1]).slice(0,12),
+                links:[...body.matchAll(/<a[^>]+href=["']([^"']+)/gi)].map(x=>x[1]).filter(x=>/^\/?\d+|category|product|catalog/i.test(x)).slice(0,25),
+                imageSamples:[...body.matchAll(/<img[^>]+(?:src|data-src)=["']([^"']+)/gi)].map(x=>x[1]).slice(0,15)}));
+            }catch(e){console.log('ERROR',url,String(e))}
+          }
+          JS
+      - name: Discover official product data sources
+        run: |
+          node --input-type=module <<'JS'
+          const sitemap=await (await fetch('https://cu.ua/sitemap.xml')).text();
+          const locs=sitemap.split('<loc>').slice(1).map(x=>x.split('<')[0]);
+          console.log('SITEMAP',JSON.stringify({total:locs.length,first:locs.slice(0,35),tail:locs.slice(-15),numeric:locs.filter(x=>String(Number(x.split('/').at(-1)))===x.split('/').at(-1)).length}));
+          const js=await (await fetch('https://cu.ua/main.2971ad9303550994.js')).text();
+          console.log('MAIN_JS',js.length);
+          const urls=[...new Set(js.split('https://').slice(1).map(s=>'https://'+s.slice(0,150).split('"')[0].split("'")[0]))];
+          console.log('JS_URLS',JSON.stringify(urls.slice(0,120)));
+          for(const term of ['api/','/api','getProducts','getProduct','productId','assortment','environments','graphql','BASE_URL','baseUrl','apiUrl','image_url','imageUrl','cdn','s3.','bucket']){
+            let ix=-1,n=0,examples=[];
+            while((ix=js.indexOf(term,ix+1))>=0){n++;if(examples.length<4)examples.push(js.slice(Math.max(0,ix-130),ix+250));}
+            console.log('JS_TERM',term,n,JSON.stringify(examples));
+          }
+          JS
+      - name: Probe official product API and image sizes
+        run: |
+          node --input-type=module <<'JS'
+          for(const url of ['https://key.cu.ua/api/products/?page_size=200&page=1',
+                          'https://key.cu.ua/api/product/151',
+                          'https://key.cu.ua/robots.txt']){
+           try{
+            const res=await fetch(url,{headers:{accept:'application/json'},signal:AbortSignal.timeout(15000)});
+            const body=await res.text();
+            console.log('API',JSON.stringify({url,status:res.status,mime:res.headers.get('content-type'),bytes:body.length}));
+            try{
+             const obj=JSON.parse(body);
+             const rows=Array.isArray(obj)?obj:obj.results;
+             console.log('API_DATA',JSON.stringify({url,shape:Object.keys(obj),count:obj.count,n:rows?.length,
+               sample:rows?.slice(0,4).map(p=>p),
+               detail:rows?undefined:obj}).slice(0,18000));
+             if(rows?.length){
+               const candidates=rows.filter(p=>p.vendorCode||p.vendor_code||p.images||p.image||p.photos);
+               console.log('API_SAMPLE_FIELDS',JSON.stringify(candidates.slice(12,15)).slice(0,9000));
+             }
+            }catch{console.log('API_TEXT',body.slice(0,500))}
+           }catch(e){console.log('API_ERROR',url,String(e))}
+          }
+          JS
+      - name: Read-only live D1 catalogue statistics
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node --input-type=module <<'JS'
+          const id='38a072d9-bb85-4417-bf92-4f0652cc4056';
+          const res=await fetch('https://api.cloudflare.com/client/v4/accounts/'+process.env.CLOUDFLARE_ACCOUNT_ID+'/d1/database/'+id+'/query',{
+           method:'POST',headers:{'Authorization':'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},
+           body:JSON.stringify({sql:"SELECT content, version FROM shop_documents WHERE pathname='data/products.json'"}),signal:AbortSignal.timeout(10000)});
+          const ans=await res.json();if(!ans.success){console.log('D1_ERROR',JSON.stringify(ans.errors));process.exit(0);}
+          const row=ans.result?.[0]?.results?.[0];
+          if(!row){console.log('D1_MISSING_DOC');process.exit(0)}
+          const all=JSON.parse(row.content);
+          const cu=all.filter(p=>p.brand==='CU SKIN');
+          console.log('LIVE_D1',JSON.stringify({version:row.version,total:all.length,cu:cu.length,
+            supplierSkus:cu.filter(p=>/^300\\d{3}$/.test(String(p.sku||''))).length,
+            photos:cu.filter(p=>p.image_url).length,draft:cu.filter(p=>p.status==='draft').length,
+            sample:cu.slice(-5).map(p=>({id:p.id,sku:p.sku,name:p.name,image_url:p.image_url?.slice(0,150),created_at:p.created_at}))}));
+          JS
+      - name: Validate and save official public product manifest
+        run: |
+          node scripts/cuskin-official-snapshot.mjs --write
+          git add data/cu-skin-official-snapshot.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data(cuskin): snapshot validated official CU SKIN catalog"
+          git push origin HEAD:fix/cuskin-official-catalog-20261117
+      - name: Upload HTML for audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cu-skin-public-html
+          path: /tmp/https-cu-ua*.html
+          if-no-files-found: ignore

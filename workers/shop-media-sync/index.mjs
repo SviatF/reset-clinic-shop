@@ -1,5 +1,6 @@
 import verified from "../../data/verified-supplier-photo-pages.json" with { type: "json" };
 import { imageDimensions, betterPhoto } from "./image-dimensions.mjs";
+import { reconcileOfficial } from "./cuskin-official.mjs";
 
 // Cloudflare Cron job: no public write endpoint, no admin clicking.
 // Bump this identifier whenever source detection or matching improves, so
@@ -315,6 +316,12 @@ export async function reconcile(env,now=Math.floor(Date.now()/1000)){
  return summary;
 }
 export default {
- async scheduled(_event,env,context){context.waitUntil(reconcile(env));},
+ async scheduled(_event,env,context){
+   context.waitUntil((async()=>{
+     try { await reconcileOfficial(env,{limit:8}); }
+     catch(error){console.error("Official CU SKIN sync failed",error);}
+     await reconcile(env);
+   })());
+ },
  async fetch(){return new Response("Not found",{status:404});},
 };
