@@ -328,5 +328,15 @@
     "brand": "Sensilis",
     "page": "https://sensilis.com.ua/upgrade-make-up-03/",
     "title": "Upgrade Make-UP 03"
+  },
+  "supplier-hydropeptide-solar-defense-body-spf-30": {
+    "brand": "HydroPeptide",
+    "page": "https://hydropeptide.ua/product/solar-defense-body-spf-30/",
+    "title": "Solar Defense Body SPF 30"
+  },
+  "supplier-hydropeptide-pre-treatment-toner": {
+    "brand": "HydroPeptide",
+    "page": "https://hydropeptide.ua/product/antivozrastnoy-toniziruyuschiy-losion/",
+    "title": "Pre-Treatment Toner"
   }
 }
