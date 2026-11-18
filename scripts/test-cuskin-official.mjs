@@ -121,3 +121,18 @@ test("official products without a verified price cannot silently go on sale",asy
   assert.equal(row.status,"draft");
  }finally{globalThis.fetch=oldFetch;}
 });
+
+
+test("CU SKIN multipack: identical numbers in different separator formats match the same canonical SKU",()=>{
+ const pad={...official,vendorCode:"260",sku:"300260",name:"CU Dr.Solution Cicaming Centeca B5 Pad",volumes:["160г 80шт"]};
+ const sachet={...official,vendorCode:"257",sku:"300257",name:"CU Dr. Solution B6 Enzyme Powder Wash Sachet",volumes:["20 шт * 1г"]};
+ const padOld={...base,sku:"300260",size:"160г-80шт",name:"CU SKIN CU DR.SOLUTION CICAMING CENTECA B5 PAD"};
+ const sachetOld={...base,sku:"300257",size:"1г*20шт",name:"CU SKIN CU Dr. Solution B6 Enzyme Powder Wash Sachet"};
+ assert.equal(planOfficialProduct([padOld],pad).kind,"update");
+ assert.equal(planOfficialProduct([sachetOld],sachet).kind,"update");
+ assert.equal(planOfficialProduct([{...padOld,size:"160г-40шт"}],pad).kind,"conflict","Different pack quantities remain blocked");
+ assert.equal(planOfficialProduct([{...sachetOld,size:"1г*10шт"}],sachet).kind,"conflict","Different sachet counts remain blocked");
+ const cc={...official,vendorCode:"153",sku:"300153",name:"CU: VITAMIN U CC CREAM SPF 40 / PA+++",volumes:["45 мл"]};
+ const spf38={...base,sku:"300153",name:"CU SKIN VITAMIN U CC CREAM SPF 38+ РА+++",size:"45мл"};
+ assert.equal(planOfficialProduct([spf38],cc).kind,"conflict","SPF38 and SPF40 must not silently share an image");
+});

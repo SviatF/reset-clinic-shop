@@ -3,7 +3,7 @@ import priceSource from "../../data/cu-skin-retail-prices-2026-11-12.json" with 
 import { imageDimensions } from "./image-dimensions.mjs";
 
 // Single, reviewed 112-item snapshot. Bump the revision when replacing this source.
-const REVISION = "cu-official-2026-11-17-v2";
+const REVISION = "cu-official-2026-11-18-v3";
 const PREFIX = "/shop-media/products/cu-skin-official/";
 const STATUSES_DONE = new Set(["attached", "created", "already", "kept"]);
 const SAFE_IMAGE_HOST = "key.cu.ua";
@@ -29,7 +29,7 @@ function sizes(value) {
 }
 function variantIncompatible(product, official, confirmedSku=false) {
   const a=sizes(product.size), b=sizes(official.volumes.join(" "));
-  if(a && b && !b.split(",").includes(a)){
+  if(a && b && a!==b && !b.split(",").includes(a)){
     // A source inventory sheet can express the same SKU quantity in grams while
     // cu.ua expresses it in millilitres. This exception is ONLY valid for an
     // exact real 300xxx SKU, and only when the numerical quantity is identical.
@@ -57,6 +57,7 @@ function officialNameMatch(product, official) {
   const a=titleKey(product.name),b=titleKey(official.name);
   return a.length>9 && a===b && sizes(product.size) &&
     (!sizes(official.volumes.join(" ")) ||
+      sizes(official.volumes.join(" "))===sizes(product.size) ||
       sizes(official.volumes.join(" ")).split(",").includes(sizes(product.size)));
 }
 export function planOfficialProduct(rows,official){
