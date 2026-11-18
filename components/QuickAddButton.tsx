@@ -5,7 +5,7 @@ import { useCart } from "@/components/CartProvider";
 import Link from "next/link";
 import type { InventoryState } from "@/lib/inventory-state";
 
-type QuickProduct = { slug: string; name: string; price: number; inStock?: boolean; availability?: InventoryState };
+type QuickProduct = { slug: string; name: string; price: number; imageUrl?: string | null; inStock?: boolean; availability?: InventoryState };
 
 export default function QuickAddButton({ item }: { item: QuickProduct }) {
   const { add } = useCart();
@@ -19,7 +19,7 @@ export default function QuickAddButton({ item }: { item: QuickProduct }) {
 
   function handleAdd() {
     if (current.inStock === false || !(current.price > 0)) return;
-    add({ slug: current.slug, name: current.name, price: current.price }, 1);
+    add({ slug: current.slug, name: current.name, price: current.price, imageUrl: current.imageUrl }, 1);
     setAdded(true);
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setAdded(false), 1300);

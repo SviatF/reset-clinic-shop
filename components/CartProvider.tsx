@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-type CartItem = { slug: string; name: string; price: number; qty: number };
+type CartItem = { slug: string; name: string; price: number; qty: number; imageUrl?: string | null };
 type CartContextValue = {
   items: CartItem[];
   count: number;
@@ -19,7 +19,7 @@ type CartContextValue = {
 const CartContext = createContext<CartContextValue | null>(null);
 
 /** Refresh locally cached cart prices against active catalog promotions. */
-async function fetchCurrentPrices(snapshot: CartItem[]): Promise<Record<string, number> | null> {
+async function fetchCurrentPrices(snapshot: CartItem[]): Promise<{prices: Record<string, number>; images: Record<string, string | null>} | null> {
   if (!snapshot.length) return null;
   try {
     const response = await fetch("/api/cart/prices", {
@@ -30,7 +30,7 @@ async function fetchCurrentPrices(snapshot: CartItem[]): Promise<Record<string, 
     });
     if (!response.ok) return null;
     const data = await response.json();
-    return data?.prices && typeof data.prices === "object" ? data.prices : null;
+    return data?.prices && typeof data.prices === "object" ? { prices: data.prices, images: data.images && typeof data.images === "object" ? data.images : {} } : null;
   } catch { return null; }
 }
 
@@ -41,11 +41,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCartOpen, setCartOpen] = useState(false);
 
   async function refreshCartPrices(snapshot: CartItem[]) {
-    const prices = await fetchCurrentPrices(snapshot);
-    if (!prices) return;
+    const catalog = await fetchCurrentPrices(snapshot);
+    if (!catalog) return;
     setItems((current) => current.map((item) => {
-      const next = prices[item.slug];
-      return Number.isFinite(next) && next > 0 && next !== item.price ? { ...item, price: next } : item;
+      const nextPrice = catalog.prices[item.slug];
+      const price = Number.isFinite(nextPrice) && nextPrice > 0 ? nextPrice : item.price;
+      const imageUrl = Object.prototype.hasOwnProperty.call(catalog.images, item.slug)
+        ? catalog.images[item.slug] : item.imageUrl;
+      return price !== item.price || imageUrl !== item.imageUrl
+        ? { ...item, price, imageUrl } : item;
     }));
   }
 
@@ -83,7 +87,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setItems((current) => {
         const exists = current.find((row) => row.slug === item.slug);
         return exists
-          ? current.map((row) => row.slug === item.slug ? { ...row, name: item.name, price: item.price, qty: Math.min(20, row.qty + qty) } : row)
+          ? current.map((row) => row.slug === item.slug ? { ...row, name: item.name, price: item.price, imageUrl: item.imageUrl || row.imageUrl, qty: Math.min(20, row.qty + qty) } : row)
           : [...current, { ...item, qty: Math.max(1,Math.min(20,qty)) }];
       });
       setCartOpen(true);
