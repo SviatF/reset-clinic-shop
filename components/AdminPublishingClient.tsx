@@ -37,7 +37,7 @@ export default function AdminPublishingClient({
   const brands = useMemo(() => [...new Set(products.map(p => p.brand).filter(Boolean))]
     .sort((a,b) => a.localeCompare(b,"uk")), [products]);
   const drafts = useMemo(() => products.filter(p => p.status === "draft"), [products]);
-  const missingPhoto = useMemo(() => products.filter(p => !String(p.image_url || "").trim()), [products]);
+  const missingPhoto = useMemo(() => products.filter(p => p.status !== "archived" && !String(p.image_url || "").trim()), [products]);
   const visible = useMemo(() => {
     const needle = search.toLocaleLowerCase("uk").trim();
     return (tab === "drafts" ? drafts : missingPhoto).filter(p =>
@@ -137,7 +137,7 @@ export default function AdminPublishingClient({
     </header>
     <div className="admin-publish-metrics">
       <div><span>ЧЕРНЕТКИ</span><strong>{drafts.length}</strong><small>Очікують публікації</small></div>
-      <div><span>БЕЗ ФОТО</span><strong>{missingPhoto.length}</strong><small>Усі статуси й бренди</small></div>
+      <div><span>БЕЗ ФОТО</span><strong>{missingPhoto.length}</strong><small>Опубліковані та чернетки · без архівних позицій</small></div>
       <div><span>З ФОТО · МОЖНА ПОКАЗАТИ</span><strong>{drafts.filter(p => Boolean(p.image_url)).length}</strong><small>Без ціни — лише каталог, без оформлення покупки</small></div>
     </div>
     <div className="admin-publish-tabs">
