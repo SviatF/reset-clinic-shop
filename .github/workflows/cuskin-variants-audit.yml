@@ -32,7 +32,7 @@ jobs:
             const sku=(body.match(/"sku"\s*:\s*"([^"]+)"/)||[])[1]||null;
             const name=(body.match(/"name"\s*:\s*"([^"]+)"/)||[])[1]||null;
             const code=(body.match(/"sku"\s*:\s*"([^"]+)"/)||[])[0]||null;
-            const volume=(body.match(/(\d+(?:\.\d+)?\s*(?:мл|ml|г|гр|шт))(?![a-z])/i)||[])[1]||null;
+            const volume=(body.match(/product-meta-strip[\s\S]{0,500}?<b>([^<]+)<\/b>/i)||[])[1]||null;
             console.log('TINY_PRODUCT',JSON.stringify({file:source.filename,href:path,http:res.status,
               sku,name,volume,skuMatch:code,hasSourceCode257:body.includes('300257'),
               hasSourceCode260:body.includes('300260'),hasSourceCode153:body.includes('300153')}));
