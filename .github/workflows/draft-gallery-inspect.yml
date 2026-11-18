@@ -1,0 +1,35 @@
+name: Inspect official supplier gallery images for draft release
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/draft-gallery-inspect.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Inspect expected supplier media gallery
+        run: |
+          node --input-type=module <<'JS'
+          const samples=[
+            ["Sensilis","https://sensilis.com.ua/upgrade-ampoules/"],
+            ["Sensilis","https://sensilis.com.ua/upgrade-day-cream/"],
+            ["Sensilis","https://sensilis.com.ua/hyaluronic-filler-serum/"],
+            ["DÉCAAR","https://decaar.com.ua/d746/"],
+            ["HydroPeptide","https://hydropeptide.ua/product/sun-sleep/"],
+            ["HydroPeptide","https://hydropeptide.com/products/sun-slick"]
+          ];
+          for(const [brand,url] of samples){
+            const res=await fetch(url,{signal:AbortSignal.timeout(13000)});
+            const html=await res.text();
+            const imageTags=[...html.matchAll(/<img\b[^>]*>/gi)].map(m=>m[0]);
+            const zoom=imageTags.find(t=>/\bid=["']zoom["']/.test(t));
+            const galleries=imageTags.filter(t=>/zoom|product-image|woocommerce-product-gallery|product-image/i.test(t)).slice(0,6);
+            const primary=html.match(/<meta\s+[^>]*property=["']og:image["'][^>]*>/i)?.[0]||null;
+            console.log("GALLERY",JSON.stringify({brand,url,status:res.status,title:html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g," ").slice(0,180),
+              zoom:zoom?.slice(0,1300),gallery:galleries.map(x=>x.slice(0,400)),primary}).slice(0,7000));
+          }
+          JS
