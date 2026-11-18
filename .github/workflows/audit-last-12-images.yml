@@ -85,4 +85,36 @@ jobs:
             console.log("PHOTO_DIM",JSON.stringify({name,status:r.status,mime:r.headers.get("content-type"),bytes:b.byteLength,dims,url}).slice(0,650));
            }catch(e){console.log("PHOTO_DIM",JSON.stringify({name,error:String(e)}))}
           }
+
+          for(const [name,url] of [
+           ["hydrakarvatska","https://karvatska.store/hydra-essence-confort-mask/"],
+           ["cetavepharm","https://avepharm.com.ua/product/cetaphil-micelyarna-emulsiya-dlya-ochishchennya-normalnoji-suhoji-ta-chutlivoji-shkiri-500-ml/"]
+          ]){
+            try{
+             const html=await (await fetch(url,{signal:AbortSignal.timeout(13000)})).text();
+             const imgTags=[...html.matchAll(/<img[^>]*>/gi)].map(m=>m[0]);
+             const urls=[...new Set([...html.matchAll(/https?:\/\/[^"' <>]+(?:jpg|png|webp)(?:\?[^"' <>]*)?/gi)].map(x=>x[0]))].filter(u=>/hydra|confort|mask|sensilis|storage\/8705|Cetaphil|cetaphil/i.test(u)).slice(0,25);
+             const hit=imgTags.filter(x=>/hydra|mask|confort|storage\/8705|main-image|product-image|Cetaphil/i.test(x)).slice(0,16);
+             console.log("PRODUCT_GALLERY",JSON.stringify({name,urls,tags:hit.map(x=>x.slice(0,650))}).slice(0,11500));
+            }catch(e){console.log("PRODUCT_GALLERY",JSON.stringify({name,error:String(e)}))}
+          }
+          for(const [name,url] of [
+           ["cet-previewweb","https://avepharm.com.ua/storage/8705/conversions/4-preview_web.webp"],
+           ["cet-originaljpg","https://avepharm.com.ua/storage/8705/4.jpg"],
+           ["cet-originalpng","https://avepharm.com.ua/storage/8705/4.png"],
+           ["cet-originalwebp","https://avepharm.com.ua/storage/8705/4.webp"],
+           ["cet-mainwebp","https://avepharm.com.ua/storage/8705/conversions/4-preview_web.webp?v=1795021016"],
+           ["cet-thumbwebp","https://avepharm.com.ua/storage/8705/conversions/4-thumb-p.webp"]
+          ]){
+            try{
+             const r=await fetch(url,{signal:AbortSignal.timeout(9000)});
+             const b=new Uint8Array(await r.arrayBuffer()),dv=new DataView(b.buffer);
+             let dims="";
+             if(b[0]===137&&b[1]===80) dims=dv.getUint32(16)+"x"+dv.getUint32(20);
+             if(b[0]===82&&b[1]===73&&b[2]===70&&b[3]===70&&b[12]===86&&b[13]===80&&b[14]===56&&b[15]===88){
+                const width=1+b[24]+(b[25]<<8)+(b[26]<<16),height=1+b[27]+(b[28]<<8)+(b[29]<<16);dims=width+"x"+height;
+             }
+             console.log("SUPPLIER_PHOTO_SIZE",JSON.stringify({name,status:r.status,mime:r.headers.get("content-type"),size:b.length,dims}));
+            }catch(e){console.log("SUPPLIER_PHOTO_SIZE",JSON.stringify({name,error:String(e)}))}
+          }
           JS
