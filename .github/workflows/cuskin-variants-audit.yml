@@ -1,0 +1,40 @@
+name: Audit three tiny CU SKIN product variants
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/cuskin-variants-audit.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Find exact product SKU and size from public product pages
+        run: |
+          node --input-type=module <<'JS'
+          const origin='https://shop.resetclinic.org';
+          const sources=[
+            {page:1,filename:'ebd2d882-d9f5-4746-bb4a-126933419b5a.png'},
+            {page:3,filename:'5b6073bb-7796-4f1f-b4d9-516d39aebb28.png'},
+            {page:4,filename:'02656862-38a3-4bf8-935c-40fae65eefe8.jpg'}
+          ];
+          for(const source of sources){
+            const html=await (await fetch(origin+'/catalog?brand=CU+SKIN&page='+source.page)).text();
+            const position=html.indexOf(source.filename);
+            const excerpt=html.slice(Math.max(0,position-600),position+450);
+            const hrefs=[...excerpt.matchAll(/href="(\/product\/[^"]+)"/g)].map(m=>m[1]);
+            const path=hrefs.at(-1);
+            if(!path){console.log('NO_LINK',source.filename,excerpt.slice(0,600));continue}
+            const res=await fetch(origin+path);
+            const body=await res.text();
+            const sku=(body.match(/"sku"\s*:\s*"([^"]+)"/)||[])[1]||null;
+            const name=(body.match(/"name"\s*:\s*"([^"]+)"/)||[])[1]||null;
+            const code=(body.match(/"sku"\s*:\s*"([^"]+)"/)||[])[0]||null;
+            const volume=(body.match(/(\d+(?:\.\d+)?\s*(?:мл|ml|г|гр|шт))(?![a-z])/i)||[])[1]||null;
+            console.log('TINY_PRODUCT',JSON.stringify({file:source.filename,href:path,http:res.status,
+              sku,name,volume,skuMatch:code,hasSourceCode257:body.includes('300257'),
+              hasSourceCode260:body.includes('300260'),hasSourceCode153:body.includes('300153')}));
+          }
+          JS
