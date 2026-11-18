@@ -268,5 +268,30 @@
     "brand": "Sensilis",
     "page": "https://sensilis.com.ua/purify-essential-cleanser/",
     "title": "Purify Essential Cleanser"
+  },
+  "supplier-sensilis-invisible-matt": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/invisible-matt/",
+    "title": "Invisible Matt"
+  },
+  "supplier-sensilis-skin-barrier": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/skin-barrier/",
+    "title": "Skin Barrier"
+  },
+  "supplier-sensilis-the-cool-rescue": {
+    "brand": "Sensilis",
+    "page": "https://sensilis.com.ua/the-cool-rescue/",
+    "title": "The Cool Rescue"
+  },
+  "supplier-hydropeptide-solar-defense-body-spf-30": {
+    "brand": "HydroPeptide",
+    "page": "https://hydropeptide.ua/product/solar-defense-body-spf-30/",
+    "title": "Solar Defense Body SPF 30"
+  },
+  "supplier-hydropeptide-pre-treatment-toner": {
+    "brand": "HydroPeptide",
+    "page": "https://hydropeptide.ua/product/antivozrastnoy-toniziruyuschiy-losion/",
+    "title": "Pre-Treatment Toner"
   }
 }
