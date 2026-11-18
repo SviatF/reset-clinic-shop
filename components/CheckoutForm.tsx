@@ -12,6 +12,7 @@ export default function CheckoutForm() {
   const [delivery, setDelivery] = useState("nova");
   const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
   const earnedBenefits = earnedCartBenefits(physicalCartSubtotal(items));
+  const freeShipping = earnedBenefits.includes("Безкоштовна доставка");
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
 
@@ -91,8 +92,8 @@ export default function CheckoutForm() {
       <section className="checkout-section">
         <h2>Доставка / отримання</h2>
         <div className="delivery-options">
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>Відділення або поштомат · 1–3 робочі дні</span></span></label>
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>Адресна доставка за тарифами перевізника</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => setDelivery("nova")} /><span><strong>Нова Пошта</strong><span>{freeShipping ? "Безкоштовно · відділення або поштомат · 1–3 робочі дні" : "Відділення або поштомат · 1–3 робочі дні"}</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => setDelivery("courier")} /><span><strong>Кур’єрська доставка</strong><span>{freeShipping ? "Безкоштовна адресна доставка" : "Адресна доставка за тарифами перевізника"}</span></span></label>
           <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
         </div>
         {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
