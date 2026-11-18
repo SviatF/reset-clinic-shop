@@ -49,3 +49,5 @@ jobs:
 # Verify the five new official draft photo sources after PR67 production deployment.
 
 # Inspect post-PR68 recovered Sensilis / Cetaphil / CU SKIN draft media totals.
+
+# Check first 2-minute Cloudflare scheduled R2 gallery import cycle for PR68.
