@@ -41,3 +41,5 @@ jobs:
           JS
 
 # Recheck after successful main deployment of inventory review dashboard.
+
+# Verify post-PR65 scheduled manufacturer photo-sync results.
