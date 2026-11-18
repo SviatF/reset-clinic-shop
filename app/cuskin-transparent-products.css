@@ -5,10 +5,10 @@
  * Scope ONLY to cu.ua images imported into products/cu-skin-official R2 keys.
  */
 .rs-card.rs-card--cu-skin-cutout {
-  background: #f5f2ee !important;
+  background: #fff !important;
 }
 .rs-card.rs-card--cu-skin-cutout .rs-card-media {
-  background: transparent !important;
+  background: #f7f6f3 !important;
   box-shadow: none !important;
 }
 .rs-card.rs-card--cu-skin-cutout .rs-card-media > img {
@@ -18,10 +18,10 @@
   filter: drop-shadow(0 11px 13px rgba(50, 36, 32, .085));
 }
 .premium-product-card.premium-product-card--cu-skin-cutout .premium-card-surface {
-  background: #f5f2ee !important;
+  background: #fff !important;
 }
 .premium-product-card.premium-product-card--cu-skin-cutout .premium-product-media {
-  background: transparent !important;
+  background: #f7f6f3 !important;
 }
 .premium-product-card.premium-product-card--cu-skin-cutout .premium-product-stage > img {
   background: transparent !important;
