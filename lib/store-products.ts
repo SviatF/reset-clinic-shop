@@ -8,6 +8,7 @@ export type StoreProduct = {
   id: string | null; slug: string; name: string; brand: string; sku: string | null;
   category: "face" | "body" | "hair" | "other"; subcategories: string[]; productLine: string;
   price: number; originalPrice: number; discountPercent: number; currency: string; stockQuantity: number; trackStock: boolean;
+  inventoryStatus?: "auto" | "unknown" | "out_of_stock";
   size: string; imageUrl: string | null; secondaryImageUrl: string | null;
   shortDescription: string; description: string; hoverLabel: string;
   hoverTitle: string; hoverText: string; howToUse: string; keyIngredients: string[];
@@ -31,6 +32,7 @@ function mapRecord(row: ProductRecord): StoreProduct {
     currency: row.currency || "UAH",
     stockQuantity: Number(row.stock_quantity || 0),
     trackStock: row.track_stock,
+    inventoryStatus: row.inventory_status,
     size: row.size || "",
     imageUrl: row.image_url,
     secondaryImageUrl: row.secondary_image_url,
