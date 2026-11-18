@@ -1,0 +1,31 @@
+name: Restore one verified Studio OLIE'RE bundle image
+on:
+  push:
+    branches: [fix/oliere-studio-bundle-photo-20261117]
+    paths:
+      - 'scripts/restore-oliere-studio-set.py'
+      - '.github/workflows/restore-oliere-studio-photo.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow==11.3.0
+      - name: Verify current exact product listing and capture original photo
+        run: python scripts/restore-oliere-studio-set.py
+      - name: Commit missing product photo and approved mapping
+        run: |
+          git add data/supplier-photo-map.json public/supplier-photos/oliere/studio-professional-styling-bundle.webp
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets(oliere): restore exact Studio styling kit packshot"
+          git push origin HEAD:fix/oliere-studio-bundle-photo-20261117

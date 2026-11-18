@@ -12,7 +12,7 @@ const bundles=new Map(manifest.sets.map(spec=>[spec.sku,spec]));
 const bySku=new Map(rows.map(row=>[row.sku,row]));
 const hair=rows.filter(p=>p.status==="active"&&p.brand==="OLIE'RE PARIS");
 const officialIds=new Set(),errors=[];
-let verified=0,pending=0,originalKits=0,singlePhotos=0;
+let verified=0,pending=0,originalKits=0,singlePhotos=0,recovered=0;
 
 function mediaIsGood(sku,uri,checksum,description){
  if(!uri?.startsWith("/supplier-photos/")){errors.push(sku+": invalid "+description+" URL");return}
@@ -26,6 +26,20 @@ function mediaIsGood(sku,uri,checksum,description){
 for(const row of hair){
  const ref=refs[row.slug];
  if(!ref){errors.push(row.sku+": missing mapped image reference");continue}
+ // This unique legacy set was not in the current official Shopify catalog.
+ // Restore its photo ONLY after verifying the exact set title on a live retailer
+ // product endpoint, and checksum-pin the downloaded unmodified packshot.
+ if(row.sku==="OLIERE-021" && ref.verification_status==="matched_exact_product_title"){
+  recovered++;
+  if(ref.image_url!=="/supplier-photos/oliere/studio-professional-styling-bundle.webp" ||
+     ref.verified_supplier_title!=="Професійний набір для укладання волосся Studio OLIE'RE PARIS" ||
+     !ref.verified_page?.startsWith("https://pinkygreen.shop/collections/studio/products/profesiynyy-nabir-dlya-ukladannya-volossya-studio-oliere-paris") ||
+     !ref.retrieved_image_source?.startsWith("https://cdn.shopify.com/s/files/1/0673/9777/9643/files/"))
+    errors.push(row.sku+": recovered exact Studio bundle photo provenance mismatch");
+  mediaIsGood(row.sku,ref.image_url,ref.retrieved_sha256,"exact-title Studio bundle photo");
+  verified++;
+  continue;
+ }
  if(ref.verification_status==="needs_review"){
   pending++;
   if(row.sku!=="OLIERE-021"||ref.image_url!==null||!ref.legacy_image_url)
@@ -67,8 +81,8 @@ for(const row of hair){
  }
  verified++;
 }
-if(hair.length!==53||verified!==52||pending!==1||originalKits!==14||singlePhotos!==38||bundles.size!==14)
- errors.push("Unexpected counts: "+JSON.stringify({hair:hair.length,verified,pending,originalKits,singlePhotos,manifest:bundles.size}));
-console.log(JSON.stringify({hair:hair.length,verified,uniqueOfficialProducts:officialIds.size,originalKits,singlePhotos,pending,errors:errors.length},null,2));
+if(hair.length!==53||verified!==53||pending!==0||recovered!==1||originalKits!==14||singlePhotos!==38||bundles.size!==14)
+ errors.push("Unexpected counts: "+JSON.stringify({hair:hair.length,verified,pending,recovered,originalKits,singlePhotos,manifest:bundles.size}));
+console.log(JSON.stringify({hair:hair.length,verified,uniqueOfficialProducts:officialIds.size,originalKits,singlePhotos,pending,recovered,errors:errors.length},null,2));
 for(const issue of errors)console.error("OLIERE_IMAGE_AUDIT",issue);
 if(errors.length)process.exit(1);
