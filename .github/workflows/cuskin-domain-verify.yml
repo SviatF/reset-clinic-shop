@@ -26,3 +26,4 @@ jobs:
             } catch(error){console.log("DOMAIN_ERROR",origin,String(error));}
           }
           JS
+# Check post-deployment official CU SKIN photo progress (read only).
