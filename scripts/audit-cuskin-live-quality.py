@@ -62,3 +62,5 @@ for row in legacy+small+failed:
     print("CU_LIVE_PHOTO_ISSUE",json.dumps(row,ensure_ascii=False))
 for row in opaque:
     print("CU_LIVE_OPAQUE",json.dumps(row,ensure_ascii=False))
+
+# Final visual background audit after the official PNG priority upgrade.
