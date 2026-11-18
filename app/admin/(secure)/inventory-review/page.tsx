@@ -36,7 +36,7 @@ function StatusTable({rows,showStock=false}:{rows:Item[];showStock?:boolean}){
 export default async function InventoryReviewPage(){
   const products=await readProducts();
   const drafts=products.filter(p=>p.status==="draft").sort((a,b)=>a.brand.localeCompare(b.brand,"uk")||a.name.localeCompare(b.name,"uk"));
-  const withoutPhoto=products.filter(p=>!p.image_url);
+  const withoutPhoto=products.filter(p=>p.status!=="archived"&&!p.image_url);
   const stockUnknown=products.filter(p=>p.status==="active"&&getInventoryState({
     brand:p.brand,price:p.price,track_stock:p.track_stock,stock_quantity:p.stock_quantity,inventory_status:p.inventory_status
   })==="unconfirmed");
@@ -45,7 +45,7 @@ export default async function InventoryReviewPage(){
     const a=products.filter(p=>p.brand===brand);
     return {brand,total:a.length,active:a.filter(p=>p.status==="active").length,
       draft:a.filter(p=>p.status==="draft").length,
-      withoutPhoto:a.filter(p=>!p.image_url).length,
+      withoutPhoto:a.filter(p=>p.status!=="archived"&&!p.image_url).length,
       availabilityUnconfirmed:stockUnknown.filter(p=>p.brand===brand).length};
   });
   return <section className="ir-shell">
@@ -55,7 +55,7 @@ export default async function InventoryReviewPage(){
       <Link className="ir-primary" href="/catalog" target="_blank">Відкрити вітрину ↗</Link></header>
     <div className="ir-kpis">
       <div><small>Чернетки</small><strong>{drafts.length}</strong><span>Не видно в публічному каталозі</span></div>
-      <div><small>Без фото · всі статуси</small><strong>{withoutPhoto.length}</strong><span>Зокрема активних: {publishedMissingPhoto.length}</span></div>
+      <div><small>Без фото · активні та чернетки</small><strong>{withoutPhoto.length}</strong><span>Зокрема активних: {publishedMissingPhoto.length}</span></div>
       <div><small>CU SKIN · наявність не підтверджено</small><strong>{stockUnknown.filter(p=>p.brand==="CU SKIN").length}</strong><span>Не означає, що товар закінчився</span></div>
       <div><small>Чернетки з ціною</small><strong>{drafts.filter(p=>Number(p.price)>0).length}</strong><span>Потребують перевірки перед публікацією</span></div>
     </div>
