@@ -1,0 +1,42 @@
+name: Verify missing OLIE'RE Studio bundle photo source
+on:
+  push:
+    branches: [audit/cuskin-photo-background-20261118]
+    paths:
+      - '.github/workflows/oliere-studio-verify.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check official source page, exact title and image
+        run: |
+          node --input-type=module <<'JS'
+          const urls=[
+            'https://oliere.paris/products/profesiynyy-nabor-dlya-ukladannya-volossya-studio-oliere-paris.js',
+            'https://oliere.paris/products/profesiynyy-nabor-dlya-ukladannya-volossya-studio-oliere-paris',
+            'https://pinkygreen.shop/collections/studio/products/profesiynyy-nabir-dlya-ukladannya-volossya-studio-oliere-paris.js',
+            'https://cdn.shopify.com/s/files/1/0765/2812/4147/files/21.png?v=1760560713'
+          ];
+          for(const url of urls){
+           try{
+            const r=await fetch(url,{signal:AbortSignal.timeout(15000)});
+            const type=r.headers.get('content-type')||'';
+            if(type.includes('image/')) {
+              const buff=new Uint8Array(await r.arrayBuffer());
+              console.log("STUDIO_IMAGE",JSON.stringify({url,status:r.status,type,bytes:buff.length,png:buff[0]===137}));
+            }else{
+              const body=await r.text();
+              let json=null;try{json=JSON.parse(body)}catch{}
+              console.log("STUDIO_SOURCE",JSON.stringify({url,status:r.status,redirect:r.url,type,bytes:body.length,
+                title:json?.title || body.match(/<title[^>]*>([^<]+)/i)?.[1],
+                images:json?.images?.slice(0,5)||[],
+                featured:json?.featured_image || null,
+                meta:body.match(/<meta\b[^>]*property="og:image"[^>]*>/i)?.[0],
+                source21:body.includes('21.png'),product:body.includes('Професійний набір для укладання волосся')}));
+            }
+           }catch(e){console.log("STUDIO_ERROR",url,String(e))}
+          }
+          JS
