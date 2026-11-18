@@ -104,6 +104,21 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "data(cuskin): snapshot validated official CU SKIN catalog"
           git push origin HEAD:fix/cuskin-official-catalog-20261117
+      - name: Confirm live CU SKIN D1/R2 result after scheduled Cron
+        run: |
+          sleep 120
+          curl --fail --silent --show-error --retry 5 --retry-delay 3 --retry-all-errors \
+            "https://reset-clinic-shop.oleg22777.workers.dev/api/health" \
+            | node --input-type=module -e '
+              let input="";for await (const part of process.stdin)input+=part;
+              const d=JSON.parse(input);console.log("CU_LIVE_AFTER_CRON",JSON.stringify({
+                status:d.status,storage:d.storage,media:d.media,
+                products:d.totals?.products,
+                cu_skin:d.photo_health?.cu_skin,
+                cu_official_sync:d.photo_health?.cu_official_sync,
+                other_missing:d.photo_health?.without_url
+              }));
+            '
       - name: Upload HTML for audit
         if: always()
         uses: actions/upload-artifact@v4
