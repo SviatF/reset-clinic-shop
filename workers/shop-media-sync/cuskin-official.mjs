@@ -3,7 +3,7 @@ import priceSource from "../../data/cu-skin-retail-prices-2026-11-12.json" with 
 import { imageDimensions } from "./image-dimensions.mjs";
 
 // Single, reviewed 112-item snapshot. Bump the revision when replacing this source.
-const REVISION = "cu-official-2026-11-18-v3";
+const REVISION = "cu-official-2026-11-18-v4";
 const PREFIX = "/shop-media/products/cu-skin-official/";
 const STATUSES_DONE = new Set(["attached", "created", "already", "kept"]);
 const SAFE_IMAGE_HOST = "key.cu.ua";
@@ -152,7 +152,15 @@ async function fetchOfficialPhoto(official) {
 async function originalIsBetter(env,url,photo){
   if(!url||!url.startsWith("/shop-media/"))return false;
   const key=url.slice("/shop-media/".length);
-  // Keep previously verified, larger supplier photos. Replace blurry workbook thumbnails.
+  // These legacy files were independently checked against 87 live product
+  // photos. Existing "official-auto" images are fully opaque 800x900px
+  // white-background crops (not alpha cutouts). The brand's exact-SKU PNGs
+  // are 470x470 with genuine transparent backgrounds. The merchant requested
+  // alpha cutouts; prefer the verified official PNG, not a white tile merely
+  // because it has more pixels. This never bypasses variant identity checks.
+  if (key.startsWith("products/official-auto/") ||
+      /^products\\/2026-11-16\\/[-\\w.]+\\.jpe?g$/i.test(key)) return false;
+  // Keep previously verified, larger supplier photos with real cutout detail.
   if(!/^products\/[-\w/.]+\.(png|jpe?g|webp)$/i.test(key))return false;
   const obj=await env.SHOP_MEDIA.get(key,{range:{offset:0,length:65536}});
   if(!obj)return false;
@@ -217,8 +225,12 @@ export async function reconcileOfficial(env,{limit=8,sources=snapshot.products,p
   const pending=sources.filter(p=>{
     const item=attempts.get(p.vendorCode);
     if(!item)return true;
-    // Keep successful photo and draft writes across matcher revisions.
-    if(STATUSES_DONE.has(item.status))return false;
+    // Keep successful D1 writes across matcher revisions. Legacy 'kept'
+    // records are intentionally reconsidered once after an alpha-priority
+    // revision; every other successful status remains idempotent.
+    if(STATUSES_DONE.has(item.status)){
+      return item.status==="kept" && !String(item.detail||"").startsWith(REVISION+" | ");
+    }
     // Reinspect earlier conflicts/errors after a matcher revision.
     if(!String(item.detail||"").startsWith(REVISION+" | "))return true;
     if(item.status==="conflict")return false;
