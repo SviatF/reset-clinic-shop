@@ -49,6 +49,8 @@ jobs:
         run: node --test scripts/test-cuskin-publish.mjs
       - name: Verify CU SKIN stock statuses and order safety
         run: node --experimental-strip-types --test scripts/test-inventory-state.mjs
+      - name: Verify safe archival of unidentifiable supplier catalog placeholder
+        run: node --test scripts/test-archive-unverifiable-placeholder.mjs
       - name: Verify manufacturer product photo verification for unpublished catalog
         run: node --test scripts/test-verified-supplier-drafts.mjs
       - name: Verify raw D1 photo recovery from catalog's existing local supplier images

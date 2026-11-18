@@ -4,6 +4,7 @@ import { reconcileOfficial } from "./cuskin-official.mjs";
 import { releaseOfficialCUListings } from "./catalog-release.mjs";
 import { publishVerifiedSupplierDrafts } from "./verified-drafts.mjs";
 import { backfillVerifiedLocalMedia } from "./local-media-backfill.mjs";
+import { archiveUnverifiableMascaraPlaceholder } from "./archive-unverifiable-placeholder.mjs";
 
 // Cloudflare Cron job: no public write endpoint, no admin clicking.
 // Bump this identifier whenever source detection or matching improves, so
@@ -335,6 +336,8 @@ export default {
      // media scans; never let unrelated CU SKIN probes starve their quota.
      try { await publishVerifiedSupplierDrafts(env,{limit:6}); }
      catch(error){console.error("Verified supplier draft sync failed",error);}
+     try { await archiveUnverifiableMascaraPlaceholder(env); }
+     catch(error){console.error("Unverifiable imported placeholder cleanup failed",error);}
      try { await reconcileOfficial(env,{limit:8}); }
      catch(error){console.error("Official CU SKIN sync failed",error);}
      await reconcile(env);
