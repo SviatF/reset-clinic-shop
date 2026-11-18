@@ -5,7 +5,7 @@ import { imageDimensions } from "./image-dimensions.mjs";
  * Only exact product-specific URLs curated in the repository. Never guess
  * a photo from general product search or replace an unrelated item's image.
  */
-const VERSION="verified-supplier-draft-2026-11-18-v2";
+const VERSION="verified-supplier-draft-2026-11-18-v3";
 const LIMIT_PER_CRON=8;
 const HOSTS={
   "HydroPeptide":new Set(["hydropeptide.ua","hydropeptide.com","www.hydropeptide.com","cdn.shopify.com"]),
