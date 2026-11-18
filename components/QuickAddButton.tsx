@@ -5,7 +5,7 @@ import { useCart } from "@/components/CartProvider";
 import Link from "next/link";
 import type { InventoryState } from "@/lib/inventory-state";
 
-type QuickProduct = { slug: string; name: string; price: number; inStock?: boolean };
+type QuickProduct = { slug: string; name: string; price: number; inStock?: boolean; availability?: InventoryState };
 
 export default function QuickAddButton({ item }: { item: QuickProduct }) {
   const { add } = useCart();
