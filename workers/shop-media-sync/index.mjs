@@ -331,10 +331,12 @@ export default {
        const result = await releaseOfficialCUListings(env);
        console.log("CU SKIN catalog release",JSON.stringify(result));
      }catch(error){console.error("CU SKIN draft publishing failed",error);}
+     // Recover currently publishable supplier drafts BEFORE slower general
+     // media scans; never let unrelated CU SKIN probes starve their quota.
+     try { await publishVerifiedSupplierDrafts(env,{limit:6}); }
+     catch(error){console.error("Verified supplier draft sync failed",error);}
      try { await reconcileOfficial(env,{limit:8}); }
      catch(error){console.error("Official CU SKIN sync failed",error);}
-     try { await publishVerifiedSupplierDrafts(env,{limit:12}); }
-     catch(error){console.error("Verified supplier draft sync failed",error);}
      await reconcile(env);
    })());
  },
