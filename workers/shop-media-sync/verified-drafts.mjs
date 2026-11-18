@@ -212,6 +212,10 @@ async function attachPhotoAndPublish(env,slug,known,url){
     }
     const now=new Date().toISOString();
     const next=rows.map(row=>row.id===p.id?{...row,image_url:url,status:"active",
+      ...(known.linePackshot ? {description:(
+        String(row.description||"").trim()+"\n\n"+
+        "Примітка: на фото представлено упаковку лінійки Sensilis. Фактичний відтінок товару визначається назвою його варіанта."
+      ).trim()} : {}),
       published_at:row.published_at||now,updated_at:now}:row);
     const changed=await env.SHOP_DB.prepare(
       "UPDATE shop_documents SET content=?,version=version+1,updated_at=datetime('now') WHERE pathname='data/products.json' AND version=?"
