@@ -3,7 +3,7 @@ import priceSource from "../../data/cu-skin-retail-prices-2026-11-12.json" with 
 import { imageDimensions } from "./image-dimensions.mjs";
 
 // Single, reviewed 112-item snapshot. Bump the revision when replacing this source.
-const REVISION = "cu-official-2026-11-17-v1";
+const REVISION = "cu-official-2026-11-17-v2";
 const PREFIX = "/shop-media/products/cu-skin-official/";
 const STATUSES_DONE = new Set(["attached", "created", "already", "kept"]);
 const SAFE_IMAGE_HOST = "key.cu.ua";
@@ -27,9 +27,20 @@ function sizes(value) {
   }
   return [...new Set(result)].sort().join(",");
 }
-function variantIncompatible(product, official) {
+function variantIncompatible(product, official, confirmedSku=false) {
   const a=sizes(product.size), b=sizes(official.volumes.join(" "));
-  if(a && b && !b.split(",").includes(a))return true;
+  if(a && b && !b.split(",").includes(a)){
+    // A source inventory sheet can express the same SKU quantity in grams while
+    // cu.ua expresses it in millilitres. This exception is ONLY valid for an
+    // exact real 300xxx SKU, and only when the numerical quantity is identical.
+    // Legacy title matches remain strict, as do distinct quantities/shades.
+    const as=a.split(","),bs=b.split(",");
+    const sameAmountDifferentMassVolume=confirmedSku&&as.length===1&&bs.length===1&&
+      as[0].split(":")[0]===bs[0].split(":")[0]&&
+      new Set([as[0].split(":")[1],bs[0].split(":")[1]]).size===2&&
+      ["ml","g"].every(unit=>[as[0],bs[0]].some(s=>s.endsWith(":"+unit)));
+    if(!sameAmountDifferentMassVolume)return true;
+  }
   const get=(text,re)=>(String(text||"").match(re)||[])
     .map(x=>x.toLowerCase().replace(",",".").replace(/[^0-9.]/g,"")).sort().join(",");
   const current=String(product.name||"").split("|").at(-1);
@@ -54,7 +65,7 @@ export function planOfficialProduct(rows,official){
   const exact=rows.filter(row=>row.brand==="CU SKIN"&&String(row.sku||"")===official.sku);
   if(exact.length>1)return {kind:"conflict",reason:"Duplicate real SKU in D1",existing:null};
   if(exact.length===1){
-    if(variantIncompatible(exact[0],official))return {kind:"conflict",reason:"Different volume, shade, strength or SPF",existing:null};
+    if(variantIncompatible(exact[0],official,true))return {kind:"conflict",reason:"Different volume, shade, strength or SPF",existing:null};
     return {kind:"update",existing:exact[0]};
   }
   const legacy=rows.filter(row=>officialNameMatch(row,official));
@@ -204,8 +215,11 @@ export async function reconcileOfficial(env,{limit=8,sources=snapshot.products,p
   const attempts=new Map((recent.results||[]).map(row=>[String(row.vendor_code),row]));
   const pending=sources.filter(p=>{
     const item=attempts.get(p.vendorCode);
-    if(!item||!String(item.detail||"").startsWith(REVISION+" | "))return true;
+    if(!item)return true;
+    // Keep successful photo and draft writes across matcher revisions.
     if(STATUSES_DONE.has(item.status))return false;
+    // Reinspect earlier conflicts/errors after a matcher revision.
+    if(!String(item.detail||"").startsWith(REVISION+" | "))return true;
     if(item.status==="conflict")return false;
     return Number(item.checked_at)<=now-3600;
   }).slice(0,Math.max(0,Math.min(12,limit)));
