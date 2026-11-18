@@ -77,8 +77,9 @@ export default async function DynamicProductPage({ params }: Props) {
     { name: item.name, path },
   ]);
 
+  const isOfficialCutout = item.brand === "CU SKIN" && String(item.imageUrl || "").includes("/products/cu-skin-official/");
   return (
-    <div className="product-page-conversion product-page-premium product-page-audit-v2 product-page-feminine">
+    <div className={`product-page-conversion product-page-premium product-page-audit-v2 product-page-feminine${isOfficialCutout ? " product-page--cu-skin-cutout" : ""}`}>
       <JsonLd data={[productSchema, breadcrumbs]} />
       <section className="product-conversion-hero product-object-hero">
         <div className="shell">
