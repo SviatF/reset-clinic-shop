@@ -45,7 +45,7 @@ export async function DELETE(request:Request){
   const rows=await readCategories();
   const candidate=rows.find(row=>row.id===id);
   if(!candidate||!candidate.parent_slug)throw new Error("Підкатегорію не знайдено або це основна категорія");
-  if(["hair-shampoo","hair-conditioner","hair-mask","hair-styling","face-cream","face-cleansing","face-toning","face-serums","face-spf","body-cleansing","body-cream","body-treatment","body-spf"].includes(candidate.id))throw new Error("Обов'язкову підкатегорію магазину можна приховати, але не видалити");
+  if(["hair-shampoo","hair-conditioner","hair-mask","hair-styling","face-cream","face-cleansing","face-toning","face-serums","face-spf","body-cleansing","body-cream","body-treatment","body-spf","face-eye-care","face-lip-care","face-spot-treatment","body-hand-care","hair-treatment"].includes(candidate.id))throw new Error("Обов'язкову підкатегорію магазину можна приховати, але не видалити");
   const used=(await readProducts()).some(row=>row.category===candidate.parent_slug && productSubcategories(row).includes(candidate.slug));
   if(used)throw new Error("До цієї підкатегорії прив'язані товари. Спочатку перепризначте їх.");
   const categories=await mutateCategories("Admin: delete subcategory "+id,current=>current.filter(row=>row.id!==id));
