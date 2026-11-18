@@ -1,0 +1,28 @@
+name: Verify RESET Shop live domains
+on:
+  push:
+    branches: [fix/cuskin-official-catalog-20261117]
+    paths:
+      - '.github/workflows/cuskin-domain-verify.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compare production custom domain with Worker health
+        run: |
+          node --input-type=module <<'JS'
+          for (const origin of ["https://shop.resetclinic.org","https://reset-clinic-shop.oleg22777.workers.dev"]) {
+            try {
+              const response=await fetch(origin+"/api/health",{headers:{Accept:"application/json"},signal:AbortSignal.timeout(15000)});
+              const data=await response.json();
+              console.log("DOMAIN_HEALTH",JSON.stringify({origin,http:response.status,status:data.status,storage:data.storage,
+                products:data.totals?.products,cu_skin:data.photo_health?.cu_skin,cu_official_sync:data.photo_health?.cu_official_sync}));
+            } catch(error){console.log("DOMAIN_ERROR",origin,String(error));}
+          }
+          JS
