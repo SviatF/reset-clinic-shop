@@ -4,12 +4,14 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
+import { earnedCartBenefits, physicalCartSubtotal } from "@/lib/cart-benefits";
 
 export default function CheckoutForm() {
   const { items, total } = useCart();
   const legacyCertificateInCart = items.some(item => isLegacyCertificateSlug(item.slug));
   const [delivery, setDelivery] = useState("nova");
   const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
+  const earnedBenefits = earnedCartBenefits(physicalCartSubtotal(items));
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
 
@@ -98,6 +100,8 @@ export default function CheckoutForm() {
           <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
         </div>}
       </section>
+
+      {earnedBenefits.length > 0 && <p className="checkout-bonus-note"><strong>Бонуси цього замовлення:</strong> {earnedBenefits.join(" · ")}. Подарунки додамо під час комплектації.</p>}
 
       <section className="checkout-section checkout-payment-section">
         <h2>Оплата</h2>

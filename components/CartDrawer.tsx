@@ -2,19 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import productImg from "@/assets/img/tovar1.webp";
 import certificateImg from "@/assets/img/main-certificate.webp";
 import { cartItemHref, certificateFromSlug, isCertificateSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
 import { useCart } from "@/components/CartProvider";
-
-const FREE_SHIPPING = 5000;
+import SmartProductImage from "@/components/SmartProductImage";
+import { CART_BENEFITS, physicalCartSubtotal } from "@/lib/cart-benefits";
 
 export default function CartDrawer() {
   const { items, total, isCartOpen, closeCart, remove, setQty } = useCart();
   const legacyCertificateInCart = items.some(item => isLegacyCertificateSlug(item.slug));
-  const shippableTotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const remaining = Math.max(0, FREE_SHIPPING - shippableTotal);
-  const progress = Math.min(100, (shippableTotal / FREE_SHIPPING) * 100);
+  const shippableTotal = physicalCartSubtotal(items);
 
   return (
     <div className={`cart-drawer-layer ${isCartOpen ? "is-open" : ""}`} aria-hidden={!isCartOpen}>
@@ -25,13 +22,21 @@ export default function CartDrawer() {
           <button onClick={closeCart} aria-label="Закрити">×</button>
         </div>
 
-        {items.length > 0 && <div className="shipping-progress">
-          <div className="shipping-copy">
-            {remaining > 0 ? <span>До безкоштовної доставки залишилось <b>{remaining.toFixed(0)} грн</b></span> : <span><b>Безкоштовна доставка активована</b></span>}
-            <span>{Math.round(progress)}%</span>
-          </div>
-          <div className="shipping-track"><span style={{ width: `${progress}%` }} /></div>
-        </div>}
+        {shippableTotal > 0 && <div className="shipping-progress" aria-label="Бонуси за покупки">
+          {CART_BENEFITS.map((benefit) => {
+            const remaining = Math.max(0, benefit.threshold - shippableTotal);
+            const progress = Math.min(100, Math.round(shippableTotal / benefit.threshold * 100));
+            return <div className="cart-benefit" key={benefit.id}>
+              <div className="shipping-copy">
+                <span>{remaining > 0 ? <>До {benefit.toLabel} залишилось <b>{remaining.toLocaleString("uk-UA")} грн</b></> : <b>{benefit.label} ✓</b>}</span>
+                <span className="cart-benefit-percent">{remaining > 0 ? `${progress}%` : "100%"}</span>
+              </div>
+              <div className="shipping-track" role="progressbar" aria-label={benefit.label} aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+                <span style={{ width: `${progress}%` }} />
+              </div>
+            </div>;
+          })}
+        </div>
 
         {!items.length ? (
           <div className="drawer-empty">
@@ -45,7 +50,9 @@ export default function CartDrawer() {
             <div className="drawer-items">
               {items.map((item) => (
                 <article className="drawer-item" key={item.slug}>
-                  <Link className="drawer-thumb" href={cartItemHref(item.slug)} onClick={closeCart}><Image src={isCertificateSlug(item.slug) ? certificateImg : productImg} alt={item.name} /></Link>
+                  <Link className="drawer-thumb" href={cartItemHref(item.slug)} onClick={closeCart}>{isCertificateSlug(item.slug)
+                    ? <Image src={certificateImg} alt={item.name} />
+                    : <SmartProductImage src={item.imageUrl} alt={item.name} fallback={<span className="drawer-photo-missing">Фото уточнюється</span>} />}</Link>
                   <div className="drawer-item-copy">
                     <Link href={cartItemHref(item.slug)} onClick={closeCart}>{item.name}</Link>
                     {certificateFromSlug(item.slug) && <span className="cert-cart-detail"><b>УНІВЕРСАЛЬНИЙ:</b> на косметику та процедури</span>}
