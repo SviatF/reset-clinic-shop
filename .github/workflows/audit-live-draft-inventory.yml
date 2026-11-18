@@ -9,45 +9,33 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
-      - name: Audit production D1 product data (read only)
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Inspect real Cloudflare health aggregate and CU SKIN public stock labels
         run: |
           node --input-type=module <<'JS'
-          const db="38a072d9-bb85-4417-bf92-4f0652cc4056",acct=process.env.CLOUDFLARE_ACCOUNT_ID;
-          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/'+acct+'/d1/database/'+db+'/query',{
-            method:'POST',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},
-            body:JSON.stringify({sql:"SELECT content, version FROM shop_documents WHERE pathname='data/products.json'"}),
-            signal:AbortSignal.timeout(25000)
-          });
-          const d=await r.json();
-          if(!d.success)throw Error("D1 query failed "+JSON.stringify(d.errors));
-          const row=d.result?.[0]?.results?.[0];
-          if(!row)throw Error("Missing D1 products");
-          const data=JSON.parse(row.content);
-          const per={};
-          for(const p of data) {
-            const key=p.brand||"unknown",x=per[key]||={total:0,active:0,draft:0,rawMissingPhoto:0,rawActiveMissing:0,rawDraftMissing:0,pricedActiveZeroStock:0,pricedDraft:0,zeroPrice:0,pricedActiveUnknownStock:0,trackStockTrue:0};
-            x.total++;
-            if(p.status==='active')x.active++;
-            if(p.status==='draft')x.draft++;
-            if(!p.image_url){x.rawMissingPhoto++;if(p.status==='active')x.rawActiveMissing++;if(p.status==='draft')x.rawDraftMissing++;}
-            if(!(Number(p.price)>0))x.zeroPrice++;
-            if(p.status==='draft'&&Number(p.price)>0)x.pricedDraft++;
-            if(p.track_stock===true)x.trackStockTrue++;
-            if(p.status==='active'&&Number(p.price)>0&&p.track_stock===true&&!(Number(p.stock_quantity)>0))x.pricedActiveZeroStock++;
-            if(p.status==='active'&&Number(p.price)>0&&p.track_stock!==true)x.pricedActiveUnknownStock++;
+          const base="https://shop.resetclinic.org";
+          const r=await fetch(base+"/api/health",{cache:"no-store",signal:AbortSignal.timeout(18000)});
+          const health=await r.json();
+          console.log("LIVE_INVENTORY_HEALTH",JSON.stringify({
+            http:r.status,status:health.status,products:health.totals?.products,
+            photo_health:health.photo_health,inventory_health:health.inventory_health
+          }).slice(0,30000));
+          let total=0,priceUnknown=0,stockUnknown=0,outOfStock=0,buttons=0;
+          for(let page=1;page<=8;page++){
+            const response=await fetch(base+"/catalog?brand=CU+SKIN&page="+page,{cache:"no-store",signal:AbortSignal.timeout(16000)});
+            const html=await response.text();
+            const cards=[...html.matchAll(/<article\s+class="rs-card[^"]*"[^>]*>[\s\S]*?<\/article>/gi)].map(m=>m[0]);
+            for(const card of cards){
+              total++;
+              if(card.includes("Ціна уточнюється"))priceUnknown++;
+              if(card.includes("Наявність? ↗")||card.includes("Наявність?"))stockUnknown++;
+              if(card.includes("Немає"))outOfStock++;
+              if(card.includes("У кошик +"))buttons++;
+            }
+            console.log("LIVE_CUSKIN_PAGE",JSON.stringify({page,http:response.status,cards:cards.length,
+              sample:cards.slice(0,2).map(x=>x.match(/class="rs-card-name"[^>]*>([^<]+)/)?.[1]||"")}));
+            if(cards.length<24)break;
           }
-          console.log("D1_LIVE_AUDIT",JSON.stringify({version:row.version,total:data.length,per}));
-          const cu=data.filter(p=>p.brand==='CU SKIN');
-          const drafts=data.filter(p=>p.status==='draft');
-          console.log("D1_DRAFTS",JSON.stringify(drafts.map(p=>({brand:p.brand,slug:p.slug,sku:p.sku,name:p.name,price:p.price,
-            stock:p.stock_quantity,tracked:p.track_stock,photo:!!p.image_url,photoUrl:String(p.image_url||"").slice(0,140)}))).slice(0,40000));
-          console.log("D1_CU_STOCK",JSON.stringify(cu.map(p=>({sku:p.sku,id:p.id,status:p.status,price:p.price,
-            stock:p.stock_quantity,tracked:p.track_stock,photo:!!p.image_url,slug:p.slug}))).slice(0,25000));
-          console.log("D1_ACTIVE_MISSING",JSON.stringify(data.filter(p=>p.status==='active'&&!p.image_url)
-            .map(p=>({brand:p.brand,slug:p.slug,name:p.name}))).slice(0,20000));
+          console.log("LIVE_CUSKIN_LABELS",JSON.stringify({total,priceUnknown,stockUnknown,outOfStock,buttons}));
           JS
