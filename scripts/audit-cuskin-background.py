@@ -16,7 +16,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "data/cu-skin-official-snapshot.json").read_text())
 OUT = pathlib.Path("cuskin-photo-preview")
 OUT.mkdir(exist_ok=True)
-CODES = {"140", "235", "206", "255", "210", "232", "227", "239", "246", "102", "151", "284", "283", "288"}
+SAMPLE_CODES = {"140", "235", "206", "255", "210", "232", "227", "239", "246", "102", "151", "284", "283", "288"}
+CODES = {p["vendorCode"] for p in CATALOG["products"]}
 
 def only_outer_white(img):
     rgba = img.convert("RGBA")
@@ -70,9 +71,12 @@ for product in CATALOG["products"]:
         alpha = original.getchannel("A")
         alpha_extrema = alpha.getextrema()
         corners = [original.getpixel((x,y)) for x,y in ((0,0),(original.width-1,0),(0,original.height-1),(original.width-1,original.height-1))]
-        preview, removed = only_outer_white(original)
-        original.save(OUT / f"{code}-before.png")
-        preview.save(OUT / f"{code}-preview.png")
+        if code in SAMPLE_CODES:
+            preview, removed = only_outer_white(original)
+            original.save(OUT / f"{code}-before.png")
+            preview.save(OUT / f"{code}-preview.png")
+        else:
+            removed = 0
         rows.append({"sku": f"300{code}", "name": product["name"],
                      "size": list(img.size), "mode": img.mode,
                      "alpha_extrema": alpha_extrema,
@@ -81,5 +85,12 @@ for product in CATALOG["products"]:
     except Exception as ex:
         rows.append({"sku": f"300{code}", "error": str(ex)[:200]})
 (OUT / "report.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2))
+print("CU_BG_SUMMARY", json.dumps({
+    "total": len(rows),
+    "transparent_png": sum(1 for x in rows if x.get("alpha_extrema", [255])[0] == 0),
+    "opaque_sources": [x.get("sku") for x in rows if x.get("alpha_extrema", [255])[0] > 0],
+    "source_errors": [x for x in rows if "error" in x],
+}, ensure_ascii=False))
 for row in rows:
-    print("CU_BG_SAMPLE", json.dumps(row, ensure_ascii=False))
+    if row.get("sku", "")[3:] in SAMPLE_CODES or "error" in row or row.get("alpha_extrema", [255])[0] > 0:
+        print("CU_BG_SAMPLE", json.dumps(row, ensure_ascii=False))
