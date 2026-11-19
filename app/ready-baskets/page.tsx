@@ -2,7 +2,9 @@ import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { readProducts } from "@/lib/commerce-json";
-import { readPublishedReadyBaskets, readyBasketResolved } from "@/lib/ready-baskets";
+import { readPublishedReadyBaskets, readyBasketResolved, readReadyBasketCategoryImages } from "@/lib/ready-baskets";
+import { categoryByKey, type ReadyBasketCategoryKind } from "@/lib/ready-basket-taxonomy";
+import ReadyBasketCategorySelector from "@/components/ReadyBasketCategorySelector";
 import ReadyBasketVisual from "@/components/ReadyBasketVisual";
 
 export const dynamic = "force-dynamic";
@@ -13,17 +15,28 @@ export const metadata: Metadata = {
 };
 const money=(n:number)=>new Intl.NumberFormat("uk-UA",{style:"currency",currency:"UAH",maximumFractionDigits:2}).format(n);
 
-export default async function ReadyBasketsPage(){
- const [baskets,products]=await Promise.all([readPublishedReadyBaskets(),readProducts()]);
- const visible=baskets.map(basket=>readyBasketResolved(basket,products));
+type Params={searchParams:Promise<{group?:string;category?:string}>};
+export default async function ReadyBasketsPage({searchParams}:Params){
+ const query=await searchParams;
+ const group:ReadyBasketCategoryKind=query.group==="skin"?"skin":"concern";
+ const category=categoryByKey(query.category||"");
+ const selected=category?.kind===group?category.key:null;
+ const [baskets,products,categoryImages]=await Promise.all([readPublishedReadyBaskets(),readProducts(),readReadyBasketCategoryImages()]);
+ const counts:Record<string,number>={};
+ for(const basket of baskets){
+  for(const key of basket.categories)counts[key]=(counts[key]||0)+1;
+ }
+ const visible=baskets.filter(basket=>!selected||basket.categories.includes(selected))
+  .map(basket=>readyBasketResolved(basket,products));
  return <div className="rb-shop-page">
   <section className="rb-hero shell">
    <div className="rb-hero-eyebrow"><span>RESET CLINIC</span><span>КОЛЕКЦІЯ ДОГЛЯДУ / 01—{String(visible.length).padStart(2,"0")}</span></div>
    <div className="rb-hero-grid"><h1>Готові<br/><em>кошики.</em></h1><div><span>CURATED SKINCARE</span><p>Продумані комбінації професійних засобів. Ми зібрали догляд у зрозумілі кроки — вам залишається обрати свою потребу.</p><Link href="/consultation">Не знаєте, що обрати? Підбір косметолога <span aria-hidden="true"><ArrowUpRight /></span></Link></div></div>
   </section>
-  <section className="rb-shop-list shell" aria-label="Добірки догляду">
-   <div className="rb-list-heading"><span>ДОБІРКИ RESET</span><span>{visible.length} {visible.length===1?"набір":visible.length>=2&&visible.length<=4?"набори":"наборів"}</span></div>
-   {visible.length===0?<div className="rb-shop-empty"><h2>Добірки готуються</h2><p>Незабаром тут з’являться готові програми догляду. Поки можна обрати косметику в каталозі.</p><Link href="/catalog">ПЕРЕЙТИ ДО КАТАЛОГУ <ArrowUpRight /></Link></div>:
+  <ReadyBasketCategorySelector group={group} selected={selected} categoryImages={categoryImages} counts={counts}/>
+  <section className="rb-shop-list shell" id="ready-baskets-list" aria-label="Добірки догляду">
+   <div className="rb-list-heading"><span>{selected?`ДОБІРКИ / ${category?.label.toUpperCase()}`:"ДОБІРКИ RESET"}</span><span>{visible.length} {visible.length===1?"набір":visible.length>=2&&visible.length<=4?"набори":"наборів"}</span></div>
+   {visible.length===0?<div className="rb-shop-empty"><h2>{selected?"Поки без добірок":"Добірки готуються"}</h2><p>{selected?"Для цього запиту ще не опубліковано готових наборів. Спробуйте іншу категорію або перегляньте всі добірки.":"Незабаром тут з’являться готові програми догляду. Поки можна обрати косметику в каталозі."}</p><Link href={selected?"/ready-baskets?group=concern#ready-baskets-list":"/catalog"}>{selected?"УСІ ГОТОВІ КОШИКИ":"ПЕРЕЙТИ ДО КАТАЛОГУ"} <ArrowUpRight /></Link></div>:
     <div className="rb-list-grid">{visible.map((basket,i)=><Link className="rb-shop-card" key={basket.id} href={`/ready-baskets/${basket.slug}`}>
       <div className="rb-card-image"><ReadyBasketVisual basket={basket} products={basket.products.map(x=>x.product)}/><span className="rb-card-number">{String(i+1).padStart(2,"0")} / RESET</span></div>
       <div className="rb-card-content"><span className="rb-card-label">ПРОФЕСІЙНА ДОБІРКА · {basket.count} ЗАСОБІВ</span>

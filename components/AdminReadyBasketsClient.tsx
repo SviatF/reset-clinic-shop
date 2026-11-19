@@ -4,6 +4,7 @@ import ArrowUpRight from "@/components/ArrowUpRight";
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import SmartProductImage from "@/components/SmartProductImage";
+import { SKIN_CATEGORIES, CONCERN_CATEGORIES, READY_BASKET_CATEGORIES } from "@/lib/ready-basket-taxonomy";
 
 type CatalogProduct = {
  slug: string; name: string; brand: string; price: number; status: string;
@@ -13,11 +14,11 @@ type BasketItem = { slug: string; qty: number };
 type Basket = {
  id: string; slug: string; title: string; concern: string; description: string;
  imageUrl: string | null; status: "draft" | "published"; sortOrder: number;
- items: BasketItem[]; calculated?: { total: number; count: number; available: boolean };
+ items: BasketItem[]; categories: string[]; calculated?: { total: number; count: number; available: boolean };
 };
 type Form = Omit<Basket, "id" | "calculated"> & { id: string };
 const empty: Form = { id: "", slug: "", title: "", concern: "", description: "",
- imageUrl: null, status: "draft", sortOrder: 50, items: [] };
+ imageUrl: null, status: "draft", sortOrder: 50, items: [], categories: [] };
 const currency = (n: number) => new Intl.NumberFormat("uk-UA",{ style:"currency",currency:"UAH",maximumFractionDigits:2 }).format(n);
 const translit: Record<string,string> = {
  а:"a",б:"b",в:"v",г:"h",ґ:"g",д:"d",е:"e",є:"ye",ж:"zh",з:"z",и:"y",і:"i",ї:"yi",
@@ -39,6 +40,8 @@ export default function AdminReadyBasketsClient() {
  const [loading,setLoading] = useState(true);
  const [message,setMessage] = useState("");
  const [imageUploading,setImageUploading] = useState(false);
+ const [categoryUploading,setCategoryUploading] = useState<string | null>(null);
+ const [categoryImages,setCategoryImages] = useState<Record<string,string>>({});
  const bySlug = useMemo(() => new Map(products.map(p => [p.slug,p])),[products]);
  const selected = form.items.map(x => ({ ...x, product: bySlug.get(x.slug) })).filter(x => x.product);
  const sum = selected.reduce((value,x) => value + (x.product?.price || 0)*x.qty,0);
@@ -55,6 +58,7 @@ export default function AdminReadyBasketsClient() {
   if(!res.ok) throw new Error(j.error || "Не вдалося прочитати D1");
   setBaskets(j.baskets || []);
   setProducts(j.products || []);
+  setCategoryImages(j.categoryImages || {});
   setWritable(Boolean(j.writable));
   setStorageReason(j.storageReason || null);
   setLoading(false);
@@ -63,7 +67,7 @@ export default function AdminReadyBasketsClient() {
  function select(basket: Basket) {
   setForm({
    id:basket.id,slug:basket.slug,title:basket.title,concern:basket.concern,description:basket.description,
-   imageUrl:basket.imageUrl,status:basket.status,sortOrder:basket.sortOrder,items:basket.items.map(x=>({...x}))
+   imageUrl:basket.imageUrl,status:basket.status,sortOrder:basket.sortOrder,items:basket.items.map(x=>({...x})),categories:[...(basket.categories||[])]
   });
   setQuery("");
   setMessage("");
@@ -71,6 +75,33 @@ export default function AdminReadyBasketsClient() {
  }
  function newBasket() { setForm({...empty,items:[]});setQuery("");setMessage(""); }
  function update<K extends keyof Form>(key:K,value:Form[K]) {setForm(prev=>({...prev,[key]:value}));}
+ function toggleCategory(key:string) {
+  setForm(prev=>({...prev,categories:prev.categories.includes(key)
+   ? prev.categories.filter(x=>x!==key) : [...prev.categories,key]}));
+ }
+ async function uploadCategory(key:string,file?:File,remove=false) {
+  if(!file&&!remove)return;
+  setCategoryUploading(key);setMessage("");
+  try {
+   let url:string|null=null;
+   if(!remove&&file){
+    const fd=new FormData();fd.append("file",file);
+    const upload=await fetch("/api/admin/upload",{method:"POST",body:fd});
+    const u=await upload.json();
+    if(!upload.ok)throw new Error(u.error||"Не вдалося завантажити зображення");
+    url=u.url;
+   }
+   const response=await fetch("/api/admin/ready-baskets",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({action:"category-image",categoryKey:key,imageUrl:url})
+   });
+   const result=await response.json();
+   if(!response.ok)throw new Error(result.error||"Не вдалося зберегти фото категорії");
+   await refresh();
+   setMessage(remove?"Обкладинку категорії скинуто на стандартну.":"Фото категорії збережено в D1.");
+  }catch(error){setMessage(error instanceof Error?error.message:"Помилка збереження фото");}
+  finally{setCategoryUploading(null);}
+ }
  function addProduct(slug:string) {
   if(form.items.some(x=>x.slug===slug))return;
   setForm(prev=>({...prev,items:[...prev.items,{slug,qty:1}]}));
@@ -83,6 +114,7 @@ export default function AdminReadyBasketsClient() {
   e.preventDefault();
   if(!writable || busy) return;
   if(form.status==="published"&&!ready){setMessage("Для публікації усі товари мають бути активними та доступними.");return;}
+  if(form.status==="published"&&!form.categories.length){setMessage("Для публікації оберіть хоча б одну категорію.");return;}
   setBusy(true);setMessage("");
   try {
    const res=await fetch("/api/admin/ready-baskets",{
@@ -168,8 +200,38 @@ export default function AdminReadyBasketsClient() {
       <input type="number" value={form.sortOrder} onChange={e=>update("sortOrder",Number(e.target.value))}/>
      </label>
     </div>
+    <section className="rb-category-editor">
+     <header><span>01 / КАТЕГОРІЇ ДОГЛЯДУ</span><h3>Кому підходить набір?</h3></header>
+     <p>Оберіть одну або декілька категорій. Покупці зможуть знайти набір за типом шкіри або конкретним запитом. Для публікації потрібна хоча б одна категорія.</p>
+     <div className="rb-category-columns">
+      {[{title:"За типом шкіри",data:SKIN_CATEGORIES},{title:"За запитом",data:CONCERN_CATEGORIES}].map(group=><div key={group.title}><h4>{group.title}</h4><div className="rb-category-choices">
+       {group.data.map(category=><label key={category.key} className={"rb-category-choice "+(form.categories.includes(category.key)?"is-selected":"")}>
+        <input type="checkbox" checked={form.categories.includes(category.key)} onChange={()=>toggleCategory(category.key)}/>
+        <span>{category.label}</span><small>{category.description}</small>
+       </label>)}
+      </div></div>)}
+     </div>
+     <details className="rb-category-photo-settings">
+      <summary>Фото круглих категорій на сайті <span>НАЛАШТУВАТИ</span></summary>
+      <p>Можна замінити кожне стандартне фото. Зображення зберігається в R2, посилання — в D1, і застосовується до всіх добірок цієї категорії.</p>
+      <div className="rb-category-photo-grid">
+       {READY_BASKET_CATEGORIES.map(category=><div className="rb-category-photo-item" key={category.key}>
+        <div className="rb-category-photo-preview">
+         <SmartProductImage src={categoryImages[category.key]||category.defaultImage} alt={category.label} fallback={<span>RESET</span>}/>
+        </div>
+        <div><strong>{category.label}</strong><small>{category.kind==="skin"?"ТИП ШКІРИ":"ЗАПИТ"}</small>
+         <label className="rb-category-photo-upload">Змінити фото
+          <input type="file" hidden accept="image/png,image/jpeg,image/webp,image/avif" disabled={!writable||categoryUploading!==null}
+           onChange={event=>{void uploadCategory(category.key,event.target.files?.[0]);event.target.value="";}}/>
+         </label>
+         {categoryImages[category.key]&&<button type="button" disabled={categoryUploading!==null} onClick={()=>void uploadCategory(category.key,undefined,true)}>Скинути</button>}
+        </div>
+       </div>)}
+      </div>
+     </details>
+    </section>
     <section className="rb-products-editor">
-     <header><span>01 / СКЛАД</span><h3>Товари в наборі</h3></header>
+     <header><span>02 / СКЛАД</span><h3>Товари в наборі</h3></header>
      <div className="rb-product-search">
       <label htmlFor="ready-basket-search">Додати засіб із каталогу</label>
       <input id="ready-basket-search" type="search" value={query} placeholder="Пошук за назвою або брендом…" onChange={e=>setQuery(e.target.value)}/>
@@ -197,7 +259,7 @@ export default function AdminReadyBasketsClient() {
      <p className="rb-tiny">Сума автоматично враховує поточні ціни товарів та акції. Оплата відбувається через стандартний кошик.</p>
     </section>
     <section className="rb-image-editor">
-     <header><span>02 / ОБКЛАДИНКА</span><h3>Зображення добірки</h3></header>
+     <header><span>03 / ОБКЛАДИНКА</span><h3>Зображення добірки</h3></header>
      <p>За замовчуванням сайт покаже фото товарів із набору. За бажанням завантажте окрему обкладинку.</p>
      <div className="rb-cover-preview">
       {form.imageUrl?<SmartProductImage src={form.imageUrl} alt={form.title} fallback={<span>Фото недоступне</span>}/>:<span>RESET / CURATED CARE</span>}

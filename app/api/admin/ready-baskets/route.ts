@@ -4,7 +4,8 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { readProducts } from "@/lib/commerce-json";
 import { jsonStoreWriteStatus } from "@/lib/json-store";
 import { getProductPricing } from "@/lib/product-pricing";
-import { readyBasketDB, initReadyBasketTable, listReadyBaskets, readyBasketResolved, type ReadyBasket, type ReadyBasketItem } from "@/lib/ready-baskets";
+import { readyBasketDB, initReadyBasketTable, initReadyBasketCategories, categoryStatements, readReadyBasketCategoryImages, listReadyBaskets, readyBasketResolved, type ReadyBasket, type ReadyBasketItem } from "@/lib/ready-baskets";
+import { CATEGORY_KEYS } from "@/lib/ready-basket-taxonomy";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -43,14 +44,19 @@ function normalize(input: Record<string, unknown>, original?: ReadyBasket): Read
   return { slug: productSlug, qty };
  });
  if (new Set(items.map(item => item.slug)).size !== items.length) throw new Error("Один товар не може повторюватися");
+ const rawCategories = Array.isArray(input.categories) ? input.categories : (original?.categories || []);
+ const categories = rawCategories.map(v => clean(v, 80));
+ if (categories.length > CATEGORY_KEYS.size || categories.some(k => !CATEGORY_KEYS.has(k)) || new Set(categories).size !== categories.length)
+   throw new Error("Неправильні категорії добірки");
  const status = input.status === "published" ? "published" : "draft";
+ if (status === "published" && categories.length === 0) throw new Error("Вкажіть хоча б одну категорію за типом шкіри або запитом");
  const orderNumber = Number(input.sortOrder);
  const sortOrder = Number.isFinite(orderNumber) ? Math.max(-100000, Math.min(100000, Math.trunc(orderNumber))) : 50;
  const now = new Date().toISOString();
  return {
   id: original?.id || randomUUID(), slug, title, concern, description,
   imageUrl: sanitizeUrl(input.imageUrl), status, sortOrder,
-  items, createdAt: original?.createdAt || now, updatedAt: now,
+  categories, items, createdAt: original?.createdAt || now, updatedAt: now,
  };
 }
 async function ensureReady() {
@@ -66,7 +72,7 @@ export async function GET() {
  const db = readyBasketDB();
  if (!db) return respond({ configured: false, error: "Не знайдено SHOP_DB" }, 503);
  try {
-  const [products, storage] = await Promise.all([readProducts(), jsonStoreWriteStatus()]);
+  const [products, storage, categoryImages] = await Promise.all([readProducts(), jsonStoreWriteStatus(), readReadyBasketCategoryImages()]);
   let baskets: ReadyBasket[] = [];
   try { baskets = await listReadyBaskets(db); }
   catch(error) {
@@ -74,6 +80,7 @@ export async function GET() {
   }
   return respond({
    configured: true, writable: storage.backend === "cloudflare-d1" && storage.writable,
+   categoryImages,
    storageReason: storage.reason,
    baskets: baskets.map(basket => ({
     ...basket, calculated: { total: readyBasketResolved(basket, products).total,
@@ -99,15 +106,33 @@ export async function POST(request: Request) {
  try {
   const db = await ensureReady();
   const input = await request.json() as Record<string, unknown>;
+  if (input.action === "category-image") {
+   const key=clean(input.categoryKey,80);
+   if(!CATEGORY_KEYS.has(key))return respond({error:"Невідома категорія"},400);
+   const imageUrl=sanitizeUrl(input.imageUrl);
+   await initReadyBasketCategories(db);
+   if(imageUrl) {
+    await db.prepare("INSERT INTO shop_ready_basket_category_images(category_key,image_url,updated_at) VALUES (?,?,?) ON CONFLICT(category_key) DO UPDATE SET image_url=excluded.image_url,updated_at=excluded.updated_at")
+      .bind(key,imageUrl,new Date().toISOString()).run();
+   } else {
+    await db.prepare("DELETE FROM shop_ready_basket_category_images WHERE category_key=?").bind(key).run();
+   }
+   return respond({ok:true,categoryKey:key,imageUrl});
+  }
   if (input.action === "delete") {
    const id = clean(input.id, 100);
    if (!id) return respond({ error: "ID потрібен" }, 400);
    await initReadyBasketTable(db);
-   await db.prepare("DELETE FROM shop_ready_baskets WHERE id = ?").bind(id).run();
+   await initReadyBasketCategories(db);
+   await db.batch([
+    db.prepare("DELETE FROM shop_ready_basket_categories WHERE basket_id = ?").bind(id),
+    db.prepare("DELETE FROM shop_ready_baskets WHERE id = ?").bind(id)
+   ]);
    return respond({ ok: true });
   }
   if (input.action !== "save") return respond({ error: "Unknown action" }, 400);
   await initReadyBasketTable(db);
+  await initReadyBasketCategories(db);
   const id = clean(input.id, 100);
   const current = id ? (await listReadyBaskets(db)).find(row => row.id === id) : undefined;
   if (id && !current) return respond({ error: "Добірку не знайдено" }, 404);
@@ -118,7 +143,7 @@ export async function POST(request: Request) {
   if (next.status === "published" && !readyBasketResolved(next, products).available)
    throw new Error("Не можна публікувати добірку з неактивним або недоступним товаром. Перевірте наявність, статус і ціну.");
   try {
-   await db.prepare(`INSERT INTO shop_ready_baskets
+   const basketWrite = db.prepare(`INSERT INTO shop_ready_baskets
      (id, slug, title, concern, description, image_url, status, sort_order, items_json, created_at, updated_at)
      VALUES (?,?,?,?,?,?,?,?,?,?,?)
      ON CONFLICT(id) DO UPDATE SET slug=excluded.slug,title=excluded.title,
@@ -126,7 +151,8 @@ export async function POST(request: Request) {
        status=excluded.status,sort_order=excluded.sort_order,items_json=excluded.items_json,
        updated_at=excluded.updated_at`)
     .bind(next.id,next.slug,next.title,next.concern,next.description,next.imageUrl,next.status,
-      next.sortOrder,JSON.stringify(next.items),next.createdAt,next.updatedAt).run();
+      next.sortOrder,JSON.stringify(next.items),next.createdAt,next.updatedAt);
+   await db.batch([basketWrite,...categoryStatements(db,next.id,next.categories)]);
   } catch(error) {
    if (error instanceof Error && /UNIQUE constraint/i.test(error.message)) throw new Error("Цей slug уже використовується іншою добіркою");
    throw error;

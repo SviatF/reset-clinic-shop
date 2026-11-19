@@ -2,13 +2,14 @@ import "server-only";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { ProductRecord } from "@/lib/commerce-types";
 import { getProductPricing } from "@/lib/product-pricing";
+import { CATEGORY_KEYS } from "@/lib/ready-basket-taxonomy";
 
 export type ReadyBasketStatus = "draft" | "published";
 export type ReadyBasketItem = { slug: string; qty: number };
 export type ReadyBasket = {
   id: string; slug: string; title: string; concern: string; description: string;
   imageUrl: string | null; status: ReadyBasketStatus; sortOrder: number;
-  items: ReadyBasketItem[]; createdAt: string; updatedAt: string;
+  items: ReadyBasketItem[]; categories: string[]; createdAt: string; updatedAt: string;
 };
 type Statement = {
  bind(...values: unknown[]): Statement;
@@ -16,7 +17,7 @@ type Statement = {
  all<T>(): Promise<{ results: T[] }>;
  run(): Promise<{ meta?: { changes?: number } }>;
 };
-type D1 = { prepare(sql: string): Statement };
+type D1 = { prepare(sql: string): Statement; batch(statements: Statement[]): Promise<unknown[]> };
 type DBRow = {
  id: string; slug: string; title: string; concern: string; description: string;
  image_url: string | null; status: string; sort_order: number;
@@ -36,6 +37,40 @@ const SCHEMA = `CREATE TABLE IF NOT EXISTS ${TABLE} (
  created_at TEXT NOT NULL,
  updated_at TEXT NOT NULL
 )`;
+const LINKS = "shop_ready_basket_categories";
+const MEDIA = "shop_ready_basket_category_images";
+const LINKS_SCHEMA = `CREATE TABLE IF NOT EXISTS ${LINKS} (
+ basket_id TEXT NOT NULL,
+ category_key TEXT NOT NULL,
+ PRIMARY KEY (basket_id, category_key)
+)`;
+const MEDIA_SCHEMA = `CREATE TABLE IF NOT EXISTS ${MEDIA} (
+ category_key TEXT PRIMARY KEY NOT NULL,
+ image_url TEXT NOT NULL,
+ updated_at TEXT NOT NULL
+)`;
+export async function initReadyBasketCategories(db: D1) {
+ await db.prepare(LINKS_SCHEMA).run();
+ await db.prepare(MEDIA_SCHEMA).run();
+}
+export function categoryStatements(db:D1,id:string,keys:string[]):Statement[] {
+ if (keys.some(key=>!CATEGORY_KEYS.has(key))) throw new Error("INVALID_READY_BASKET_CATEGORY");
+ return [
+  db.prepare("DELETE FROM shop_ready_basket_categories WHERE basket_id=?").bind(id),
+  ...keys.map(key=>db.prepare("INSERT INTO shop_ready_basket_categories(basket_id,category_key) VALUES (?,?)").bind(id,key)),
+ ];
+}
+export async function readReadyBasketCategoryImages():Promise<Record<string,string>> {
+ const db=readyBasketDB();
+ if(!db)return {};
+ try {
+  const result=await db.prepare("SELECT category_key,image_url FROM shop_ready_basket_category_images").all<{category_key:string;image_url:string}>();
+  return Object.fromEntries(result.results.filter(row=>CATEGORY_KEYS.has(row.category_key)).map(row=>[row.category_key,row.image_url]));
+ } catch(error) {
+  if(error instanceof Error && /no such table|shop_ready_basket_category_images/i.test(error.message)) return {};
+  throw error;
+ }
+}
 export function readyBasketDB(): D1 | null {
  try {
   const env = getCloudflareContext().env as unknown as { SHOP_DB?: D1 };
@@ -51,14 +86,26 @@ function rowToBasket(row: DBRow): ReadyBasket {
  return {
   id: row.id, slug: row.slug, title: row.title, concern: row.concern, description: row.description,
   imageUrl: row.image_url, status: row.status === "published" ? "published" : "draft",
-  sortOrder: row.sort_order, items, createdAt: row.created_at, updatedAt: row.updated_at,
+  sortOrder: row.sort_order, items, categories: [], createdAt: row.created_at, updatedAt: row.updated_at,
  };
 }
 export async function listReadyBaskets(db: D1): Promise<ReadyBasket[]> {
  const response = await db.prepare(
   `SELECT * FROM ${TABLE} ORDER BY sort_order ASC, created_at DESC`
  ).all<DBRow>();
- return response.results.map(rowToBasket);
+ const baskets=response.results.map(rowToBasket);
+ if(!baskets.length) return baskets;
+ try {
+  const tags=await db.prepare("SELECT basket_id,category_key FROM shop_ready_basket_categories").all<{basket_id:string;category_key:string}>();
+  const byId=new Map(baskets.map(basket=>[basket.id,basket]));
+  for(const tag of tags.results){
+   const basket=byId.get(tag.basket_id);
+   if(basket && CATEGORY_KEYS.has(tag.category_key) && !basket.categories.includes(tag.category_key))basket.categories.push(tag.category_key);
+  }
+ }catch(error) {
+  if(!(error instanceof Error && /no such table|shop_ready_basket_categories/i.test(error.message)))throw error;
+ }
+ return baskets;
 }
 export async function readReadyBaskets(): Promise<ReadyBasket[]> {
  const db = readyBasketDB();
