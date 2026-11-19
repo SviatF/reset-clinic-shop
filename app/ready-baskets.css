@@ -1,0 +1,97 @@
+/* RESET / CURATED BASKETS — sculptural monochrome retail design */
+.rb-shop-page{--rb-ink:#1a1816;--rb-warm:#f5f2ed;--rb-muted:#77716a;background:#f8f6f2;color:var(--rb-ink)}
+.rb-shop-page .shell{max-width:1450px;margin-left:auto;margin-right:auto}
+.rb-hero{padding-top:80px;padding-bottom:96px;border-bottom:1px solid #d8d3cb}
+.rb-hero-eyebrow{display:flex;justify-content:space-between;color:#7a7168;font-size:10px;font-weight:700;letter-spacing:.19em}
+.rb-hero-grid{display:grid;grid-template-columns:1.15fr .7fr;gap:80px;align-items:end;padding-top:54px}
+.rb-hero-grid h1{font-size:clamp(84px,10.5vw,178px);line-height:.84;letter-spacing:-.075em;font-weight:500;margin:0}
+.rb-hero-grid h1 em,.rb-included-top h2 em{font-family:Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.06em}
+.rb-hero-grid>div{padding:0 0 8px;max-width:430px}
+.rb-hero-grid>div>span,.rb-list-heading,.rb-card-label,.rb-detail-kicker,.rb-detail-price small,.rb-detail-visual-label,.rb-included-top>span,.rb-included-text>span,.rb-detail-consult{font-size:10px;letter-spacing:.16em;font-weight:700}
+.rb-hero-grid p{font-size:clamp(18px,1.8vw,25px);line-height:1.5;color:#57514b;margin:18px 0 32px;letter-spacing:-.025em}
+.rb-hero-grid a{color:var(--rb-ink);font-size:12px;text-decoration:none;border-bottom:1px solid #555;padding-bottom:8px;display:inline-block}
+.rb-shop-list{padding-top:46px;padding-bottom:110px}
+.rb-list-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;color:#81786f}
+.rb-list-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.rb-shop-card{display:block;color:inherit;text-decoration:none;border:1px solid #ded9d1;background:#fffefa;overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.rb-shop-card:hover{transform:translateY(-4px);box-shadow:0 22px 42px #26201a12}
+.rb-card-image{position:relative;aspect-ratio:1.35;background:#e9e5dc;overflow:hidden}
+.rb-card-number{position:absolute;left:24px;top:24px;z-index:2;font-size:10px;letter-spacing:.13em;color:#1d1b19;background:#fbf8f0e9;padding:10px 12px}
+.rb-visual{width:100%;height:100%;overflow:hidden;background:#ece7df}
+.rb-cover-img{width:100%;height:100%;object-fit:cover;display:block}
+.rb-visual-grid{height:100%;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:2px;background:#e4dfd6}
+.rb-visual-grid:has(>.rb-visual-cell:only-child){grid-template-columns:1fr;grid-template-rows:1fr}
+.rb-visual-cell{background:#f1eee8;min-height:0;display:grid;place-items:center;overflow:hidden}
+.rb-visual-cell img{display:block;width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .5s}
+.rb-shop-card:hover .rb-visual-cell img{transform:scale(1.04)}
+.rb-visual-fallback,.rb-visual-placeholder{display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;width:100%;height:100%;font-family:Georgia,serif;color:#999088;letter-spacing:.12em;font-size:30px;text-align:center;line-height:1.1}
+.rb-visual-fallback{font-size:18px}.rb-visual-fallback small{font:8px Arial,sans-serif;letter-spacing:.3em}
+.rb-card-content{padding:32px 36px 30px}
+.rb-card-label{color:#82786e}
+.rb-card-content h2{font-size:clamp(26px,3vw,43px);line-height:1.13;letter-spacing:-.04em;font-weight:500;margin:18px 0 12px}
+.rb-card-content p{min-height:43px;margin:0;color:#706962;font-size:14px;line-height:1.5}
+.rb-card-bottom{display:flex;align-items:end;justify-content:space-between;margin-top:35px;border-top:1px solid #e3ded7;padding-top:24px}
+.rb-card-bottom>div{display:grid;gap:8px}.rb-card-bottom small{font-size:9px;letter-spacing:.13em;color:#82786f}
+.rb-card-bottom strong{font-size:27px;letter-spacing:-.05em;font-weight:550}
+.rb-circle-link{display:grid;place-items:center;width:49px;height:49px;border-radius:50%;background:#1c1916;color:white;font-size:24px;transition:background .25s}
+.rb-shop-card:hover .rb-circle-link{background:#887565}
+.rb-pricing-note{color:#81776c;font-size:11px;max-width:640px;line-height:1.7;margin-top:27px}
+.rb-shop-empty{padding:100px 20px;text-align:center;border:1px solid #ded9d1}
+.rb-shop-empty h2{font-size:44px;letter-spacing:-.04em;margin:0 0 15px}
+.rb-shop-empty p{max-width:430px;margin:0 auto 27px;color:#6e655e;line-height:1.6}
+.rb-shop-empty a{color:inherit;text-decoration:underline;text-underline-offset:7px;font-size:12px}
+.rb-expert{border-top:1px solid #ddd5cb;padding-top:55px;padding-bottom:80px;display:flex;align-items:end;justify-content:space-between;gap:35px}
+.rb-expert>div>span{font-size:10px;letter-spacing:.17em;color:#867d71}
+.rb-expert h2{font-family:Georgia,serif;font-size:clamp(26px,3.5vw,55px);line-height:1.13;letter-spacing:-.035em;font-weight:400;margin:21px 0 0}
+.rb-expert a{display:inline-flex;gap:34px;align-items:center;text-decoration:none;background:#161411;color:#fff;padding:20px 27px;font-size:11px;font-weight:700;letter-spacing:.1em;white-space:nowrap}
+.rb-detail-breadcrumb{display:flex;flex-wrap:wrap;gap:12px;padding-top:32px;padding-bottom:25px;font-size:10px;letter-spacing:.1em;color:#81786f}
+.rb-detail-breadcrumb a{color:inherit;text-decoration:none}
+.rb-detail-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr);gap:clamp(30px,6vw,100px);padding-bottom:100px}
+.rb-detail-visual{position:relative;background:#eae5dc;aspect-ratio:1;min-width:0}
+.rb-detail-visual-label{position:absolute;left:23px;bottom:20px;color:#817468;background:#f8f6f2df;padding:10px}
+.rb-detail-information{padding-top:25px}
+.rb-detail-kicker{color:#81776d}
+.rb-detail-information h1{font-size:clamp(42px,5vw,78px);letter-spacing:-.06em;line-height:1.02;font-weight:500;margin:25px 0 28px}
+.rb-concern{border-top:1px solid #d8d2c9;border-bottom:1px solid #d8d2c9;padding:20px 0;margin-bottom:26px}
+.rb-concern small{color:#877a70;font-size:10px;letter-spacing:.16em}
+.rb-concern p{margin:8px 0 0;font-size:17px;line-height:1.45}
+.rb-detail-description{font-size:16px;color:#62594f;line-height:1.75;white-space:pre-line}
+.rb-detail-price{padding:28px 0 24px;margin-top:22px;border-top:1px solid #d8d2c9;display:grid;gap:9px}
+.rb-detail-price small{color:#81776d}
+.rb-detail-price strong{font-family:Georgia,serif;font-size:clamp(40px,4vw,64px);font-weight:400;letter-spacing:-.04em}
+.rb-detail-price>span,.rb-detail-help,.rb-unavailable{font-size:11px;line-height:1.7;color:#81766b}
+.rb-buy-button{display:flex;align-items:center;justify-content:space-between;gap:15px;width:100%;background:#1d1a18;color:#fff;border:1px solid #1d1a18;cursor:pointer;padding:23px 25px;font-size:11px;font-weight:750;letter-spacing:.12em;transition:background .25s}
+.rb-buy-button:hover:not(:disabled){background:#564b42}
+.rb-buy-button:disabled{background:#a6a09a;border-color:#a6a09a;cursor:not-allowed}
+.rb-buy-button span{font-size:22px}
+.rb-detail-help{margin:16px 0 30px}
+.rb-detail-consult{display:inline-block;text-decoration:none;color:#1d1a18;padding-bottom:10px;border-bottom:1px solid #1d1a18}
+.rb-included{padding-bottom:100px}
+.rb-included-top{padding-top:55px;border-top:1px solid #d8d2c9;display:grid;grid-template-columns:1fr 2fr;gap:20px}
+.rb-included-top>span{color:#81766b}
+.rb-included-top h2{font-size:clamp(38px,5.5vw,78px);letter-spacing:-.06em;line-height:1;margin:0 0 52px;font-weight:500}
+.rb-included-item{display:grid;grid-template-columns:45px 110px minmax(0,1fr) 145px;gap:30px;align-items:center;padding:25px 0;border-top:1px solid #dfd8cf}
+.rb-included-number{font-size:11px;color:#a29a90}
+.rb-included-image{width:110px;height:110px;display:grid;place-items:center;background:#ede8e0}
+.rb-included-image img{width:100%;height:100%;object-fit:contain;padding:7px}
+.rb-included-image>span{font:22px Georgia,serif;color:#ada295}
+.rb-included-text>span{color:#84796f}
+.rb-included-text h3{margin:9px 0 4px;font-size:clamp(16px,1.7vw,23px);line-height:1.22;font-weight:520}
+.rb-included-text p{margin:9px 0 0;color:#7e7368;font-size:12px;line-height:1.5;max-width:620px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.rb-included-cost{text-align:right;display:grid;gap:8px}
+.rb-included-cost strong{font-size:20px;letter-spacing:-.035em}
+.rb-included-cost span,.rb-included-cost a{font-size:11px;color:#80756a}
+.rb-included-cost a{text-decoration:underline;text-underline-offset:3px}
+.rb-included-footer{border-top:1px solid #1d1a18;display:flex;justify-content:space-between;padding:30px 0;font-size:11px;letter-spacing:.12em}
+.rb-included-footer strong{font-size:29px;letter-spacing:-.04em}
+@media(max-width:900px){.rb-hero-grid{gap:30px}.rb-detail-grid{grid-template-columns:1fr 1fr;gap:25px}.rb-detail-information h1{font-size:44px}.rb-included-item{gap:15px}}
+@media(max-width:720px){
+.rb-hero{padding-top:38px;padding-bottom:46px}.rb-hero-grid{display:block;padding-top:35px}.rb-hero-grid h1{font-size:clamp(72px,18vw,120px)}.rb-hero-grid>div{margin-top:40px}.rb-hero-grid p{font-size:17px}
+.rb-hero-eyebrow{font-size:8px}.rb-shop-list{padding:28px 0 65px}.rb-list-grid{grid-template-columns:1fr;gap:16px}.rb-card-image{aspect-ratio:1.35}.rb-card-content{padding:25px}.rb-card-content h2{font-size:30px}.rb-card-bottom{margin-top:26px}
+.rb-expert{padding-top:33px;padding-bottom:55px;display:block}.rb-expert a{margin-top:28px;width:100%;justify-content:space-between}
+.rb-detail-grid{grid-template-columns:1fr;padding-bottom:70px}.rb-detail-breadcrumb{padding-top:20px}.rb-detail-visual{aspect-ratio:1.25}.rb-detail-information{padding-top:10px}.rb-detail-information h1{font-size:clamp(38px,10vw,58px)}.rb-detail-price{margin-top:15px}.rb-detail-price strong{font-size:44px}
+.rb-included-top{display:block;padding-top:30px}.rb-included-top h2{margin-top:26px;margin-bottom:32px;font-size:48px}
+.rb-included-item{grid-template-columns:27px 75px minmax(0,1fr);gap:11px;align-items:start}.rb-included-image{width:75px;height:75px}.rb-included-text h3{font-size:17px}.rb-included-cost{grid-column:3;text-align:left;grid-row:2}.rb-included-text p{display:none}.rb-included-cost strong{font-size:17px}
+.rb-included{padding-bottom:50px}.rb-included-footer strong{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.rb-shop-card,.rb-visual-cell img{transition:none!important;transform:none!important}}

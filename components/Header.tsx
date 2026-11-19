@@ -12,6 +12,7 @@ const primary = [
   ["ОБЛИЧЧЯ", "/face"],
   ["ТІЛО", "/body"],
   ["ВОЛОССЯ", "/hair"],
+  ["ГОТОВІ КОШИКИ", "/ready-baskets"],
   ["СЕРТИФІКАТ", "/certificate"],
 ] as const;
 
