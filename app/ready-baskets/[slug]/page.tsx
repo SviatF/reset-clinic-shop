@@ -1,3 +1,4 @@
+import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -42,7 +43,7 @@ export default async function ReadyBasketDetailPage({params}:Props){
     <ReadyBasketAddButton items={forCart} available={basket.available}/>
     {!basket.available&&<p className="rb-unavailable">Один або кілька засобів зараз недоступні. Перегляньте їх окремо або зверніться до косметолога.</p>}
     <p className="rb-detail-help">Склад і ціна перевіряються під час оформлення замовлення. Покупка здійснюється як звичайний кошик із окремих засобів.</p>
-    <Link href="/consultation" className="rb-detail-consult">ПОРАДА КОСМЕТОЛОГА <span>↗</span></Link>
+    <Link href="/consultation" className="rb-detail-consult">ПОРАДА КОСМЕТОЛОГА <span><ArrowUpRight /></span></Link>
    </div>
   </div>
   <section className="rb-included shell">
@@ -55,7 +56,7 @@ export default async function ReadyBasketDetailPage({params}:Props){
      {row.product?.short_description&&<p>{row.product.short_description}</p>}
     </div>
     <div className="rb-included-cost"><strong>{money(row.price*row.qty)}</strong><span>{row.qty} × {money(row.price)}</span>
-     {row.product&&<Link href={`/product/${row.slug}`}>Детальніше ↗</Link>}</div>
+     {row.product&&<Link href={`/product/${row.slug}`}>Детальніше <ArrowUpRight /></Link>}</div>
    </article>)}</div>
    <div className="rb-included-footer"><span>УСЬОГО ЗАСОБІВ: {basket.count}</span><strong>{money(basket.total)}</strong></div>
   </section>

@@ -1,4 +1,5 @@
 "use client";
+import ArrowUpRight from "@/components/ArrowUpRight";
 
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
@@ -125,7 +126,7 @@ export default function AdminReadyBasketsClient() {
   <div className="admin-page-head"><div>
     <span>RESET COMMERCE · CURATED ROUTINES</span><h1>Готові кошики</h1>
     <p>Створюйте підбірки догляду з товарів магазину. Актуальні ціни розраховуються автоматично.</p>
-  </div><Link className="rb-view-link" href="/ready-baskets" target="_blank">Переглянути на сайті ↗</Link></div>
+  </div><Link className="rb-view-link" href="/ready-baskets" target="_blank">Переглянути на сайті <ArrowUpRight /></Link></div>
   {message && <div className="admin-toast" role="status">{message}</div>}
   {!writable && <div className="admin-connect-card"><span>СХОВИЩЕ</span><h2>Збереження поки недоступне</h2>
    <p>{storageReason || "Підключіть D1 та увімкніть SHOP_STORAGE_BACKEND=cloudflare і SHOP_PRODUCTS_BACKEND=d1 після ініціалізації каталогу."}</p>

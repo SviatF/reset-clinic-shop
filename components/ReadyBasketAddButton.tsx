@@ -1,4 +1,5 @@
 "use client";
+import ArrowUpRight from "@/components/ArrowUpRight";
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 
@@ -15,6 +16,6 @@ export default function ReadyBasketAddButton({items,available}:{items:Item[];ava
  }
  return <button className="rb-buy-button" type="button" disabled={!available} onClick={addAll}>
   {added ? "ТОВАРИ ДОДАНО ДО КОШИКА" : available ? "ДОДАТИ ВЕСЬ НАБІР ДО КОШИКА" : "НАБІР ТИМЧАСОВО НЕДОСТУПНИЙ"}
-  <span aria-hidden="true">↗</span>
+  <span aria-hidden="true"><ArrowUpRight /></span>
  </button>;
 }
