@@ -1,0 +1,45 @@
+/* Staggered scroll entrance for the RESET Skincare Finder.
+   JavaScript only arms these states once IntersectionObserver is supported.
+   Without JS, everything renders normally; on reduced motion, no animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .rb-discovery--editorial.rb-motion-armed [data-rb-reveal] {
+    transition-property: opacity, transform, filter;
+    transition-duration: 850ms, 850ms, 850ms;
+    transition-timing-function: cubic-bezier(.22,1,.36,1);
+    transition-delay: var(--rb-entrance-delay, 0ms);
+  }
+
+  .rb-discovery--editorial.rb-motion-armed [data-rb-reveal]:not(.rb-in-view) {
+    opacity: 0;
+    transform: translate3d(0, var(--rb-entrance-y, 26px), 0) scale(var(--rb-entrance-scale, 1));
+    filter: blur(2px);
+  }
+
+  .rb-discovery--editorial.rb-motion-armed [data-rb-reveal].rb-in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+
+  .rb-discovery--editorial [data-rb-reveal="eyebrow"] { --rb-entrance-y: 14px; }
+  .rb-discovery--editorial [data-rb-reveal="title"] { --rb-entrance-y: 35px; --rb-entrance-delay: 85ms; }
+  .rb-discovery--editorial [data-rb-reveal="tabs"] { --rb-entrance-y: 19px; --rb-entrance-delay: 125ms; }
+  .rb-discovery--editorial [data-rb-reveal="card"] { --rb-entrance-y: 44px; --rb-entrance-scale: .955; }
+  .rb-discovery--editorial [data-rb-reveal="panel"] { --rb-entrance-y: 31px; --rb-entrance-delay: 190ms; }
+  .rb-discovery--editorial [data-rb-reveal="footer"] { --rb-entrance-y: 24px; --rb-entrance-delay: 125ms; }
+  .rb-discovery--editorial [data-rb-reveal="ambient"] { --rb-entrance-y: -12px; --rb-entrance-delay: 140ms; }
+
+  /* Preserve hover lift already defined on the inner capsule. */
+  .rb-discovery--editorial .rb-discovery-option:hover .rb-discovery-image {
+    transform: translateY(-7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-discovery--editorial [data-rb-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

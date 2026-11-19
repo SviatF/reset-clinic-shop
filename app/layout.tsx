@@ -38,6 +38,7 @@ import "./admin-publishing.css";
 import "./admin-cuskin-import.css";
 import "./cuskin-transparent-products.css";
 import "./ready-baskets.css";
+import "./ready-baskets-reveal.css";
 import "./admin-ready-baskets.css";
 import heroSocial from "@/assets/img/hero-ph.webp";
 import favicon from "@/assets/img/favicon.webp";

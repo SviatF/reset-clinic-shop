@@ -1,3 +1,6 @@
+"use client";
+
+import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import Link from "next/link";
 import ArrowUpRight from "@/components/ArrowUpRight";
 import SmartProductImage from "@/components/SmartProductImage";
@@ -42,16 +45,45 @@ export default function ReadyBasketCategorySelector({
  counts: Record<string,number>;
 }) {
  const categories=group==="skin"?SKIN_CATEGORIES:CONCERN_CATEGORIES;
- return <section className="rb-discovery rb-discovery--editorial shell" id="ready-baskets-categories" aria-labelledby="rb-discovery-title">
-  <div className="rb-concept-ambient" aria-hidden="true"><i/><i/><i/><i/></div>
-  <div className="rb-discovery-eyebrow"><span>01 / SKINCARE FINDER</span><span>ОБЕРІТЬ СВОЄ</span></div>
-  <div className="rb-discovery-title">
+ const sectionRef = useRef<HTMLElement>(null);
+
+ // Progressive enhancement: SSR content stays visible without JavaScript or IO support.
+ // Individual elements animate only when they actually enter the viewport.
+ useLayoutEffect(() => {
+  const section = sectionRef.current;
+  if (!section || typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const targets = Array.from(section.querySelectorAll<HTMLElement>("[data-rb-reveal]"));
+  targets.forEach(target => target.classList.remove("rb-in-view"));
+  section.classList.add("rb-motion-armed");
+
+  const observer = new IntersectionObserver(entries => {
+   for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    entry.target.classList.add("rb-in-view");
+    observer.unobserve(entry.target);
+   }
+  }, { threshold: 0.08, rootMargin: "0px 0px -5% 0px" });
+
+  targets.forEach(target => observer.observe(target));
+  return () => {
+   observer.disconnect();
+   section.classList.remove("rb-motion-armed");
+   targets.forEach(target => target.classList.remove("rb-in-view"));
+  };
+ }, [group]);
+
+ return <section ref={sectionRef} className="rb-discovery rb-discovery--editorial shell" id="ready-baskets-categories" aria-labelledby="rb-discovery-title">
+  <div className="rb-concept-ambient" data-rb-reveal="ambient" aria-hidden="true"><i/><i/><i/><i/></div>
+  <div className="rb-discovery-eyebrow" data-rb-reveal="eyebrow"><span>01 / SKINCARE FINDER</span><span>ОБЕРІТЬ СВОЄ</span></div>
+  <div className="rb-discovery-title" data-rb-reveal="title">
    <h2 id="rb-discovery-title">{group==="skin"?"Який у вас":"Що турбує"}<br/><em>{group==="skin"?"тип шкіри?":"вашу шкіру?"}</em></h2>
    <p>Оберіть категорію, щоб підібрати готові набори RESET Clinic під ваш запит або тип шкіри.</p>
   </div>
   <div className="rb-discovery-stage">
    <div className="rb-discovery-stage-main">
-    <nav className="rb-discovery-tabs" aria-label="Спосіб підбору">
+    <nav className="rb-discovery-tabs" data-rb-reveal="tabs" aria-label="Спосіб підбору">
      <Link href="/ready-baskets?group=concern#ready-baskets-categories" aria-current={group==="concern"?"page":undefined}>ЗА ЗАПИТОМ</Link>
      <Link href="/ready-baskets?group=skin#ready-baskets-categories" aria-current={group==="skin"?"page":undefined}>ЗА ТИПОМ ШКІРИ</Link>
     </nav>
@@ -63,7 +95,9 @@ export default function ReadyBasketCategorySelector({
        ? `/ready-baskets?group=${group}#ready-baskets-list`
        : `/ready-baskets?group=${group}&category=${encodeURIComponent(category.key)}#ready-baskets-list`;
       const count=counts[category.key]||0;
-      return <Link key={category.key} href={url} className={"rb-discovery-option "+(chosen?"is-active":"")}
+      return <Link key={category.key} href={url} data-rb-reveal="card"
+       style={{"--rb-entrance-delay":`${(index%4)*90}ms`} as CSSProperties}
+       className={"rb-discovery-option "+(chosen?"is-active":"")}
        aria-current={chosen?"page":undefined} aria-label={category.label+" — "+count+" добірок"}>
        <span className="rb-discovery-image">
         <span className="rb-discovery-image-photo">
@@ -81,7 +115,7 @@ export default function ReadyBasketCategorySelector({
      })}
     </div>
    </div>
-   <aside className="rb-discovery-benefits" aria-label="Чому варто обрати добірки RESET Clinic">
+   <aside className="rb-discovery-benefits" data-rb-reveal="panel" aria-label="Чому варто обрати добірки RESET Clinic">
     <span className="rb-benefits-eyebrow">SKINCARE FINDER</span>
     <h3>Готові добірки<br/>професійного<br/>догляду</h3>
     <div className="rb-benefits-divider"/>
@@ -93,7 +127,7 @@ export default function ReadyBasketCategorySelector({
     <div className="rb-benefits-glass" aria-hidden="true"/>
    </aside>
   </div>
-  <div className="rb-discovery-bottom">
+  <div className="rb-discovery-bottom" data-rb-reveal="footer">
    <p>Не впевнені у своєму запиті? <Link href="/consultation">Попросіть пораду косметолога <ArrowUpRight /></Link></p>
    <Link className="rb-discovery-all" href="/ready-baskets?group=concern#ready-baskets-list">ПЕРЕГЛЯНУТИ ВСІ НАБОРИ <ArrowUpRight /></Link>
   </div>
