@@ -25,6 +25,8 @@ jobs:
         run: node scripts/restore-oliere-bundle-originals.mjs --check
       - name: Validate supplier import staging
         run: node scripts/validate-supplier-import.mjs
+      - name: Verify high-quality skincare finder imagery
+        run: node scripts/validate-skin-concern-assets.mjs
       - name: Verify safe D1 import generator
         run: npm run shop:d1:test
       - name: Test per-product discounts and payable prices

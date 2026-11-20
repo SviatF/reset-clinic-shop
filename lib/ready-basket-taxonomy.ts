@@ -16,14 +16,14 @@ export const READY_BASKET_CATEGORIES: ReadyBasketCategory[] = [
  { key:"skin-normal",label:"Нормальна",kind:"skin",description:"Щоденна підтримка",defaultImage:photo("photo-1764773963700-d7e0277db2cc") },
  { key:"skin-sensitive",label:"Чутлива",kind:"skin",description:"Делікатний догляд",defaultImage:photo("photo-1730288951113-9cc087c14b83") },
  { key:"skin-mature",label:"Зріла",kind:"skin",description:"Підтримка пружності",defaultImage:photo("photo-1764773963700-d7e0277db2cc") },
- { key:"concern-wrinkles",label:"Зморшки",kind:"concern",description:"Пружність і тонус",defaultImage:"/skin-concerns/01-wrinkles.webp" },
- { key:"concern-pigmentation",label:"Пігментація",kind:"concern",description:"Рівніший тон",defaultImage:"/skin-concerns/02-pigmentation.webp" },
- { key:"concern-redness",label:"Чутливість / почервоніння",kind:"concern",description:"Заспокоєння шкіри",defaultImage:"/skin-concerns/03-redness.webp" },
- { key:"concern-dullness",label:"Тьмяність",kind:"concern",description:"Сяйво шкіри",defaultImage:"/skin-concerns/04-dullness.webp" },
- { key:"concern-acne",label:"Висипання / акне",kind:"concern",description:"Догляд за проблемною шкірою",defaultImage:"/skin-concerns/05-acne.webp" },
- { key:"concern-dehydration",label:"Зневоднення",kind:"concern",description:"Відновлення зволоження",defaultImage:"/skin-concerns/06-dehydration.webp" },
- { key:"concern-pores",label:"Розширені пори",kind:"concern",description:"Текстура і баланс",defaultImage:"/skin-concerns/07-pores.webp" },
- { key:"concern-barrier",label:"Порушений бар’єр",kind:"concern",description:"Комфорт і відновлення",defaultImage:"/skin-concerns/08-barrier.webp" },
+ { key:"concern-wrinkles",label:"Зморшки",kind:"concern",description:"Пружність і тонус",defaultImage:"/skin-concerns/01-wrinkles-hq.webp" },
+ { key:"concern-pigmentation",label:"Пігментація",kind:"concern",description:"Рівніший тон",defaultImage:"/skin-concerns/02-pigmentation-hq.webp" },
+ { key:"concern-redness",label:"Чутливість / почервоніння",kind:"concern",description:"Заспокоєння шкіри",defaultImage:"/skin-concerns/03-redness-hq.webp" },
+ { key:"concern-dullness",label:"Тьмяність",kind:"concern",description:"Сяйво шкіри",defaultImage:"/skin-concerns/04-dullness-hq.webp" },
+ { key:"concern-acne",label:"Висипання / акне",kind:"concern",description:"Догляд за проблемною шкірою",defaultImage:"/skin-concerns/05-acne-hq.webp" },
+ { key:"concern-dehydration",label:"Зневоднення",kind:"concern",description:"Відновлення зволоження",defaultImage:"/skin-concerns/06-dehydration-hq.webp" },
+ { key:"concern-pores",label:"Розширені пори",kind:"concern",description:"Текстура і баланс",defaultImage:"/skin-concerns/07-pores-hq.webp" },
+ { key:"concern-barrier",label:"Порушений бар’єр",kind:"concern",description:"Комфорт і відновлення",defaultImage:"/skin-concerns/08-barrier-hq.webp" },
 ];
 export const SKIN_CATEGORIES = READY_BASKET_CATEGORIES.filter(x=>x.kind==="skin");
 export const CONCERN_CATEGORIES = READY_BASKET_CATEGORIES.filter(x=>x.kind==="concern");
