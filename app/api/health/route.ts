@@ -31,6 +31,8 @@ export async function GET() {
     const newCuSkin = cuSkin.filter(p => String(p.id).startsWith("cu-official-"));
     const photoCounts = {
       without_url: raw.filter(p => !String(p.image_url || "").trim()).length,
+      archived_without_url: raw.filter(p => p.status === "archived" && !String(p.image_url || "").trim()).length,
+      unresolved_active_or_draft: raw.filter(p => p.status !== "archived" && !String(p.image_url || "").trim()).length,
       live_active_missing_photo: products.filter(p => p.status === "active" && !String(p.image_url || "").trim()).length,
       raw_active_missing_photo: raw.filter(p => p.status === "active" && !String(p.image_url || "").trim()).length,
       auto_restored: raw.filter(p => String(p.image_url || "").includes("/products/official-auto/")).length,
