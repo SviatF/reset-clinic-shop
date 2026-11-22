@@ -279,3 +279,16 @@
     width: 100%;
   }
 }
+
+/* Payment method selector: cash only for in-clinic pickup */
+.checkout-payment-options{display:grid;gap:10px;}
+.checkout-payment-option{position:relative;cursor:pointer;border:1px solid #d8d0c8;transition:border-color .2s,background .2s;}
+.checkout-payment-option.is-selected{border-color:#1b1916;background:#faf7f2;box-shadow:inset 0 0 0 1px #1b1916;}
+.checkout-payment-option:focus-within{outline:2px solid #605148;outline-offset:2px;}
+.checkout-payment-option>input[type=radio]{position:absolute;width:1px;height:1px;opacity:0;left:12px;}
+.checkout-payment-option>i{opacity:0;}
+.checkout-payment-option.is-selected>i{opacity:1;}
+.checkout-cash-mark{background:#dcd3c8;color:#1b1916;border-radius:3px;}
+.checkout-cash-mark span{font-family:Georgia,serif!important;font-size:22px!important;}
+@media(max-width:700px){.checkout-payment-option{grid-template-columns:auto 1fr;}.checkout-payment-option>i{display:none;}}
+@media(prefers-reduced-motion:reduce){.checkout-payment-option{transition:none;}}

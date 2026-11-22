@@ -54,6 +54,8 @@ export type OrderRecord = {
   reference: string | null;
   status: "new" | "awaiting_payment" | "paid" | "processing" | "shipped" | "completed" | "cancelled" | "refunded";
   payment_status: string;
+  /** Optional for legacy Monobank orders; cash pickup has no invoice. */
+  payment_method?: "monobank" | "cash_on_pickup";
   customer_name: string;
   phone: string;
   email: string;

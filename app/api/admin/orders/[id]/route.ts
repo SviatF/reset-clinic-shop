@@ -23,7 +23,14 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       const index = orders.findIndex((item) => item.id === id);
       if (index < 0) throw new Error("Замовлення не знайдено");
       const copy = [...orders];
-      copy[index] = { ...copy[index], ...changes, updated_at: new Date().toISOString() } as OrderRecord;
+      const current = copy[index];
+      const confirmedCash = current.payment_method === "cash_on_pickup" &&
+        changes.status === "paid" && current.payment_status !== "cash_paid";
+      copy[index] = {
+        ...current, ...changes,
+        ...(confirmedCash ? { payment_status: "cash_paid", paid_at: new Date().toISOString() } : {}),
+        updated_at: new Date().toISOString(),
+      } as OrderRecord;
       return copy;
     });
     const updated = nextOrders.find((item) => item.id === id);

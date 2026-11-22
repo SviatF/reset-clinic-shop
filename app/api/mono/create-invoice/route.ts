@@ -48,6 +48,7 @@ async function persistOrder(args: {
       reference: args.reference,
       status: "awaiting_payment",
       payment_status: "created",
+      payment_method: "monobank",
       customer_name: clean(args.body.name, 180),
       phone: clean(args.body.phone, 80),
       email: clean(args.body.email, 120),

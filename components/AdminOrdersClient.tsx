@@ -4,6 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 
 const money = (value: number) => new Intl.NumberFormat("uk-UA", { style: "currency", currency: "UAH" }).format(value || 0);
 const statuses = ["new","awaiting_payment","paid","processing","shipped","completed","cancelled","refunded"];
+const paymentLabel = (order: {payment_method?:string;payment_status:string;invoice_id?:string|null}) =>
+  order.payment_method === "cash_on_pickup"
+    ? order.payment_status === "cash_paid" ? "Готівка · оплачено" : "Готівка · при отриманні"
+    : "Monobank · " + order.payment_status;
 
 export default function AdminOrdersClient() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -43,7 +47,7 @@ export default function AdminOrdersClient() {
       <div className="admin-filter-row"><button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>Всі</button>{statuses.map((status) => <button key={status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>{status}</button>)}</div>
 
       <div className="admin-orders-workspace">
-        <section className="admin-panel admin-orders-table-panel"><div className="admin-table-wrap"><table className="admin-table admin-orders-table"><thead><tr><th>Замовлення</th><th>Клієнт</th><th>Оплата</th><th>Статус</th><th>Сума</th><th>Дата</th></tr></thead><tbody>{orders.length ? orders.map((order) => <tr key={order.id} className={selectedId === order.id ? "is-selected" : ""} onClick={() => setSelectedId(order.id)}><td><strong>{order.order_number}</strong><small>{order.delivery_method}</small></td><td>{order.customer_name || "—"}<small>{order.phone}</small></td><td><span className={`admin-payment payment-${order.payment_status}`}>{order.payment_status}</span></td><td><span className={`admin-status status-${order.status}`}>{order.status}</span></td><td><strong>{money(Number(order.total))}</strong></td><td>{new Date(order.created_at).toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</td></tr>) : <tr><td colSpan={6}>Замовлень ще немає.</td></tr>}</tbody></table></div></section>
+        <section className="admin-panel admin-orders-table-panel"><div className="admin-table-wrap"><table className="admin-table admin-orders-table"><thead><tr><th>Замовлення</th><th>Клієнт</th><th>Оплата</th><th>Статус</th><th>Сума</th><th>Дата</th></tr></thead><tbody>{orders.length ? orders.map((order) => <tr key={order.id} className={selectedId === order.id ? "is-selected" : ""} onClick={() => setSelectedId(order.id)}><td><strong>{order.order_number}</strong><small>{order.delivery_method}</small></td><td>{order.customer_name || "—"}<small>{order.phone}</small></td><td><span className={`admin-payment payment-${order.payment_status}`}>{paymentLabel(order)}</span></td><td><span className={`admin-status status-${order.status}`}>{order.status}</span></td><td><strong>{money(Number(order.total))}</strong></td><td>{new Date(order.created_at).toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</td></tr>) : <tr><td colSpan={6}>Замовлень ще немає.</td></tr>}</tbody></table></div></section>
 
         <aside className="admin-order-detail">
           {selected ? <>
@@ -56,7 +60,14 @@ export default function AdminOrdersClient() {
             {selected.certificate_recipient_email && <div className="admin-customer-comment"><span>КОНТАКТ ОДЕРЖУВАЧА СЕРТИФІКАТА</span><p>{selected.certificate_recipient_email}</p></div>}
             {selected.certificate_message && <div className="admin-customer-comment"><span>ПОБАЖАННЯ ДО СЕРТИФІКАТА</span><p>{selected.certificate_message}</p></div>}
             {selected.comment && <div className="admin-customer-comment"><span>КОМЕНТАР КЛІЄНТА</span><p>{selected.comment}</p></div>}
-            <div className="admin-payment-meta"><span>MONOBANK</span><p>Invoice: {selected.invoice_id || "—"}</p><p>Payment: {selected.payment_status}</p>{selected.paid_at && <p>Оплачено: {new Date(selected.paid_at).toLocaleString("uk-UA")}</p>}</div>
+            <div className="admin-payment-meta">
+              <span>{selected.payment_method === "cash_on_pickup" ? "ГОТІВКА ПРИ САМОВИВОЗІ" : "MONOBANK"}</span>
+              {selected.payment_method !== "cash_on_pickup" && <p>Invoice: {selected.invoice_id || "—"}</p>}
+              <p>Оплата: {paymentLabel(selected)}</p>
+              {selected.payment_method === "cash_on_pickup" && selected.payment_status !== "cash_paid" &&
+                <p>Оплата не отримана. Після прийняття коштів оберіть статус «paid».</p>}
+              {selected.paid_at && <p>Оплачено: {new Date(selected.paid_at).toLocaleString("uk-UA")}</p>}
+            </div>
           </> : <div className="admin-detail-empty"><span>SELECT ORDER</span><p>Оберіть замовлення з таблиці, щоб змінити статус, додати ТТН або нотатку.</p></div>}
         </aside>
       </div>
