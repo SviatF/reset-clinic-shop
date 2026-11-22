@@ -6,6 +6,7 @@ import { jsonStoreWriteConfigured, jsonStoreWriteAvailable } from "@/lib/json-st
 import { normalizeOrder } from "@/lib/mono";
 import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
+import { queueOrderTelegram } from "@/lib/telegram-orders";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -45,6 +46,7 @@ export async function POST(request:Request) {
   const previous=(await readOrders()).find(order=>order.reference===id && order.payment_method==="cash_on_pickup");
   if (previous) {
    if (previous.phone!==phone) return respond({error:"Повторний запит не збігається з попереднім замовленням"},409);
+   await queueOrderTelegram(previous,"created");
    return respond(publicOrder(previous));
   }
 
@@ -85,6 +87,7 @@ export async function POST(request:Request) {
   const stored=orders.find(order=>order.reference===id&&order.payment_method==="cash_on_pickup");
   if(!stored)throw new Error("Замовлення не збережене");
   if(stored.id===record.id) {
+   await queueOrderTelegram(stored,"created");
    try{
     await appendActivity({
      event_type:"order_created",entity_type:"order",entity_id:stored.id,

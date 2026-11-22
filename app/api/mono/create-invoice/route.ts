@@ -6,6 +6,7 @@ import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { monoFetch, normalizeOrder, monoProductIcon, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
 import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
+import { queueOrderTelegram } from "@/lib/telegram-orders";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -84,6 +85,8 @@ async function persistOrder(args: {
       updated_at: now,
     };
     await mutateOrders(`Order ${order.order_number}: created`, (orders) => [order, ...orders]);
+    // A new Mono invoice is not proof of payment. Notify as awaiting payment.
+    await queueOrderTelegram(order, "created");
     // Audit event failure must not hide a successfully stored order from the payer.
     try {
       await appendActivity({ event_type: "order_created", entity_type: "order", entity_id: order.id, title: `Нове замовлення ${order.order_number}`, metadata: { invoiceId: args.invoiceId, total: args.amount / 100 } });

@@ -150,3 +150,23 @@ body:has(.reset-admin-root) main { min-height:100vh; }
 .admin-detail-empty p { font-size:12px; line-height:1.6; max-width:250px; }
 @media(max-width:1100px){.admin-app{grid-template-columns:190px minmax(0,1fr)}.admin-two-col{grid-template-columns:1fr}.admin-product-workspace{grid-template-columns:260px minmax(0,1fr)}.admin-orders-workspace{grid-template-columns:1fr}.admin-order-detail{position:static}.admin-metric-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.admin-login-page{padding:18px}.admin-login-card{padding:28px}.admin-app{display:block}.admin-sidebar{position:relative;height:auto;padding:16px}.admin-sidebar nav{grid-template-columns:repeat(3,1fr);display:grid;margin:14px 0}.admin-sidebar nav a{grid-template-columns:1fr;padding:10px}.admin-sidebar nav i{display:none}.admin-sidebar-foot{display:none}.admin-main{padding:24px 14px 60px}.admin-page-head{align-items:flex-start;flex-direction:column}.admin-page-head h1{font-size:34px}.admin-metric-grid{grid-template-columns:1fr 1fr}.admin-product-workspace{grid-template-columns:1fr}.admin-product-list{position:static;max-height:330px}.admin-form-grid{grid-template-columns:1fr}.admin-form-grid label.wide,.admin-serp-preview.wide{grid-column:auto}.admin-image-admin{grid-template-columns:1fr}.admin-image-preview{width:100%;height:220px}.admin-form-actions{align-items:flex-start;flex-direction:column}.admin-orders-table{min-width:720px}}
+
+
+/* Orders · durable Telegram notification outbox */
+.admin-telegram-orders-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;padding:16px 22px;margin:18px 0;
+  border:1px solid #d9d4cd;background:#f9f7f3;
+}
+.admin-telegram-orders-bar>div{display:grid;gap:6px;min-width:0;}
+.admin-telegram-orders-bar strong{font-size:11px;letter-spacing:.09em;font-weight:700;}
+.admin-telegram-orders-bar span{font-size:12px;color:#726b64;line-height:1.4;}
+.admin-telegram-orders-bar button{
+  padding:12px 17px;min-height:43px;background:#22201d;border:1px solid #22201d;
+  color:#fff;font-size:10px;font-weight:750;letter-spacing:.06em;cursor:pointer;
+  transition:background .2s;
+}
+.admin-telegram-orders-bar button:hover:not(:disabled){background:#554d45;}
+.admin-telegram-orders-bar button:disabled{opacity:.5;cursor:not-allowed;}
+@media(max-width:640px){.admin-telegram-orders-bar{padding:16px}.admin-telegram-orders-bar button{width:100%;}}
+@media(prefers-reduced-motion:reduce){.admin-telegram-orders-bar button{transition:none;}}

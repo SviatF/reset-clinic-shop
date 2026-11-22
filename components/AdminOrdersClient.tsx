@@ -16,6 +16,10 @@ export default function AdminOrdersClient() {
   const [filter, setFilter] = useState("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [telegram, setTelegram] = useState<{
+    configured:boolean;pending:number|null;sent:number|null;failed:number|null;
+  } | null>(null);
+  const [telegramBusy,setTelegramBusy] = useState(false);
   const selected = useMemo(() => orders.find((order) => order.id === selectedId), [orders, selectedId]);
 
   async function load() {
@@ -28,6 +32,28 @@ export default function AdminOrdersClient() {
   }
 
   useEffect(() => { load().catch((err) => setMessage(err.message)); }, [filter]);
+  useEffect(() => {
+    fetch("/api/admin/telegram/orders", {cache:"no-store"})
+      .then(response=>response.ok?response.json():null)
+      .then(data=>{if(data)setTelegram(data);})
+      .catch(()=>{});
+  }, []);
+
+  async function retryTelegram() {
+    if(telegramBusy)return;
+    setTelegramBusy(true);setMessage("");
+    try {
+      const response=await fetch("/api/admin/telegram/orders",{method:"POST"});
+      const data=await response.json();
+      if(!response.ok)throw new Error(data.error||"Не вдалося повторити відправку");
+      if(data.queue)setTelegram(data.queue);
+      setMessage(!data.configured
+        ? "Telegram не підключено: додайте TELEGRAM_BOT_TOKEN і TELEGRAM_CHAT_ID у Cloudflare."
+        : "Telegram: надіслано " + data.sent + ", помилок " + data.failed + ".");
+    }catch(error){
+      setMessage(error instanceof Error?error.message:"Помилка Telegram");
+    }finally{setTelegramBusy(false);}
+  }
 
   async function updateOrder(changes: Record<string, unknown>) {
     if (!selectedId || !writable) return;
@@ -42,6 +68,20 @@ export default function AdminOrdersClient() {
   return (
     <div className="admin-orders-page">
       <div className="admin-page-head"><div><span>ORDER CONTROL</span><h1>Замовлення</h1><p>Оплата, fulfillment, доставка та комунікація з клієнтом.</p></div><div className="admin-order-count">{orders.length}<span>orders</span></div></div>
+      <div className="admin-telegram-orders-bar">
+        <div>
+          <strong>TELEGRAM · СПОВІЩЕННЯ ПРО ЗАМОВЛЕННЯ</strong>
+          <span>{telegram
+            ? telegram.configured
+              ? "Надіслано: " + telegram.sent + " · У черзі: " + telegram.pending + " · Помилок: " + telegram.failed
+              : "Не налаштовано: потрібні TELEGRAM_BOT_TOKEN і TELEGRAM_CHAT_ID у Cloudflare"
+            : "Перевірка підключення…"}</span>
+        </div>
+        <button type="button" disabled={telegramBusy || !telegram?.configured}
+          onClick={retryTelegram}>
+          {telegramBusy ? "НАДСИЛАЄМО…" : "НАДІСЛАТИ НЕВІДПРАВЛЕНІ"}
+        </button>
+      </div>
       {configured !== null && !writable && <div className="admin-connect-card" role="status"><span>ТЕСТОВИЙ РЕЖИМ</span><h2>Збереження замовлень ще не підключене</h2><p>Зараз тут немає робочої бази замовлень. Для тестів підключіть окрему Cloudflare D1, а для реальної оплати потрібні окремі перевірки.</p></div>}
       {message && <div className="admin-toast">{message}</div>}
       <div className="admin-filter-row"><button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>Всі</button>{statuses.map((status) => <button key={status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>{status}</button>)}</div>

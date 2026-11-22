@@ -4,6 +4,7 @@ import { appendActivity, mutateOrders, mutateProducts, readOrders } from "@/lib/
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
 import { verifyMonoWebhook } from "@/lib/mono";
 import { isCertificateSlug } from "@/lib/certificate-products";
+import { queueOrderTelegram } from "@/lib/telegram-orders";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,7 +51,19 @@ export async function POST(request: Request) {
     } as OrderRecord));
     const updated = nextOrders.find((item) => item.id === before.id);
     if (!updated) return NextResponse.json({ ok: true });
-    await appendActivity({ event_type: `payment_${payload.status}`, entity_type: "order", entity_id: updated.id, title: `Оплата ${updated.order_number}: ${payload.status}`, metadata: { invoiceId: payload.invoiceId, amount: (payload.finalAmount || payload.amount || 0) / 100 } });
+    // Signed Mono webhook is authoritative. Ignore duplicate webhook statuses.
+    if (before.payment_status !== updated.payment_status) {
+      const event = payload.status === "success" ? "paid"
+        : payload.status === "reversed" ? "refunded"
+        : payload.status === "failure" || payload.status === "expired" ? "cancelled"
+        : null;
+      if (event) await queueOrderTelegram(updated,event);
+    }
+    try {
+      await appendActivity({ event_type: `payment_${payload.status}`, entity_type: "order", entity_id: updated.id, title: `Оплата ${updated.order_number}: ${payload.status}`, metadata: { invoiceId: payload.invoiceId, amount: (payload.finalAmount || payload.amount || 0) / 100 } });
+    } catch (auditError) {
+      console.error("Mono audit event failed",auditError instanceof Error?auditError.name:"UNKNOWN");
+    }
     if (payload.status === "success" && !updated.stock_decremented) await decrementStock(updated);
   } catch (error) {
     console.error("mono webhook processing error", error);
