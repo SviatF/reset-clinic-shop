@@ -18,7 +18,43 @@ export type NormalizedCheckoutItem = {
   qty: number;
   unitAmount: number;
   totalAmount: number;
+  /** Product catalog media, never supplied by the customer. */
+  imageUrl: string | null;
 };
+
+/**
+ * Monobank's basketOrder.icon needs a public, absolute HTTPS image URL.
+ * Product media stored under /shop-media/ must be served through /api/media/
+ * so the payment provider can fetch it without a browser session.
+ * Missing or invalid photos are omitted rather than replaced with unrelated ones.
+ */
+export function monoProductIcon(source: string | null | undefined): string | undefined {
+  if (!source || typeof source !== "string") return undefined;
+  let image = source.trim();
+  if (!image) return undefined;
+  if (image.startsWith("/shop-media/")) {
+    image = "/api/media/" + image.slice("/shop-media/".length);
+  }
+  if (image.startsWith("/") && !image.startsWith("//")) {
+    try {
+      image = new URL(image, SITE_URL).href;
+    } catch {
+      return undefined;
+    }
+  }
+  try {
+    const url = new URL(image);
+    if (url.protocol !== "https:" || url.username || url.password) return undefined;
+    const hostname = url.hostname.toLowerCase();
+    if (!hostname.includes(".") || hostname === "localhost" ||
+        hostname.endsWith(".local") || hostname.endsWith(".internal") ||
+        /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(hostname) ||
+        hostname.startsWith("[") || url.port) return undefined;
+    return url.href;
+  } catch {
+    return undefined;
+  }
+}
 
 export type MonoInvoiceStatus = {
   invoiceId: string;
@@ -72,7 +108,7 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
     const gift = certificateFromSlug(slug);
     if (gift) {
       const unitAmount = gift.price * 100;
-      normalized.push({ productId: gift.productId, slug: gift.slug, name: gift.name, sku: gift.sku, qty, unitAmount, totalAmount: unitAmount * qty });
+      normalized.push({ productId: gift.productId, slug: gift.slug, name: gift.name, sku: gift.sku, qty, unitAmount, totalAmount: unitAmount * qty, imageUrl: null });
       continue;
     }
     const item = bySlug.get(slug)!;
@@ -80,7 +116,7 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
     // Authoritative server-side sale price: never trust stale browser cart totals.
     const unitAmount = Math.round(getProductPricing(item).price * 100);
     if (!Number.isFinite(unitAmount) || unitAmount <= 0) throw new Error(`Некоректна ціна товару «${item.name}»`);
-    normalized.push({ productId: item.id, slug: item.slug, name: item.name, sku: item.sku, qty, unitAmount, totalAmount: unitAmount * qty });
+    normalized.push({ productId: item.id, slug: item.slug, name: item.name, sku: item.sku, qty, unitAmount, totalAmount: unitAmount * qty, imageUrl: item.image_url || item.secondary_image_url || null });
   }
   return { items: normalized, amount: normalized.reduce((sum, item) => sum + item.totalAmount, 0) };
 }

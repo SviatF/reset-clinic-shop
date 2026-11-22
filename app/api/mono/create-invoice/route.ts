@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { OrderRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateOrders, readOrders, newId } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured } from "@/lib/json-store";
-import { monoFetch, normalizeOrder, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
+import { monoFetch, normalizeOrder, monoProductIcon, SITE_URL, type NormalizedCheckoutItem } from "@/lib/mono";
 import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
 
@@ -136,7 +136,15 @@ export async function POST(request: Request) {
         destination: `RESET Clinic · замовлення ${orderCode}`,
         comment: "Онлайн-замовлення RESET Clinic",
         ...(email ? { customerEmails: [email] } : {}),
-        basketOrder: items.map((item) => ({ name: item.name, qty: item.qty, sum: item.unitAmount, total: item.totalAmount, unit: "шт.", code: item.slug })),
+        basketOrder: items.map((item) => ({
+          name: item.name,
+          qty: item.qty,
+          sum: item.unitAmount,
+          total: item.totalAmount,
+          unit: "шт.",
+          code: item.slug,
+          ...(monoProductIcon(item.imageUrl) ? { icon: monoProductIcon(item.imageUrl) } : {}),
+        })),
       },
     };
     const response = await monoFetch("/api/merchant/invoice/create", {
