@@ -48,7 +48,7 @@ export function monoProductIcon(source: string | null | undefined): string | und
     const hostname = url.hostname.toLowerCase();
     if (!hostname.includes(".") || hostname === "localhost" ||
         hostname.endsWith(".local") || hostname.endsWith(".internal") ||
-        /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(hostname) ||
+        /^\d+\.\d+\.\d+\.\d+$/.test(hostname) ||
         hostname.startsWith("[") || url.port) return undefined;
     return url.href;
   } catch {
