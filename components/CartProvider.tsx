@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { cartEcommercePayload, itemDeltaEcommercePayload, pushEcommerceEvent } from "@/lib/checkout-tracking";
 
 type CartItem = { slug: string; name: string; price: number; qty: number; imageUrl?: string | null };
@@ -40,6 +40,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
   const [isCartOpen, setCartOpen] = useState(false);
+  const drawerViewTracked = useRef(false);
 
   async function refreshCartPrices(snapshot: CartItem[]) {
     const catalog = await fetchCurrentPrices(snapshot);
@@ -72,6 +73,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (!ready) return;
     localStorage.setItem("reset-cart", JSON.stringify(items));
   }, [items, ready]);
+
+  // Track each drawer opening, including the automatic opening after add-to-cart.
+  useEffect(() => {
+    if (!isCartOpen) {
+      drawerViewTracked.current = false;
+      return;
+    }
+    if (!ready || !items.length || drawerViewTracked.current) return;
+    drawerViewTracked.current = true;
+    pushEcommerceEvent("view_cart",cartEcommercePayload(items));
+  }, [isCartOpen, ready, items]);
 
   useEffect(() => {
     document.body.style.overflow = isCartOpen ? "hidden" : "";
@@ -117,7 +129,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     // Successful checkout clears the cart without a false removal event.
     clear: () => setItems([]),
     openCart: () => {
-      if(items.length)pushEcommerceEvent("view_cart",cartEcommercePayload(items));
       setCartOpen(true);
       void refreshCartPrices(items);
     },
