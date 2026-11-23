@@ -41,14 +41,29 @@ export async function POST(request: Request) {
     }
     const before = (await readOrders()).find((item) => item.invoice_id === payload.invoiceId);
     if (!before) return NextResponse.json({ ok: true });
-    const nextOrders = await mutateOrders(`Payment ${before.order_number}: ${payload.status}`, (orders) => orders.map((order) => order.id !== before.id ? order : {
-      ...order,
-      payment_status: payload.status!,
-      status: orderStatus(payload.status!),
-      mono_payload: payload as Record<string, unknown>,
-      paid_at: payload.status === "success" ? payload.modifiedDate || order.paid_at || new Date().toISOString() : order.paid_at,
-      updated_at: new Date().toISOString(),
-    } as OrderRecord));
+    // Validate a successful charge against the persisted invoice before accepting it.
+    // Bank amounts use integer minor units; we never trust a browser-entered price.
+    if (payload.status === "success") {
+      const expected=Math.round(Number(before.total)*100);
+      if (!Number.isFinite(payload.amount) || payload.amount!==expected) {
+        console.error("Signed Mono payment amount differs from order",before.order_number);
+        return NextResponse.json({error:"Payment amount mismatch"},{status:409});
+      }
+    }
+    const nextOrders = await mutateOrders(`Payment ${before.order_number}: ${payload.status}`, (orders) => orders.map((order) => {
+      if(order.id !== before.id)return order;
+      // Repeat or out-of-order callbacks must never undo a successful payment.
+      if(order.payment_status==="reversed" ||
+         (order.payment_status==="success" && payload.status!=="reversed"))return order;
+      return {
+        ...order,
+        payment_status: payload.status!,
+        status: orderStatus(payload.status!),
+        mono_payload: payload as Record<string, unknown>,
+        paid_at: payload.status === "success" ? payload.modifiedDate || order.paid_at || new Date().toISOString() : order.paid_at,
+        updated_at: new Date().toISOString(),
+      } as OrderRecord;
+    }));
     const updated = nextOrders.find((item) => item.id === before.id);
     if (!updated) return NextResponse.json({ ok: true });
     // Signed Mono webhook is authoritative. Ignore duplicate webhook statuses.

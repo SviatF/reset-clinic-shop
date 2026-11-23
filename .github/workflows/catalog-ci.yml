@@ -61,6 +61,8 @@ jobs:
         run: node --test scripts/test-local-photo-backfill.mjs
       - name: Build Cloudflare scheduled photo Worker (dry run)
         run: npx wrangler deploy --dry-run --config workers/shop-media-sync/wrangler.jsonc --outdir .tmp/shop-media-cron
+      - name: Validate GTM and signed-payment purchase safety
+        run: node scripts/verify-gtm-analytics.mjs
       - name: TypeScript check
         run: npx tsc --noEmit
       - name: Next.js production build

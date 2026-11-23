@@ -7,6 +7,7 @@ import { monoFetch, normalizeOrder, monoProductIcon, SITE_URL, type NormalizedCh
 import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
 import { queueOrderTelegram } from "@/lib/telegram-orders";
+import { sanitizeOrderAttribution } from "@/lib/order-analytics";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,6 +23,7 @@ type CreateInvoiceBody = {
   certificate_recipient_email?: string;
   certificate_message?: string;
   items?: Array<{ slug: string; qty: number }>;
+  tracking?: unknown;
 };
 
 function clean(value: unknown, max = 180) {
@@ -50,6 +52,7 @@ async function persistOrder(args: {
       status: "awaiting_payment",
       payment_status: "created",
       payment_method: "monobank",
+      attribution: sanitizeOrderAttribution(args.body.tracking),
       customer_name: clean(args.body.name, 180),
       phone: clean(args.body.phone, 80),
       email: clean(args.body.email, 120),

@@ -47,6 +47,16 @@ export type OrderItemRecord = {
   line_total: number;
 };
 
+/** Optional first/last-touch attribution and GA4 IDs persisted with each checkout. */
+export type OrderAttribution = {
+  utm_source?: string; utm_medium?: string; utm_campaign?: string;
+  utm_content?: string; utm_term?: string;
+  gclid?: string; fbclid?: string; gbraid?: string; wbraid?: string;
+  landing_page?: string;
+  ga4_client_id?: string; ga4_session_id?: string;
+  ga4_measurement_id?: string;
+};
+
 export type OrderRecord = {
   id: string;
   order_number: string;
@@ -56,6 +66,7 @@ export type OrderRecord = {
   payment_status: string;
   /** Optional for legacy Monobank orders; cash pickup has no invoice. */
   payment_method?: "monobank" | "cash_on_pickup";
+  attribution?: OrderAttribution | null;
   customer_name: string;
   phone: string;
   email: string;

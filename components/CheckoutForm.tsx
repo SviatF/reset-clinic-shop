@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
@@ -18,6 +18,16 @@ export default function CheckoutForm() {
   const freeShipping = earnedBenefits.includes("Безкоштовна доставка");
   const [isPaying, setIsPaying] = useState(false);
   const [error, setError] = useState("");
+  const checkoutTracked=useRef(false);
+  useEffect(()=>{
+    if(!items.length||checkoutTracked.current)return;
+    checkoutTracked.current=true;
+    pushEcommerceEvent("begin_checkout",{
+      currency:"UAH",value:total,
+      items:items.map(item=>({item_id:item.slug,item_name:item.name,price:item.price,quantity:item.qty}))
+    });
+  },[items,total]);
+
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

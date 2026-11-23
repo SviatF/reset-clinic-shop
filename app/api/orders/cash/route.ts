@@ -6,6 +6,7 @@ import { jsonStoreWriteConfigured, jsonStoreWriteAvailable } from "@/lib/json-st
 import { normalizeOrder } from "@/lib/mono";
 import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
+import { sanitizeOrderAttribution } from "@/lib/order-analytics";
 import { queueOrderTelegram } from "@/lib/telegram-orders";
 
 export const runtime = "nodejs";
@@ -15,7 +16,7 @@ type CashOrderBody = {
  name?: string; phone?: string; email?: string; delivery?: string; city?: string;
  branch?: string; comment?: string; certificate_recipient_email?: string;
  certificate_message?: string; items?: Array<{slug:string;qty:number}>;
- clientRequestId?: string;
+ clientRequestId?: string; tracking?: unknown;
 };
 const clean = (v:unknown, max=180) => typeof v === "string" ? v.trim().slice(0,max) : "";
 const respond = (body:unknown, status=200) => NextResponse.json(body,{status,headers:{"Cache-Control":"no-store"}});
@@ -65,6 +66,7 @@ export async function POST(request:Request) {
   const record:OrderRecord={
    id:newId("order"),order_number:`RST-${orderCode}`,invoice_id:null,reference:id,
    payment_method:"cash_on_pickup",payment_status:"pending_cash",status:"new",
+   attribution:sanitizeOrderAttribution(body.tracking),
    customer_name:name,phone,email,delivery_method:"pickup",city:"Львів",
    branch:"RESET Clinic, вул. Кульпарківська, 93/2",
    comment:clean(body.comment,1000),

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "@/components/CartProvider";
+import { pushEcommerceEvent } from "@/lib/checkout-tracking";
 
 type PaymentState = "checking" | "success" | "processing" | "failure" | "expired" | "missing" | "error";
 
@@ -86,6 +87,45 @@ export default function PaymentResultPage() {
       if (timer) clearTimeout(timer);
     };
   }, [attempt, clear]);
+
+  // Report GA4 purchase ONLY after the signed Monobank webhook has persisted
+  // a successful order. A bank success screen on its own is NOT sufficient.
+  useEffect(() => {
+    if (state !== "success") return;
+    let cancelled=false;
+    let timer:ReturnType<typeof setTimeout>|null=null;
+    let attempts=0;
+
+    const checkConfirmed=async()=>{
+      let invoiceId="",reference="";
+      try{
+        const saved=JSON.parse(localStorage.getItem("reset-mono-payment")||"{}");
+        invoiceId=String(saved.invoiceId||"");
+        reference=String(saved.reference||"");
+      }catch{return;}
+      if(!invoiceId||!reference)return;
+      try{
+        const params=new URLSearchParams({invoiceId,reference});
+        const response=await fetch("/api/analytics/purchase?"+params.toString(),{
+          cache:"no-store",credentials:"same-origin"
+        });
+        if(cancelled)return;
+        const data=await response.json();
+        if(response.ok && data.ready && data.ecommerce?.transaction_id){
+          const key="reset-ga4-purchase:"+data.ecommerce.transaction_id;
+          try{if(localStorage.getItem(key))return;}catch{}
+          // Mark first; reloads or rerenders cannot emit the same transaction twice.
+          try{localStorage.setItem(key,"1");}catch{}
+          pushEcommerceEvent("purchase",data.ecommerce);
+          return;
+        }
+      }catch{}
+      if(!cancelled&&attempts++<12)
+        timer=setTimeout(checkConfirmed,2000);
+    };
+    void checkConfirmed();
+    return ()=>{cancelled=true;if(timer)clearTimeout(timer);};
+  },[state]);
 
   const copy = labels[state];
   const paidAmount = typeof info.amount === "number" ? `${(info.amount / 100).toFixed(2)} грн` : null;
