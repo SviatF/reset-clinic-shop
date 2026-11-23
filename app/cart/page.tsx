@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { cartEcommercePayload, pushEcommerceEvent } from "@/lib/checkout-tracking";
 import productImg from "@/assets/img/tovar1.webp";
 import certificateImg from "@/assets/img/main-certificate.webp";
 import { cartItemHref, certificateFromSlug, isCertificateSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
@@ -12,6 +14,12 @@ export default function CartPage() {
   const legacyCertificateInCart = items.some(item => isLegacyCertificateSlug(item.slug));
   const shippableTotal = total;
   const remaining = Math.max(0, 5000 - shippableTotal);
+  const viewed=useRef(false);
+  useEffect(()=>{
+    if(viewed.current||!items.length)return;
+    viewed.current=true;
+    pushEcommerceEvent("view_cart",cartEcommercePayload(items));
+  },[items]);
   return (
     <section className="cart-page">
       <div className="shell">

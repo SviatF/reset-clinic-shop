@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { cartEcommercePayload, itemDeltaEcommercePayload, pushEcommerceEvent } from "@/lib/checkout-tracking";
 
 type CartItem = { slug: string; name: string; price: number; qty: number; imageUrl?: string | null };
 type CartContextValue = {
@@ -84,18 +85,42 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     isCartOpen,
     add: (item, qty = 1) => {
       if (!Number.isFinite(item.price) || !(item.price > 0)) return;
-      setItems((current) => {
-        const exists = current.find((row) => row.slug === item.slug);
-        return exists
-          ? current.map((row) => row.slug === item.slug ? { ...row, name: item.name, price: item.price, imageUrl: item.imageUrl || row.imageUrl, qty: Math.min(20, row.qty + qty) } : row)
-          : [...current, { ...item, qty: Math.max(1,Math.min(20,qty)) }];
+      const requested = Number.isFinite(qty) ? Math.max(1, Math.min(20, Math.trunc(qty))) : 1;
+      const existing = items.find(row => row.slug === item.slug);
+      const addedQty = Math.max(0, Math.min(20-(existing?.qty ?? 0), requested));
+      if (!addedQty) return;
+      pushEcommerceEvent("add_to_cart", itemDeltaEcommercePayload(item, addedQty));
+      setItems(current => {
+        const previous = current.find(row => row.slug === item.slug);
+        return previous
+          ? current.map(row => row.slug === item.slug
+              ? {...row,name:item.name,price:item.price,imageUrl:item.imageUrl||row.imageUrl,qty:Math.min(20,row.qty+addedQty)}
+              : row)
+          : [...current,{...item,qty:addedQty}];
       });
       setCartOpen(true);
     },
-    remove: (slug) => setItems((current) => current.filter((row) => row.slug !== slug)),
-    setQty: (slug, qty) => setItems((current) => current.map((row) => row.slug === slug ? { ...row, qty: Math.max(1, Math.min(20,qty)) } : row)),
+    remove: (slug) => {
+      const item = items.find(row => row.slug === slug);
+      if (!item) return;
+      pushEcommerceEvent("remove_from_cart", itemDeltaEcommercePayload(item,item.qty));
+      setItems(current => current.filter(row => row.slug !== slug));
+    },
+    setQty: (slug, qty) => {
+      const item = items.find(row => row.slug === slug);
+      if (!item) return;
+      const nextQty = Number.isFinite(qty) ? Math.max(1,Math.min(20,Math.trunc(qty))) : item.qty;
+      const delta = nextQty-item.qty;
+      if (delta) pushEcommerceEvent(delta>0?"add_to_cart":"remove_from_cart",itemDeltaEcommercePayload(item,Math.abs(delta)));
+      setItems(current => current.map(row => row.slug === slug ? {...row,qty:nextQty} : row));
+    },
+    // Successful checkout clears the cart without a false removal event.
     clear: () => setItems([]),
-    openCart: () => { setCartOpen(true); void refreshCartPrices(items); },
+    openCart: () => {
+      if(items.length)pushEcommerceEvent("view_cart",cartEcommercePayload(items));
+      setCartOpen(true);
+      void refreshCartPrices(items);
+    },
     closeCart: () => setCartOpen(false),
   }), [items, isCartOpen]);
 
