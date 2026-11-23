@@ -8,6 +8,7 @@ import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
 import { queueOrderTelegram } from "@/lib/telegram-orders";
 import { sanitizeOrderAttribution } from "@/lib/order-analytics";
+import { ONE_UAH_TEST_PRODUCT_SLUG } from "@/lib/payment-test-product";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -64,6 +65,8 @@ async function persistOrder(args: {
       certificate_message: clean(args.body.certificate_message, 500) || null,
       tracking_number: null,
       admin_notes: (() => {
+        if (args.items.some(item=>item.slug===ONE_UAH_TEST_PRODUCT_SLUG))
+          return "ТЕСТОВЕ ЗАМОВЛЕННЯ: реальна оплата 1 грн, без фізичного товару, комплектації або доставки.";
         const eligibleTotal = args.items.reduce((sum, item) => sum + (certificateFromSlug(item.slug) ? 0 : item.totalAmount), 0) / 100;
         const benefits = earnedCartBenefits(eligibleTotal);
         return benefits.length ? "БОНУСИ ЗАМОВЛЕННЯ (товари без сертифікатів): " + benefits.join("; ") : null;
@@ -115,6 +118,8 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as CreateInvoiceBody;
     const { items, amount } = await normalizeOrder(body.items || []);
+    if (items.some(item=>item.slug===ONE_UAH_TEST_PRODUCT_SLUG) && body.delivery!=="pickup")
+      throw new Error("Для тестової оплати 1 грн оберіть варіант без доставки.");
     const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
     const email = clean(body.email, 120);
     if (!clean(body.name) || !clean(body.phone, 80)) throw new Error("Вкажіть ім’я та номер телефону");

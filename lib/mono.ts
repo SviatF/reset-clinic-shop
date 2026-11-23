@@ -4,6 +4,7 @@ import { createPublicKey, verify } from "node:crypto";
 import { readProducts } from "@/lib/commerce-json";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
 import { getProductPricing } from "@/lib/product-pricing";
+import { ONE_UAH_TEST_PRODUCT_SLUG, withOneUahTestProduct } from "@/lib/payment-test-product";
 
 const MONO_API = "https://api.monobank.ua";
 export const SITE_URL = process.env.SITE_URL || "https://reset-clinic-shop.vercel.app";
@@ -93,7 +94,7 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
   // Universal gift certificates have fixed denominations checked on the server,
   // independently of the optional cosmetic products store.
   const needsStore = items.some(item => !certificateFromSlug(String(item?.slug || "")));
-  const products = needsStore ? await readProducts() : [];
+  const products = needsStore ? withOneUahTestProduct(await readProducts()) : [];
   const bySlug = new Map(products.filter((item) => item.status === "active").map((item) => [item.slug, item]));
   const merged = new Map<string, number>();
   for (const item of items) {
@@ -102,6 +103,10 @@ export async function normalizeOrder(items: CheckoutCartItem[]) {
     if (!slug || (!bySlug.has(slug) && !certificateFromSlug(slug))) throw new Error("У кошику є недоступний товар");
     const qty = Math.max(1, Math.min(20, Math.trunc(Number(item.qty) || 1)));
     merged.set(slug, Math.min(20, (merged.get(slug) || 0) + qty));
+  }
+  if (merged.has(ONE_UAH_TEST_PRODUCT_SLUG) &&
+      (merged.size!==1 || merged.get(ONE_UAH_TEST_PRODUCT_SLUG)!==1)) {
+    throw new Error("Тестовий товар за 1 грн потрібно оплачувати окремо, в кількості 1 шт.");
   }
   const normalized: NormalizedCheckoutItem[] = [];
   for (const [slug, qty] of merged) {

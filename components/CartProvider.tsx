@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { cartEcommercePayload, itemDeltaEcommercePayload, pushEcommerceEvent } from "@/lib/checkout-tracking";
+import { ONE_UAH_TEST_PRODUCT_SLUG } from "@/lib/payment-test-product";
 
 type CartItem = { slug: string; name: string; price: number; qty: number; imageUrl?: string | null };
 type CartContextValue = {
@@ -99,7 +100,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (!Number.isFinite(item.price) || !(item.price > 0)) return;
       const requested = Number.isFinite(qty) ? Math.max(1, Math.min(20, Math.trunc(qty))) : 1;
       const existing = items.find(row => row.slug === item.slug);
-      const addedQty = Math.max(0, Math.min(20-(existing?.qty ?? 0), requested));
+      const maximum = item.slug===ONE_UAH_TEST_PRODUCT_SLUG ? 1 : 20;
+      const addedQty = Math.max(0, Math.min(maximum-(existing?.qty ?? 0), requested));
       if (!addedQty) return;
       pushEcommerceEvent("add_to_cart", itemDeltaEcommercePayload(item, addedQty));
       setItems(current => {
@@ -121,7 +123,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setQty: (slug, qty) => {
       const item = items.find(row => row.slug === slug);
       if (!item) return;
-      const nextQty = Number.isFinite(qty) ? Math.max(1,Math.min(20,Math.trunc(qty))) : item.qty;
+      const maximum=slug===ONE_UAH_TEST_PRODUCT_SLUG?1:20;
+      const nextQty = Number.isFinite(qty) ? Math.max(1,Math.min(maximum,Math.trunc(qty))) : item.qty;
       const delta = nextQty-item.qty;
       if (delta) pushEcommerceEvent(delta>0?"add_to_cart":"remove_from_cart",itemDeltaEcommercePayload(item,Math.abs(delta)));
       setItems(current => current.map(row => row.slug === slug ? {...row,qty:nextQty} : row));

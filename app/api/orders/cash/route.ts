@@ -4,6 +4,7 @@ import type { OrderRecord } from "@/lib/commerce-types";
 import { appendActivity, mutateOrders, readOrders, newId } from "@/lib/commerce-json";
 import { jsonStoreWriteConfigured, jsonStoreWriteAvailable } from "@/lib/json-store";
 import { normalizeOrder } from "@/lib/mono";
+import { ONE_UAH_TEST_PRODUCT_SLUG } from "@/lib/payment-test-product";
 import { certificateFromSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits } from "@/lib/cart-benefits";
 import { sanitizeOrderAttribution } from "@/lib/order-analytics";
@@ -52,6 +53,8 @@ export async function POST(request:Request) {
   }
 
   const {items,amount}=await normalizeOrder(body.items||[]);
+  if (items.some(item=>item.slug===ONE_UAH_TEST_PRODUCT_SLUG))
+    return respond({error:"Тестовий товар 1 грн доступний лише для онлайн-оплати Monobank."},400);
   if (items.some(item=>!Number.isFinite(item.unitAmount)||item.unitAmount<=0) || amount<=0)
    return respond({error:"Неможливо оформити замовлення без ціни"},400);
   const hasCertificate=items.some(item=>Boolean(certificateFromSlug(item.slug)));
