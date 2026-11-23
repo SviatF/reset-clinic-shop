@@ -31,7 +31,6 @@ const money = (value:number)=>new Intl.NumberFormat("uk-UA",{
 export default function AdminPaymentTestClient(){
   const [amount,setAmount]=useState("1890");
   const [method,setMethod]=useState<"card"|"cash_pickup">("card");
-  const [testEventCode,setTestEventCode]=useState("");
   const [config,setConfig]=useState<Configuration|null>(null);
   const [result,setResult]=useState<Result|null>(null);
   const [loading,setLoading]=useState(false);
@@ -39,7 +38,7 @@ export default function AdminPaymentTestClient(){
 
   useEffect(()=>{
     const controller=new AbortController();
-    fetch("/api/admin/payment-test",{cache:"no-store",signal:controller.signal})
+    fetch("/api/payment-test",{cache:"no-store",signal:controller.signal})
       .then(async r=>{
         const data=await r.json();
         if(!r.ok)throw new Error(data.error||"Не вдалося перевірити конфігурацію");
@@ -57,8 +56,7 @@ export default function AdminPaymentTestClient(){
   const validAmount=Number.isFinite(amountNumber) && amountNumber>=1 &&
     amountNumber<=50000 &&
     Math.abs(amountNumber*100-Math.round(amountNumber*100))<.00001;
-  const canSend=Boolean(config?.pixelConfigured && config?.tokenConfigured &&
-    (config?.testCodeConfigured || /^TEST[A-Za-z0-9_-]{3,40}$/i.test(testEventCode.trim())));
+  const canSend=config?.mode==="ready";
   const resultByName=useMemo(()=>new Map((result?.events||[]).map(x=>[x.name,x])),[result]);
 
   async function runTest(event:FormEvent<HTMLFormElement>){
@@ -66,9 +64,9 @@ export default function AdminPaymentTestClient(){
     if(!validAmount||loading)return;
     setResult(null);setMessage("");setLoading(true);
     try{
-      const response=await fetch("/api/admin/payment-test",{
+      const response=await fetch("/api/payment-test",{
         method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({amount:amountNumber,method,testEventCode})
+        body:JSON.stringify({amount:amountNumber,method})
       });
       const data=await response.json();
       if(!response.ok && !data.events)throw new Error(data.error||"Помилка тестового запиту");
@@ -83,11 +81,11 @@ export default function AdminPaymentTestClient(){
   return <div className="admin-payment-test">
     <header className="admin-payment-test-header">
       <div>
-        <span className="apt-eyebrow">RESET COMMERCE / TEST ENVIRONMENT</span>
+        <span className="apt-eyebrow">RESET CLINIC / PUBLIC TEST ENVIRONMENT</span>
         <h1>Тестова оплата<span>.</span></h1>
         <p>Перевірка подій оформлення та успішної покупки без реальних платежів.</p>
       </div>
-      <div className="apt-environment"><span className="apt-environment-dot"/> ТІЛЬКИ ТЕСТ</div>
+      <div className="apt-environment"><span className="apt-environment-dot"/> ПУБЛІЧНА ТЕСТОВА СТОРІНКА</div>
     </header>
 
     <div className="apt-notice" role="note">
@@ -130,16 +128,11 @@ export default function AdminPaymentTestClient(){
 
         <div className="apt-test-config">
           <span>02 / META TEST EVENTS</span>
-          <label className="apt-field">
-            <span>Код із Meta Events Manager (необов'язковий, якщо є Secret)</span>
-            <input value={testEventCode} onChange={e=>setTestEventCode(e.target.value)}
-              placeholder="TEST12345" autoComplete="off" spellCheck={false} maxLength={44}/>
-            <small>Використовується лише як <code>test_event_code</code>. Токен CAPI вводити тут не потрібно.</small>
-          </label>
+          <p className="apt-public-hint">Це публічний тест. Усі ключі аналітики й тестовий код зберігаються лише на сервері. Відвідувачам не потрібен доступ до адмінпанелі.</p>
           <div className="apt-config-status">
-            <span>Pixel ID: {config?.pixelConfigured?"налаштовано":"не налаштовано"}</span>
-            <span>CAPI Token: {config?.tokenConfigured?"налаштовано":"не налаштовано"}</span>
-            <span>Test Code: {config?.testCodeConfigured||testEventCode.trim()?"вказано":"потрібен"}</span>
+            <span>Meta Pixel: {config?.pixelConfigured?"підключено":"не налаштовано"}</span>
+            <span>Meta CAPI: {config?.tokenConfigured?"підключено":"не налаштовано"}</span>
+            <span>Test Events: {config?.testCodeConfigured?"увімкнено":"не налаштовано"}</span>
           </div>
         </div>
 
@@ -148,8 +141,8 @@ export default function AdminPaymentTestClient(){
             :canSend?"ЗАПУСТИТИ ТЕСТ · META CAPI":"ЗАПУСТИТИ ЛОКАЛЬНУ СИМУЛЯЦІЮ"}
           <span aria-hidden="true">↗</span>
         </button>
-        <p className="apt-footnote">При запуску автоматично обробляються три етапи.
-          Тільки з дійсним <code>test_event_code</code> події відправляються до Meta.</p>
+        <p className="apt-footnote">Запуск обмежено: не більш ніж 3 спроби на годину з одного підключення. Автоматично обробляються три етапи.
+          Тільки за наявності серверного <code>test_event_code</code> події відправляються до Meta.</p>
       </form>
 
       <section className="apt-panel apt-events" aria-labelledby="apt-events-heading">

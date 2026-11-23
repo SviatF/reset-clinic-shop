@@ -3,7 +3,7 @@ import AdminPaymentTestClient from "@/components/AdminPaymentTestClient";
 import "@/app/admin-payment-test.css";
 
 export const metadata: Metadata = {
-  title: "Тестова оплата · RESET Clinic Admin",
+  title: "Тестова оплата · RESET Clinic",
   robots: { index:false,follow:false,noarchive:true,nocache:true }
 };
 export const dynamic="force-dynamic";

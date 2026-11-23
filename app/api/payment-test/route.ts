@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,22 +37,69 @@ function configInfo(){
 }
 
 export async function GET(){
-  if (!(await isAdminAuthenticated())) return respond({error: "Доступ лише для адміністратора."},401);
   return respond(configInfo());
+}
+
+
+type RateDb = {
+  prepare(sql:string):{
+    run():Promise<{meta?:{changes?:number}}>;
+    bind(...values:unknown[]):{
+      run():Promise<{meta?:{changes?:number}}>;
+    };
+  };
+};
+const RATE_TABLE = "shop_public_payment_test_limits";
+const HOURLY_LIMIT = 3;
+const DAILY_GLOBAL_LIMIT = 60;
+
+/** D1-backed, atomic limits; fail closed if the database or identity is unavailable. */
+async function publicTestRateLimit(request:NextRequest,token:string){
+  const ip=request.headers.get("cf-connecting-ip");
+  if (!ip || ip.length>64 || !/^[a-fA-F0-9:.]+$/.test(ip)) {
+    return {allowed:false,reason:"Не вдалося перевірити ліміт тестів. Спробуйте пізніше.",status:503};
+  }
+  let db:RateDb | undefined;
+  try {
+    db=(getCloudflareContext().env as unknown as {SHOP_DB?:RateDb}).SHOP_DB;
+    if (!db) throw new Error("D1 unavailable");
+    await db.prepare(
+      "CREATE TABLE IF NOT EXISTS "+RATE_TABLE+" ("+
+      "bucket TEXT PRIMARY KEY, attempts INTEGER NOT NULL, expires_at INTEGER NOT NULL)"
+    ).run();
+
+    const now=Math.floor(Date.now()/1000);
+    const hashedIp=createHash("sha256").update(token+":"+ip).digest("hex");
+    const perIp="ip:"+hashedIp+":"+Math.floor(now/3600);
+    const global="all:"+Math.floor(now/86400);
+    const check=async (bucket:string, limit:number, expiration:number)=>{
+      const result=await db!.prepare(
+        "INSERT INTO "+RATE_TABLE+" (bucket,attempts,expires_at) VALUES (?,1,?) "+
+        "ON CONFLICT(bucket) DO UPDATE SET attempts=attempts+1 "+
+        "WHERE attempts < ?"
+      ).bind(bucket,expiration,limit).run();
+      return (result.meta?.changes||0)===1;
+    };
+    // Global cap protects the Meta API credential even if clients rotate IPs.
+    if (!await check(global,DAILY_GLOBAL_LIMIT,(Math.floor(now/86400)+1)*86400))
+      return {allowed:false,reason:"Денний ліміт тестових подій вичерпано.",status:429};
+    if (!await check(perIp,HOURLY_LIMIT,(Math.floor(now/3600)+1)*3600))
+      return {allowed:false,reason:"Максимум 3 тестові запуски на годину з одного підключення.",status:429};
+    return {allowed:true,reason:"",status:200};
+  }catch{
+    return {allowed:false,reason:"Перевірка ліміту тимчасово недоступна. Події не надсилалися.",status:503};
+  }
 }
 
 type TestRequest = {
   amount?: number;
   method?: PaymentMethod;
-  testEventCode?: string;
 };
 
 export async function POST(request:NextRequest){
-  if (!(await isAdminAuthenticated())) return respond({error: "Доступ лише для адміністратора."},401);
-
   const origin = request.headers.get("origin");
   if (!origin || origin !== new URL(request.url).origin) {
-    return respond({error:"Запит має надходити з адмінпанелі цього сайту."},403);
+    return respond({error:"Запит має надходити з тестової сторінки цього сайту."},403);
   }
   if (Number(request.headers.get("content-length")||0) > 4096){
     return respond({error:"Завеликий запит."},413);
@@ -73,11 +120,7 @@ export async function POST(request:NextRequest){
   }
 
   const c = config();
-  const override = typeof body.testEventCode === "string" ? body.testEventCode.trim() : "";
-  if (override && !validTestCode(override)) {
-    return respond({error:"Код тестових подій має починатися з TEST."},400);
-  }
-  const testCode = override || c.fallbackCode;
+  const testCode = c.fallbackCode;
   const runId = randomUUID();
   const names = Array.from(STEPS);
 
@@ -87,7 +130,7 @@ export async function POST(request:NextRequest){
     const missing=[
       ...(!c.pixelId ? ["META_PIXEL_ID"] : []),
       ...(!c.token ? ["META_CAPI_ACCESS_TOKEN"] : []),
-      ...(!testCode ? ["META_TEST_EVENT_CODE або код з Meta Events Manager"] : [])
+      ...(!testCode ? ["META_TEST_EVENT_CODE"] : [])
     ];
     return respond({
       ok:false,mode:"simulation",runId,missing,
@@ -95,6 +138,9 @@ export async function POST(request:NextRequest){
       events:names.map(name=>({name,status:"simulated",eventId:null}))
     });
   }
+
+  const limit = await publicTestRateLimit(request,c.token);
+  if (!limit.allowed) return respond({error:limit.reason},limit.status);
 
   const ua = (request.headers.get("user-agent") || "RESETClinicTest/1.0").slice(0,500);
   const eventSource = new URL("/admin/payment-test",

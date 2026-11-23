@@ -75,3 +75,6 @@
 @media(max-width:1100px){.apt-layout{grid-template-columns:1fr;}.admin-payment-test{padding:28px 22px 55px;}.apt-event{grid-template-columns:43px 1fr;}}
 @media(max-width:660px){.admin-payment-test{padding:20px 14px 48px;}.admin-payment-test-header{flex-direction:column;gap:14px;padding-bottom:22px;}.admin-payment-test-header h1{font-size:44px;}.apt-notice{padding:15px;}.apt-panel{padding:18px;}.apt-product{grid-template-columns:50px minmax(0,1fr);}.apt-product-mark{width:50px;height:50px;}.apt-product>strong{grid-column:2;}.apt-method em{display:none;}.apt-event-top{align-items:flex-start;}}
 @media(prefers-reduced-motion:reduce){.apt-method,.apt-submit{transition:none;}}
+
+/* Public test link – plain-language explanation, no secret inputs */
+.apt-public-hint{font-size:12px;line-height:1.6;color:#75695f;margin:0 0 20px;max-width:520px;}
