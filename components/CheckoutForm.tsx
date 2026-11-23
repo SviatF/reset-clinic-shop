@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits, physicalCartSubtotal } from "@/lib/cart-benefits";
+import { getCheckoutTracking, pushEcommerceEvent } from "@/lib/checkout-tracking";
 
 export default function CheckoutForm() {
   const { items, total, clear } = useCart();
@@ -49,10 +50,16 @@ export default function CheckoutForm() {
       delivery,
       items,
       total,
+      tracking:getCheckoutTracking(),
       createdAt: new Date().toISOString(),
     };
 
     try {
+      pushEcommerceEvent("add_payment_info",{
+        currency:"UAH",value:total,
+        payment_type:cashSelected?"cash_on_pickup":"monobank",
+        items:items.map(item=>({item_id:item.slug,item_name:item.name,price:item.price,quantity:item.qty}))
+      });
       try { localStorage.setItem("reset-order-draft", JSON.stringify(draft)); } catch {}
 
       if (cashSelected) {

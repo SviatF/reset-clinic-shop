@@ -57,20 +57,20 @@ export function captureShopAttribution() {
     const value=params.get(key);
     if(value&&value.length<400) values[key]=value.slice(0,200);
   }
-  if(!Object.keys(values).length)return;
   const data=safeStored();
-  const next:Stored={
-    first:Object.keys(data.first).length?data.first:values,
-    last:{...data.last,...values}
-  };
+  const first={...data.first};
+  if(!first.landing_page)first.landing_page=window.location.origin+window.location.pathname;
+  // Preserve first acquisition of each parameter; use last touch for checkout.
+  for(const key of KEYS){
+    if(values[key] && !first[key])first[key]=values[key];
+  }
+  const next:Stored={first,last:{...data.last,...values}};
   try{localStorage.setItem(STORE_KEY,JSON.stringify(next));}catch{}
 }
 export function getCheckoutTracking():OrderAttribution {
   captureShopAttribution();
   const saved=safeStored();
-  return {...saved.first,...saved.last,...readGaIds(),
-    landing_page:typeof window!=="undefined"?window.location.origin+window.location.pathname:undefined
-  };
+  return {...saved.first,...saved.last,...readGaIds()};
 }
 export function pushEcommerceEvent(eventName:string,ecommerce:Record<string,unknown>){
   if(typeof window==="undefined")return;

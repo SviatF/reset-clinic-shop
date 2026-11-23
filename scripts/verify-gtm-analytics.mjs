@@ -11,7 +11,7 @@ const cash=file("app/api/orders/cash/route.ts");
 assert.match(layout,/GTM-58GQ89JW/);
 assert.match(layout,/gtm\.js/);
 assert.match(layout,/ns\.html/);
-assert.match(form,/tracking: getCheckoutTracking\(\)/);
+assert.match(form,/tracking:\s*getCheckoutTracking\(\)/);
 assert.match(mono,/sanitizeOrderAttribution\(args\.body\.tracking\)/);
 assert.match(cash,/sanitizeOrderAttribution\(body\.tracking\)/);
 assert.match(webhook,/verifyMonoWebhook\(rawBody, signature\)/);
