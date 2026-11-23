@@ -6,14 +6,20 @@ import { useCart } from "@/components/CartProvider";
 import { certificateFromSlug, isLegacyCertificateSlug } from "@/lib/certificate-products";
 import { earnedCartBenefits, physicalCartSubtotal } from "@/lib/cart-benefits";
 import { getCheckoutTracking, pushEcommerceEvent } from "@/lib/checkout-tracking";
+import { ONE_UAH_TEST_PRODUCT_SLUG } from "@/lib/payment-test-product";
 
 export default function CheckoutForm() {
   const { items, total, clear } = useCart();
   const legacyCertificateInCart = items.some(item => isLegacyCertificateSlug(item.slug));
+  const isTestOnly = items.length===1 && items[0].slug===ONE_UAH_TEST_PRODUCT_SLUG && items[0].qty===1;
+  const hasTestProduct = items.some(item=>item.slug===ONE_UAH_TEST_PRODUCT_SLUG);
   const [delivery, setDelivery] = useState("nova");
+  useEffect(()=>{
+    if (isTestOnly) {setDelivery("pickup");setPaymentMethod("monobank");}
+  },[isTestOnly]);
   const [paymentMethod, setPaymentMethod] = useState<"monobank" | "cash_on_pickup">("monobank");
   const cashRequestIdRef = useRef<string | null>(null);
-  const cashSelected = delivery === "pickup" && paymentMethod === "cash_on_pickup";
+  const cashSelected = !hasTestProduct && delivery === "pickup" && paymentMethod === "cash_on_pickup";
   const hasCertificate = items.some(item => certificateFromSlug(item.slug) !== null);
   const earnedBenefits = earnedCartBenefits(physicalCartSubtotal(items));
   const freeShipping = earnedBenefits.includes("Безкоштовна доставка");
@@ -32,7 +38,7 @@ export default function CheckoutForm() {
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!items.length || isPaying || legacyCertificateInCart) return;
+    if (!items.length || isPaying || legacyCertificateInCart || (hasTestProduct && !isTestOnly)) return;
 
     setError("");
     setIsPaying(true);
@@ -135,10 +141,11 @@ export default function CheckoutForm() {
       <section className="checkout-section">
         <h2>Доставка / отримання</h2>
         <div className="delivery-options">
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} onChange={() => { setDelivery("nova"); setPaymentMethod("monobank"); }} /><span><strong>Нова Пошта</strong><span>{freeShipping ? "Безкоштовно · відділення або поштомат · 1–3 робочі дні" : "Відділення або поштомат · 1–3 робочі дні"}</span></span></label>
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} onChange={() => { setDelivery("courier"); setPaymentMethod("monobank"); }} /><span><strong>Кур’єрська доставка</strong><span>{freeShipping ? "Безкоштовна адресна доставка" : "Адресна доставка за тарифами перевізника"}</span></span></label>
-          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>Самовивіз із RESET Clinic</strong><span>Львів, вул. Кульпарківська, 93/2</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "nova"} disabled={hasTestProduct} onChange={() => { setDelivery("nova"); setPaymentMethod("monobank"); }} /><span><strong>Нова Пошта</strong><span>{freeShipping ? "Безкоштовно · відділення або поштомат · 1–3 робочі дні" : "Відділення або поштомат · 1–3 робочі дні"}</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "courier"} disabled={hasTestProduct} onChange={() => { setDelivery("courier"); setPaymentMethod("monobank"); }} /><span><strong>Кур’єрська доставка</strong><span>{freeShipping ? "Безкоштовна адресна доставка" : "Адресна доставка за тарифами перевізника"}</span></span></label>
+          <label className="delivery-option"><input type="radio" name="delivery" checked={delivery === "pickup"} onChange={() => setDelivery("pickup")} /><span><strong>{isTestOnly?"Без доставки · тестова оплата":"Самовивіз із RESET Clinic"}</strong><span>{isTestOnly?"Технічна позиція · реальне списання 1 грн":"Львів, вул. Кульпарківська, 93/2"}</span></span></label>
         </div>
+        {isTestOnly && <p className="mono-payment-security">Це реальна оплата 1 грн без фізичного товару або доставки. Лише для перевірки Monobank і GA4.</p>}
         {delivery !== "pickup" && <div className="checkout-fields" style={{ marginTop: 14 }}>
           <div className="checkout-field"><label htmlFor="city">Місто</label><input id="city" name="city" required={delivery !== "pickup"} /></div>
           <div className="checkout-field"><label htmlFor="branch">Відділення / адреса</label><input id="branch" name="branch" required={delivery !== "pickup"} /></div>
@@ -157,7 +164,7 @@ export default function CheckoutForm() {
             <div><strong>Онлайн-оплата через monobank</strong><span>Картка · Apple Pay · Google Pay · monobank</span></div>
             <i aria-hidden="true">✓</i>
           </label>
-          {delivery === "pickup" && <label className={`mono-payment-choice checkout-payment-option ${cashSelected ? "is-selected" : ""}`}>
+          {delivery === "pickup" && !hasTestProduct && <label className={`mono-payment-choice checkout-payment-option ${cashSelected ? "is-selected" : ""}`}>
             <input type="radio" name="payment_method" value="cash_on_pickup" checked={cashSelected}
               onChange={() => setPaymentMethod("cash_on_pickup")} />
             <div className="mono-payment-mark checkout-cash-mark" aria-hidden="true"><span>₴</span></div>
@@ -176,8 +183,9 @@ export default function CheckoutForm() {
         <div className="checkout-field full"><label htmlFor="comment">Побажання до замовлення</label><textarea id="comment" name="comment" placeholder="Наприклад, хочу уточнити сумісність із моїм поточним доглядом" /></div>
       </section>
 
+      {hasTestProduct && !isTestOnly && <p role="alert" className="cert-cart-legacy">Тестову оплату на 1 грн потрібно оформляти окремо, у кількості 1 шт.</p>}
       {legacyCertificateInCart && <p className="cert-cart-legacy" role="alert">У кошику є старий варіант сертифіката. Видаліть його та <Link href="/certificate#certificate-order">оберіть актуальний номінал універсального сертифіката</Link>.</p>}
-      <button className="checkout-submit mono-checkout-submit" type="submit" disabled={!items.length || isPaying || legacyCertificateInCart}>
+      <button className="checkout-submit mono-checkout-submit" type="submit" disabled={!items.length || isPaying || legacyCertificateInCart || (hasTestProduct && !isTestOnly)}>
         {isPaying ? (cashSelected ? "ОФОРМЛЮЄМО ЗАМОВЛЕННЯ…" : "СТВОРЮЄМО БЕЗПЕЧНИЙ ПЛАТІЖ…") : cashSelected ? `ПІДТВЕРДИТИ ЗАМОВЛЕННЯ · ${total.toFixed(2)} грн` : `ОПЛАТИТИ ОНЛАЙН · ${total.toFixed(2)} грн`}
       </button>
       <p className="checkout-note">{cashSelected ? "Після підтвердження замовлення буде зареєстроване без оплати. Готівку сплатите під час самовивозу." : "Після натискання ви перейдете на офіційну платіжну сторінку monobank, а після оплати повернетеся в RESET Clinic."}</p>

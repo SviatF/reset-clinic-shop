@@ -1,4 +1,5 @@
 import { getInventoryState } from "@/lib/inventory-state";
+import { ONE_UAH_TEST_PRODUCT_SLUG } from "@/lib/payment-test-product";
 import ArrowUpRight from "@/components/ArrowUpRight";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -22,11 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) return { title: "Товар не знайдено", robots: { index: false, follow: false } };
   const path = `/product/${item.slug}`;
   const image = item.imageUrl ? absoluteUrl(item.imageUrl) : null;
+  const isTestProduct = item.slug === ONE_UAH_TEST_PRODUCT_SLUG;
   return {
     title: item.seoTitle || item.name,
     description: item.seoDescription || item.description,
     alternates: { canonical: path },
-    robots: { index: true, follow: true },
+    robots: isTestProduct ? { index: false, follow: false } : { index: true, follow: true },
     openGraph: {
       title: `${item.name} — купити в RESET Clinic`,
       description: item.seoDescription || item.description,
@@ -45,6 +47,7 @@ export default async function DynamicProductPage({ params }: Props) {
   const item = await getStoreProductBySlug(slug);
   if (!item) notFound();
   const path = `/product/${item.slug}`;
+  const isTestProduct = item.slug === ONE_UAH_TEST_PRODUCT_SLUG;
   const brandUrl = `/catalog?brand=${encodeURIComponent(item.brand)}`;
   const categoryName = item.category === "body" ? "Тіло" : item.category === "hair" ? "Волосся" : item.category === "face" ? "Обличчя" : "Каталог";
   const categoryPath = item.category === "body" ? "/body" : item.category === "hair" ? "/hair" : item.category === "face" ? "/face" : "/catalog";
@@ -105,6 +108,9 @@ export default async function DynamicProductPage({ params }: Props) {
             <div className="product-detail-panel product-premium-detail">
               <span className="eyebrow"><Link href={brandUrl} className="product-brand-link">{item.brand.toUpperCase()} <ArrowUpRight /></Link> · {categoryName.toUpperCase()}</span>
               <h1>{item.name}</h1>
+              {isTestProduct && <p role="note" style={{padding:"12px 16px",border:"1px solid currentColor",borderRadius:12}}>
+                Тестова позиція для перевірки Monobank і GA4. З картки <strong>реально спишеться 1 грн</strong>. Фізичний товар та доставка відсутні. Оформлюйте окремо, з онлайн-оплатою.
+              </p>}
               <p className="product-benefit-lead">{productIntro(item.description || item.shortDescription)}</p>
 
               <div className="product-purchase-deck product-purchase-deck-light">
@@ -112,7 +118,7 @@ export default async function DynamicProductPage({ params }: Props) {
                   <div className="product-price-main"><span className="product-price-label">{onSale ? "ЦІНА ЗІ ЗНИЖКОЮ" : "ЦІНА"}</span>{onSale && <del className="shop-detail-price-before">{item.originalPrice.toFixed(2)} грн</del>}<strong className="product-price-number">{needsPrice ? "Ціна уточнюється" : <>{Number(item.price).toFixed(2)} <em>грн</em></>}</strong>{onSale && <span className="shop-saving-label shop-detail-saving-label">Економія {savings.toLocaleString("uk-UA", { maximumFractionDigits: 2 })} грн</span>}</div>
                   <div className="product-price-side"><span>RESET CLINIC</span><small>{needsPrice ? "Вартість за запитом" : needsAvailability ? "Наявність уточнюється" : inStock ? "Доступно до замовлення" : "Немає в наявності"}</small></div>
                 </div>
-                {needsPrice ? <Link href="/contacts" className="checkout-payment-error">Уточнити ціну та наявність →</Link> : needsAvailability ? <Link href="/contacts" className="checkout-payment-error">Уточнити наявність товару →</Link> : inStock ? <ProductActions item={{ slug: item.slug, name: item.name, imageUrl: item.imageUrl, price: Number(item.price), maxQty: item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
+                {needsPrice ? <Link href="/contacts" className="checkout-payment-error">Уточнити ціну та наявність →</Link> : needsAvailability ? <Link href="/contacts" className="checkout-payment-error">Уточнити наявність товару →</Link> : inStock ? <ProductActions item={{ slug: item.slug, name: item.name, imageUrl: item.imageUrl, price: Number(item.price), maxQty: isTestProduct ? 1 : item.trackStock ? item.stockQuantity : 20 }} /> : <div className="checkout-payment-error">Товар тимчасово відсутній.</div>}
                 <div className="product-shipping-line"><span>ДОСТАВКА</span><strong>Безкоштовно від 5000 грн</strong></div>
               </div>
 

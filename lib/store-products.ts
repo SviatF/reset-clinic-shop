@@ -4,6 +4,7 @@ import { readProducts } from "@/lib/commerce-json";
 import { productSubcategories } from "@/lib/catalog-taxonomy";
 import { productDisplayName, productModelBySlug } from "@/lib/product-display";
 import { getProductPricing } from "@/lib/product-pricing";
+import { withOneUahTestProduct } from "@/lib/payment-test-product";
 export type StoreProduct = {
   id: string | null; slug: string; name: string; brand: string; sku: string | null;
   category: "face" | "body" | "hair" | "other"; subcategories: string[]; productLine: string;
@@ -52,10 +53,10 @@ function mapRecord(row: ProductRecord): StoreProduct {
 }
 
 
-export async function getAllProductRecords(){return readProducts();}
+export async function getAllProductRecords(){return withOneUahTestProduct(await readProducts());}
 export type CatalogQuery = {category?:string;subcategory?:string;brand?:string;featured?:boolean;limit?:number;page?:number;search?:string;line?:string;sort?:"default"|"price-asc"|"price-desc"|"name"};
 export async function getStoreProductsPage(options:CatalogQuery={},prefetched?:ProductRecord[]){
-  const data=prefetched ?? await readProducts();
+  const data=withOneUahTestProduct(prefetched ?? await readProducts());
   const query=(options.search||"").toLocaleLowerCase("uk").trim();
   const filtered=data.filter(row=>row.status==="active")
     .filter(row=>!options.category||row.category===options.category)
@@ -75,6 +76,6 @@ export async function getStoreProductsPage(options:CatalogQuery={},prefetched?:P
 }
 export async function getStoreProducts(options:CatalogQuery={}){return (await getStoreProductsPage(options)).items;}
 export async function getStoreProductBySlug(slug:string){
- const row=(await readProducts()).find(item=>item.slug===slug&&item.status==="active");
+ const row=withOneUahTestProduct(await readProducts()).find(item=>item.slug===slug&&item.status==="active");
  return row?mapRecord(row):null;
 }
