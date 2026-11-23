@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import ProductActions from "@/components/ProductActions";
+import ProductViewTracking from "@/components/ProductViewTracking";
 import SmartProductImage from "@/components/SmartProductImage";
 import { absoluteUrl, breadcrumbSchema, siteConfig } from "@/lib/seo";
 import { getStoreProductBySlug } from "@/lib/store-products";
@@ -85,6 +86,7 @@ export default async function DynamicProductPage({ params }: Props) {
   return (
     <div className={`product-page-conversion product-page-premium product-page-audit-v2 product-page-feminine${isOfficialCutout ? " product-page--cu-skin-cutout" : ""}`}>
       <JsonLd data={[productSchema, breadcrumbs]} />
+      <ProductViewTracking slug={item.slug} name={item.name} price={Number(item.price)} />
       <section className="product-conversion-hero product-object-hero">
         <div className="shell">
           <div className="breadcrumbs"><Link href="/">Головна</Link><span>/</span><Link href={categoryPath}>{categoryName}</Link><span>/</span><span>{item.name}</span></div>

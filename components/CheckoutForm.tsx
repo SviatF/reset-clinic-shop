@@ -55,6 +55,10 @@ export default function CheckoutForm() {
     };
 
     try {
+      pushEcommerceEvent("add_shipping_info",{
+        currency:"UAH",value:total,shipping_tier:delivery,
+        items:items.map(item=>({item_id:item.slug,item_name:item.name,price:item.price,quantity:item.qty}))
+      });
       pushEcommerceEvent("add_payment_info",{
         currency:"UAH",value:total,
         payment_type:cashSelected?"cash_on_pickup":"monobank",

@@ -36,8 +36,10 @@ export async function POST(request: Request) {
     const payload = JSON.parse(rawBody) as { invoiceId?: string; status?: string; amount?: number; finalAmount?: number; modifiedDate?: string; reference?: string; paymentInfo?: unknown };
     if (!payload.invoiceId || !payload.status) return NextResponse.json({ ok: true });
     if (!jsonStoreWriteConfigured()) {
-      console.warn("Mono webhook JSON persistence skipped: GITHUB_TOKEN is not configured");
-      return NextResponse.json({ ok: true });
+      // Never acknowledge a payment notification without durable persistence.
+      // A 5xx response allows Monobank to retry it.
+      console.error("Mono webhook persistence is not configured");
+      return NextResponse.json({ error: "Order persistence unavailable" }, { status: 503 });
     }
     const before = (await readOrders()).find((item) => item.invoice_id === payload.invoiceId);
     if (!before) return NextResponse.json({ ok: true });

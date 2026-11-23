@@ -25,7 +25,8 @@ function clientFromCookie(cookie:string) {
   return /^\d{5,20}\.\d{5,20}$/.test(id)?id:"";
 }
 function measurementId() {
-  return process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || "";
+  // This ID selects the stream's cookie only. GTM sends the GA4 events.
+  return process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || "G-CPJEJ15RRG";
 }
 function readGaIds() {
   const client_id=clientFromCookie(readCookie("_ga"));
@@ -78,4 +79,21 @@ export function pushEcommerceEvent(eventName:string,ecommerce:Record<string,unkn
   w.dataLayer=w.dataLayer||[];
   w.dataLayer.push({ecommerce:null});
   w.dataLayer.push({event:eventName,ecommerce});
+}
+
+/** GA4 ecommerce currency amounts are UAH major units; no personal data. */
+export type TrackedCartItem={slug:string;name:string;price:number;qty:number};
+const roundUah=(n:number)=>Math.round(n*100)/100;
+export function cartEcommercePayload(items:readonly TrackedCartItem[]) {
+  const valid=items.filter(item=>Boolean(item.slug&&item.name)&&Number.isFinite(item.price)&&item.price>0&&Number.isFinite(item.qty)&&item.qty>0);
+  return {
+    currency:"UAH",
+    value:roundUah(valid.reduce((sum,item)=>sum+item.price*item.qty,0)),
+    items:valid.map(item=>({item_id:item.slug,item_name:item.name,price:roundUah(item.price),quantity:item.qty}))
+  };
+}
+export function itemDeltaEcommercePayload(item:Pick<TrackedCartItem,"slug"|"name"|"price">,quantity:number) {
+  return {currency:"UAH",value:roundUah(item.price*quantity),
+    items:[{item_id:item.slug,item_name:item.name,price:roundUah(item.price),quantity}]
+  };
 }
